@@ -31,9 +31,12 @@ export default function SignInSide() {
       email: data.get('email'),
       password: data.get('password'),
     });
+    const data1 = {
+      email: data.get('email'),
+      password: data.get('password'),
+    }
 
-
-    axios.post('http://127.0.0.1:5000/login',data)
+    axios.post('http://127.0.0.1:5000/login',data1)
     .then((res)=>{
         console.log(res)
         if(res.data.status=="ok"){

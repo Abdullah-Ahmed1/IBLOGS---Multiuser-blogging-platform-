@@ -115,7 +115,7 @@ module.exports = {
 
   login: async (req, res) => {
     const user = await User.findOne({ email: req.body.email });
-    //console.log(user);
+    console.log("---------------------", user);
     if (!user)
       return res.json({ status: "error", data: "invalid email or password" });
 
