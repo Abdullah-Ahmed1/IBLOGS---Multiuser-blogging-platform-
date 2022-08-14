@@ -63,7 +63,6 @@ module.exports = {
     res.json(blog);
   },
   getOneBlog: async (req, res) => {
-    console.log("---", typeof req.params.id);
     const blog = await Blog.findById(req.params.id);
     if (!blog) return res.status(400).send("Class not found");
     res.json(blog);
