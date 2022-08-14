@@ -4,6 +4,8 @@ import DialogTitle from '@mui/material/DialogTitle';
 import { useEffect,useState } from 'react';
 import axios from "axios";
 import TextField from '@mui/material/TextField';
+import Snackbar from '@mui/material/Snackbar';
+import Slide from '@mui/material/Slide';
 import { confirmAlert } from 'react-confirm-alert'; // Import
 import CssBaseline from "@mui/material/CssBaseline";
 import 'react-confirm-alert/src/react-confirm-alert.css'; // Import css
@@ -24,7 +26,9 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Dashboard from '../components/BloggerSideBarMui/DrawerMui';
 
-const BloggerHome = ({openModal,handleClose})=>{
+const BloggerHome = ({openModal,handleClose,token})=>{
+  const [snack, setSnack] =useState(true);
+
     const [blogs,setBlogs]=useState([]);
   ////////////////////////////////////////////////////////////////////////////////
     const[blogTitle,setBlogTitle] = useState("");
@@ -106,8 +110,14 @@ const BloggerHome = ({openModal,handleClose})=>{
           const data = {
             title : blogTitle,
             description : blogDescription
+
           }
 
+          console.log("65464654687132411584",token)
+          const info=  JSON.parse(atob(token.token.split(".")[1]))
+         console.log(info)
+           await axios.post(`http://127.0.0.1:5000/BloggerDashboard/add/${info.id}`,data)
+           .then(response=>console.log(response));
       
 
       }
@@ -127,6 +137,14 @@ const BloggerHome = ({openModal,handleClose})=>{
 
     return(
         <>
+         <Snackbar
+        anchorOrigin={{vertical:"top",horizontal:"right"}}
+        open={true}
+        onClose={()=>setSnack(false)}
+        TransitionComponent={Slide}
+        message="I love snacks"
+        key={"top"+ "right"}
+      />
         <div>
         <Dialog
         fullScreen={fullScreen}

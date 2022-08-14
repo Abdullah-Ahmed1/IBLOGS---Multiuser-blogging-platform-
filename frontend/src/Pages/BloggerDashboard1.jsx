@@ -1,5 +1,5 @@
 import * as React from "react";
-import {useState} from "react";
+import {useState,useEffect} from "react";
 //import { useMediaQuery } from "react-responsive";
 import { styled, createTheme, ThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -41,26 +41,8 @@ import {
 // import Orders from "./Orders";
 import AccountMenu from './../components/Avatar/AccountAvatar';
 
-function Copyright(props) {
-  return (
-    <Typography
-      variant="body2"
-      color="text.secondary"
-      align="center"
-      {...props}
-    >
-      {"Copyright © "}
-      <Link color="inherit" href="https://mui.com/">
-        Your Website
-      </Link>{" "}
-      {new Date().getFullYear()}
-      {"."}
-    </Typography>
-  );
-}
-
+////////////---------------------------------------------------------------MUI things
 const drawerWidth = 220;
-
 const AppBar = styled(MuiAppBar, {
   shouldForwardProp: (prop) => prop !== "open",
 })(({ theme, open }) => ({
@@ -78,7 +60,6 @@ const AppBar = styled(MuiAppBar, {
     }),
   }),
 }));
-
 const Drawer = styled(MuiDrawer, {
   shouldForwardProp: (prop) => prop !== "open",
 })(({ theme, open }) => ({
@@ -104,7 +85,6 @@ const Drawer = styled(MuiDrawer, {
     }),
   },
 }));
-
 const mdTheme = createTheme({
   palette: {
     primary: {
@@ -123,6 +103,9 @@ const mdTheme2 = createTheme({
     mode: "dark",
   },
 });
+//---------------------------------------------------------------
+
+
 
 function DashboardContent(props) {
   const theme = useTheme();
@@ -130,6 +113,16 @@ function DashboardContent(props) {
   const[openModal,setOpenModal] = useState(false);
   const { window } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
+  const [ token ,  setToken ] = useState({});
+  
+
+    useEffect(()=>{
+      console.log("------------------------------",typeof(JSON.parse(localStorage.getItem("token"))))
+       const a = JSON.parse(localStorage.getItem("token"))
+       setToken(a)
+       console.log("11111111111111111",token)
+    },[])
+
 
   const container =
     window !== undefined ? () => window().document.body : undefined;
@@ -154,6 +147,7 @@ function DashboardContent(props) {
       setOpen(false);
     }
   }, [open, mobileOpen, matches]);
+  console.log("tokennnnnnnnnnnnnnnnnnnnnnnnnn",token);
 
   return (
     <ThemeProvider theme={mdTheme}>
@@ -280,7 +274,7 @@ function DashboardContent(props) {
           <Grid container spacing={3} direction="row">
             {/* Chart */}
             <Routes>
-                <Route exact path="/" element={<BloggerHome  openModal = {openModal}  handleClose={handleClose} />} />
+                <Route exact path="/" element={<BloggerHome  openModal = {openModal}  token={token}  handleClose={handleClose} />} />
                 <Route exact path="/blogs" element={<BloggerBlog />} />
                 <Route exact path="/addpost" element={<AddPost />} />
                 <Route exact path="/full-blog/:blogId" element={<FullBlogView />} /> 
