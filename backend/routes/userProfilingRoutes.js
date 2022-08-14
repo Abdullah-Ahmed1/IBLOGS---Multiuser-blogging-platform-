@@ -1,0 +1,16 @@
+const express = require("express");
+const router = express.Router();
+const profilingController = require("../controllers/ProfilingController");
+
+router.route("/hello").get(profilingController.main);
+
+router.route("/register").post(profilingController.insertUser);
+router.route("/login").post(profilingController.login);
+router.route("/me").get(profilingController.me);
+router.route("/forget").post(profilingController.forgetPassword);
+router.route("/findUser/:id").get(profilingController.findUser);
+router.route("/:id/verify/:token/").get(profilingController.verify);
+router.route("/:id/forget/:token/").post(profilingController.newPassword);
+
+
+module.exports = router;

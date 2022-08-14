@@ -1,0 +1,41 @@
+.blog-box{
+    border: 1px solid lightgray;
+    height: 100px;
+    margin: 10px  ;
+
+    
+    border-radius: 5px;
+    /* box-shadow: 5px 10px  lightGrey ; */
+    max-height: 100px;
+    min-height: 100px;
+    width: 80%;
+    
+    overflow-y: hidden;
+    
+    
+}
+
+
+.options{
+    visibility:hidden
+}
+.blog-box:hover .options{
+    visibility:visible
+}
+
+ .blog-box::-webkit-scrollbar {
+    display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.blog-box {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+} */
+.blog-box:hover {
+    /* padding: 20px;
+    transition: .1s; */
+    /* //width: 500px; */
+    border: 2px solid black;
+    /* height: 350px; */
+}

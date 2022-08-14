@@ -1,0 +1,17 @@
+/* *{
+    padding: 0;
+    margin: 0;
+}
+.App
+{
+    flex-wrap: wrap;
+    width: auto;
+    height: full-width;
+}
+li{
+    list-style: none;
+}
+ul{
+    padding: 0;
+    margin: 0;
+} */
