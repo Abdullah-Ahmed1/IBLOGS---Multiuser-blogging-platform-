@@ -27,7 +27,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import Dashboard from '../components/BloggerSideBarMui/DrawerMui';
 
 const BloggerHome = ({openModal,handleClose,token})=>{
-  const [snack, setSnack] =useState(true);
+  const [snack, setSnack] =useState(false);
 
     const [blogs,setBlogs]=useState([]);
   ////////////////////////////////////////////////////////////////////////////////
@@ -42,6 +42,7 @@ const BloggerHome = ({openModal,handleClose,token})=>{
         // let value = JSON.parse(localStorage.getItem('token'));
         // let token = "value.token";
         let token = "something will be token here"
+        setSnack(true);
         // console.log("this is token",token)
         let response = axios.get('http://127.0.0.1:5000/me',{
             headers:{
@@ -83,6 +84,10 @@ const BloggerHome = ({openModal,handleClose,token})=>{
         }).catch((error)=>{
             console.log(error)
         })
+
+        return()=>{
+          setSnack(false)
+        }
 
     },[])
 
@@ -139,10 +144,11 @@ const BloggerHome = ({openModal,handleClose,token})=>{
         <>
          <Snackbar
         anchorOrigin={{vertical:"top",horizontal:"right"}}
-        open={true}
+        open={snack}
         onClose={()=>setSnack(false)}
         TransitionComponent={Slide}
-        message="I love snacks"
+        autoHideDuration={3000}
+        message={ "Welcome"+"   "+JSON.parse(atob((JSON.parse(localStorage.getItem('token'))).token.split(".")[1])).username }
         key={"top"+ "right"}
       />
         <div>

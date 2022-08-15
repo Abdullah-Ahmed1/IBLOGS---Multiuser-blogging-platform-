@@ -130,7 +130,7 @@ module.exports = {
         data: "invalid email or passwordddd",
       });
     const token = jwt.sign(
-      { username: user.username, password: user.password, id: user._id },
+      { username: user.firstname, password: user.password, id: user._id },
       "1234567"
     );
     return res.json({ status: "ok", data: token });
