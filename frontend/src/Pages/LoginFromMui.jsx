@@ -15,8 +15,13 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { Link } from "react-router-dom";
+import Snackbar from '@mui/material/Snackbar';
+import MuiAlert from '@mui/material/Alert';
 import { useState,createContext, useContext  } from 'react';
 
+const Alert = React.forwardRef(function Alert(props, ref) {
+  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+});
 
 
 const theme = createTheme();
@@ -25,14 +30,24 @@ export default function SignInSide() {
   
     const myRef = document.querySelector('.scrollable-div')
     const navigate = useNavigate();
+    
+    const [open, setOpen] = React.useState(false);
+    const handleClose = (event, reason) => {
+      if (reason === 'clickaway') {
+        return;
+      }
+  
+      setOpen(false);
+    };
 
+    
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
+    // console.log({
+    //   email: data.get('email'),
+    //   password: data.get('password'),
+    // });
     const data1 = {
       email: data.get('email'),
       password: data.get('password'),
@@ -51,6 +66,8 @@ export default function SignInSide() {
             }));
             navigate('/bloggerdashboard')
 
+        }else{
+          setOpen(true  )
         }
     })
 
@@ -59,6 +76,11 @@ export default function SignInSide() {
   return (
     <ThemeProvider theme={theme}>
       <Grid container component="main" sx={{ height: '100vh' }}>
+      <Snackbar open={open} autoHideDuration={6000}   key={"top" + "right"}  anchorOrigin={{ vertical:"top", horizontal:"right" }}  onClose={handleClose}>
+        <Alert onClose={handleClose} severity="error" sx={{ width: '100%' }}>
+          Invalid email or password!
+        </Alert>
+      </Snackbar>
         <CssBaseline />
         <Grid
           item

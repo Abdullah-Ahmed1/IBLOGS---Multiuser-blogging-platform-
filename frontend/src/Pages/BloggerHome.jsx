@@ -14,7 +14,7 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 
 import Box from "@mui/material/Box";
 // import Paper from "@mui/material/Paper";
-// import Grid from "@mui/material/Grid";
+ import Grid from "@mui/material/Grid";
 // import Blogs from './../components/BlogComps/Blogs';
 // import Backdrop from '@mui/material/Backdrop';
 // import Typography from '@mui/material/Typography';
@@ -25,6 +25,7 @@ import { useTheme } from '@mui/material/styles';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Dashboard from '../components/BloggerSideBarMui/DrawerMui';
+import BlogCard from './../components/BlogComps/BlogCardMui';
 
 const BloggerHome = ({openModal,handleClose,token})=>{
   const [snack, setSnack] =useState(false);
@@ -33,6 +34,7 @@ const BloggerHome = ({openModal,handleClose,token})=>{
   ////////////////////////////////////////////////////////////////////////////////
     const[blogTitle,setBlogTitle] = useState("");
     const[blogDescription,setBlogDescription] = useState("");
+    const [blogImage,setBlogImage] = useState("") 
   /////////////////////////////////////////////////////////////////////////////////
     const theme = useTheme();
     const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
@@ -111,15 +113,19 @@ const BloggerHome = ({openModal,handleClose,token})=>{
       };
 
  ////////////////////////////////////////////////////////////
-      const blogFormSubmit = async()=>{
-          const data = {
-            title : blogTitle,
-            description : blogDescription
 
+      const blogFormSubmit = async()=>{
+        
+        console.log("65464654687132411584",token)
+        const info=  JSON.parse(atob(token.token.split(".")[1]))
+        
+        const data = {
+            title : blogTitle,
+            description : blogDescription,
+            owner : info.id
           }
 
-          console.log("65464654687132411584",token)
-          const info=  JSON.parse(atob(token.token.split(".")[1]))
+
          console.log(info)
            await axios.post(`http://127.0.0.1:5000/BloggerDashboard/add/${info.id}`,data)
            .then(response=>console.log(response));
@@ -127,6 +133,13 @@ const BloggerHome = ({openModal,handleClose,token})=>{
 
       }
  ////////////////////////////////////////////////////////////////////
+      const handleImage = (e)=>{
+        let url = URL.createObjectURL(e.target.files[0]);
+        setBlogImage(url)
+        console.log(url)
+      }
+
+ ////////////////////////////////////////////////////////////////
     
     const handleDelete =async (id)=>{
         setBlogs(blogs.filter(blog=>blog._id!=id));
@@ -197,6 +210,20 @@ const BloggerHome = ({openModal,handleClose,token})=>{
                 autoComplete="Description"
               />
               
+              <TextField
+                        id="outlined-full-width"
+                        label="Image Upload"
+                        style={{ margin: 8 }}
+                        name="upload-photo"
+                        type="file"
+                        fullWidth
+                        margin="normal"
+                        InputLabelProps={{
+                            shrink: true,
+                        }}
+                        variant="outlined"
+                        onChange={ handleImage}
+                    />
               <Button
                 type="submit"
                  onClick = {blogFormSubmit}
@@ -211,38 +238,40 @@ const BloggerHome = ({openModal,handleClose,token})=>{
       </Dialog>
     
       </div>
-          
-             <div>
-           <ToastContainer 
-                theme="dark"
-                position="top-right"
-                autoClose={5000}
-                hideProgressBar={false}
-                newestOnTop={false}
-                closeOnClick
-                rtl={false}
-                pauseOnFocusLoss
-                draggable
-                pauseOnHover
-                
-            />
-           </div>
-            
-               
-            
-            {/* <div >
-            <div style={{marginLeft:"110px",marginTop:"20px"}}>
-                        <h2>All Posts</h2>    
-                  </div>  
-                <div style={{marginLeft:"100px",marginTop:"20px",display:"flex",flexWrap:"wrap"}}>
+        
 
-                < Blogs blogs = {blogs} handleDelete ={onClick}  />
-                </div>
-            </div> */}
-            <Box>
-             <h2>Your blogs</h2>
+      <Box sx={{ flexGrow: 1 }}>
               
-            </Box>
+             <h2>Your blogs</h2>
+              <Grid    container  direction="row" alignItems="stretch" spacing = {6}    >
+                <Grid item lg={4} md = {6}  xs = {12} >
+                  
+                 <BlogCard/>
+                  
+                </Grid>
+                <Grid item lg={4} md = {6}   xs = {12} >
+                  
+                  <BlogCard/>
+                   
+                 </Grid>
+                 <Grid item lg={4}  md = {6} xs = {12} >
+                  
+                  <BlogCard/>
+                   
+                 </Grid>
+                 <Grid item lg={4} md = {6}  xs = {12} >
+                  
+                  <BlogCard/>
+                   
+                 </Grid>
+                 <Grid item lg={4} md = {6}  xs = {12} >
+                  
+                  <BlogCard/>
+                   
+                 </Grid>
+                 </Grid>
+              </Box>
+            
         </>
     )
 }
