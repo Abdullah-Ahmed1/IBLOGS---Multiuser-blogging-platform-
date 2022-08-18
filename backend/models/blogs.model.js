@@ -6,7 +6,15 @@ var blogSchema = new mongoose.Schema({
   description: {
     type: String,
   },
-  post: {
+  posts: {
+    type: [
+      {
+        type: mongoose.Types.ObjectId,
+        ref: "Blog",
+      },
+    ],
+  },
+  image: {
     type: String,
   },
   owner: {

@@ -40,6 +40,7 @@ import {
 // import Deposits from "./Deposits";
 // import Orders from "./Orders";
 import AccountMenu from './../components/Avatar/AccountAvatar';
+import BlogPost from './BlogPosts ';
 
 ////////////---------------------------------------------------------------MUI things
 const drawerWidth = 220;
@@ -276,7 +277,9 @@ function DashboardContent(props) {
             <Routes>
                 <Route exact path="/" element={<BloggerHome  openModal = {openModal}  token={token}  handleClose={handleClose} />} />
                 <Route exact path="/blogs" element={<BloggerBlog />} />
+                <Route exact path="/blogPosts/:blogId" element ={<BlogPost/>}   />
                 <Route exact path="/addpost" element={<AddPost />} />
+                
                 <Route exact path="/full-blog/:blogId" element={<FullBlogView />} /> 
                 <Route exact path="/update/:PostId" element={<PostUpdate />} /> 
                 <Route exact path="/updateProfile" element={<ProfileUpdate />} />

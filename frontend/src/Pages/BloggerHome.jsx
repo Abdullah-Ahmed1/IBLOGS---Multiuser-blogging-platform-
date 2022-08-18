@@ -113,31 +113,54 @@ const BloggerHome = ({openModal,handleClose,token})=>{
       };
 
  ////////////////////////////////////////////////////////////
+ const handleImage = async(e)=>{
+  
+  const body = new FormData();
+  body.append('file', e.target.files[0]);
+  body.append('upload_preset',"my-uploads")
+
+  const res = await fetch('https://api.cloudinary.com/v1_1/dlgwvuu5d/image/upload', { method: 'POST', body }).then(r=>r.json());
+  console.log("-----",res.secure_url)
+  setBlogImage(res.secure_url)
+  console.log(res.secure_url)
+}
 
       const blogFormSubmit = async()=>{
         
-        console.log("65464654687132411584",token)
+
+
+
+
+
+        console.log("65464654687132411584",blogImage)
         const info=  JSON.parse(atob(token.token.split(".")[1]))
-        
         const data = {
             title : blogTitle,
             description : blogDescription,
+            image : blogImage,
             owner : info.id
           }
 
 
          console.log(info)
            await axios.post(`http://127.0.0.1:5000/BloggerDashboard/add/${info.id}`,data)
-           .then(response=>console.log(response));
+           .then(response=>{console.log(response)
+            axios.get('http://127.0.0.1:5000/bloggerDashboard/get')
+            .then((res)=>{
+                console.log("----",res.data)
+                setBlogs(res.data)
+    
+            }).catch((error)=>{
+                console.log(error)
+            })
+    
+           }
+           );
+           
       
-
+          handleClose();
       }
  ////////////////////////////////////////////////////////////////////
-      const handleImage = (e)=>{
-        let url = URL.createObjectURL(e.target.files[0]);
-        setBlogImage(url)
-        console.log(url)
-      }
 
  ////////////////////////////////////////////////////////////////
     
@@ -233,6 +256,9 @@ const BloggerHome = ({openModal,handleClose,token})=>{
               >
                 Submit
               </Button>
+             <div  style={{maxHeight:"10px",maxWidth:"10px"}}>
+              <img src={blogImage} style={{maxHeight:"100px", maxWidth:"100px" }} alt="image" />
+             </div>
               
               </DialogContent>       
       </Dialog>
@@ -244,7 +270,17 @@ const BloggerHome = ({openModal,handleClose,token})=>{
               
              <h2>Your blogs</h2>
               <Grid    container  direction="row" alignItems="stretch" spacing = {6}    >
-                <Grid item lg={4} md = {6}  xs = {12} >
+                 {
+                  blogs.map((item)=>{
+                    return (
+                      <Grid item lg={4} md = {6}  key = {item._id}  xs = {12} >
+                        <BlogCard  item = {item}  key = {item._id} />
+                      </Grid>
+                    )
+                  })
+                 }         
+
+                {/* <Grid item lg={4} md = {6}  xs = {12} >
                   
                  <BlogCard/>
                   
@@ -268,7 +304,7 @@ const BloggerHome = ({openModal,handleClose,token})=>{
                   
                   <BlogCard/>
                    
-                 </Grid>
+                 </Grid> */}
                  </Grid>
               </Box>
             

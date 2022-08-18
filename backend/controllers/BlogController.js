@@ -2,7 +2,9 @@ const Mongoose = require("mongoose");
 const jwt = require("jsonwebtoken");
 var connection = require("../Connection/connection");
 const Blog = Mongoose.model("Blog");
+const Post = Mongoose.model("Post");
 const { User, validate } = require("../models/users.model");
+//const { Post, validate } = require("../models/post.model");
 
 module.exports = {
   addBlog: async (req, res) => {
@@ -72,4 +74,37 @@ module.exports = {
     user;
     res.json({ deletedPost: post });
   },
+
+  //////////////////////////// Blog Posts functions /////////////////////////////////////////////////////////////////
+
+  addPost: async (req, res) => {
+    // console.log(req.body, "---------", req.params.blogId);
+    const blogId = req.params.blogId;
+    const blog = await Blog.findOne({ _id: blogId });
+    console.log("--------", blog);
+    Post.create(req.body)
+      .then(async (post) => {
+        console.log("Blog has been Added ", post, post._id);
+        console.log("reached");
+        await Blog.updateOne(
+          { _id: blog._id },
+          { $push: { posts: post._id } },
+          function (error, success) {
+            if (error) {
+              console.log(error);
+            } else {
+              console.log(success);
+            }
+          }
+          // { returnOriginal: false }
+        );
+        res.statusCode = 200;
+        res.setHeader("Content-Type", "application/json");
+
+        res.json(post);
+      })
+      .catch((err) => res.json(err));
+  },
+
+  getPost: (req, res) => {},
 };

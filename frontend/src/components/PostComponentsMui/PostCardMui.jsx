@@ -11,9 +11,8 @@ import Typography from '@mui/material/Typography';
 
 
 
-export default function BlogCard({item}) {
+export default function PostCard() {
 
-    console.log("*****",item.image)
 
   return (
     
@@ -22,16 +21,16 @@ export default function BlogCard({item}) {
         component="img"
         alt="green iguana"
         height="140"
-        image={item.image? item.image : "https://res.cloudinary.com/dlgwvuu5d/image/upload/v1660213469/my-uploads/phzatp2folb3pglrxkea.jpg"}
+        image={"https://res.cloudinary.com/dlgwvuu5d/image/upload/v1660213469/my-uploads/phzatp2folb3pglrxkea.jpg"}
       />
       <CardContent  textoverflow="ellipsis"  >
-      <Link   style = {{textDecoration:"none",color:"black"}}  to= {`/Bloggerdashboard/blogPosts/${item._id}`}>
-        <Typography gutterBottom variant="h6" sx = {{   color:"black",fontWeight:"bold",textDecoration:"none"}}   component="div">
-          {item.title}
+     
+        <Typography gutterBottom variant="h5" sx = {{   color:"black",textDecoration:"none"}}   component="div">
+        this is a dummy title
         </Typography>
-        </Link>
+      
         <Typography variant="body2" className='scrolling'  sx = {{height:"100px",overflow:"auto"}}   color="text.secondary">
-         {item.description}
+         Lorem ipsum dolor sit, amet consectetur adipisicing elit. Eaque reprehenderit quis ipsa quae? Necessitatibus vel velit delectus doloribus inventore optio explicabo? Fuga corrupti inventore, ullam recusandae culpa eligendi accusantium! Saepe?
         </Typography>
       </CardContent>
       <CardActions>

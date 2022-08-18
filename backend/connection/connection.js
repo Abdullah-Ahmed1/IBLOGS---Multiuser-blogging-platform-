@@ -14,3 +14,4 @@ mongoose.connect(
 module.exports = mongoose.connect;
 require("../models/users.model");
 require("../models/blogs.model");
+require("../models/post.model");
