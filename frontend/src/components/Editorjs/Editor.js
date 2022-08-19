@@ -1,9 +1,8 @@
 import React, { useState, useRef, useMemo } from "react";
 import JoditEditor from "jodit-react";
 
-const MyEditor = () => {
+const MyEditor = ({ content, setContent }) => {
   const editor = useRef(null);
-  const [content, setContent] = useState("");
 
   const config = {
     readonly: false, // all options from https://xdsoft.net/jodit/doc/,

@@ -16,8 +16,8 @@ import useMediaQuery from "@mui/material/useMediaQuery";
 import Badge from "@mui/material/Badge";
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
-import Paper from "@mui/material/Paper";
-import Link from "@mui/material/Link";
+//import Paper from "@mui/material/Paper";
+//import Link from "@mui/material/Link";
 import MenuIcon from "@mui/icons-material/Menu";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import { Notifications } from "@mui/icons-material";
@@ -271,8 +271,8 @@ function DashboardContent(props) {
         }}
       >
         <Toolbar />
-        <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
-          <Grid container spacing={3} direction="row">
+        <Container maxWidth="lg" sx={{ mt: 4 }}>
+          <Grid container spacing={1} direction="row">
             {/* Chart */}
             <Routes>
                 <Route exact path="/" element={<BloggerHome  openModal = {openModal}  token={token}  handleClose={handleClose} />} />

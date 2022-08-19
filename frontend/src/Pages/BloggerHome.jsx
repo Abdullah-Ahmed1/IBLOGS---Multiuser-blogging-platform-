@@ -2,6 +2,7 @@ import Dialog from '@mui/material/Dialog';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import { useEffect,useState } from 'react';
+import {Link} from "react-router-dom"
 import axios from "axios";
 import TextField from '@mui/material/TextField';
 import Snackbar from '@mui/material/Snackbar';
@@ -11,13 +12,14 @@ import CssBaseline from "@mui/material/CssBaseline";
 import 'react-confirm-alert/src/react-confirm-alert.css'; // Import css
 import Button from '@mui/material/Button';
 import FormControlLabel from '@mui/material/FormControlLabel';
+import Breadcrumbs from '@mui/material/Breadcrumbs';
 
 import Box from "@mui/material/Box";
 // import Paper from "@mui/material/Paper";
  import Grid from "@mui/material/Grid";
 // import Blogs from './../components/BlogComps/Blogs';
 // import Backdrop from '@mui/material/Backdrop';
-// import Typography from '@mui/material/Typography';
+ import Typography from '@mui/material/Typography';
 // import Fade from '@mui/material/Fade';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material/styles';
@@ -26,6 +28,37 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Dashboard from '../components/BloggerSideBarMui/DrawerMui';
 import BlogCard from './../components/BlogComps/BlogCardMui';
+
+function handleClick(event) {
+  event.preventDefault();
+  console.info('You clicked a breadcrumb.');
+}
+
+function BasicBreadcrumbs() {
+  return (
+    <div role="presentation" onClick={handleClick}>
+      <Breadcrumbs aria-label="breadcrumb">
+        <Link underline="hover" color="inherit" to="/bloggerDashboard">
+          MUI
+        </Link>
+        <Link
+          underline="hover"
+          color="inherit"
+         to= "/bloggerDashboard"
+        >
+          Core
+        </Link>
+        <Typography color="text.primary">Breadcrumbs</Typography>
+      </Breadcrumbs>
+    </div>
+  );
+}
+
+
+
+
+
+
 
 const BloggerHome = ({openModal,handleClose,token})=>{
   const [snack, setSnack] =useState(false);
@@ -264,7 +297,7 @@ const BloggerHome = ({openModal,handleClose,token})=>{
       </Dialog>
     
       </div>
-        
+      <BasicBreadcrumbs />                 
 
       <Box sx={{ flexGrow: 1 }}>
               
