@@ -65,7 +65,8 @@ module.exports = {
     res.json(blog);
   },
   getOneBlog: async (req, res) => {
-    const blog = await Blog.findById(req.params.id);
+    const blogId = req.params.id;
+    const blog = await Blog.findById(blogId);
     if (!blog) return res.status(400).send("Class not found");
     res.json(blog);
   },
@@ -78,7 +79,7 @@ module.exports = {
   //////////////////////////// Blog Posts functions /////////////////////////////////////////////////////////////////
 
   addPost: async (req, res) => {
-    // console.log(req.body, "---------", req.params.blogId);
+    console.log(req.body, "---------", req.params.blogId);
     const blogId = req.params.blogId;
     const blog = await Blog.findOne({ _id: blogId });
     console.log("--------", blog);
@@ -106,5 +107,15 @@ module.exports = {
       .catch((err) => res.json(err));
   },
 
-  getPost: (req, res) => {},
+  getPost: (req, res) => {
+    const blogId = req.params.blogId;
+    console.log("////////////////", blogId);
+
+    Blog.findById(blogId)
+      .populate("posts")
+      .exec()
+      .then((data) => {
+        res.json(data);
+      });
+  },
 };

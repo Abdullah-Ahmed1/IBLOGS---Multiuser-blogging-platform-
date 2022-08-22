@@ -6,6 +6,11 @@ import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
+import ArticleIcon from '@mui/icons-material/Article';
+import ShareIcon from '@mui/icons-material/Share';
+import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
+import Badge from "@mui/material/Badge";
 import Typography from '@mui/material/Typography';
 
 
@@ -16,9 +21,9 @@ export default function BlogCard({item}) {
     console.log("*****",item.image)
 
   return (
-    
-    <Card sx={{ minWidth:400,maxWidth: 400 }}>
-      <CardMedia
+     
+        <Card sx={{ minWidth:400,maxWidth: 400 ,boxShadow:" 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)"}}>
+      <CardMedia  
         component="img"
         alt="green iguana"
         height="140"
@@ -34,11 +39,15 @@ export default function BlogCard({item}) {
          {item.description}
         </Typography>
       </CardContent>
-      <CardActions>
-        <Button   sx = {{color:"black"}}  size="small">Share</Button>
-        <Button size="small">Learn More</Button>
+      <CardActions  >
+        <Button   sx = {{color:"black"}}  size="small"><ArticleIcon/>5</Button>
+        <Button  sx = {{color:"black"}} size="small"><ShareIcon/></Button>
+        <Button  sx = {{color:"black"}} size="small"><EditIcon/></Button>
+        <Button  sx = {{color:"black"}} size="small"><DeleteIcon/></Button>
       </CardActions>
     </Card>
+  
+
     
   );
 }

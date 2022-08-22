@@ -11,5 +11,6 @@ router.route("/get/:id").get(BlogController.getOneBlog);
 
 //////////////////////// posts ///////////////////////////////////////////////
 router.route("/addpost/:blogId").post(BlogController.addPost);
+router.route("/get-all-posts/:blogId").get(BlogController.getPost);
 
 module.exports = router;

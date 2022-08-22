@@ -9,8 +9,8 @@ var blogSchema = new mongoose.Schema({
   posts: {
     type: [
       {
-        type: mongoose.Types.ObjectId,
-        ref: "Blog",
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Post",
       },
     ],
   },

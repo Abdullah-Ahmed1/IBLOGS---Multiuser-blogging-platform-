@@ -7,9 +7,13 @@ const MyEditor = ({ content, setContent }) => {
   const config = {
     readonly: false, // all options from https://xdsoft.net/jodit/doc/,
     height: "650",
+
     toolbarAdaptive: false,
     toolbarInline: true,
-
+    enableDragAndDropFileToEditor: true,
+    showCharsCounter: false,
+    showWordsCounter: false,
+    showXPathInStatusbar: false,
     spellCheck: true,
     // height: 1000,
     // maxHeight: 1000,

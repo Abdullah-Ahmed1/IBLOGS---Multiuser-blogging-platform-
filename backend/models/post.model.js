@@ -22,7 +22,7 @@ var postSchema = new mongoose.Schema({
     type: [
       {
         sid: {
-          type: mongoose.Types.ObjectId,
+          type: mongoose.Schema.Types.ObjectId,
           ref: "User",
         },
       },

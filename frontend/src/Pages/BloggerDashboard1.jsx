@@ -41,6 +41,7 @@ import {
 // import Orders from "./Orders";
 import AccountMenu from './../components/Avatar/AccountAvatar';
 import BlogPost from './BlogPosts ';
+import EditorialCalender from './EditorialCalender';
 
 ////////////---------------------------------------------------------------MUI things
 const drawerWidth = 220;
@@ -261,10 +262,11 @@ function DashboardContent(props) {
       <Box
         component="main"
         sx={{
-          backgroundColor: (theme) =>
-            theme.palette.mode === "light"
-              ? theme.palette.grey[100]
-              : theme.palette.grey[900],
+         
+           backgroundColor: (theme) =>
+             theme.palette.mode === "light"
+               ? theme.palette.grey[100]
+               : theme.palette.grey[900],
           flexGrow: 1,
           height: "100vh",
           overflow: "auto",
@@ -283,6 +285,8 @@ function DashboardContent(props) {
                 <Route exact path="/full-blog/:blogId" element={<FullBlogView />} /> 
                 <Route exact path="/update/:PostId" element={<PostUpdate />} /> 
                 <Route exact path="/updateProfile" element={<ProfileUpdate />} />
+                <Route exact path="/calender" element={<EditorialCalender />} />
+                
 
             </Routes>
           </Grid>

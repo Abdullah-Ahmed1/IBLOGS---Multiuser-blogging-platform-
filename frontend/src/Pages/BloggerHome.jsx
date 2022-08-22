@@ -146,7 +146,7 @@ const BloggerHome = ({openModal,handleClose,token})=>{
       };
 
  ////////////////////////////////////////////////////////////
- const handleImage = async(e)=>{
+const handleImage = async(e)=>{
   
   const body = new FormData();
   body.append('file', e.target.files[0]);
@@ -158,41 +158,34 @@ const BloggerHome = ({openModal,handleClose,token})=>{
   console.log(res.secure_url)
 }
 
-      const blogFormSubmit = async()=>{
-        
+const blogFormSubmit = async()=>{
 
+  console.log("65464654687132411584",blogImage)
+  const info=  JSON.parse(atob(token.token.split(".")[1]))
+  const data = {
+      title : blogTitle,
+      description : blogDescription,
+      image : blogImage,
+      owner : info.id
+    }
+    console.log(info)
+      await axios.post(`http://127.0.0.1:5000/BloggerDashboard/add/${info.id}`,data)
+      .then(response=>{console.log(response)
+      axios.get('http://127.0.0.1:5000/bloggerDashboard/get')
+      .then((res)=>{
+          console.log("----",res.data)
+          setBlogs(res.data)
 
+      }).catch((error)=>{
+          console.log(error)
+      })
 
-
-
-        console.log("65464654687132411584",blogImage)
-        const info=  JSON.parse(atob(token.token.split(".")[1]))
-        const data = {
-            title : blogTitle,
-            description : blogDescription,
-            image : blogImage,
-            owner : info.id
-          }
-
-
-         console.log(info)
-           await axios.post(`http://127.0.0.1:5000/BloggerDashboard/add/${info.id}`,data)
-           .then(response=>{console.log(response)
-            axios.get('http://127.0.0.1:5000/bloggerDashboard/get')
-            .then((res)=>{
-                console.log("----",res.data)
-                setBlogs(res.data)
-    
-            }).catch((error)=>{
-                console.log(error)
-            })
-    
-           }
-           );
-           
-      
-          handleClose();
       }
+      );
+      
+
+    handleClose();
+  }
  ////////////////////////////////////////////////////////////////////
 
  ////////////////////////////////////////////////////////////////
@@ -265,20 +258,20 @@ const BloggerHome = ({openModal,handleClose,token})=>{
                 //id="Description"
                 autoComplete="Description"
               />
-              
+          
               <TextField
-                        id="outlined-full-width"
-                        label="Image Upload"
-                        style={{ margin: 8 }}
-                        name="upload-photo"
-                        type="file"
-                        fullWidth
-                        margin="normal"
-                        InputLabelProps={{
-                            shrink: true,
-                        }}
-                        variant="outlined"
-                        onChange={ handleImage}
+                id="outlined-full-width"
+                label="Image Upload"
+                style={{ margin: 8 }}
+                name="upload-photo"
+                type="file"
+                fullWidth
+                margin="normal"
+                InputLabelProps={{
+                    shrink: true,
+                }}
+                variant="outlined"
+                onChange={ handleImage}
                     />
               <Button
                 type="submit"
@@ -292,7 +285,6 @@ const BloggerHome = ({openModal,handleClose,token})=>{
              <div  style={{maxHeight:"10px",maxWidth:"10px"}}>
               <img src={blogImage} style={{maxHeight:"100px", maxWidth:"100px" }} alt="image" />
              </div>
-              
               </DialogContent>       
       </Dialog>
     
@@ -300,9 +292,8 @@ const BloggerHome = ({openModal,handleClose,token})=>{
       <BasicBreadcrumbs />                 
 
       <Box sx={{ flexGrow: 1 }}>
-              
              <h2>Your blogs</h2>
-              <Grid    container  direction="row" alignItems="stretch" spacing = {6}    >
+              <Grid container direction="row" alignItems="stretch" rowSpacing = {5} columnSpacing={10}    >
                  {
                   blogs.map((item)=>{
                     return (
