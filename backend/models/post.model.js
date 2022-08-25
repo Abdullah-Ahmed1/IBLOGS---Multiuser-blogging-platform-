@@ -21,22 +21,21 @@ var postSchema = new mongoose.Schema({
   likes: {
     type: [
       {
-        sid: {
-          type: mongoose.Schema.Types.ObjectId,
-          ref: "User",
-        },
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
       },
     ],
   },
   dislikes: {
     type: [
       {
-        sid: {
-          type: mongoose.Types.ObjectId,
-          ref: "User",
-        },
+        type: mongoose.Types.ObjectId,
+        ref: "User",
       },
     ],
+  },
+  comments: {
+    type: [{}],
   },
 
   Categories: {

@@ -1,11 +1,13 @@
 import * as React from "react";
 import {useState,useEffect} from "react";
+import {Link} from "react-router-dom";
 //import { useMediaQuery } from "react-responsive";
 import { styled, createTheme, ThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 import MuiDrawer from "@mui/material/Drawer";
 import Box from "@mui/material/Box";
 import MuiAppBar from "@mui/material/AppBar";
+
 import Toolbar from "@mui/material/Toolbar";
 import List from "@mui/material/List";
 import Typography from "@mui/material/Typography";
@@ -155,7 +157,9 @@ function DashboardContent(props) {
     <ThemeProvider theme={mdTheme}>
     <Box sx={{ display: "flex" }}>
       <CssBaseline />
-      <AppBar position="absolute" open={open}>
+      <AppBar 
+        sx = {{ backgroundColor:"#379683" }}
+      position="absolute" open={open}>
         <Toolbar
           sx={{
             pr: "24px", // keep right padding when drawer closed
@@ -172,7 +176,9 @@ function DashboardContent(props) {
               display: { xs: "none", sm: "flex" },
             }}
           >
-            <MenuIcon />
+            <MenuIcon sx = {{
+              color:"#05386B"
+            }}   />
           </IconButton>
 
           {/* //////////////////////////////////////////////////////////// */}
@@ -183,23 +189,25 @@ function DashboardContent(props) {
             onClick={handleDrawerToggle}
             sx={{ mr: 2, display: { sm: "none" } }}
           >
-            <MenuIcon />
+            <MenuIcon fill = "green" />
           </IconButton>
           <Typography
             component="h1"
             variant="h6"
             color="inherit"
             noWrap
-            sx={{ flexGrow: 1, fontWeight: "bold" }}
+            sx={{ flexGrow: 1, fontWeight: "bold" ,color:"#05386B" }}
           >
             IBlogs
           </Typography>
-     
+          <div style={{fontWeight:"bolder" , color:"#EDF5E1" ,padding:"10px" ,  border:"2px solid #EDF5E1", borderRadius:"20px" ,cursor:"pointer", }}  >
+           <Link  style = {{ color:"#EDF5E1",textDecoration:"none"}} to = "/readerdashboard"  >Switch to Reading</Link> 
+            </div>
             <AccountMenu/>
-     
+            
           <IconButton color="inherit">
             <Badge badgeContent={4} color="secondary">
-              <Notifications />
+              <Notifications sx = {{color:"#05386b"}} />
             </Badge>
           </IconButton>
         </Toolbar>
@@ -230,10 +238,13 @@ function DashboardContent(props) {
           color="primary"
           sx={{
             display: { xs: "none", sm: "flex" },
-            // "& .MuiDrawer-paper": {
+             "& .MuiDrawer-paper": {
             //   // boxSizing: "border-box",
             //   width: drawerWidth,
-            // },
+            backgroundColor:"#05386B",
+            color:"yellow"
+          },
+          
           }}
         >
           <Toolbar

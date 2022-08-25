@@ -131,7 +131,7 @@ const BlogPost= ()=>{
               {
                 posts.map((item)=>{
                   return(
-                    <div container style={{display:"block"}} >
+                    <div   key = {item._id} style={{display:"block"}} >
                       {parse(item.content)}
                     </div>
                   )

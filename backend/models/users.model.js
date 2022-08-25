@@ -19,6 +19,14 @@ const userSchema = new mongoose.Schema({
       },
     ],
   },
+  // Liked_Posts: {
+  //   type: [
+  //     {
+  //       type: mongoose.Types.ObjectId,
+  //       ref: "Post",
+  //     },
+  //   ],
+  // },
   verified: { type: Boolean, default: false },
 });
 

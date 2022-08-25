@@ -13,6 +13,7 @@ import NewPassword from "./Pages/NewPassword";
 //import Box from "@mui/material/Box";
 import SignInSide from "./Pages/LoginFromMui";
 import SignUp from "./Pages/RegisterFormMui";
+import ReaderDashboard from "./Pages/ReaderDashboard/ReaderDashboard";
 
 function App() {
   return (
@@ -31,6 +32,7 @@ function App() {
         <Route exact path="/users/:id/verify/:token" element={<VerifyUser />} />
 
         <Route path="/bloggerdashboard/*" element={<Dashboard />} />
+        <Route path="/readerdashboard/*" element={<ReaderDashboard />} />
         <Route exact path="*" element={<PageNotFound />} />
       </Routes>
     </div>

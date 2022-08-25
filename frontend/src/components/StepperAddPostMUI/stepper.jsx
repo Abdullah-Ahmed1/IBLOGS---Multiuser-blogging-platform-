@@ -1,4 +1,5 @@
 import * as React from 'react';
+import "./addpost.css"
 import Box from '@mui/material/Box';
 import Stepper from '@mui/material/Stepper';
 import Step from '@mui/material/Step';
@@ -8,6 +9,10 @@ import InfoIcon from '@mui/icons-material/Info';
 import Divider from '@mui/material/Divider';
 import CreateIcon from '@mui/icons-material/Create';
 import PublishIcon from '@mui/icons-material/Publish';
+import Paper from "@mui/material/Paper";
+import TextField from '@mui/material/TextField';
+
+import Chip from '@mui/material/Chip';
 import { styled } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
 import StepLabel from '@mui/material/StepLabel';
@@ -21,29 +26,7 @@ import StepConnector, { stepConnectorClasses } from '@mui/material/StepConnector
 
 const steps = ['Post Details', 'Create post', 'Upload Options'];
 
-const QontoConnector = styled(StepConnector)(({ theme }) => ({
-    [`&.${stepConnectorClasses.alternativeLabel}`]: {
-      top: 10,
-      left: 'calc(-50% + 16px)',
-      right: 'calc(50% + 16px)',
-    },
-    [`&.${stepConnectorClasses.active}`]: {
-      [`& .${stepConnectorClasses.line}`]: {
-        borderColor: '#784af4',
-      },
-    },
-    [`&.${stepConnectorClasses.completed}`]: {
-      [`& .${stepConnectorClasses.line}`]: {
-        borderColor: '#784af4',
-      },
-    },
-    [`& .${stepConnectorClasses.line}`]: {
-      borderColor: theme.palette.mode === 'dark' ? theme.palette.grey[800] : '#eaeaf0',
-      borderTopWidth: 3,
-      borderRadius: 1,
-    },
-  }));
-  
+
   const QontoStepIconRoot = styled('div')(({ theme, ownerState }) => ({
     color: theme.palette.mode === 'dark' ? theme.palette.grey[700] : '#eaeaf0',
     display: 'flex',
@@ -192,11 +175,132 @@ ColorlibStepIcon.propTypes = {
     icon: PropTypes.node,
   };
 
+  //------------ Post Details  ------------------------------
+
+  const CssTextField = styled(TextField)({
+    '& label.Mui-focused': {
+      color: 'black',
+    },
+
+    '& .MuiInput-underline:after': {
+      borderBottom:" black"
+    },
+    '& .MuiOutlinedInput-root': {
+      '& fieldset': {
+        borderBottomColor: 'black',
+      },
+     
+      '&.Mui-focused fieldset': {
+        borderBottomColor: 'black',
+      },
+    },
+  });
+  
+  const ListItem = styled('li')(({ theme }) => ({
+    margin: theme.spacing(0.5),
+  }));
+  
+   function ChipsArray() {
+    const [chipData, setChipData] = React.useState([
+      { key: 0, label: 'Angular' },
+      { key: 1, label: 'jQuery' },
+      { key: 2, label: 'Polymer' },
+      { key: 3, label: 'React' },
+      { key: 4, label: 'Vue.js' },
+    ]);
+  
+    const handleDelete = (chipToDelete) => () => {
+      setChipData((chips) => chips.filter((chip) => chip.key !== chipToDelete.key));
+    };
+  
+    return (
+      <Paper
+        sx={{
+          display: 'flex',
+          justifyContent: 'center',
+          flexWrap: 'wrap',
+          listStyle: 'none',
+          p: 0.5,
+          m: 0,
+        }}
+        component="ul"
+      >
+        {chipData.map((data) => {
+          let icon;
+  
+          // if (data.label === 'React') {
+          //   icon = <TagFacesIcon />;
+          // }
+  
+          return (
+            <ListItem key={data.key}>
+              <Chip
+                icon={icon}
+                label={data.label}
+                onDelete={ handleDelete(data)}
+              />
+            </ListItem>
+          );
+        })}
+      </Paper>
+    );
+  }
+
+
+
+
+  const PostDetails = ()=>{
+    return(
+      <Box sx = {{display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"space-around"}}  >
+        <h2>Post Details</h2>
+           <CssTextField
+           className='title-field'
+          
+          id="outlined-multiline-flexible"
+          label="Title"
+          sx = {{ width:"50%  ",marginBottom:"20px"}}
+          multiline
+          maxRows={4}
+         // value={value}
+          //onChange={handleChange}
+          variant="outlined"
+        />
+         <CssTextField
+           className='title-field'
+          
+          id="outlined-multiline-flexible"
+          label="Description"
+          sx = {{ width:"50%  ",marginBottom:"20px"}}
+          multiline
+          rows={4}
+        maxRows={4}
+         // value={value}
+          //onChange={handleChange}
+          variant="outlined"
+        />
+        <CssTextField
+           className='title-field'
+          
+          id="outlined-multiline-flexible"
+          label="Category Tags"
+          sx = {{ width:"50%  ",marginBottom:"20px"}}
+          multiline
+          maxRows={4}
+         // value={value}
+          //onChange={handleChange}
+          variant="outlined"
+        />
+        <ChipsArray/>
+      </Box>
+    )
+  }
+
+  ///-----------------------------------------
   function getStepContent(step) {
     switch (step) {
       case 0:
         return (
-            <h1>Post Details</h1>
+            <PostDetails/>
         );
   
       case 1:
@@ -274,7 +378,7 @@ export default function AddPostStepper() {
           );
         })}
       </Stepper>
-      <br/>
+   
       <Divider variant="middle" />
 
       {activeStep === steps.length ? (
@@ -289,20 +393,22 @@ export default function AddPostStepper() {
         </React.Fragment>
       ) : (
         <React.Fragment>
-               {getStepContent(activeStep)}
-          <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
+               
+          <Box sx={{ display: 'flex', flexDirection: 'column', pt: 2 }}>
+          <Paper elevation={3} sx = {{minHeight:"500px"}}  >
+            <div  style={{display: 'flex', flexDirection: 'row',justifyContent:"flex-end" ,pt: 2}} >           
             <Button
               color="inherit"
             
               disabled={activeStep === 0}
               onClick={handleBack}
-              sx={{ mr: 1,backgroundColor:"black" }}
+              sx={{ mr: 1,backgroundColor:"black",color:"white" }}
             >
               Back
             </Button>
             <Box sx={{  backgroundColor:"black" }} />
             {isStepOptional(activeStep) && (
-              <Button color="inherit" onClick={handleSkip} sx={{ mr: 1 }}>
+              <Button color="inherit" onClick={handleSkip} sx={{ mr: 1 , color:"white", backgroundColor:"black" }}>
                 Skip
               </Button>
             )}
@@ -310,6 +416,9 @@ export default function AddPostStepper() {
             <Button  sx = {{backgroundColor:"black"}} onClick={handleNext}>
               {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
             </Button>
+            </div>
+            {getStepContent(activeStep)}
+            </Paper>
           </Box>
         </React.Fragment>
       )}

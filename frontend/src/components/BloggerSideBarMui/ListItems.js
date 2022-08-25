@@ -31,26 +31,26 @@ export const MainListItems = (props) => {
       >
         <ListItemButton>
           <ListItemIcon>
-            <DashboardIcon />
+            <DashboardIcon sx={{ color: "#379683" }} />
           </ListItemIcon>
           <ListItemText primary="Dashboard" />
         </ListItemButton>
       </Link>
       <ListItemButton onClick={props.handleClick}>
         <ListItemIcon>
-          <AddCircleIcon />
+          <AddCircleIcon sx={{ color: "#379683" }} />
         </ListItemIcon>
         <ListItemText primary="Add Blog" />
       </ListItemButton>
       <ListItemButton>
         <ListItemIcon>
-          <PeopleIcon />
+          <PeopleIcon sx={{ color: "#379683" }} />
         </ListItemIcon>
         <ListItemText primary="Customers" />
       </ListItemButton>
       <ListItemButton>
         <ListItemIcon>
-          <BarChartIcon />
+          <BarChartIcon sx={{ color: "#379683" }} />
         </ListItemIcon>
         <ListItemText primary="Reports" />
       </ListItemButton>
@@ -60,7 +60,7 @@ export const MainListItems = (props) => {
       >
         <ListItemButton>
           <ListItemIcon>
-            <CalendarMonthIcon />
+            <CalendarMonthIcon sx={{ color: "#379683" }} />
           </ListItemIcon>
           <ListItemText primary="Calender" />
         </ListItemButton>
@@ -77,7 +77,7 @@ export const SecondaryListItems = () => {
     </ListSubheader> */}
       <ListItemButton>
         <ListItemIcon>
-          <AssignmentIcon />
+          <AssignmentIcon sx={{ color: "#379683" }} />
         </ListItemIcon>
         <ListItemText primary="Current month" />
       </ListItemButton>

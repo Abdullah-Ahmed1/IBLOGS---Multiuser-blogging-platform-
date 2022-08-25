@@ -90,7 +90,7 @@ export default function SignInSide() {
           sx={{
              // backgroundImage: 'url(https://source.unsplash.com/random)',
             backgroundRepeat: 'no-repeat',
-            backgroundColor: "black",
+            backgroundColor: "#5cdb95",
             backgroundSize: 'cover',
             display:{sm : "flex",xs:"none"},
             backgroundPosition: 'center',
@@ -102,7 +102,7 @@ export default function SignInSide() {
             
             textStyle={{
                 //fontFamily: 'Red Hat Display',
-                color: 'White',
+                color: '#05386b',
                 fontWeight: 500,
                 fontSize: '4.5em',
               }}
@@ -168,7 +168,7 @@ export default function SignInSide() {
                 type="submit"
                 fullWidth
                 variant="contained"
-                sx={{ mt: 3, mb: 2 , backgroundColor:"black" }}
+                sx={{ mt: 3, mb: 2 , backgroundColor:"#5cdb95" }}
               >
                 Sign In
               </Button>
