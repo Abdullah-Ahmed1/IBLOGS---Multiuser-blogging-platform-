@@ -1,7 +1,7 @@
 import React, { useState, useRef, useMemo } from "react";
 import JoditEditor from "jodit-react";
 
-const MyEditor = ({ content, setContent }) => {
+const MyEditor = ({ handlePostContent, postContent }) => {
   const editor = useRef(null);
 
   const config = {
@@ -26,12 +26,12 @@ const MyEditor = ({ content, setContent }) => {
     <div style={{ height: "100vh" }}>
       <JoditEditor
         ref={editor}
-        value={content}
+        value={postContent}
         config={config}
         tabIndex={1} // tabIndex of textarea
-        onBlur={(newContent) => setContent(newContent)} // preferred to use only this option to update the content for performance reasons
+        onBlur={(newContent) => handlePostContent(newContent)} // preferred to use only this option to update the content for performance reasons
         onChange={(newContent) => {
-          console.log(newContent);
+          //  console.log(newContent);
         }}
       />
     </div>

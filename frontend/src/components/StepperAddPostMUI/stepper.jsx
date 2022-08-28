@@ -260,7 +260,8 @@ ColorlibStepIcon.propTypes = {
     const [temp,setTemp] = useState("");
     const [chip,setChip] = useState([]);
     const handleEnterPress = (e)=>{
-      if(e.key ==='Enter' || e.key === " "){
+      //e.preventDefault();
+      if(e.key ==='Enter' || e.keyCode == 32){
         handlePostKeywords(temp)
         const item = {key:chip.length, label:temp}
         setChip([item,...chip])
@@ -271,21 +272,21 @@ ColorlibStepIcon.propTypes = {
       <Box sx = {{display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"space-around"}}  >
         <h2>Post Details</h2>
            <CssTextField
-           className='title-field'
+            className='title-field'
             onChange={(e)=>handlePostTitle(e.target.value)}
           id="outlined-multiline-flexible"
           label="Title"
           sx = {{ width:"50%  ",marginBottom:"20px"}}
           multiline
-          maxRows={4}
+          maxRows={1}
          // value={value}
           //onChange={handleChange}
           variant="outlined"
         />
          <CssTextField
-           className='title-field'
+           className='description-field'
            onChange={(e)=>handlePostDescription(e.target.value)}
-          id="outlined-multiline-flexible"
+          id="outlined-multilsine-flexible"
           label="Description"
           sx = {{ width:"50%  ",marginBottom:"20px"}}
           multiline
@@ -296,15 +297,15 @@ ColorlibStepIcon.propTypes = {
           variant="outlined"
         />
         <CssTextField
-           className='title-field'
+           className='keyword-field'
            value={temp}
            onKeyPress={handleEnterPress}
            onChange={(e)=>setTemp(e.target.value)}
           id="outlined-multiline-flexible"
           label="Category Tags"
           sx = {{ width:"50%  ",marginBottom:"20px"}}
-          multiline
-          maxRows={4}
+      
+         
          // value={value}
           //onChange={handleChange}
           variant="outlined"
@@ -314,19 +315,14 @@ ColorlibStepIcon.propTypes = {
     )
   }
 
-  const UploadOptions = ()=>{
+  const UploadOptions = ({allowComments,handleAllowComments,handlePublish})=>{
     const [value, setValue] = React.useState(dayjs('2014-08-18T21:11:54'));
     const [schedule,setSchedule] = React.useState(true);
     const handleChange = (newValue) => {
       setValue(newValue);
     };
-    const [radio, setRadio] = React.useState('female');
+    // const [radio, setRadio] = React.useState(true);
 
-    const radioHandle = (event) => {
-      setRadio(event.target.value);
-    };
-  
-    
     return(
       <div style={{display:"flex",flexDirection:"column" ,alignItems:"center"}} >
         <h1 style = {{color:"#05386b"}}>Upload Options</h1>
@@ -338,16 +334,16 @@ ColorlibStepIcon.propTypes = {
             row
             aria-labelledby="demo-controlled-radio-buttons-group"
             name="controlled-radio-buttons-group"
-            value={radio}
-            onChange={radioHandle}
+            value={allowComments}
+            onChange={(newValue)=>handleAllowComments(newValue.target.value)}
           >
-          <FormControlLabel sx = {{color:"#05386b",'&.Mui-focused':{color:"#379683"}}}  value="No" control={<Radio sx = {{color:"#05386b", '&.Mui-checked' :{ color:"#379683"}}}  />} label="No" />
-          <FormControlLabel sx = {{color:"#05386b",'&.Mui-focused':{color:"#379683"}}}  value="Yes" control={<Radio  sx = {{color:"#05386b", '&.Mui-checked' :{ color:"#379683"}}}  />} label="Yes" />
+          <FormControlLabel sx = {{color:"#05386b",'&.Mui-focused':{color:"#379683"}}}  value={false} control={<Radio sx = {{color:"#05386b", '&.Mui-checked' :{ color:"#379683"}}}  />} label="No" />
+          <FormControlLabel sx = {{color:"#05386b",'&.Mui-focused':{color:"#379683"}}}  value={true} control={<Radio  sx = {{color:"#05386b", '&.Mui-checked' :{ color:"#379683"}}}  />} label="Yes" />
           </RadioGroup>
         </FormControl>
         {/* -------------------------------- */}
 
-      <Button  sx = {{backgroundColor:"#379683", color:"#05386b",fontWeight:"bolder" ,width:"300px", height:"50px" }} variant="contained" startIcon={<PublishIcon  sx ={{color:"#05386b",fontSize:"30px"}}  />}>
+      <Button  onClick={handlePublish}  sx = {{backgroundColor:"#379683", color:"#05386b",fontWeight:"bolder" ,width:"300px", height:"50px" }} variant="contained" startIcon={<PublishIcon  sx ={{color:"#05386b",fontSize:"30px"}}  />}>
         Publish
       </Button>
       <Button   sx = {{backgroundColor:"#379683", color:"#05386b",fontWeight:"bolder" ,height:"50px" }} variant="contained" startIcon={<SaveAsIcon   sx ={{color:"#05386b",fontSize:"30px"}} />}>
@@ -374,7 +370,7 @@ ColorlibStepIcon.propTypes = {
 
   ////////////////////////////////////////////////////////////////////////////////
   ///-----------------------------------------
-  function getStepContent(step,handlePostTitle,handlePostDescription,handlePostKeywords,handlePostContent,handleAllowComments,handlePublishStatus,handlePublishDate) {
+  function getStepContent(step,handlePostTitle,handlePostDescription,handlePostKeywords,handlePostContent,postContent,handleAllowComments,allowComments,handlePublishStatus,handlePublishDate,publishDate,handlePublish) {
     switch (step) {
       case 0:
         return (
@@ -385,10 +381,10 @@ ColorlibStepIcon.propTypes = {
         );
   
       case 1:
-        return <MyEditor />
+        return <MyEditor handlePostContent =  {handlePostContent} postContent = {postContent}/>
       case 2:
         return (
-            <UploadOptions/>
+            <UploadOptions  allowComments = {allowComments} handleAllowComments ={handleAllowComments}   handlePublish ={handlePublish}  />
         );
         
       default:
@@ -403,20 +399,32 @@ export default function AddPostStepper() {
     const [postDescription, setPostDescription] = useState("");
     const [postKeywords, setPostKeywords] = useState([]);
     const [postContent , setPostContent] = useState("");
-    const [allowComments , setAllowComments] = useState("");
+    const [allowComments , setAllowComments] = useState(true);
     const [publishStatus,setPublishStatus] = useState("");
-    const [publishDate,setPublishDate] = useState("");
+    const [publishDate,setPublishDate] = useState(dayjs('2014-08-18T21:11:54'));
     
+
     const handlePostTitle = postTitle=> setPostTitle(postTitle)
     const handlePostDescription = postDescription => setPostDescription(postDescription)
-    const handlePostKeywords = postKeyword =>  setPostKeywords([postKeyword,...postKeywords])
+    const handlePostKeywords = postKeyword =>  {
+      const item = {key :postKeywords.length , label :postKeyword}
+      setPostKeywords([item,...postKeywords])
+    }
     const handlePostContent = postContent =>  setPostContent(postContent)
     const handleAllowComments = allowComments => setAllowComments(allowComments)
     const handlePublishStatus = publishStatus => setPublishStatus(publishStatus)
     const handlePublishDate = publishDate => setPublishDate(publishDate) 
 
-      const handleFunctions = [handlePostTitle,handlePostDescription,handlePostKeywords,handlePostContent,handleAllowComments,handlePublishStatus,handlePublishDate]
-  //---------------------------------------------
+     // console.log("post title : ",postTitle)
+      //console.log("post description : ",postDescription)
+      console.log("post keywords : ",postContent)
+      console.log("comments",allowComments)
+     
+    const handlePublish = ()=>{
+      console.log("reached")
+    }
+
+      //---------------------------------------------
 
   const container = useRef(null)
   const [activeStep, setActiveStep] = React.useState(0);
@@ -533,7 +541,7 @@ export default function AddPostStepper() {
               {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
             </Button>
             </div>
-            {getStepContent(activeStep,handlePostTitle,handlePostDescription,handlePostKeywords,handlePostContent,handleAllowComments,handlePublishStatus,handlePublishDate)}
+            {getStepContent(activeStep,handlePostTitle,handlePostDescription,handlePostKeywords,handlePostContent,postContent,handleAllowComments,allowComments,handlePublishStatus,handlePublishDate,publishDate,handlePublish)}
             </Paper>
           </Box>
         </React.Fragment>
