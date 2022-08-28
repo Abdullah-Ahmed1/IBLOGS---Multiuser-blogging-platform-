@@ -200,7 +200,7 @@ function DashboardContent(props) {
           >
             IBlogs
           </Typography>
-          <div style={{fontWeight:"bolder" , color:"#EDF5E1" ,padding:"10px" ,  border:"2px solid #EDF5E1", borderRadius:"20px" ,cursor:"pointer", }}  >
+          <div style={{fontWeight:"bolder" , backgroundColor:"#05386b",color:"#EDF5E1" ,padding:"10px" ,  border:"0px solid #EDF5E1", borderRadius:"20px" ,cursor:"pointer",':hover':{backgroundColor:"green"} }}  >
            <Link  style = {{ color:"#EDF5E1",textDecoration:"none"}} to = "/readerdashboard"  >Switch to Reading</Link> 
             </div>
             <AccountMenu/>

@@ -4,6 +4,8 @@ import Grid from "@mui/material/Grid";
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import axios from "axios";
 import parse from 'html-react-parser';
+import animationData from '../lottie/pencil.json'
+import Lottie from "lottie-web";
 //import PostCard from "../components/PostComponentsMui/PostCardMui"
 
 import "../components/Css_for_pages/addPostModal.css"
@@ -19,6 +21,7 @@ import Slide from '@mui/material/Slide';
 //import { TransitionProps } from '@mui/material/transitions';
 import { useState } from 'react';
 import AddPostStepper from './../components/StepperAddPostMUI/stepper';
+import { useRef } from 'react';
 
 
 //---------------------- FULL SCREEN MUI DIALOGUE BOX     ------------------------------------------
@@ -26,8 +29,11 @@ import AddPostStepper from './../components/StepperAddPostMUI/stepper';
 const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
   });
+
+
    function FullScreenDialog({handleClose,handleClickOpen,dialogOpen ,blogId  }) {
 
+    //  const container = useRef(null)
       const [content,setContent] = useState("")
       console.log("-----------------------------------------",content)
       const id =  JSON.parse(atob((JSON.parse(localStorage.getItem('token'))).token.split(".")[1])).id
@@ -46,6 +52,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
         // console.log("reached")
         // handleClose();
       }
+     
   
     return (
       <div>
@@ -58,7 +65,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
         >
           <AppBar sx={{ position: 'relative' ,position: '-webkit-sticky',
         position: 'sticky',
-        top: 0,backgroundColor:"black",color:"white" }}>
+        top: 0,backgroundColor:"#379683",color:"white" }}>
             <Toolbar>
               <IconButton
                 edge="start"
@@ -66,11 +73,13 @@ const Transition = React.forwardRef(function Transition(props, ref) {
                 onClick={handleClose}
                 aria-label="close"
               >
-                <CloseIcon />
+                <CloseIcon sx = {{color:"#05386b "}} />
               </IconButton>
-              <Typography sx={{ ml: 2, flex: 1 }} variant="h6" component="div">
+              <Typography sx={{ ml: 2, flex: 1, color:"#05386b",fontWeight:"bolder" }} variant="h6" component="div">
                 Create Post
+               
               </Typography>
+                       
               <Button className ="saveButton"   onClick={handlePostSave}  sx = {{backgroundColor:"white",color:"black"}}  >
                 save
               </Button>
@@ -79,10 +88,11 @@ const Transition = React.forwardRef(function Transition(props, ref) {
           <div style={{ display:"flex",justifyContent:"center"}}>
           <div style={{width:"95%" ,marginTop:"20px"}} >
             <AddPostStepper/>
-            </div>  
+            </div>
+            
           </div>
           <div>
-            {parse(content)}
+           
           </div>
         </Dialog>
       </div>
