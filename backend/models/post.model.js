@@ -1,19 +1,27 @@
 const mongoose = require("mongoose");
 var postSchema = new mongoose.Schema({
-  title: {
+  postTitle: {
+    type: String,
+    required: true,
+  },
+  postDescription: {
     type: String,
     required: true,
   },
 
-  content: {
+  postContent: {
     type: String,
     required: true,
   },
+  postKeywords: {
+    type: [],
+    required: true,
+  },
 
-  date: {
+  publishDate: {
     type: String,
   },
-  status: {
+  publishStatus: {
     type: String,
     required: true,
   },
@@ -34,8 +42,12 @@ var postSchema = new mongoose.Schema({
       },
     ],
   },
+  allowComments: {
+    type: String,
+    required: true,
+  },
   comments: {
-    type: [{}],
+    type: [],
   },
 
   Categories: {

@@ -3,7 +3,10 @@ import JoditEditor from "jodit-react";
 
 const MyEditor = ({ handlePostContent, postContent }) => {
   const editor = useRef(null);
+  console.log("posContent Type: ", typeof postContent);
 
+  const [value, setValue] = useState("");
+  console.log(value);
   const config = {
     readonly: false, // all options from https://xdsoft.net/jodit/doc/,
     height: "650",

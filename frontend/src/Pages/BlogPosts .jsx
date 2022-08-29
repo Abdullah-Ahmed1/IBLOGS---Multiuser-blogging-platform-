@@ -142,7 +142,7 @@ const BlogPost= ()=>{
                 posts.map((item)=>{
                   return(
                     <div   key = {item._id} style={{display:"block"}} >
-                      {parse(item.content)}
+                      {parse(item.postContent)}
                     </div>
                   )
                 })

@@ -9,6 +9,8 @@ import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
 import { MobileDatePicker } from '@mui/x-date-pickers/MobileDatePicker';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import axios from "axios";
+import { useParams } from 'react-router-dom';
 //--------------------------------------
 import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
@@ -315,7 +317,7 @@ ColorlibStepIcon.propTypes = {
     )
   }
 
-  const UploadOptions = ({allowComments,handleAllowComments,handlePublish})=>{
+  const UploadOptions = ({handleSave,allowComments,handleAllowComments,handlePublish})=>{
     const [value, setValue] = React.useState(dayjs('2014-08-18T21:11:54'));
     const [schedule,setSchedule] = React.useState(true);
     const handleChange = (newValue) => {
@@ -346,7 +348,8 @@ ColorlibStepIcon.propTypes = {
       <Button  onClick={handlePublish}  sx = {{backgroundColor:"#379683", color:"#05386b",fontWeight:"bolder" ,width:"300px", height:"50px" }} variant="contained" startIcon={<PublishIcon  sx ={{color:"#05386b",fontSize:"30px"}}  />}>
         Publish
       </Button>
-      <Button   sx = {{backgroundColor:"#379683", color:"#05386b",fontWeight:"bolder" ,height:"50px" }} variant="contained" startIcon={<SaveAsIcon   sx ={{color:"#05386b",fontSize:"30px"}} />}>
+
+      <Button onClick={handleSave}  sx = {{backgroundColor:"#379683", color:"#05386b",fontWeight:"bolder" ,height:"50px" }} variant="contained" startIcon={<SaveAsIcon   sx ={{color:"#05386b",fontSize:"30px"}} />}>
         Save to draft
       </Button>
       <Button    onClick = {()=>{setSchedule(false)}}   sx = {{display: `${schedule ? "flex" : "none"}` ,backgroundColor:"#379683", color:"#05386b",fontWeight:"bolder" ,height:"50px" }} variant="contained" startIcon={<WatchLaterIcon sx ={{color:"#05386b",fontSize:"30px"}} />}>
@@ -370,8 +373,9 @@ ColorlibStepIcon.propTypes = {
 
   ////////////////////////////////////////////////////////////////////////////////
   ///-----------------------------------------
-  function getStepContent(step,handlePostTitle,handlePostDescription,handlePostKeywords,handlePostContent,postContent,handleAllowComments,allowComments,handlePublishStatus,handlePublishDate,publishDate,handlePublish) {
-    switch (step) {
+  const GetStepContent = ({activeStep,handleSave,handlePostTitle,handlePostDescription,handlePostKeywords,handlePostContent,postContent,handleAllowComments,allowComments,handlePublishStatus,handlePublishDate,publishDate,handlePublish}) => {
+    console.log()
+    switch (activeStep) {
       case 0:
         return (
             <PostDetails handlePostTitle = {handlePostTitle} 
@@ -384,7 +388,11 @@ ColorlibStepIcon.propTypes = {
         return <MyEditor handlePostContent =  {handlePostContent} postContent = {postContent}/>
       case 2:
         return (
-            <UploadOptions  allowComments = {allowComments} handleAllowComments ={handleAllowComments}   handlePublish ={handlePublish}  />
+            <UploadOptions  allowComments = {allowComments} 
+            handleAllowComments ={handleAllowComments}   
+            handlePublish ={handlePublish} 
+           handleSave = {handleSave}
+            />
         );
         
       default:
@@ -393,14 +401,14 @@ ColorlibStepIcon.propTypes = {
   }
 
 export default function AddPostStepper() {
-
+  let { blogId } = useParams();
   //--------------------------------------------- add post states and functions
     const [postTitle, setPostTitle] = useState("");
     const [postDescription, setPostDescription] = useState("");
     const [postKeywords, setPostKeywords] = useState([]);
-    const [postContent , setPostContent] = useState("");
+    const [postContent , setPostContent] = useState('');
     const [allowComments , setAllowComments] = useState(true);
-    const [publishStatus,setPublishStatus] = useState("");
+   // const [publishStatus,setPublishStatus] = useState("");
     const [publishDate,setPublishDate] = useState(dayjs('2014-08-18T21:11:54'));
     
 
@@ -412,16 +420,40 @@ export default function AddPostStepper() {
     }
     const handlePostContent = postContent =>  setPostContent(postContent)
     const handleAllowComments = allowComments => setAllowComments(allowComments)
-    const handlePublishStatus = publishStatus => setPublishStatus(publishStatus)
+   // const handlePublishStatus = publishStatus => setPublishStatus(publishStatus)
     const handlePublishDate = publishDate => setPublishDate(publishDate) 
 
      // console.log("post title : ",postTitle)
       //console.log("post description : ",postDescription)
-      console.log("post keywords : ",postContent)
+      console.log("post Content : ",postContent)
       console.log("comments",allowComments)
      
-    const handlePublish = ()=>{
-      console.log("reached")
+    const handlePublish=()=>{
+      console.log("puvlish")
+      const data = {
+        postTitle,
+        postDescription,
+        postKeywords,
+        postContent,
+        allowComments,
+        publishStatus : "published",
+        publishDate: new Date()
+      
+      }
+
+
+         axios.post(`http://127.0.0.1:5000/bloggerDashboard/addpost/${blogId}`,data)
+         .then(res => console.log(res))
+         .catch(err=>console.log(err))
+
+    }
+
+    const handlePublish1 = ()=>{
+      console.log("-------publish reached")
+      
+    }
+    const handleSave = ()=>{
+      console.log("-------")
     }
 
       //---------------------------------------------
@@ -541,7 +573,19 @@ export default function AddPostStepper() {
               {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
             </Button>
             </div>
-            {getStepContent(activeStep,handlePostTitle,handlePostDescription,handlePostKeywords,handlePostContent,postContent,handleAllowComments,allowComments,handlePublishStatus,handlePublishDate,publishDate,handlePublish)}
+            <GetStepContent activeStep={activeStep}
+             handlePostTitle = {handlePostTitle} 
+             handlePostDescription={handlePostDescription} 
+             handlePostKeywords={handlePostKeywords }
+              handlePostContent = {handlePostContent} 
+              postContent = {postContent}
+               handleAllowComments = {handleAllowComments}
+                allowComments = {allowComments} 
+                handlePublishDate = {handlePublishDate} 
+                publishDate ={publishDate} 
+                handleSave ={handleSave}
+                 handlePublish = {handlePublish}
+                 />
             </Paper>
           </Box>
         </React.Fragment>
