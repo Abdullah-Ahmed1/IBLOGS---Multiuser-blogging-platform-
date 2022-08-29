@@ -96,6 +96,7 @@ module.exports = {
   verify: async (req, res) => {
     try {
       const user = await User.findOne({ _id: req.params.id });
+      console.log("user1: ", user);
       if (!user) return res.status(400).send({ message: "Invalid link" });
 
       const token = await Token.findOne({
@@ -103,13 +104,15 @@ module.exports = {
         token: req.params.token,
       });
       if (!token) return res.status(400).send({ message: "Invalid link" });
-
-      await User.updateOne({ _id: user._id, verified: true });
+      console.log("reached");
+      // { _id: user._id, verified: true }
+      const a = await User.updateOne({ _id: user._id }, { verified: true });
       await token.remove();
 
       res.status(200).send({ message: "Email verified successfully" });
     } catch (error) {
-      res.status(500).send({ message: "Internal Server Error" });
+      console.log("error", error);
+      res.status(500).send({ message: "Internal Server Error", error: error });
     }
   },
 
@@ -138,12 +141,16 @@ module.exports = {
 
   me: (req, res) => {
     const token = req.headers["authorization"];
-    // console.log(token);
+    console.log(token);
+    try {
+      const decoded = jwt.verify(token, "1234567");
+      console.log("--->>", decoded);
+      return res.json({ userInfo: decoded.username, userId: decoded.id });
+    } catch (err) {
+      return res.send({ err: err, message: "token may not be valid" });
+    }
+    // console.log("--->>", decoded);
 
-    const decoded = jwt.verify(token, "1234567");
-    console.log("--->>", decoded);
-
-    return res.json({ userInfo: decoded });
     // const user = User.findOne({ password: decoded.password });
     // console.log("full user is ", user);
   },

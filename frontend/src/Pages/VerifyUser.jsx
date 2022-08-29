@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 const VerifyUser = ()=>{
 
-    const [validUrl, setValidUrl] = useState(true);
+    const [validUrl, setValidUrl] = useState(false);
 	const param = useParams();
 
     useEffect(() => {

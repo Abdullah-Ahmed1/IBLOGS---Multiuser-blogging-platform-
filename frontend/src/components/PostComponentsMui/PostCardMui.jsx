@@ -16,18 +16,19 @@ const bull = (
   </Box>
 );
 
-export default function PostCardMui() {
+export default function PostCardMui({item}) {
+  console.log("items",item)
   return (
     <Card sx={{ display: 'flex' }}>
     <CardContent sx={{ flex: 1 }}>
-      <Typography component="h2" variant="h5">
-        {post.title}
+      <Typography component="h5" variant="h5">
+       {item.postTitle}
       </Typography>
       <Typography variant="subtitle1" color="text.secondary">
-        {post.date}
+       
       </Typography>
       <Typography variant="subtitle1" paragraph>
-        {post.description}
+        {item.postDescription}
       </Typography>
       <Typography variant="subtitle1" color="primary">
         Continue reading...
@@ -36,8 +37,8 @@ export default function PostCardMui() {
     <CardMedia
       component="img"
       sx={{ width: 160, display: { xs: 'none', sm: 'block' } }}
-      image={post.image}
-      alt={post.imageLabel}
+      img = {''}
+      alt={"post.imageLabel"}
     />
   </Card>
   );

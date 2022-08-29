@@ -22,6 +22,7 @@ import Slide from '@mui/material/Slide';
 import { useState } from 'react';
 import AddPostStepper from './../components/StepperAddPostMUI/stepper';
 import { useRef } from 'react';
+import PostCardMui from './../components/PostComponentsMui/PostCardMui';
 
 
 //---------------------- FULL SCREEN MUI DIALOGUE BOX     ------------------------------------------
@@ -138,15 +139,19 @@ const BlogPost= ()=>{
             </Grid>
             </Grid>
             <div  >
+            <Grid container spacing={4} >
               {
+                
                 posts.map((item)=>{
                   return(
-                    <div   key = {item._id} style={{display:"block"}} >
-                      {parse(item.postContent)}
-                    </div>
+                    <Grid item lg ={6} xs = {12}>
+                    <PostCardMui key={item._id} item = {item}/>
+                    </Grid>
                   )
                 })
+                
               }
+              </Grid>
             </div>
             {/* <PostCard/> */}
         </div>  

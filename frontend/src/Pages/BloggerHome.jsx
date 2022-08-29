@@ -74,12 +74,13 @@ const BloggerHome = ({openModal,handleClose,token})=>{
     const myRef = document.querySelector('.scrollable-div')
     
     useEffect(()=>{
-        // let value = JSON.parse(localStorage.getItem('token'));
-        // let token = "value.token";
-        let token = "something will be token here"
+         let value = JSON.parse(localStorage.getItem('token'));
+         let token = value.token
+         console.log("token",token)
+        //let token = "something will be token here"
         setSnack(true);
         // console.log("this is token",token)
-        let response = axios.get('http://127.0.0.1:5000/me',{
+          axios.get('http://127.0.0.1:5000/me',{
             headers:{
               "Content-Type":"application/json",
               "Accept":"application/json",
@@ -87,20 +88,7 @@ const BloggerHome = ({openModal,handleClose,token})=>{
             }
           }).then  ( function (response) {
             console.log("response",response.data.userInfo.id);
-            toast( `Welcome: ${response.data.userInfo.username}`,
-            {
-                position: "top-right",
-                autoClose: 5000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-            });   
-
-
-
-
+           
           })
           .catch(function (error) {
             console.log(error);
