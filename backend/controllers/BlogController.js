@@ -60,9 +60,23 @@ module.exports = {
   },
 
   getBlog: async (req, res) => {
-    const blog = await Blog.find();
-    if (blog.length == 0) return res.send("no blogs to show");
-    res.json(blog);
+    const token = req.headers["authorization"];
+    console.log("token", token);
+    try {
+      const decoded = jwt.verify(token, "1234567");
+      User.findById(decoded.id)
+        .populate("your_blogs")
+        .exec()
+        .then((data) => {
+          console.log("this user data : ", data);
+          return res.send({ blogs: data.your_blogs });
+        });
+    } catch (err) {
+      return res.send({ err });
+    }
+    // const blog = await Blog.find();
+    // if (blog.length == 0) return res.send("no blogs to show");
+    // res.json(blog);
   },
   getOneBlog: async (req, res) => {
     const blogId = req.params.id;

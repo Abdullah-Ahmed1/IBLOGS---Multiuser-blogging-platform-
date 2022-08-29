@@ -99,10 +99,16 @@ const BloggerHome = ({openModal,handleClose,token})=>{
 
 
 
-         axios.get('http://127.0.0.1:5000/bloggerDashboard/get')
+         axios.get('http://127.0.0.1:5000/bloggerDashboard/get',{
+          headers:{
+            "Content-Type":"application/json",
+            "Accept":"application/json",
+            "Authorization": token 
+          }
+         })
         .then((res)=>{
-            console.log("----",res.data)
-            setBlogs(res.data)
+            console.log("blogssss----",res.data.blogs)
+            setBlogs(res.data.blogs)
 
         }).catch((error)=>{
             console.log(error)
@@ -283,6 +289,9 @@ const blogFormSubmit = async()=>{
              <h2>Your blogs</h2>
               <Grid container direction="row" alignItems="stretch" rowSpacing = {5} columnSpacing={10}    >
                  {
+                  blogs.length === 0 ? ( <h5>You have not created any blog yet</h5>)
+                  :
+                  
                   blogs.map((item)=>{
                     return (
                       <Grid item lg={4} md = {6}  key = {item._id}  xs = {12} >
@@ -290,6 +299,7 @@ const blogFormSubmit = async()=>{
                       </Grid>
                     )
                   })
+                  
                  }         
 
                 {/* <Grid item lg={4} md = {6}  xs = {12} >
