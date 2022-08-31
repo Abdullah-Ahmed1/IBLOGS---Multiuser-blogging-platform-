@@ -90,17 +90,21 @@ const Drawer = styled(MuiDrawer, {
   },
 }));
 const mdTheme = createTheme({
-  palette: {
-    primary: {
-      main: "#ffffff",
-    },
-    secondary: {
-      main: "#000000",
-    },
-  },
-  paper: {
-    background: "black",
-  },
+ 
+
+  
+
+  //  overrides: {
+  //   MuiCssBaseline: {
+     
+  //       body: {
+  //         backgroundImage:
+  //           "url(https://designshack.net/wp-content/uploads/gradient-background.jpg)"
+  //       }
+     
+  //   }
+  // }
+ 
 });
 const mdTheme2 = createTheme({
   palette: {
@@ -155,8 +159,9 @@ function DashboardContent(props) {
 
   return (
     <ThemeProvider theme={mdTheme}>
-    <Box sx={{ display: "flex" }}>
       <CssBaseline />
+    <Box sx={{ display: "flex" }}>
+      
       <AppBar 
         sx = {{ backgroundColor:"#379683" }}
       position="absolute" open={open}>
@@ -273,18 +278,20 @@ function DashboardContent(props) {
       <Box
         component="main"
         sx={{
-         
-           backgroundColor: (theme) =>
-             theme.palette.mode === "light"
-               ? theme.palette.grey[100]
-               : theme.palette.grey[900],
+        //  background:"https://res.cloudinary.com/dlgwvuu5d/image/upload/v1661858507/my-uploads/crxuibfslasaepf24mvp.png",
+              
+         // backgroundColor:"yellow",
+          //  backgroundColor: (theme) =>
+          //    theme.palette.mode === "light"
+          //      ? theme.palette.grey[100]
+          //      : theme.palette.grey[900],
           flexGrow: 1,
           height: "100vh",
           overflow: "auto",
         }}
       >
         <Toolbar />
-        <Container maxWidth="lg" sx={{ mt: 4 }}>
+        <Container maxWidth="lg" sx={{ mt: 4 }} >
           <Grid container spacing={1} direction="row">
             {/* Chart */}
             <Routes>

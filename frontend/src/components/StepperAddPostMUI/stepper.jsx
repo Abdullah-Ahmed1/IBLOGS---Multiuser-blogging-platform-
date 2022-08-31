@@ -279,12 +279,11 @@ ColorlibStepIcon.propTypes = {
           id="outlined-multiline-flexible"
           label="Title"
           sx = {{ width:"50%  ",marginBottom:"20px"}}
-          multiline
-          maxRows={1}
+          InputProps ={{maxLength:5}}
          // value={value}
           //onChange={handleChange}
           variant="outlined"
-        />
+              />
          <CssTextField
            className='description-field'
            onChange={(e)=>handlePostDescription(e.target.value)}

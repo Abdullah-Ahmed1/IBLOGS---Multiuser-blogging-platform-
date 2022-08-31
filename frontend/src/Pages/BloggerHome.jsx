@@ -8,7 +8,7 @@ import TextField from '@mui/material/TextField';
 import Snackbar from '@mui/material/Snackbar';
 import Slide from '@mui/material/Slide';
 import { confirmAlert } from 'react-confirm-alert'; // Import
-import CssBaseline from "@mui/material/CssBaseline";
+//import CssBaseline from "@mui/material/CssBaseline";
 import 'react-confirm-alert/src/react-confirm-alert.css'; // Import css
 import Button from '@mui/material/Button';
 import FormControlLabel from '@mui/material/FormControlLabel';
@@ -167,8 +167,8 @@ const blogFormSubmit = async()=>{
       .then(response=>{console.log(response)
       axios.get('http://127.0.0.1:5000/bloggerDashboard/get')
       .then((res)=>{
-          console.log("----",res.data)
-          setBlogs(res.data)
+          console.log("----",res.data.blogs)
+          setBlogs(res.data.blogs)
 
       }).catch((error)=>{
           console.log(error)
@@ -287,7 +287,7 @@ const blogFormSubmit = async()=>{
 
       <Box sx={{ flexGrow: 1 }}>
              <h2>Your blogs</h2>
-              <Grid container direction="row" alignItems="stretch" rowSpacing = {5} columnSpacing={10}    >
+              <Grid container direction="row" alignItems="stretch" rowSpacing = {5} columnSpacing={20}    >
                  {
                   blogs.length === 0 ? ( <h5>You have not created any blog yet</h5>)
                   :

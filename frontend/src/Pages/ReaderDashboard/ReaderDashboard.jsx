@@ -45,7 +45,7 @@ export default function ReaderDashboard() {
       </Drawer>
       <Box
         component="main"
-        sx={{ flexGrow: 1, bgcolor: 'background.default', p: 3 }}
+        sx={{ flexGrow: 1, backgroundImage:"https://res.cloudinary.com/dlgwvuu5d/image/upload/v1661858507/my-uploads/crxuibfslasaepf24mvp.png", p: 3 }}
       >
         <Toolbar />
        <Grid container spacing = {5} >

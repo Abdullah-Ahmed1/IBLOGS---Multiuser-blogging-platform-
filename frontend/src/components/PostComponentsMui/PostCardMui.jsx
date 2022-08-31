@@ -1,10 +1,17 @@
 import * as React from 'react';
+import './PostCardMui.css'
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
+import ThumbUpAltIcon from '@mui/icons-material/ThumbUpAlt';
+import Divider from '@mui/material/Divider';
+import ShareIcon from '@mui/icons-material/Share';
+import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
+import VisibilityIcon from '@mui/icons-material/Visibility';
 import Typography from '@mui/material/Typography';
 
 const bull = (
@@ -19,27 +26,41 @@ const bull = (
 export default function PostCardMui({item}) {
   console.log("items",item)
   return (
-    <Card sx={{ display: 'flex' }}>
+    <Card  className = "card-container" sx={{ display: 'flex' ,position:"relative",maxHeight:"230px",minHeight:"230px"}}>
+      
     <CardContent sx={{ flex: 1 }}>
-      <Typography component="h5" variant="h5">
+    {item.publishDate}
+      <Typography component="h6" variant="h6" sx ={{fontWeight:"bolder",maxHeight:"30px",minHeight:"30px",  display: "block",lineClamp: 2 ,overflow:"hidden",boxOrient:"vertical"}}  >
        {item.postTitle}
       </Typography>
-      <Typography variant="subtitle1" color="text.secondary">
+      
+      <Divider  variant='middle'  />
+      {/* <Typography variant="subtitle1" color="text.secondary">
        
-      </Typography>
-      <Typography variant="subtitle1" paragraph>
+      </Typography> */}
+      <Typography variant="subtitle1" className='scrolling' sx= {{minHeight:"105px",maxHeight:"105px",overflow:"auto"}}  paragraph>
         {item.postDescription}
       </Typography>
-      <Typography variant="subtitle1" color="primary">
-        Continue reading...
-      </Typography>
+     
+       <div  >
+       <Button   sx = {{color:"#05386b"}}  size="small"><ThumbUpAltIcon/>5</Button>
+        <Button  sx = {{color:"#05386b"}} size="small"><ShareIcon/></Button>
+        <Button  sx = {{color:"#05386b"}} size="small"><EditIcon/></Button>
+        <Button  sx = {{color:"#05386b"}} size="small"><DeleteIcon/></Button>
+        <Button  sx = {{color:"#05386b"}} size="small"><VisibilityIcon/></Button>
+        
+    </div>
     </CardContent>
-    <CardMedia
+      
+    {/* <CardMedia
       component="img"
-      sx={{ width: 160, display: { xs: 'none', sm: 'block' } }}
-      img = {''}
+     // height="100"
+      sx={{ width: 170, display: { xs: 'none', sm: 'block' } }}
+      image = {'https://res.cloudinary.com/dlgwvuu5d/image/upload/v1660811997/my-uploads/hrnxf8krmisji29cpgnw.png'}
       alt={"post.imageLabel"}
-    />
+    /> */}
+   
   </Card>
+ 
   );
 }

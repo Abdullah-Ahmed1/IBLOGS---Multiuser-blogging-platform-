@@ -135,17 +135,17 @@ const BlogPost= ()=>{
             </Grid>
             <Grid item>
                 
-            <AddCircleIcon fontSize='large' sx = {{cursor:"pointer"}}    onClick = {()=> setOpen(true)} /> 
+            <AddCircleIcon fontSize='large' sx={{cursor:"pointer",color:"#b7410e"}}   onClick = {()=> setOpen(true)} /> 
             </Grid>
             </Grid>
             <div  >
-            <Grid container spacing={4} >
+            <Grid container spacing={3} >
               {
                 
                 posts.map((item)=>{
                   return(
-                    <Grid item lg ={6} xs = {12}>
-                    <PostCardMui key={item._id} item = {item}/>
+                    <Grid item  key={item._id} lg ={6} xs = {12}>
+                    <PostCardMui  item = {item}/>
                     </Grid>
                   )
                 })
