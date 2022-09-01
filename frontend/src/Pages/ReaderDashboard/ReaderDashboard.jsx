@@ -14,6 +14,7 @@ import { createStyles, makeStyles } from '@mui/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import List_Items from '../../components/ReaderDashComponents/ListItems2';
 import SearchBar from './../../components/ReaderDashComps/Searchbar';
+import ReaderPostCard from './../../components/PostComponentsMui/ReaderPostCard';
 
 const drawerWidth = 80;
 
@@ -22,6 +23,7 @@ const useStyles = makeStyles((theme)=>({
     minHeight :'100vh',
     backgroundImage: 'url(https://res.cloudinary.com/dlgwvuu5d/image/upload/v1661960761/my-uploads/4665_zuak4h.jpg)',
     backgroundRepeat : "no-repeat",
+    backgroundAttachment:"fixed",
     backgroundSize:"cover",
    
   }
@@ -70,40 +72,46 @@ const classes = useStyles();
         <CssBaseline />
         {/* <h1>hellow world</h1> */}
         {/* <Toolbar /> */}
-        <div style={{display:"flex",width:"70%",flexDirection:"row" ,background:"rgba(255,255,255,0.95)",alignItems:"center",justifyContent:"space-between"}}>
+        <div style={{display:"flex",width:"70%",flexDirection:"row" ,background:"rgba(237, 245, 225,0.95)",alignItems:"center",justifyContent:"space-between"}}>
           <h2>IBlogs</h2>
           <SearchBar/>
         </div>
         <Divider variant="middle"/>
-       <Grid container spacing = {5} sx = {{background:"rgba(255,255,255,0.9)"}}  >
+       <Grid container spacing = {5} sx = {{background:"rgba(237, 245, 225,0.9)"}}  >
         <Grid item container  spacing={4}  lg ={8} md = {7} sm ={12} sx = {{marginLeft:"7px"}}  >  
        {/* ----------------------------------------------------------------------------------- */}
+       <Grid item lg ={12}>
+       <ReaderPostCard/>
+       </Grid>
+       <Grid item lg ={12}>
+       <ReaderPostCard/>
+       </Grid>
+       <Grid item lg ={12}>
+       <ReaderPostCard/>
+       </Grid>
+       <Grid item lg ={12}>
+       <ReaderPostCard/>
+       </Grid>
+       <Grid item lg ={12}>
+       <ReaderPostCard/>
+       </Grid>
+       <Grid item lg ={12}>
+       <ReaderPostCard/>
+       </Grid>
+       <Grid item lg ={12}>
+       <ReaderPostCard/>
+       </Grid>
+       <Grid item lg ={12}>
+       <ReaderPostCard/>
+       </Grid>
+       <Grid item lg ={12}>
+       <ReaderPostCard/>
+       </Grid>
+       <Grid item lg ={12}>
+       <ReaderPostCard/>
+       </Grid>
        
-        <Grid item lg={12} >
-        <Card sx={{minHeight:"250px" ,display: 'flex' ,boxShadow:"10px" }}>
-          <CardContent sx={{ flex: 1 }}>
-            <Typography component="h2" variant="h5">
-              this is title
-            </Typography>
-            <Typography variant="subtitle1" color="text.secondary">
-              this is subtitle space
-            </Typography>
-            <Typography variant="subtitle1" paragraph>
-              this is description space Lorem ipsum dolor sit amet consectetur adipisicing elit. Totam odit, ut eveniet, qui aspernatur dolores doloribus quis, accusantium corrupti porro quo velit ipsam sunt? Itaque minima ea neque sint quisquam.
-            </Typography>
-            <Typography variant="subtitle1" color="primary">
-              Continue reading...
-            </Typography>
-          </CardContent>
-          <CardMedia
-            component="img"
-            sx={{ width: 160, display: { xs: 'none', sm: 'block',height:"100px",margin:"auto" } }}
-            image={"https://res.cloudinary.com/dlgwvuu5d/image/upload/v1661858507/my-uploads/crxuibfslasaepf24mvp.png"}
-            alt=" image"
-          />
-        </Card>
-        </Grid>   
-        <Grid item lg={12} >
+        {/* <Grid item lg={12} >
         <Card sx={{ display: 'flex' }}>
           <CardContent sx={{ flex: 1 }}>
             <Typography component="h2" variant="h5">
@@ -126,150 +134,7 @@ const classes = useStyles();
             alt=" image"
           />
         </Card>
-        </Grid>    <Grid item lg={12} >
-        <Card sx={{ display: 'flex' }}>
-          <CardContent sx={{ flex: 1 }}>
-            <Typography component="h2" variant="h5">
-              this is title
-            </Typography>
-            <Typography variant="subtitle1" color="text.secondary">
-              this is subtitle space
-            </Typography>
-            <Typography variant="subtitle1" paragraph>
-              this is description space Lorem ipsum dolor sit amet consectetur adipisicing elit. Totam odit, ut eveniet, qui aspernatur dolores doloribus quis, accusantium corrupti porro quo velit ipsam sunt? Itaque minima ea neque sint quisquam.
-            </Typography>
-            <Typography variant="subtitle1" color="primary">
-              Continue reading...
-            </Typography>
-          </CardContent>
-          <CardMedia
-            component="img"
-            sx={{ width: 160, display: { xs: 'none', sm: 'block', height:"100px"} }}
-            image={"https://res.cloudinary.com/dlgwvuu5d/image/upload/v1661858507/my-uploads/crxuibfslasaepf24mvp.png"}
-            alt=" image"
-          />
-        </Card>
-        </Grid>    
-        <Grid item lg={12} >
-        <Card sx={{ display: 'flex' }}>
-          <CardContent sx={{ flex: 1 }}>
-            <Typography component="h2" variant="h5">
-              this is title
-            </Typography>
-            <Typography variant="subtitle1" color="text.secondary">
-              this is subtitle space
-            </Typography>
-            <Typography variant="subtitle1" paragraph>
-              this is description space Lorem ipsum dolor sit amet consectetur adipisicing elit. Totam odit, ut eveniet, qui aspernatur dolores doloribus quis, accusantium corrupti porro quo velit ipsam sunt? Itaque minima ea neque sint quisquam.
-            </Typography>
-            <Typography variant="subtitle1" color="primary">
-              Continue reading...
-            </Typography>
-          </CardContent>
-          <CardMedia
-            component="img"
-            sx={{ width: 160, display: { xs: 'none', sm: 'block' } }}
-            image={"https://res.cloudinary.com/dlgwvuu5d/image/upload/v1661858507/my-uploads/crxuibfslasaepf24mvp.png"}
-            alt=" image"
-          />
-        </Card>
-        </Grid>
-        <Grid item lg={12} >
-        <Card sx={{ display: 'flex' }}>
-          <CardContent sx={{ flex: 1 }}>
-            <Typography component="h2" variant="h5">
-              this is title
-            </Typography>
-            <Typography variant="subtitle1" color="text.secondary">
-              this is subtitle space
-            </Typography>
-            <Typography variant="subtitle1" paragraph>
-              this is description space Lorem ipsum dolor sit amet consectetur adipisicing elit. Totam odit, ut eveniet, qui aspernatur dolores doloribus quis, accusantium corrupti porro quo velit ipsam sunt? Itaque minima ea neque sint quisquam.
-            </Typography>
-            <Typography variant="subtitle1" color="primary">
-              Continue reading...
-            </Typography>
-          </CardContent>
-          <CardMedia
-            component="img"
-            sx={{ width: 160, display: { xs: 'none', sm: 'block' } }}
-            image={"https://res.cloudinary.com/dlgwvuu5d/image/upload/v1661858507/my-uploads/crxuibfslasaepf24mvp.png"}
-            alt=" image"
-          />
-        </Card>
-        </Grid>   
-        <Grid item lg={12} >
-        <Card sx={{ display: 'flex' }}>
-          <CardContent sx={{ flex: 1 }}>
-            <Typography component="h2" variant="h5">
-              this is title
-            </Typography>
-            <Typography variant="subtitle1" color="text.secondary">
-              this is subtitle space
-            </Typography>
-            <Typography variant="subtitle1" paragraph>
-              this is description space Lorem ipsum dolor sit amet consectetur adipisicing elit. Totam odit, ut eveniet, qui aspernatur dolores doloribus quis, accusantium corrupti porro quo velit ipsam sunt? Itaque minima ea neque sint quisquam.
-            </Typography>
-            <Typography variant="subtitle1" color="primary">
-              Continue reading...
-            </Typography>
-          </CardContent>
-          <CardMedia
-            component="img"
-            sx={{ width: 160, display: { xs: 'none', sm: 'block' } }}
-            image={"https://res.cloudinary.com/dlgwvuu5d/image/upload/v1661858507/my-uploads/crxuibfslasaepf24mvp.png"}
-            alt=" image"
-          />
-        </Card>
-        </Grid>
-        <Grid item lg={12} >
-        <Card sx={{ display: 'flex' }}>
-          <CardContent sx={{ flex: 1 }}>
-            <Typography component="h2" variant="h5">
-              this is title
-            </Typography>
-            <Typography variant="subtitle1" color="text.secondary">
-              this is subtitle space
-            </Typography>
-            <Typography variant="subtitle1" paragraph>
-              this is description space Lorem ipsum dolor sit amet consectetur adipisicing elit. Totam odit, ut eveniet, qui aspernatur dolores doloribus quis, accusantium corrupti porro quo velit ipsam sunt? Itaque minima ea neque sint quisquam.
-            </Typography>
-            <Typography variant="subtitle1" color="primary">
-              Continue reading...
-            </Typography>
-          </CardContent>
-          <CardMedia
-            component="img"
-            sx={{ width: 160, display: { xs: 'none', sm: 'block' } }}
-            image={"https://res.cloudinary.com/dlgwvuu5d/image/upload/v1661858507/my-uploads/crxuibfslasaepf24mvp.png"}
-            alt=" image"
-          />
-        </Card>
-        </Grid>
-        <Grid item lg={12} >
-        <Card sx={{ display: 'flex' }}>
-          <CardContent sx={{ flex: 1 }}>
-            <Typography component="h2" variant="h5">
-              this is title
-            </Typography>
-            <Typography variant="subtitle1" color="text.secondary">
-              this is subtitle space
-            </Typography>
-            <Typography variant="subtitle1" paragraph>
-              this is description space Lorem ipsum dolor sit amet consectetur adipisicing elit. Totam odit, ut eveniet, qui aspernatur dolores doloribus quis, accusantium corrupti porro quo velit ipsam sunt? Itaque minima ea neque sint quisquam.
-            </Typography>
-            <Typography variant="subtitle1" color="primary">
-              Continue reading...
-            </Typography>
-          </CardContent>
-          <CardMedia
-            component="img"
-            sx={{ width: 160, display: { xs: 'none', sm: 'block' } }}
-            image={"https://res.cloudinary.com/dlgwvuu5d/image/upload/v1661858507/my-uploads/crxuibfslasaepf24mvp.png"}
-            alt=" image"
-          />
-        </Card>
-        </Grid>
+        </Grid> */}
 
         {/* ---------------------------------------------------------------- */}
         </Grid>
