@@ -18,6 +18,9 @@ app.use("/", profilingRoutes);
 const blogRoutes = require("./routes/blogRoutes");
 app.use("/bloggerDashboard", blogRoutes);
 
+const Data = require("./routes/ReaderDashboardRoutes");
+app.use("/readerDashboard", Data);
+
 app.listen(5000, () => {
   console.log("your app is running on port 5000");
 });

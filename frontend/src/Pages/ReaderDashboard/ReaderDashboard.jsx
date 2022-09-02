@@ -1,4 +1,6 @@
 import * as React from 'react';
+import { useEffect,useState } from 'react';
+import axios from "axios";
 import Box from '@mui/material/Box';
 import Drawer from '@mui/material/Drawer';
 import Toolbar from '@mui/material/Toolbar';
@@ -31,9 +33,14 @@ const useStyles = makeStyles((theme)=>({
 
 
 export default function ReaderDashboard() {
-const classes = useStyles();
+  const classes = useStyles();
 
-
+  useEffect(()=>{
+    axios.get('http://127.0.0.1:5000/readerDashboard')
+    .then(res =>{
+      console.log("res",res)
+    })
+  })
   return (
     <Box sx={{ display: 'flex' }} 
     className={classes.root}
