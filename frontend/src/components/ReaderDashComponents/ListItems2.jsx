@@ -8,19 +8,19 @@ const List_Items = ()=>{
         <>
          <ListItemButton>
           <ListItemIcon>
-            <HomeIcon sx={{ color: "#05386b",fontSize:"35px" }} />
+            <HomeIcon sx={{ color: "#05386b",fontSize:"25px" }} />
           </ListItemIcon>
          
         </ListItemButton>
         <ListItemButton>
           <ListItemIcon>
-            <ViewListIcon sx={{ color: "#05386b",fontSize:"35px" }} />
+            <ViewListIcon sx={{ color: "#05386b",fontSize:"25px" }} />
           </ListItemIcon>
          
         </ListItemButton>
         <ListItemButton>
           <ListItemIcon>
-            <ThumbUpAltIcon sx={{ color:"#05386b",fontSize:"35px" }} />
+            <ThumbUpAltIcon sx={{ color:"#05386b",fontSize:"25px" }} />
           </ListItemIcon>
          
         </ListItemButton>

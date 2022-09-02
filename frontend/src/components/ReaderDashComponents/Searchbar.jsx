@@ -1,11 +1,54 @@
 import * as React from 'react';
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
+import { alpha, styled } from '@mui/material/styles';
+import InputBase from '@mui/material/InputBase';
 import CircularProgress from '@mui/material/CircularProgress';
 import InputAdornment from '@mui/material/InputAdornment';
 import Box from '@mui/material/Box';
 import SearchIcon from '@mui/icons-material/Search';
 import AccountCircle from '@mui/icons-material/AccountCircle';
+
+const SearchInput = styled(InputBase)(({ theme }) => ({
+  'label + &': {
+    marginTop: theme.spacing(3),
+  },
+  '& .MuiTextField-input': {
+    borderRadius: 4,
+    position: 'relative',
+    backgroundColor: theme.palette.mode === 'light' ? '#fcfcfb' : '#2b2b2b',
+    border: '1px solid #05386b',
+    fontSize: 14,
+    width: 'auto',
+    padding: '8px 10px',
+    transition: theme.transitions.create([
+      'border-color',
+      'background-color',
+      'box-shadow',
+    ]),
+    // Use the system font instead of the default Roboto font.
+    fontFamily: [
+      '-apple-system',
+      'BlinkMacSystemFont',
+      '"Segoe UI"',
+      'Roboto',
+      '"Helvetica Neue"',
+      'Arial',
+      'sans-serif',
+      '"Apple Color Emoji"',
+      '"Segoe UI Emoji"',
+      '"Segoe UI Symbol"',
+    ].join(','),
+    '&:focus': {
+      boxShadow: ` 10px #379683`,
+      borderColor: '#379683',
+    },
+  },
+}));
+
+
+
+
 
 function sleep(delay = 0) {
   return new Promise((resolve) => {
@@ -17,6 +60,8 @@ export default function SearchBar() {
   const [open, setOpen] = React.useState(false);
   const [options, setOptions] = React.useState([]);
   const loading = open && options.length === 0;
+
+
 
   React.useEffect(() => {
     let active = true;
@@ -45,8 +90,8 @@ export default function SearchBar() {
   }, [open]);
 
   return (
-    <Box  sx={{ display: 'flex', alignItems: 'flex-end' }}>
-    <SearchIcon sx={{ fontSize:"40px",mr: 1, my: 0.5 }} />    
+    <Box  sx={{ display: 'flex', alignItems: 'flex-end',width:"70%" }}>
+    <SearchIcon sx={{ fontSize:"35px",mr: 1, my: 0.5 }} />    
     <Autocomplete
       id="asynchronous-demo"
       freeSolo
@@ -66,10 +111,10 @@ export default function SearchBar() {
         <TextField
           {...params}
           size="small"
-          sx ={{border:"2px solid black", borderRadius:"5px", color:"black"}}
+          
          placeholder="Search"
           InputProps={{
-          
+          height:"30px  ",
             ...params.InputProps,
             endAdornment: (
               <React.Fragment>
