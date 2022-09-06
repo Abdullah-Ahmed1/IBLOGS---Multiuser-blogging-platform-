@@ -14,7 +14,7 @@ const userSchema = new mongoose.Schema({
   your_blogs: {
     type: [
       {
-        type: mongoose.Types.ObjectId,
+        type: mongoose.Schema.Types.ObjectId,
         ref: "Blog",
       },
     ],
@@ -37,7 +37,7 @@ userSchema.methods.generateAuthToken = function () {
   return token;
 };
 
-const User = mongoose.model("user", userSchema);
+const User = mongoose.model("User", userSchema);
 
 const validate = (data) => {
   const schema = Joi.object({
