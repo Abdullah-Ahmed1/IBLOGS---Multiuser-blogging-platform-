@@ -42,6 +42,7 @@ import StepConnector, { stepConnectorClasses } from '@mui/material/StepConnector
 import lottie from 'lottie-web'
 import { useRef, useEffect } from 'react';
 import { useState } from 'react';
+import ConfirmBox from './ConfirmBox';
 
 
 const steps = ['Post Details', 'Create post', 'Upload Options'];
@@ -316,18 +317,19 @@ ColorlibStepIcon.propTypes = {
     )
   }
 
-  const UploadOptions = ({handleSave,allowComments,handleAllowComments,handlePublish,handlePublishStatus,handleSchedule})=>{
+  const UploadOptions = ({openBox,handleOpenBox,handleSave,publishDate,handlePublishDate,allowComments,handleAllowComments,handlePublish,handlePublishStatus,handleSchedule})=>{
     const [value, setValue] = React.useState(dayjs('2014-08-18T21:11:54'));
     const [schedule,setSchedule] = React.useState(true);
     const handleChange = (newValue) => {
-      console.log(" onChnage called")
+  
       setValue(newValue);
     };
     // const [radio, setRadio] = React.useState(true);
-
+    const handleSetSchedule = schedule => setSchedule(schedule)
     return(
       <div style={{display:"flex",flexDirection:"column" ,alignItems:"center"}} >
         <h1 style = {{color:"#05386b"}}>Upload Options</h1>
+        <ConfirmBox openBox = {openBox} handleOpenBox={handleOpenBox}  handleSetSchedule= {handleSetSchedule} />
          <Stack direction="column" spacing={2}>
         {/* -------------------------------- */}
         <FormControl>
@@ -359,9 +361,12 @@ ColorlibStepIcon.propTypes = {
         <DateTimePicker
             sx = {{display: `${schedule ? "none" : "flex"}` }}
           //  label="Date&Time picker"
-            value={value}
-            onClose={()=>console.log("closed")}
-            onChange={handleChange}
+            value={publishDate}
+            
+
+
+            onClose={handleSchedule}
+            onChange={handlePublishDate}
             renderInput={(params) => <TextField {...params}  onBlur={()=>console.log("reacheddddddddddddddddd")} sx = {{display: `${schedule ? "none" : "flex"}` ,color:"green",backgroundColor:"#379683"}}/>}
           />
            
@@ -374,7 +379,7 @@ ColorlibStepIcon.propTypes = {
 
   ////////////////////////////////////////////////////////////////////////////////
   ///-----------------------------------------
-  const GetStepContent = ({activeStep,handleSave,handlePostTitle,handlePostDescription,handlePostKeywords,handlePostContent,postContent,handleAllowComments,allowComments,handlePublishStatus,handlePublishDate,publishDate,handleSchedule,handlePublish}) => {
+  const GetStepContent = ({activeStep,handleSave,handlePostTitle,handlePostDescription,handlePostKeywords,handlePostContent,postContent,handleAllowComments,allowComments,handlePublishStatus,handlePublishDate,publishDate,handleSchedule,handlePublish,openBox,handleOpenBox}) => {
     console.log()
     switch (activeStep) {
       case 0:
@@ -390,11 +395,15 @@ ColorlibStepIcon.propTypes = {
       case 2:
         return (
             <UploadOptions  allowComments = {allowComments} 
-            handleAllowComments ={handleAllowComments}   
+            handleAllowComments ={handleAllowComments}  
+            handlePublishDate = {handlePublishDate} 
+            publishDate = {publishDate}
             handlePublish ={handlePublish} 
             handleSchedule = {handleSchedule}
             handlePublishStatus = {handlePublishStatus}
            handleSave = {handleSave}
+           openBox={openBox}
+           handleOpenBox = {handleOpenBox}
             />
         );
         
@@ -413,6 +422,10 @@ export default function AddPostStepper() {
     const [allowComments , setAllowComments] = useState(true);
     const [publishStatus,setPublishStatus] = useState("");
     const [publishDate,setPublishDate] = useState(dayjs('2014-08-18T21:11:54'));
+    //----------------confirmation box open-----------------------------------
+    const [openBox,SetOpenBox] = useState(false);
+    const handleOpenBox = openBox => SetOpenBox(openBox)
+    //---------------------------------------------------
     
 
     const handlePostTitle = postTitle=> setPostTitle(postTitle)
@@ -428,9 +441,9 @@ export default function AddPostStepper() {
 
      // console.log("post title : ",postTitle)
       //console.log("post description : ",postDescription)
-      console.log("post Content : ",postContent)
-      console.log("comments",allowComments)
-     
+     // console.log("post Content : ",postContent)
+      //console.log("comments",allowComments)
+     console.log("confirmation",openBox)
     const handlePublish=()=>{
       console.log("puvlish")
       const data = {
@@ -452,6 +465,10 @@ export default function AddPostStepper() {
     }
     const handleSchedule=()=>{
       console.log("schedule clicked")
+      console.log("schedule date: ",publishDate)
+      SetOpenBox(true)
+      
+
       // const data = {
       //   postTitle,
       //   postDescription,
@@ -610,6 +627,8 @@ export default function AddPostStepper() {
                 handlePublishStatus = {handlePublishStatus}
                 handleSchedule={handleSchedule}
                  handlePublish = {handlePublish}
+                 openBox={openBox}
+                 handleOpenBox = {handleOpenBox}
                  />
             </Paper>
           </Box>
