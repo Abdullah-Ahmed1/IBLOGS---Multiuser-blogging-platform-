@@ -316,10 +316,11 @@ ColorlibStepIcon.propTypes = {
     )
   }
 
-  const UploadOptions = ({handleSave,allowComments,handleAllowComments,handlePublish})=>{
+  const UploadOptions = ({handleSave,allowComments,handleAllowComments,handlePublish,handlePublishStatus,handleSchedule})=>{
     const [value, setValue] = React.useState(dayjs('2014-08-18T21:11:54'));
     const [schedule,setSchedule] = React.useState(true);
     const handleChange = (newValue) => {
+      console.log(" onChnage called")
       setValue(newValue);
     };
     // const [radio, setRadio] = React.useState(true);
@@ -359,8 +360,9 @@ ColorlibStepIcon.propTypes = {
             sx = {{display: `${schedule ? "none" : "flex"}` }}
           //  label="Date&Time picker"
             value={value}
+            onClose={()=>console.log("closed")}
             onChange={handleChange}
-            renderInput={(params) => <TextField {...params} sx = {{display: `${schedule ? "none" : "flex"}` ,color:"green",backgroundColor:"#379683"}}/>}
+            renderInput={(params) => <TextField {...params}  onBlur={()=>console.log("reacheddddddddddddddddd")} sx = {{display: `${schedule ? "none" : "flex"}` ,color:"green",backgroundColor:"#379683"}}/>}
           />
            
       </LocalizationProvider>
@@ -372,7 +374,7 @@ ColorlibStepIcon.propTypes = {
 
   ////////////////////////////////////////////////////////////////////////////////
   ///-----------------------------------------
-  const GetStepContent = ({activeStep,handleSave,handlePostTitle,handlePostDescription,handlePostKeywords,handlePostContent,postContent,handleAllowComments,allowComments,handlePublishStatus,handlePublishDate,publishDate,handlePublish}) => {
+  const GetStepContent = ({activeStep,handleSave,handlePostTitle,handlePostDescription,handlePostKeywords,handlePostContent,postContent,handleAllowComments,allowComments,handlePublishStatus,handlePublishDate,publishDate,handleSchedule,handlePublish}) => {
     console.log()
     switch (activeStep) {
       case 0:
@@ -390,6 +392,8 @@ ColorlibStepIcon.propTypes = {
             <UploadOptions  allowComments = {allowComments} 
             handleAllowComments ={handleAllowComments}   
             handlePublish ={handlePublish} 
+            handleSchedule = {handleSchedule}
+            handlePublishStatus = {handlePublishStatus}
            handleSave = {handleSave}
             />
         );
@@ -407,7 +411,7 @@ export default function AddPostStepper() {
     const [postKeywords, setPostKeywords] = useState([]);
     const [postContent , setPostContent] = useState('');
     const [allowComments , setAllowComments] = useState(true);
-   // const [publishStatus,setPublishStatus] = useState("");
+    const [publishStatus,setPublishStatus] = useState("");
     const [publishDate,setPublishDate] = useState(dayjs('2014-08-18T21:11:54'));
     
 
@@ -419,7 +423,7 @@ export default function AddPostStepper() {
     }
     const handlePostContent = postContent =>  setPostContent(postContent)
     const handleAllowComments = allowComments => setAllowComments(allowComments)
-   // const handlePublishStatus = publishStatus => setPublishStatus(publishStatus)
+    const handlePublishStatus = publishStatus => setPublishStatus(publishStatus)
     const handlePublishDate = publishDate => setPublishDate(publishDate) 
 
      // console.log("post title : ",postTitle)
@@ -446,6 +450,26 @@ export default function AddPostStepper() {
          .catch(err=>console.log(err))
 
     }
+    const handleSchedule=()=>{
+      console.log("schedule clicked")
+      // const data = {
+      //   postTitle,
+      //   postDescription,
+      //   postKeywords,
+      //   postContent,
+      //   allowComments,
+      //   publishStatus : "published",
+      //   publishDate: new Date()
+      
+      // }
+
+
+      //    axios.post(`http://127.0.0.1:5000/bloggerDashboard/addpost/${blogId}`,data)
+      //    .then(res => console.log(res))
+      //    .catch(err=>console.log(err))
+
+    }
+
 
     const handlePublish1 = ()=>{
       console.log("-------publish reached")
@@ -583,6 +607,8 @@ export default function AddPostStepper() {
                 handlePublishDate = {handlePublishDate} 
                 publishDate ={publishDate} 
                 handleSave ={handleSave}
+                handlePublishStatus = {handlePublishStatus}
+                handleSchedule={handleSchedule}
                  handlePublish = {handlePublish}
                  />
             </Paper>

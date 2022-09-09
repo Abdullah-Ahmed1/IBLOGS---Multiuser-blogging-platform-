@@ -77,8 +77,8 @@ export default function AccountMenu() {
             },
           },
         }}
-        transformOrigin={{ horizontal: "right", vertical: "top" }}
-        anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
+        // transformOrigin={{ horizontal: "right", vertical: "top" }}
+        // anchorOrigin={{ horizontal: "left", vertical: "bottom" }}
       >
         <MenuItem>
           <Avatar /> Profile

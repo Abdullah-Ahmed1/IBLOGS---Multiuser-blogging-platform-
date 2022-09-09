@@ -27,6 +27,7 @@ import ReaderPostCard from './../../components/PostComponentsMui/ReaderPostCard'
 import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 import ShareIcon from '@mui/icons-material/Share';
 import BookmarkAddIcon from '@mui/icons-material/BookmarkAdd';
+
 import BookmarkAddedIcon from '@mui/icons-material/BookmarkAdded';
 import "./../../components/PostComponentsMui/PostCardScroll.css";
 import Avatar from '@mui/material/Avatar';
@@ -35,6 +36,7 @@ import Avatar from '@mui/material/Avatar';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import RecommendedChips from './../../components/PostComponentsMui/RecommendChips';
 import TrendPostCard from './../../components/PostComponentsMui/TrendPostCard';
+import AccountMenu from './../../components/Avatar/AccountAvatar';
 
 const drawerWidth = 70;
 
@@ -164,12 +166,13 @@ export default function ReaderDashboard() {
         <List  sx ={{marginTop:"50px",marginLeft:"5px",overflow:"hidden"}}>
          <List_Items/>
         </List>
-        <Divider />
+        {/* <Divider /> */}
         <List>
          
         </List>
+        <AccountMenu sx = {{position :"absolute", bottom:"80px",left:"15px",backgroundColor:"#05386b",cursor:"pointer"}}/>
       </Drawer>
-      <Box
+      <Box  
       
         component="main"
         sx={{ 

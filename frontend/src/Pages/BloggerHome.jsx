@@ -55,11 +55,6 @@ function BasicBreadcrumbs() {
 }
 
 
-
-
-
-
-
 const BloggerHome = ({openModal,handleClose,token})=>{
   const [snack, setSnack] =useState(false);
 
