@@ -6,8 +6,13 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 
-export default function ConfirmBox({openBox,handleOpenBox,handleSetSchedule}) {
+export default function ConfirmBox({openBox,handleOpenBox,handleSchedule,handleSetSchedule}) {
   
+    const handleAgree = ()=>{
+        handleSchedule()
+        handleOpenBox(false)
+    }
+
   return (
     <div>
      
@@ -22,13 +27,12 @@ export default function ConfirmBox({openBox,handleOpenBox,handleSetSchedule}) {
         </DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
-            Let Google help apps determine location. This means sending anonymous
-            location data to Google, even when no apps are running.
+           If you agree, your Post will be scheduled to the date and time you selected!
           </DialogContentText>
         </DialogContent>
         <DialogActions>
           <Button onClick={()=>{handleSetSchedule(true);handleOpenBox(false)}}>Disagree</Button>
-          <Button onClick={()=>handleOpenBox(false)} autoFocus>
+          <Button onClick={handleAgree} autoFocus>
             Agree
           </Button>
         </DialogActions>

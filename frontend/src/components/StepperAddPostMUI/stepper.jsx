@@ -329,7 +329,7 @@ ColorlibStepIcon.propTypes = {
     return(
       <div style={{display:"flex",flexDirection:"column" ,alignItems:"center"}} >
         <h1 style = {{color:"#05386b"}}>Upload Options</h1>
-        <ConfirmBox openBox = {openBox} handleOpenBox={handleOpenBox}  handleSetSchedule= {handleSetSchedule} />
+        <ConfirmBox openBox = {openBox} handleOpenBox={handleOpenBox}  handleSchedule={handleSchedule} handleSetSchedule= {handleSetSchedule} />
          <Stack direction="column" spacing={2}>
         {/* -------------------------------- */}
         <FormControl>
@@ -365,9 +365,9 @@ ColorlibStepIcon.propTypes = {
             
 
 
-            onClose={handleSchedule}
+            onClose={()=>handleOpenBox(true)}
             onChange={handlePublishDate}
-            renderInput={(params) => <TextField {...params}  onBlur={()=>console.log("reacheddddddddddddddddd")} sx = {{display: `${schedule ? "none" : "flex"}` ,color:"green",backgroundColor:"#379683"}}/>}
+            renderInput={(params) => <TextField {...params}  disabled sx = {{display: `${schedule ? "none" : "flex"}` ,color:"green",backgroundColor:"#379683"}}/>}
           />
            
       </LocalizationProvider>
@@ -465,25 +465,25 @@ export default function AddPostStepper() {
     }
     const handleSchedule=()=>{
       console.log("schedule clicked")
-      console.log("schedule date: ",publishDate)
-      SetOpenBox(true)
+      console.log("schedule date: ",dayjs(publishDate).format())
+      //SetOpenBox(true)
       
 
-      // const data = {
-      //   postTitle,
-      //   postDescription,
-      //   postKeywords,
-      //   postContent,
-      //   allowComments,
-      //   publishStatus : "published",
-      //   publishDate: new Date()
+      const data = {
+        postTitle,
+        postDescription,
+        postKeywords,
+        postContent,
+        allowComments,
+        publishStatus : "scheduled",
+        publishDate: dayjs(publishDate).format()
       
-      // }
+      }
 
 
-      //    axios.post(`http://127.0.0.1:5000/bloggerDashboard/addpost/${blogId}`,data)
-      //    .then(res => console.log(res))
-      //    .catch(err=>console.log(err))
+         axios.post(`http://127.0.0.1:5000/bloggerDashboard/addpost/${blogId}`,data)
+         .then(res => console.log(res))
+         .catch(err=>console.log(err))
 
     }
 

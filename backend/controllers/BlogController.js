@@ -5,6 +5,7 @@ const Blog = Mongoose.model("Blog");
 const Post = Mongoose.model("Post");
 const { User, validate } = require("../models/users.model");
 //const { Post, validate } = require("../models/post.model");
+const schedule = require("node-schedule");
 
 module.exports = {
   addBlog: async (req, res) => {
@@ -93,14 +94,29 @@ module.exports = {
   //////////////////////////// Blog Posts functions /////////////////////////////////////////////////////////////////
 
   addPost: async (req, res) => {
-    console.log(req.body, "---------", req.params.blogId);
     const blogId = req.params.blogId;
     const blog = await Blog.findOne({ _id: blogId });
-    console.log("--------", blog);
+    // console.log("--------", blog);
     Post.create(req.body)
       .then(async (post) => {
-        console.log("Blog has been Added ", post, post._id);
-        console.log("reached");
+        console.log("Post has been Added ", post, post._id);
+        //  console.log("reached");
+        console.log("spot1");
+
+        const someDate = new Date("2022-09-11T00:02:00.000+5:30");
+        schedule.scheduleJob("MJob", someDate, async () => {
+          try {
+            console.log("called");
+            await Post.updateOne(
+              { _id: post._id },
+              { publishStatus: "published" }
+            );
+          } catch (err) {
+            console.log(err);
+          }
+          schedule.cancelJob("MJob");
+        });
+
         await Blog.updateOne(
           { _id: blog._id },
           { $push: { posts: post._id } },
@@ -117,8 +133,15 @@ module.exports = {
         res.setHeader("Content-Type", "application/json");
 
         res.json(post);
+        console.log("spot2");
       })
       .catch((err) => res.json(err));
+
+    // const someDate = new Date("2022-09-10T16:25:00.000+5:30");
+    // schedule.scheduleJob("MJob", someDate, () => {
+    //   console.log(req.body, "---------");
+    //   schedule.cancelJob("MJob");
+    // });
   },
 
   getPost: (req, res) => {
