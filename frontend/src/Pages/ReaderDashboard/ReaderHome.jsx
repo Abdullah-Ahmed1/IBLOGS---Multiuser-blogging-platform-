@@ -1,33 +1,23 @@
 import * as React from 'react';
-import { useEffect,useState,useRef } from 'react';
-import axios from "axios";
+import { useState } from 'react';
+//import axios from "axios";
 import Box from '@mui/material/Box';
-import Drawer from '@mui/material/Drawer';
-import Toolbar from '@mui/material/Toolbar';
 import Grid from "@mui/material/Grid";
 import Grid2 from '@mui/material/Unstable_Grid2';
-import List from '@mui/material/List';
-import Typography from '@mui/material/Typography';
+//import List from '@mui/material/List';
+import { Typography } from '@mui/material';
 import { Link } from 'react-router-dom';
 import { styled } from '@mui/material/styles';
-//import Divider from '@mui/material/Divider';
-
 import Paper from '@mui/material/Paper';
-// import Card from '@mui/material/Card';
-// import parse from 'html-react-parser';
-// import CardContent from '@mui/material/CardContent';
-// import CardMedia from '@mui/material/CardMedia';
 import Divider from '@mui/material/Divider';
-import { createStyles, makeStyles } from '@mui/styles';
+//import { createStyles, makeStyles } from '@mui/styles';
 import CssBaseline from '@mui/material/CssBaseline';
-import List_Items from '../../components/ReaderDashComponents/ListItems2';
+//import List_Items from '../../components/ReaderDashComponents/ListItems2';
 import SearchBar from "../../components/ReaderDashComponents/Searchbar"
-import ReaderPostCard from './../../components/PostComponentsMui/ReaderPostCard';
 //------------
 import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 import ShareIcon from '@mui/icons-material/Share';
 import BookmarkAddIcon from '@mui/icons-material/BookmarkAdd';
-
 import BookmarkAddedIcon from '@mui/icons-material/BookmarkAdded';
 import "./../../components/PostComponentsMui/PostCardScroll.css";
 import Avatar from '@mui/material/Avatar';
@@ -36,7 +26,7 @@ import Avatar from '@mui/material/Avatar';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import RecommendedChips from './../../components/PostComponentsMui/RecommendChips';
 import TrendPostCard from './../../components/PostComponentsMui/TrendPostCard';
-import AccountMenu from './../../components/Avatar/AccountAvatar';
+//import AccountMenu from './../../components/Avatar/AccountAvatar';
 
 const Item = styled(Paper)(({ theme }) => ({
     backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
@@ -52,8 +42,6 @@ const ReaderHome = ({posts})=>{
     return(
         <>
         <CssBaseline />
-        {/* <h1>hellow world</h1> */}
-        {/* <Toolbar /> */}
         <div style={{display:"flex",width:"73%",flexDirection:"row" ,background:"rgba(237, 245, 225,0)",alignItems:"center",justifyContent:"space-between"}}>
           <h2 style = {{color:"#379863"}}>IBlogs</h2>
           <SearchBar/>
@@ -92,13 +80,19 @@ const ReaderHome = ({posts})=>{
                 </Grid>
                 
             </Grid>
+            {/* <Link to="/ReaderDashboard/full-post">       */}
             <Grid item lg ={8} sx ={{padding:0,margin:0, fontFamily: "Fjalla One, sans-serif"}}>
+                    <Link to="/ReaderDashboard/full-post" style={{textDecoration:"none",color:"black"}} >
                     <h4 style = {{fontWeight:"bolder"}}>{item.postTitle}</h4>
+                    </Link>
+                    <Link to="/ReaderDashboard/full-post" style={{textDecoration:"none",color:"black"}} >
                     <div  className="scrollers" style= {{color:"#00000099",width:"98%",maxHeight:"60%",fontSize:"14px",minHeight:"60%",overflow:"auto"}}>
                       {item.postDescription}
                     </div>
+                    </Link>
                    
             </Grid>
+            {/* </Link> */}
             <Grid item sx = {{ width:"80%",maxHeight:"20px"}} >
               {/* <Button  sx = {{width:"20px",color:"#05386b"}} size="small"><ThumbUpIcon/></Button>
              <Button  sx = {{   width:"20px",color:"#05386b"}} size="small"> <ShareIcon/></Button>
@@ -113,9 +107,10 @@ const ReaderHome = ({posts})=>{
          </Grid>
 
          <Grid item container justifyContent="flex-end" sx = {{display:{lg :"flex",md:"none",sm:"none",xs:"none"},height:"300px"}}  alignItems={"center"} lg = {2} >
-            <img  style={{maxWidth:"160px",height:"90px"}} src={"https://res.cloudinary.com/dlgwvuu5d/image/upload/v1661858507/my-uploads/crxuibfslasaepf24mvp.png"} alt="image" />
+            <img  style={{maxWidth:"160px",height:"90px"}} src={"https://res.cloudinary.com/dlgwvuu5d/image/upload/v1661858507/my-uploads/crxuibfslasaepf24mvp.png"} alt="" />
         </Grid>       
        </Grid>
+       
        </Box>
           )
         })):(

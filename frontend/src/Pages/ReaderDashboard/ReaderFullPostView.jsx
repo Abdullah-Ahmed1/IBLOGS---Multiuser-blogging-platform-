@@ -2,12 +2,27 @@
  import parse from 'html-react-parser';
  import Grid2 from '@mui/material/Unstable_Grid2';
  import CssBaseline from '@mui/material/CssBaseline';
+ import Avatar from '@mui/material/Avatar';
  const ReaderFullPostView = ({posts})=>{
     return(
         <>
         <CssBaseline />
         <Grid2 container spacing={0} justifyContent= "space-between"   >
         <Grid2 xs={12} md={5} lg={8} spacing={0} sx = {{backgroundColor:"white",marginTop:"20px",marginLeft:"30px"}}  >
+            <Grid2 container flexDirection="row" columnSpacing={3}>
+                <Grid2>
+                <Avatar sx = {{height:"45px",width:"45px"}}  alt="Remy Sharp" src="/static/images/avatar/1.jpg"/>   
+            
+                </Grid2>
+                <Grid2 container  flexDirection="column" rowSpacing={0}  >
+                    <Grid2 sx ={{fontSize:"14px"}}>
+                        Abdullah Ahmed
+                    </Grid2>
+                    <Grid2 sx ={{fontSize:"14px"}}>
+                        Coding with Abdullah
+                    </Grid2>
+                </Grid2>
+            </Grid2>
             {
                 posts.map((post)=>{
                     return(
