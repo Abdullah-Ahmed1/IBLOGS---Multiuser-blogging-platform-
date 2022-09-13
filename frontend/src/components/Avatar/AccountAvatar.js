@@ -11,6 +11,7 @@ import Tooltip from "@mui/material/Tooltip";
 import PersonAdd from "@mui/icons-material/PersonAdd";
 import Settings from "@mui/icons-material/Settings";
 import Logout from "@mui/icons-material/Logout";
+import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
 export default function AccountMenu() {
@@ -80,10 +81,11 @@ export default function AccountMenu() {
         // transformOrigin={{ horizontal: "right", vertical: "top" }}
         // anchorOrigin={{ horizontal: "left", vertical: "bottom" }}
       >
-        <MenuItem>
-          <Avatar /> Profile
-        </MenuItem>
-
+        <Link to="/your-profile">
+          <MenuItem>
+            <Avatar /> Profile
+          </MenuItem>
+        </Link>
         <Divider />
 
         <MenuItem>

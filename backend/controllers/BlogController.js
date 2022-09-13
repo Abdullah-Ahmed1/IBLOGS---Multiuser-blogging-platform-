@@ -16,7 +16,7 @@ module.exports = {
     Blog.create(req.body)
       .then(async (blog) => {
         console.log("Blog has been Added ", blog, blog._id);
-        console.log("reached");
+        console.log("reached!!!!!!");
         await User.updateOne(
           { _id: user1._id },
           { $push: { your_blogs: blog._id } },
@@ -48,7 +48,7 @@ module.exports = {
     ).catch((err) => res.json(err));
   },
   update: async (blog) => {
-    console.log("reached");
+    console.log("reached-----");
     const user = await User.findOneAndUpdate(
       { _id: "628bfbb6cd0f5de02bf11b79" },
       { $push: { your_blogs: blog._id } },
@@ -62,14 +62,14 @@ module.exports = {
 
   getBlog: async (req, res) => {
     const token = req.headers["authorization"];
-    console.log("token", token);
+    //  console.log("token", token);
     try {
       const decoded = jwt.verify(token, "1234567");
       User.findById(decoded.id)
         .populate("your_blogs")
         .exec()
         .then((data) => {
-          console.log("this user data : ", data);
+          //    console.log("this user data : ", data);
           return res.send({ blogs: data.your_blogs });
         });
     } catch (err) {
@@ -146,7 +146,7 @@ module.exports = {
 
   getPost: (req, res) => {
     const blogId = req.params.blogId;
-    console.log("////////////////", blogId);
+    // console.log("////////////////", blogId);
 
     Blog.findById(blogId)
       .populate("posts")

@@ -14,6 +14,7 @@ import NewPassword from "./Pages/NewPassword";
 import SignInSide from "./Pages/LoginFromMui";
 import SignUp from "./Pages/RegisterFormMui";
 import ReaderDashboard from "./Pages/ReaderDashboard/ReaderDashboard";
+//import YourProfile from "./components/ProfileComps/ProfileInfo";
 
 function App() {
   return (
@@ -33,6 +34,7 @@ function App() {
 
         <Route path="/bloggerdashboard/*" element={<Dashboard />} />
         <Route path="/readerdashboard/*" element={<ReaderDashboard />} />
+
         <Route exact path="*" element={<PageNotFound />} />
       </Routes>
     </div>

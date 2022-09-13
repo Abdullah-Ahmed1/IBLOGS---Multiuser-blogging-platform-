@@ -12,11 +12,13 @@ const List_Items = ()=>{
     return(
         <>
         <Tooltip title="Home" placement="right" arrow>
+          <Link to="/readerdashboard">
          <ListItemButton>
           <ListItemIcon>
             <HomeIcon sx={{ color: "#05386b",fontSize:"25px", marginBottom:"10px" }} />
           </ListItemIcon>
         </ListItemButton>
+        </Link>
         </Tooltip>
 
         <Tooltip title="Saved" placement="right" arrow>

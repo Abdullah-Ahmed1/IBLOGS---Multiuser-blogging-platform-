@@ -42,7 +42,7 @@ const ReaderHome = ({posts})=>{
     return(
         <>
         <CssBaseline />
-        <div style={{display:"flex",width:"73%",flexDirection:"row" ,background:"rgba(237, 245, 225,0)",alignItems:"center",justifyContent:"space-between"}}>
+        <div style={{marginTop:"20px",display:"flex",width:"73%",flexDirection:"row" ,background:"rgba(237, 245, 225,0)",alignItems:"center",justifyContent:"space-between"}}>
           <h2 style = {{color:"#379863"}}>IBlogs</h2>
           <SearchBar/>
         </div>
@@ -66,9 +66,11 @@ const ReaderHome = ({posts})=>{
                     <Avatar sx={{ width: 45, height: 45 }}>A</Avatar>
                 </Grid>
                 <Grid item container   direction="column" spacing={0} lg = {9}  md = {7} sm={5}>
-                    <Grid item   sx = {{fontSize:"14px",fontWeight:"bold",fontFamily: " Ubuntu, sans-serif"}}>
+                  <Link to = "author-profile"  sx = {{textDecoration:"none"}}>
+                    <Grid item   sx = {{textDecoration:"none",fontSize:"14px",fontWeight:"bold",fontFamily: " Ubuntu, sans-serif"}}>
                         Abdullah Ahmed -{" 27 April "}
                     </Grid>
+                  </Link>
                     <Grid item  sx = {{fontSize:"16px",fontFamily: " Ubuntu, sans-serif",color:"#05386b"}}>
                         From: Reactjs - from begginer to expert
                     </Grid>
@@ -106,9 +108,9 @@ const ReaderHome = ({posts})=>{
             </Grid>
          </Grid>
 
-         <Grid item container justifyContent="flex-end" sx = {{display:{lg :"flex",md:"none",sm:"none",xs:"none"},height:"300px"}}  alignItems={"center"} lg = {2} >
-            <img  style={{maxWidth:"160px",height:"90px"}} src={"https://res.cloudinary.com/dlgwvuu5d/image/upload/v1661858507/my-uploads/crxuibfslasaepf24mvp.png"} alt="" />
-        </Grid>       
+          <Grid item container justifyContent="flex-end" sx = {{display:{lg :"flex",md:"none",sm:"none",xs:"none"},height:"300px"}}  alignItems={"center"} lg = {2} >
+              <img  style={{maxWidth:"160px",height:"90px"}} src={"https://res.cloudinary.com/dlgwvuu5d/image/upload/v1661858507/my-uploads/crxuibfslasaepf24mvp.png"} alt="" />
+          </Grid>       
        </Grid>
        
        </Box>

@@ -1,4 +1,4 @@
- import Grid from "@mui/material/Grid";
+ //import Grid from "@mui/material/Grid";
  import parse from 'html-react-parser';
  import Grid2 from '@mui/material/Unstable_Grid2';
  import CssBaseline from '@mui/material/CssBaseline';
@@ -9,16 +9,16 @@
         <CssBaseline />
         <Grid2 container spacing={0} justifyContent= "space-between"   >
         <Grid2 xs={12} md={5} lg={8} spacing={0} sx = {{backgroundColor:"white",marginTop:"20px",marginLeft:"30px"}}  >
-            <Grid2 container flexDirection="row" columnSpacing={3}>
+            <Grid2 container sx = {{marginBottom:"20px"}} flexDirection="row" columnSpacing={3}>
                 <Grid2>
                 <Avatar sx = {{height:"45px",width:"45px"}}  alt="Remy Sharp" src="/static/images/avatar/1.jpg"/>   
             
                 </Grid2>
                 <Grid2 container  flexDirection="column" rowSpacing={0}  >
-                    <Grid2 sx ={{fontSize:"14px"}}>
+                    <Grid2 sx ={{fontSize:"14px",fontWeight:"bold"}}>
                         Abdullah Ahmed
                     </Grid2>
-                    <Grid2 sx ={{fontSize:"14px"}}>
+                    <Grid2 sx ={{fontSize:"14px",fontWeight:"bold"}}>
                         Coding with Abdullah
                     </Grid2>
                 </Grid2>
@@ -26,7 +26,7 @@
             {
                 posts.map((post)=>{
                     return(
-                        <div >
+                        <div style = {{padding:"10px",boxShadow:"0 4px 8px 0 rgba(92,219,149, 0.2), 0 6px 20px 0 rgba(92,219,149, 0.19)"}} >
                            {parse(post.postContent)} 
                         </div>
                     )
@@ -38,7 +38,7 @@
             Lorem ipsum dolor sit amet, consectetur adipisicing elit. Suscipit ipsum exercitationem inventore corrupti, ad iste impedit architecto! Odio expedita, alias assumenda sequi cum nihil! Culpa architecto minima perferendis nisi est?
         </Grid2>   
         </Grid2>
-          <h1>Full post will be shown here</h1>  
+            
         </>
     )
 }

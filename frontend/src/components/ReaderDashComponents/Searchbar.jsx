@@ -91,7 +91,7 @@ export default function SearchBar() {
 
   return (
     <Box  sx={{ display: 'flex', alignItems: 'flex-end',width:"70%" }}>
-    <SearchIcon sx={{ fontSize:"35px",mr: 1, my: 0.5 }} />    
+    <SearchIcon sx={{ fontSize:"35px",mr: 1, my: 0.5 ,color:"#379863" }} />    
     <Autocomplete
       id="asynchronous-demo"
       freeSolo

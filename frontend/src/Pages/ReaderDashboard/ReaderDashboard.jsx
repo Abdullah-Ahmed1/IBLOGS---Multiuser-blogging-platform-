@@ -42,6 +42,8 @@ import AccountMenu from './../../components/Avatar/AccountAvatar';
 //--------------Calling Components--------------------------
 import ReaderHome from './ReaderHome';
 import ReaderFullPostView from './ReaderFullPostView';
+import AuthorProfile from './AuthorProfile';
+import YourProfile from './../../components/ProfileComps/ProfileInfo';
 //----------------------------------------------------------------
 const drawerWidth = 70;
 
@@ -49,11 +51,11 @@ const drawerWidth = 70;
 
 const useStyles = makeStyles((theme)=>({
   root:{
-    //minHeight :'100vh',
+   // height :'100vh',
     backgroundImage: 'url(https://res.cloudinary.com/dlgwvuu5d/image/upload/v1661960761/my-uploads/4665_zuak4h.jpg)',
-    backgroundRepeat : "no-repeat",
+    backgroundRepeat : "repeat",
     backgroundAttachment:"fixed",
-    backgroundSize:"cover",
+     backgroundSize:"contain",
    
   }
 }))
@@ -180,7 +182,8 @@ export default function ReaderDashboard() {
        <Routes>
        <Route exact path="/" element={<ReaderHome  posts = {posts}/>} />
        <Route exact path="/full-post" element={<ReaderFullPostView posts = {posts} />} />
-                
+       <Route exact path="/author-profile" element={<AuthorProfile />} />
+       <Route exact path="/your-profile" element={<YourProfile />} />         
        </Routes>
       </Box>
     </Box>
