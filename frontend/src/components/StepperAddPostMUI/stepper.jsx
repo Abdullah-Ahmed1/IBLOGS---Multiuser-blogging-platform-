@@ -6,7 +6,7 @@ import Stepper from '@mui/material/Stepper';
 import Step from '@mui/material/Step';
 import PropTypes from 'prop-types';
 import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
-import { MobileDatePicker } from '@mui/x-date-pickers/MobileDatePicker';
+//import { MobileDatePicker } from '@mui/x-date-pickers/MobileDatePicker';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import axios from "axios";
@@ -31,13 +31,13 @@ import TextField from '@mui/material/TextField';
 import SaveAsIcon from '@mui/icons-material/SaveAs';
 import Chip from '@mui/material/Chip';
 import { styled } from '@mui/material/styles';
-import Typography from '@mui/material/Typography';
+//import Typography from '@mui/material/Typography';
 import StepLabel from '@mui/material/StepLabel';
 import MyEditor from '../Editorjs/Editor';
 import Check from '@mui/icons-material/Check';
-import SettingsIcon from '@mui/icons-material/Settings';
-import GroupAddIcon from '@mui/icons-material/GroupAdd';
-import VideoLabelIcon from '@mui/icons-material/VideoLabel';
+//import SettingsIcon from '@mui/icons-material/Settings';
+//import GroupAddIcon from '@mui/icons-material/GroupAdd';
+//import VideoLabelIcon from '@mui/icons-material/VideoLabel';
 import StepConnector, { stepConnectorClasses } from '@mui/material/StepConnector';
 import lottie from 'lottie-web'
 import { useRef, useEffect } from 'react';
@@ -264,7 +264,7 @@ ColorlibStepIcon.propTypes = {
     const [chip,setChip] = useState([]);
     const handleEnterPress = (e)=>{
       //e.preventDefault();
-      if(e.key ==='Enter' || e.keyCode == 32){
+      if(e.key ==='Enter' || e.keyCode === 32){
         handlePostKeywords(temp)
         const item = {key:chip.length, label:temp}
         setChip([item,...chip])

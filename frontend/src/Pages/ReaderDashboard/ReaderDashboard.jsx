@@ -1,36 +1,19 @@
 import * as React from 'react';
-import { useEffect,useState,useRef } from 'react';
+import { useEffect,useState} from 'react';
 import axios from "axios";
 import { Routes } from 'react-router-dom';
 import { Route } from 'react-router';
 import Box from '@mui/material/Box';
 import Drawer from '@mui/material/Drawer';
 import Toolbar from '@mui/material/Toolbar';
-// import Grid from "@mui/material/Grid";
-// import Grid2 from '@mui/material/Unstable_Grid2';
-import List from '@mui/material/List';
-// import Typography from '@mui/material/Typography';
-// import { Link } from 'react-router-dom';
-// import { styled } from '@mui/material/styles';
-// //import Divider from '@mui/material/Divider';
 
-// import Paper from '@mui/material/Paper';
-// import Card from '@mui/material/Card';
-// import parse from 'html-react-parser';
-// import CardContent from '@mui/material/CardContent';
-// import CardMedia from '@mui/material/CardMedia';
+import List from '@mui/material/List';
+
 import Divider from '@mui/material/Divider';
 import { createStyles, makeStyles } from '@mui/styles';
 // import CssBaseline from '@mui/material/CssBaseline';
 import List_Items from '../../components/ReaderDashComponents/ListItems2';
-// import SearchBar from "../../components/ReaderDashComponents/Searchbar"
-// import ReaderPostCard from './../../components/PostComponentsMui/ReaderPostCard';
-// //------------
-// import ThumbUpIcon from '@mui/icons-material/ThumbUp';
-// import ShareIcon from '@mui/icons-material/Share';
-// import BookmarkAddIcon from '@mui/icons-material/BookmarkAdd';
 
-// import BookmarkAddedIcon from '@mui/icons-material/BookmarkAdded';
 import "./../../components/PostComponentsMui/PostCardScroll.css";
 // import Avatar from '@mui/material/Avatar';
 // //import Grid from "@mui/material/Grid";
@@ -43,7 +26,7 @@ import AccountMenu from './../../components/Avatar/AccountAvatar';
 import ReaderHome from './ReaderHome';
 import ReaderFullPostView from './ReaderFullPostView';
 import AuthorProfile from './AuthorProfile';
-import YourProfile from './../../components/ProfileComps/ProfileInfo';
+import YourProfile from '../YourProfileInfo';
 //----------------------------------------------------------------
 const drawerWidth = 70;
 

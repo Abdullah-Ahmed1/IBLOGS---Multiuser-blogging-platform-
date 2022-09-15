@@ -136,7 +136,7 @@ const BloggerHome = ({openModal,handleClose,token})=>{
 
  ////////////////////////////////////////////////////////////
 const handleImage = async(e)=>{
-  
+  console.log("imageeeeeeeeeee--",e.target.files[0])
   const body = new FormData();
   body.append('file', e.target.files[0]);
   body.append('upload_preset',"my-uploads")

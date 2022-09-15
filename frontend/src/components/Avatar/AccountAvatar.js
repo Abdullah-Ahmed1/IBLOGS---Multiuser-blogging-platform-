@@ -81,7 +81,7 @@ export default function AccountMenu() {
         // transformOrigin={{ horizontal: "right", vertical: "top" }}
         // anchorOrigin={{ horizontal: "left", vertical: "bottom" }}
       >
-        <Link to="/your-profile">
+        <Link to="/readerdashboard/your-profile">
           <MenuItem>
             <Avatar /> Profile
           </MenuItem>
