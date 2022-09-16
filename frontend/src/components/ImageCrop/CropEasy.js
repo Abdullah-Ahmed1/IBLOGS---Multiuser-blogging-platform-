@@ -1,8 +1,11 @@
 import { Cancel } from "@mui/icons-material";
+import { createContext, useContext } from "react";
+import axios from "axios";
 import CropIcon from "@mui/icons-material/Crop";
 import Dialog from "@mui/material/Dialog";
 import DialogTitle from "@mui/material/DialogTitle";
 import { getOrientation } from "get-orientation/browser";
+import { UserContext } from "../../Pages/ReaderDashboard/ReaderDashboard";
 
 import {
   Box,
@@ -27,6 +30,10 @@ const ORIENTATION_TO_ANGLE = {
 
 const CropEasy = ({ cropOpen, handleClickOpen, handleClose }) => {
   //const { setAlert, setLoading } = useAuth();
+  const value1 = useContext(UserContext);
+
+  //console.log("usercontext", value);
+
   const [crop, setCrop] = useState({ x: 0, y: 0 });
   const [zoom, setZoom] = useState(1);
   const [uploaded, setUploaded] = useState(false);
@@ -40,6 +47,7 @@ const CropEasy = ({ cropOpen, handleClickOpen, handleClose }) => {
     setUploaded(false);
   };
 
+  //console.log("--", croppedImage);
   // const cropComplete = (croppedArea, croppedAreaPixels) => {
   //   setCroppedAreaPixels(croppedAreaPixels);
   // };
@@ -56,9 +64,49 @@ const CropEasy = ({ cropOpen, handleClickOpen, handleClose }) => {
       );
       console.log("donee", { croppedImage });
       setCroppedImage(croppedImage);
+
+      const formData = new FormData();
+      formData.append("file", croppedImage);
+      // formData.append("api_key", YOUR_API_KEY);
+      // replace this with your upload preset name
+      console.log("hurrah");
+      formData.append("upload_preset", "my-uploads"); //via cloudinary
+      axios({
+        method: "POST",
+        url: "https://api.cloudinary.com/v1_1/dlgwvuu5d/image/upload",
+        data: formData,
+      }).then((res) => {
+        console.log("!!!!!!--///////////", res.data.secure_url);
+        let value = JSON.parse(localStorage.getItem("token"));
+        let token = value.token;
+        axios
+          .post(
+            "http://127.0.0.1:5000/updateProfileImage",
+            { image: res.data.secure_url },
+            {
+              headers: {
+                "Content-Type": "application/json",
+                Accept: "application/json",
+                Authorization: token,
+              },
+            }
+          )
+          .then((res) => {
+            console.log("resssss", res);
+            value1.ProfileFetch();
+          })
+          .catch((err) => console.log("errr", err));
+      });
     } catch (e) {
-      console.error(e);
+      console.error("errrrrrrrrr", e);
     }
+    //--------------------------------------------
+    // var reader = new FileReader();
+    // reader.readAsDataURL(croppedImage);
+    // reader.onloadend = function () {
+    //   var base64data = reader.result;
+
+    //---------------------------------------------
   }, [imageSrc, croppedAreaPixels, rotation]);
 
   function readFile(file) {

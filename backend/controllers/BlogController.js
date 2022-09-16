@@ -155,4 +155,19 @@ module.exports = {
         res.json(data);
       });
   },
+
+  //--this is a method below to add any field to already added document
+
+  // tempMethod: async (req, res) => {
+  //   try {
+  //     console.log("reached-----------");
+  //     await User.updateMany(
+  //       {},
+  //       { $set: { profileImage: "" } },
+  //       { upsert: false, multi: true }
+  //     );
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  // },
 };

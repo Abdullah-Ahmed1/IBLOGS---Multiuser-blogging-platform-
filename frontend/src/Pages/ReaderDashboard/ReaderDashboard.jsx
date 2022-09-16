@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useEffect,useState} from 'react';
+import { useEffect,useState,createContext, useContext} from 'react';
 import axios from "axios";
 import { Routes } from 'react-router-dom';
 import { Route } from 'react-router';
@@ -74,12 +74,14 @@ const useStyles = makeStyles((theme)=>({
     
 //   )
 // }
+ export const  UserContext = createContext(null);
 
 export default function ReaderDashboard() {
   const classes = useStyles();
 
   const [visible,setVisible] = useState(false);
   const [posts,setPosts] = useState([])
+  const [profileData,setProfileData] = useState({});
   
   // const ref = useRef();
  // const listInnerRef = useRef();  
@@ -97,6 +99,31 @@ export default function ReaderDashboard() {
   //   }
   // };
   console.log("post",posts  )
+
+
+
+  const ProfileFetch = ()=>{
+    console.log("uuuuuuuuuuuuuu")
+    let value = JSON.parse(localStorage.getItem("token"));
+    let token = value.token;
+    axios.get(
+        "http://127.0.0.1:5000/getProfile",
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+            Authorization: token,
+          },
+        }
+      )
+      .then((res) => {
+        console.log("Got Profile", res);
+        setProfileData(res.data)
+      })
+      .catch((err) => console.log("errr", err));
+  }
+
+
 
   useEffect(()=>{
 
@@ -117,13 +144,34 @@ export default function ReaderDashboard() {
      
     }).catch(err=> console.log(err))
 
+//---------------------------------------------------------
+    let value = JSON.parse(localStorage.getItem("token"));
+    let token = value.token;
+    axios.get(
+        "http://127.0.0.1:5000/getProfile",
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+            Authorization: token,
+          },
+        }
+      )
+      .then((res) => {
+        console.log("Got Profile", res);
+        setProfileData(res.data)
+      })
+      .catch((err) => console.log("errr", err));
 
     return () => {
       // will run on every unmount.
        console.log("component is unmounting");
       }
   },[])
+
+  
   return (
+    <UserContext.Provider  value = {{ProfileFetch,profileData}} >
     <Box sx={{ display: 'flex' }} 
     className={classes.root}
     >
@@ -154,7 +202,7 @@ export default function ReaderDashboard() {
         <List>
          
         </List>
-        <AccountMenu sx = {{position :"absolute", bottom:"80px",left:"15px",backgroundColor:"#05386b",cursor:"pointer"}}/>
+        <AccountMenu profileData={profileData}  sx = {{position :"absolute", bottom:"80px",left:"15px",backgroundColor:"#05386b",cursor:"pointer"}}/>
       </Drawer>
       <Box  
       
@@ -170,5 +218,6 @@ export default function ReaderDashboard() {
        </Routes>
       </Box>
     </Box>
+    </UserContext.Provider>
   );
 }

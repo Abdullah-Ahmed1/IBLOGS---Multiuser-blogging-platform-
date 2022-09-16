@@ -10,6 +10,7 @@ const userSchema = new mongoose.Schema({
   dob: { type: String },
   country: { type: String },
   mobile: { type: String },
+  profileImage: { type: String },
   password: { type: String, required: true },
   your_blogs: {
     type: [

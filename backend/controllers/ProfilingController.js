@@ -155,8 +155,38 @@ module.exports = {
     // console.log("full user is ", user);
   },
 
+  findProfile: async (req, res) => {
+    const token = req.headers["authorization"];
+    try {
+      const decoded = jwt.verify(token, "1234567");
+      const data = await User.findOne({ _id: decoded.id });
+      return res.send(data);
+    } catch (err) {
+      res.send(err);
+    }
+  },
   findUser: async (req, res) => {
-    const user = await User.findOne({ _id: req.params.id });
+    const userId = req.params.id;
+    const user = await User.findOne({ _id: userId });
     res.send(user);
+  },
+
+  updateProfileImage: async (req, res) => {
+    const token = req.headers["authorization"];
+    const image = req.body.image;
+    console.log("image", image);
+    try {
+      const decoded = jwt.verify(token, "1234567");
+      // console.log("--->>", decoded);
+      // return res.json({ userInfo: decoded.username, userId: decoded.id });
+      const a = await User.findOneAndUpdate(
+        { _id: decoded.id },
+        { profileImage: image }
+      );
+      // console.log("a is", a);
+      res.send({ message: "Profile Image updated" });
+    } catch (err) {
+      return res.send({ err: err, message: "token may not be valid" });
+    }
   },
 };

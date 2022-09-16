@@ -11,6 +11,10 @@ router.route("/forget").post(profilingController.forgetPassword);
 router.route("/findUser/:id").get(profilingController.findUser);
 router.route("/:id/verify/:token/").get(profilingController.verify);
 router.route("/:id/forget/:token/").post(profilingController.newPassword);
-
+router
+  .route("/updateProfileImage")
+  .post(profilingController.updateProfileImage);
+//-------------------------------------------------------------
+router.route("/getProfile").get(profilingController.findProfile);
 
 module.exports = router;

@@ -1,4 +1,5 @@
-import {useState} from "react";
+import {useState,useEffect,useContext} from "react";
+import axios from "axios";
 import CssBaseline from '@mui/material/CssBaseline';
 import Grid2 from '@mui/material/Unstable_Grid2';
 import CameraAltIcon from '@mui/icons-material/CameraAlt';
@@ -6,18 +7,27 @@ import CropEasy from './../components/ImageCrop/CropEasy';
 import EditIcon from '@mui/icons-material/Edit';
 import DoneIcon from '@mui/icons-material/Done';
 import TextField from '@mui/material/TextField';
+import { UserContext } from "./ReaderDashboard/ReaderDashboard";
+
 const YourProfile =()=>{
+   // const [profileData,setProfileData]=  useState({});
     const [cropOpen, setCropOpen] = useState(false);
     const [nameEdit,setNameEdit] = useState(false);
     const [professionEdit,setProfessionEdit] = useState(false);
     const [aboutEdit,setAboutEdit] = useState(false)
 
+    const value = useContext(UserContext);
+    console.log("profilevalue--",value.profileData)
+    //console.log("!!!!",profileData)
     const handleClickOpen = () => {
         setCropOpen(true);
       };
       const handleClose = () => {
         setCropOpen(false);
       };
+    useEffect(()=>{
+       
+    },[])
 
     return (
         <>
@@ -32,7 +42,7 @@ const YourProfile =()=>{
                                 <CropEasy cropOpen = {cropOpen} handleClickOpen={handleClickOpen} handleClose={handleClose}  />
                                 <CameraAltIcon onClick ={handleClickOpen} sx = {{position:"absolute"}} />
                                 
-                                <img  style={{width:"150px",height:"150px",borderRadius:"100%"}}  src="https://res.cloudinary.com/dlgwvuu5d/image/upload/v1663106838/my-uploads/ppp_rufoeg.png" alt="" />
+                                <img  style={{width:"150px",height:"150px",borderRadius:"100%"}}  src={value.profileData.profileImage? value.profileData.profileImage: "https://res.cloudinary.com/dlgwvuu5d/image/upload/v1663106838/my-uploads/ppp_rufoeg.png" } alt="" />
                                 </div>
                             </div>
                             {/* <Avatar   alt="Travis Howard" src="https://res.cloudinary.com/dlgwvuu5d/image/upload/v1660686670/my-uploads/t3gssujtpbrgl1gzp97f.jpg"  sx = {{height:"100px",width:"100px",fontSize:"50px"}}  /> */}
@@ -45,7 +55,7 @@ const YourProfile =()=>{
                                             <TextField id="filled-basic" size="small" label="Username" variant="filled" /> 
                                         ):
                                         (
-                                            <h1 style={{margin:"0px"}}>Abdullah Ahmed</h1>    
+                                            <h1 style={{margin:"0px"}}>{value.profileData.firstname} {value.profileData.lastname}</h1>    
                                                
                                         )
                                     }
@@ -64,7 +74,7 @@ const YourProfile =()=>{
                             </Grid2> 
                             <Grid2>
                                 <Grid2>
-                                <h4 style={{margin:"0px",color:"grey"}} >abdullah.ahmed10001@gmail.com</h4>
+                                <h4 style={{margin:"0px",color:"grey"}} >{value.profileData.email}</h4>
                                 </Grid2>
                             </Grid2>   
                             <Grid2 container  columnSpacing={2} direction="row" alignItems={"center"}  >
@@ -110,10 +120,11 @@ const YourProfile =()=>{
                                 <Grid2>
                                     {
                                         aboutEdit?(
+                                            <TextField id="filled-basic" sx = {{width:"80%"}} multiline size="small" label="About" rows={5}  variant="filled" />
+                                           
+                                        ):(
                                             <p> Lorem ipsum dolor sit amet consectetur adipisicing elit. Odio voluptatum nobis aliquid sapiente corporis temporibus molestiae obcaecati, dolor aut, amet, quod consequatur? Ratione animi vero rem eum quasi ad consequatur. 
                                             </p>
-                                        ):(
-                                            <TextField id="filled-basic" sx = {{width:"80%"}} multiline size="small" label="About" rows={5}  variant="filled" />
                                         )
                                     }
                                 </Grid2>

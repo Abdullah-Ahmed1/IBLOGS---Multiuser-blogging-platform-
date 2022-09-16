@@ -14,7 +14,7 @@ import Logout from "@mui/icons-material/Logout";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
-export default function AccountMenu() {
+export default function AccountMenu({ profileData }) {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
 
@@ -27,7 +27,7 @@ export default function AccountMenu() {
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
-  const handleClose = () => {
+  const handleClose = ({ profileImage }) => {
     setAnchorEl(null);
   };
   return (
@@ -42,7 +42,11 @@ export default function AccountMenu() {
             aria-haspopup="true"
             aria-expanded={open ? "true" : undefined}
           >
-            <Avatar sx={{ width: 32, height: 32 }}>M</Avatar>
+            <Avatar
+              sx={{ width: 32, height: 32 }}
+              alt={profileData.firstname}
+              src={profileData.profileImage}
+            />
           </IconButton>
         </Tooltip>
       </Box>
