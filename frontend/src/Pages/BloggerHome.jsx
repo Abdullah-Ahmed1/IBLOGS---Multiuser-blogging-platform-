@@ -11,9 +11,8 @@ import { confirmAlert } from 'react-confirm-alert'; // Import
 //import CssBaseline from "@mui/material/CssBaseline";
 import 'react-confirm-alert/src/react-confirm-alert.css'; // Import css
 import Button from '@mui/material/Button';
-import FormControlLabel from '@mui/material/FormControlLabel';
+//import FormControlLabel from '@mui/material/FormControlLabel';
 import Breadcrumbs from '@mui/material/Breadcrumbs';
-
 import Box from "@mui/material/Box";
 // import Paper from "@mui/material/Paper";
  import Grid from "@mui/material/Grid";
@@ -23,10 +22,7 @@ import Box from "@mui/material/Box";
 // import Fade from '@mui/material/Fade';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material/styles';
-
-import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import Dashboard from '../components/BloggerSideBarMui/DrawerMui';
 import BlogCard from './../components/BlogComps/BlogCardMui';
 
 function handleClick(event) {
@@ -55,10 +51,11 @@ function BasicBreadcrumbs() {
 }
 
 
-const BloggerHome = ({openModal,handleClose,token})=>{
+
+const BloggerHome = ({openModal,handleClose,token,blogs})=>{
   const [snack, setSnack] =useState(false);
 
-    const [blogs,setBlogs]=useState([]);
+    
   ////////////////////////////////////////////////////////////////////////////////
     const[blogTitle,setBlogTitle] = useState("");
     const[blogDescription,setBlogDescription] = useState("");
@@ -68,6 +65,8 @@ const BloggerHome = ({openModal,handleClose,token})=>{
     const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
     const myRef = document.querySelector('.scrollable-div')
     
+   
+
     useEffect(()=>{
          let value = JSON.parse(localStorage.getItem('token'));
          let token = value.token
@@ -94,20 +93,7 @@ const BloggerHome = ({openModal,handleClose,token})=>{
 
 
 
-         axios.get('http://127.0.0.1:5000/bloggerDashboard/get',{
-          headers:{
-            "Content-Type":"application/json",
-            "Accept":"application/json",
-            "Authorization": token 
-          }
-         })
-        .then((res)=>{
-            console.log("blogssss----",res.data.blogs)
-            setBlogs(res.data.blogs)
-
-        }).catch((error)=>{
-            console.log(error)
-        })
+        
 
         return()=>{
           setSnack(false)
@@ -115,24 +101,24 @@ const BloggerHome = ({openModal,handleClose,token})=>{
 
     },[])
 
-    const onClick = async (id) => {
-        confirmAlert({
-            title: 'Confirm to Delete',
-            message: 'Are you sure to do delete.',
-            buttons: [
-              {
-                label: 'Yes',
-                onClick: () => {
-                    handleDelete(id);
-                }
-              },
-              {
-                label: 'No',
-                onClick: () => console.log("no is lcicked")
-              }
-            ]
-          });
-      };
+    // const onClick = async (id) => {
+    //     confirmAlert({
+    //         title: 'Confirm to Delete',
+    //         message: 'Are you sure to do delete.',
+    //         buttons: [
+    //           {
+    //             label: 'Yes',
+    //             onClick: () => {
+    //                 handleDelete(id);
+    //             }
+    //           },
+    //           {
+    //             label: 'No',
+    //             onClick: () => console.log("no is lcicked")
+    //           }
+    //         ]
+    //       });
+    //   };
 
  ////////////////////////////////////////////////////////////
 const handleImage = async(e)=>{
@@ -160,17 +146,17 @@ const blogFormSubmit = async()=>{
     console.log(info)
       await axios.post(`http://127.0.0.1:5000/BloggerDashboard/add/${info.id}`,data)
       .then(response=>{console.log(response)
-      axios.get('http://127.0.0.1:5000/bloggerDashboard/get')
-      .then((res)=>{
-          console.log("----",res.data.blogs)
-          setBlogs(res.data.blogs)
+      // axios.get('http://127.0.0.1:5000/bloggerDashboard/get')
+      // .then((res)=>{
+      //     console.log("----",res.data.blogs)
+      //     setBlogs(res.data.blogs)
 
-      }).catch((error)=>{
-          console.log(error)
-      })
+      // }).catch((error)=>{
+      //     console.log(error)
+      // })
 
       }
-      );
+      ).catch(err=> console.log(err))
       
 
     handleClose();
@@ -179,20 +165,21 @@ const blogFormSubmit = async()=>{
 
  ////////////////////////////////////////////////////////////////
     
-    const handleDelete =async (id)=>{
-        setBlogs(blogs.filter(blog=>blog._id!=id));
+    // const handleDelete =async (id)=>{
+    //     setBlogs(blogs.filter(blog=>blog._id!=id));
 
-        await axios.delete(`http://127.0.0.1:5000/BloggerDashboard/deletePost/${id}`)
-        .then(response=>console.log(response));
+    //     await axios.delete(`http://127.0.0.1:5000/BloggerDashboard/deletePost/${id}`)
+    //     .then(response=>console.log(response));
 
         
 
-    }
+    // }
 
 
 
     return(
         <>
+        
          <Snackbar
         anchorOrigin={{vertical:"top",horizontal:"right"}}
         open={snack}

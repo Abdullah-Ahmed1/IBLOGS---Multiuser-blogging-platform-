@@ -1,4 +1,5 @@
 import * as React from 'react';
+import {useState,useContext} from 'react';
 import '../../Pages/scroll.css'
 import {Link} from "react-router-dom"
 import Card from '@mui/material/Card';
@@ -12,16 +13,27 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import Badge from "@mui/material/Badge";
 import Typography from '@mui/material/Typography';
+import BlogDeleteDialogue from './BlogDelDialogue';
+import {BloggerContext} from '../../Pages/BloggerDashboard1';
 
 
 
 
 export default function BlogCard({item}) {
+  const [open, setOpen] = useState(false);
 
-    console.log("*****",item.image)
+  const value = useContext(BloggerContext);
+
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+    //console.log("*****",item.image)
 
   return (
-     
+     <>
+      <BlogDeleteDialogue  title = {item.title} blogId ={item._id}  open = {open} handleClose={handleClose} />
+
         <Card sx={{ minWidth:400,maxWidth: 400 ,boxShadow:" 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)"}}>
       <CardMedia  
         component="img"
@@ -40,15 +52,15 @@ export default function BlogCard({item}) {
         </Typography>
       </CardContent>
       <CardActions  >
-        <Button   sx = {{color:"black"}}  size="small"><ArticleIcon/>5</Button>
+        <Button   sx = {{color:"black"}}  size="small"><ArticleIcon/>{item.posts.length}</Button>
         <Button  sx = {{color:"black"}} size="small"><ShareIcon/></Button>
         <Button  sx = {{color:"black"}} size="small"><EditIcon/></Button>
-        <Button  sx = {{color:"black"}} size="small"><DeleteIcon/></Button>
+        <Button  onClick={()=>setOpen(true)}   sx = {{color:"black"}} size="small"  ><DeleteIcon/></Button>
       </CardActions>
     </Card>
   
 
-    
+    </>
   );
 }
 

@@ -156,6 +156,53 @@ module.exports = {
       });
   },
 
+  // deleteBlog: async(req, res) => {
+  //   const blogId = req.params.id;
+  //   const token = req.headers["authorization"];
+  //   try {
+  //     const decoded = jwt.verify(token, "1234567");
+  //     // console.log("--->>", decoded);
+  //     //
+  //     User.updateOne(
+  //       { _id: decoded.id },
+  //       {$pull: { "your_blogs": blogId }}
+  //     ).then((res)=>{
+  //       Blog.find({_id : blogId},{posts})
+  //     })
+  //     // console.log("a is", a);
+  //     res.send({ message: "Profile Image updated" });
+  //   } catch (err) {
+  //     return res.send({ err: err, message: "token may not be valid" });
+  //   }
+  //   console.log("$$$$$$$$$$", blogId);
+  // },
+
+  deleteBlog: async (req, res) => {
+    const blogId = req.params.id;
+    const token = req.headers["authorization"];
+    try {
+      const decoded = jwt.verify(token, "1234567"); // Verify token
+
+      //-------------------- find specific blog and get array of posts and delete all posts of blog using that array ---------------------------
+      const data = await Blog.find({ _id: blogId }, { posts: 1, _id: 0 });
+      console.log("data", data[0].posts);
+      data[0].posts.forEach(async (item) => {
+        await Post.deleteOne({ _id: item });
+      });
+
+      //-------------------------Deleting that blog from blogs collection--------------------------------------------------
+      await Blog.deleteOne({ _id: blogId });
+
+      //------------- Remove blogId from your_blogs array of user ---------
+      await User.updateOne(
+        { _id: decoded.id },
+        { $pull: { your_blogs: blogId } }
+      );
+    } catch (err) {
+      console.log(err);
+    }
+  },
+
   //--this is a method below to add any field to already added document
 
   // tempMethod: async (req, res) => {

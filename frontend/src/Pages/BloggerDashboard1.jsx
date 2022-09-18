@@ -1,6 +1,6 @@
 import * as React from "react";
 import axios from "axios";
-import {useState,useEffect} from "react";
+import {useState,useEffect,createContext} from "react";
 import {Link} from "react-router-dom";
 //import { useMediaQuery } from "react-responsive";
 import { styled, createTheme, ThemeProvider } from "@mui/material/styles";
@@ -114,7 +114,7 @@ const mdTheme2 = createTheme({
 });
 //---------------------------------------------------------------
 
-
+export const  BloggerContext = createContext(null);
 
 function DashboardContent(props) {
   const theme = useTheme();
@@ -124,6 +124,7 @@ function DashboardContent(props) {
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const [ token ,  setToken ] = useState({});
   const [profileData,setProfileData] = useState({});
+  const [blogs,setBlogs]=useState([]);
 
     useEffect(()=>{
       console.log("------------------------------",typeof(JSON.parse(localStorage.getItem("token"))))
@@ -131,8 +132,29 @@ function DashboardContent(props) {
        setToken(a)
        console.log("11111111111111111",token)
     },[])
+//------------------Blogs manipulation functions--------------------
+    const handleBlogDelete = (id)=>{
+      console.log("clicked id",id)
+      setBlogs(blogs.filter(blog => blog._id !== id ))
 
+      let value = JSON.parse(localStorage.getItem("token"));
+      let token = value.token;
 
+    axios.delete(
+      `http://127.0.0.1:5000/bloggerDashboard/delete-blog/${id}`,
+      {headers:{
+        "Content-Type":"application/json",
+        "Accept":"application/json",
+        "Authorization": token 
+      }},
+
+      ).then(res =>{
+        console.log(res)
+      }
+
+      ) 
+    }
+//-------------------------------------------------    
   const container =
     window !== undefined ? () => window().document.body : undefined;
   //console.log("match", match);
@@ -150,8 +172,12 @@ function DashboardContent(props) {
   const handleClose = ()=>{
     setOpenModal(false);
   }
+
+
+
   React.useEffect(() => {
 
+//------------------------------------------------------------------    
     let value = JSON.parse(localStorage.getItem("token"));
     let token = value.token;
     axios.get(
@@ -169,9 +195,22 @@ function DashboardContent(props) {
         setProfileData(res.data)
       })
       .catch((err) => console.log("errr", err));
+//--------------------------------------------------------------------------
 
-
-
+    axios.get('http://127.0.0.1:5000/bloggerDashboard/get',{
+        headers:{
+          "Content-Type":"application/json",
+          "Accept":"application/json",
+          "Authorization": token 
+        }
+      })
+      .then((res)=>{
+          console.log("blogssss----",res.data.blogs)
+          setBlogs(res.data.blogs)
+      }).catch((error)=>{
+          console.log(error)
+      })
+//--------------------------------------------------------------------------
 
 //    console.log(matches, "called");
     if (!matches) {
@@ -181,6 +220,7 @@ function DashboardContent(props) {
   console.log("tokennnnnnnnnnnnnnnnnnnnnnnnnn",token);
 
   return (
+    <BloggerContext.Provider value = {{handleBlogDelete}}>
     <ThemeProvider theme={mdTheme}>
       <CssBaseline />
     <Box sx={{ display: "flex" }}>
@@ -321,7 +361,7 @@ function DashboardContent(props) {
           <Grid container spacing={1} direction="row">
             {/* Chart */}
             <Routes>
-                <Route exact path="/" element={<BloggerHome  openModal = {openModal}  token={token}  handleClose={handleClose} />} />
+                <Route exact path="/" element={<BloggerHome  blogs = {blogs} openModal = {openModal}  token={token}  handleClose={handleClose} />} />
                 <Route exact path="/blogs" element={<BloggerBlog />} />
                 <Route exact path="/blogPosts/:blogId" element ={<BlogPost/>}   />
                 <Route exact path="/addpost" element={<AddPost />} />
@@ -338,6 +378,7 @@ function DashboardContent(props) {
       </Box>
     </Box>
   </ThemeProvider>
+  </BloggerContext.Provider>
   );
 }
 
