@@ -27,6 +27,8 @@ import ReaderHome from './ReaderHome';
 import ReaderFullPostView from './ReaderFullPostView';
 import AuthorProfile from './AuthorProfile';
 import YourProfile from '../YourProfileInfo';
+
+var _  =require('lodash')
 //----------------------------------------------------------------
 const drawerWidth = 70;
 
@@ -43,37 +45,7 @@ const useStyles = makeStyles((theme)=>({
   }
 }))
 
-// const useIntersection = (element, rootMargin) => {
-//   const [isVisible, setState] = useState(false);
 
-//   useEffect(() => {
-//       const observer = new IntersectionObserver(
-//           ([entry]) => {
-//               setState(entry.isIntersecting);
-//           }, { rootMargin }
-//       );
-
-//       element.current && observer.observe(element.current);
-
-//       return () => observer.unobserve(element.current);
-//   }, []);
-
-//   return isVisible;
-// };
-
-
-// const Posts = ({posts})=>{
-//   console.log("!!!!!!!!!!!!!!!!!1",posts)
-//   return(
-    
-//       posts.map(post=>{
-//         return(
-//           <ReaderDashboard key={post._id} post = {post}/>
-//         )
-//       })
-    
-//   )
-// }
  export const  UserContext = createContext(null);
 
 export default function ReaderDashboard() {
@@ -82,24 +54,89 @@ export default function ReaderDashboard() {
   const [visible,setVisible] = useState(false);
   const [posts,setPosts] = useState([])
   const [profileData,setProfileData] = useState({});
-  
-  // const ref = useRef();
- // const listInnerRef = useRef();  
-  // const inViewport = useIntersection(ref, '0px'); // Trigger as soon as the element becomes visible
-  // //const inViewport = useIntersection(ref, '-200px'); // Trigger if 200px is visible from the element
-
-  // const onScroll = () => {
-  //   if (listInnerRef.current) {
-  //     const { scrollTop, scrollHeight, clientHeight } = listInnerRef.current;
-  //     if (scrollTop + clientHeight === scrollHeight) {
-  //       console.log("reached bottom");
-  //     }else{
-  //       console.log("not reached bootom")
-  //     }
-  //   }
-  // };
+  const [profileData1,setProfileData1] = useState({});
+  const [dataChanged,setDataChanged] = useState(false);
+ 
   console.log("post",posts  )
 
+  const handleInfoChange = (item)=>{
+    setProfileData({...profileData,...item})
+  } 
+
+  ///----------------- Here API for updating data of profileInfo is applied  --------------
+  const ApiForProfileInfoChange = ()=>{
+    //--------------Here we first check that if the state value is changed or not, If changed we will make an API 
+    //-- otherwise not 
+    if(_.isEqual(profileData,profileData1)){
+      return console.log("not chnaged")
+    }else{
+      console.log("chnaged");
+      let value = JSON.parse(localStorage.getItem("token"));
+      let token = value.token;
+        axios.post(
+          "http://127.0.0.1:5000/updateProfile",profileData ,
+          {
+            headers: {
+              "Content-Type": "application/json",
+              Accept: "application/json",
+              Authorization: token,
+            },
+          }
+        )
+        .then((res) => {
+          console.log("Got response------------------", res);
+
+          let value = JSON.parse(localStorage.getItem("token"));
+          let token = value.token;
+          axios.get(
+              "http://127.0.0.1:5000/getProfile",
+              {
+                headers: {
+                  "Content-Type": "application/json",
+                  Accept: "application/json",
+                  Authorization: token,
+                },
+              }
+            )
+            .then((res) => {
+              console.log("Got Profile", res);
+              setProfileData(res.data)
+              setProfileData1(res.data)
+            })
+            .catch((err) => console.log("errr", err));
+          
+        })
+        .catch((err) => console.log("errr", err));
+    
+    }
+
+    // _.isEqual(profileData,profileData1)? 
+    //    "data is not changed"
+    //  : 
+      
+    //     console.log("uuuuuuuuuuuuuu");
+    //     let value = JSON.parse(localStorage.getItem("token"));
+    //     let token = value.token;
+    //       axios.get(
+    //         "http://127.0.0.1:5000/getProfile",
+    //         {
+    //           headers: {
+    //             "Content-Type": "application/json",
+    //             Accept: "application/json",
+    //             Authorization: token,
+    //           },
+    //         }
+    //       )
+    //       .then((res) => {
+    //         console.log("Got Profile", res);
+    //         setProfileData(res.data)
+    //       })
+    //       .catch((err) => console.log("errr", err));
+      
+    
+    
+    
+  }
 
 
   const ProfileFetch = ()=>{
@@ -127,15 +164,6 @@ export default function ReaderDashboard() {
 
   useEffect(()=>{
 
-    //console.log("post",posts  )
-  //  console.log("called")
-  //   if (inViewport) {
-  //     console.log('in viewport:', ref.current);
-  //     setVisible(true)
-  // }else{
-  //   console.log("no in view port")
-  //   setVisible(false)
-  // }
     axios.get('http://127.0.0.1:5000/readerDashboard')
     .then(res =>{
       console.log("res--------",res.data.data)
@@ -160,6 +188,7 @@ export default function ReaderDashboard() {
       .then((res) => {
         console.log("Got Profile", res);
         setProfileData(res.data)
+        setProfileData1(res.data)
       })
       .catch((err) => console.log("errr", err));
 
@@ -170,8 +199,9 @@ export default function ReaderDashboard() {
   },[])
 
   
+  
   return (
-    <UserContext.Provider  value = {{ProfileFetch,profileData}} >
+    <UserContext.Provider  value = {{ProfileFetch,profileData,handleInfoChange,ApiForProfileInfoChange}} >
     <Box sx={{ display: 'flex' }} 
     className={classes.root}
     >

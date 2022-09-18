@@ -11,6 +11,12 @@ import { UserContext } from "./ReaderDashboard/ReaderDashboard";
 
 const YourProfile =()=>{
    // const [profileData,setProfileData]=  useState({});
+
+    const [firstname,setFirstname] = useState("")
+    const [lastname,setLastname] = useState("")
+    const [profession,setProfession] = useState("")
+    const [organization,setOrganization] = useState("")
+    //-----------------------------------------------------------
     const [cropOpen, setCropOpen] = useState(false);
     const [nameEdit,setNameEdit] = useState(false);
     const [professionEdit,setProfessionEdit] = useState(false);
@@ -25,9 +31,7 @@ const YourProfile =()=>{
       const handleClose = () => {
         setCropOpen(false);
       };
-    useEffect(()=>{
-       
-    },[])
+    
 
     return (
         <>
@@ -52,7 +56,14 @@ const YourProfile =()=>{
                                 <Grid2 >
                                     {
                                         nameEdit?(
-                                            <TextField id="filled-basic" size="small" label="Username" variant="filled" /> 
+                                            <Grid2 container>
+                                                <Grid2>    
+                                                    <TextField value={value.profileData.firstname} onChange={(e)=>value.handleInfoChange({ firstname : e.target.value})}  id="filled-basic" size="small" label="first name" variant="filled" />
+                                                </Grid2>
+                                                <Grid2>
+                                                    <TextField value={value.profileData.lastname} onChange={(e)=>value.handleInfoChange({ lastname : e.target.value})} id="filled-basic" size="small" label="last name" variant="filled" />
+                                                </Grid2>
+                                            </Grid2> 
                                         ):
                                         (
                                             <h1 style={{margin:"0px"}}>{value.profileData.firstname} {value.profileData.lastname}</h1>    
@@ -64,7 +75,7 @@ const YourProfile =()=>{
                                 <Grid2 alignItems={"center"} >
                                     {
                                         nameEdit ?(
-                                        <DoneIcon  sx = {{cursor:"pointer"}}  onClick = {()=>setNameEdit(false)}   />            
+                                        <DoneIcon  sx = {{cursor:"pointer"}}  onClick = {()=>{setNameEdit(false); value.ApiForProfileInfoChange()}}   />            
                                         ):(
                                             <EditIcon  sx = {{cursor:"pointer"}}  onClick = {()=>setNameEdit(true)} />     
                                         )
@@ -81,9 +92,18 @@ const YourProfile =()=>{
                                 <Grid2>
                                     {
                                         professionEdit?(
-                                            <TextField id="filled-basic" size="small" label="Username" variant="filled" />
+
+                                            <Grid2 container>
+                                                <Grid2>    
+                                                    <TextField value={value.profileData.profession} onChange={(e)=>value.handleInfoChange({ profession : e.target.value})}  id="filled-basic" size="small" label="Profession" variant="filled" />
+                                                </Grid2>
+                                                <Grid2>@</Grid2>
+                                                <Grid2>
+                                                    <TextField value={value.profileData.organization} onChange={(e)=>value.handleInfoChange({ organization : e.target.value})} id="filled-basic" size="small" label="Organization" variant="filled" />
+                                                </Grid2>
+                                            </Grid2> 
                                         ):(
-                                            <h4 style={{margin:"0px",color:"grey"}}>software engineer @ Google</h4>
+                                            <h4 style={{margin:"0px",color:"grey"}}>{value.profileData.profession} @ {value.profileData.organization}</h4>
                                         )
                                     }
                               
@@ -91,7 +111,7 @@ const YourProfile =()=>{
                                 <Grid2>
                                     {
                                         professionEdit?(
-                                            <DoneIcon sx = {{cursor:"pointer"}}  onClick = {()=>setProfessionEdit(false)}/>
+                                            <DoneIcon sx = {{cursor:"pointer"}}  onClick = {()=>{setProfessionEdit(false); value.ApiForProfileInfoChange()   }}/>
                                         ):( 
                                             <EditIcon  sx = {{cursor:"pointer"}}  onClick = {()=>setProfessionEdit(true)}/>
                                         )

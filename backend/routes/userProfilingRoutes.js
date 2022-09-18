@@ -16,5 +16,6 @@ router
   .post(profilingController.updateProfileImage);
 //-------------------------------------------------------------
 router.route("/getProfile").get(profilingController.findProfile);
+router.route("/updateProfile").post(profilingController.updateProfile);
 
 module.exports = router;

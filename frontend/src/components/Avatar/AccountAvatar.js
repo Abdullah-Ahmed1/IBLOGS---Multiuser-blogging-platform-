@@ -27,7 +27,7 @@ export default function AccountMenu({ profileData }) {
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
-  const handleClose = ({ profileImage }) => {
+  const handleClose = () => {
     setAnchorEl(null);
   };
   return (

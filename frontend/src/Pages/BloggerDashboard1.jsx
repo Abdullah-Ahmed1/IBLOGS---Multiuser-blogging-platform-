@@ -1,4 +1,5 @@
 import * as React from "react";
+import axios from "axios";
 import {useState,useEffect} from "react";
 import {Link} from "react-router-dom";
 //import { useMediaQuery } from "react-responsive";
@@ -30,7 +31,7 @@ import BloggerHome from './BloggerHome';
 import BloggerBlog from './BloggerBlog';
 import AddPost from './AddPost';
 import FullBlogView from './FullBlogView';
-import ProfileUpdate from './ProfileUpdate';
+//import ProfileUpdate from './ProfileUpdate';
 import PostUpdate from './PostUpdate';
 import {
   MainListItems,
@@ -122,7 +123,7 @@ function DashboardContent(props) {
   const { window } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const [ token ,  setToken ] = useState({});
-  
+  const [profileData,setProfileData] = useState({});
 
     useEffect(()=>{
       console.log("------------------------------",typeof(JSON.parse(localStorage.getItem("token"))))
@@ -150,7 +151,29 @@ function DashboardContent(props) {
     setOpenModal(false);
   }
   React.useEffect(() => {
-    console.log(matches, "called");
+
+    let value = JSON.parse(localStorage.getItem("token"));
+    let token = value.token;
+    axios.get(
+        "http://127.0.0.1:5000/getProfile",
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+            Authorization: token,
+          },
+        }
+      )
+      .then((res) => {
+        console.log("Got Profile", res);
+        setProfileData(res.data)
+      })
+      .catch((err) => console.log("errr", err));
+
+
+
+
+//    console.log(matches, "called");
     if (!matches) {
       setOpen(false);
     }
@@ -208,8 +231,11 @@ function DashboardContent(props) {
           <div style={{fontWeight:"bolder" , backgroundColor:"#05386b",color:"#EDF5E1" ,padding:"10px" ,  border:"0px solid #EDF5E1", borderRadius:"20px" ,cursor:"pointer",':hover':{backgroundColor:"green"} }}  >
            <Link  style = {{ color:"#EDF5E1",textDecoration:"none"}} to = "/readerdashboard"  >Switch to Reading</Link> 
             </div>
-            <AccountMenu/>
-            
+          {/* ------------------------------------------ */}
+
+            <AccountMenu  profileData={profileData} />
+
+          {/* ------------------------------------------ */}
           <IconButton color="inherit">
             <Badge badgeContent={4} color="secondary">
               <Notifications sx = {{color:"#05386b"}} />
@@ -302,7 +328,6 @@ function DashboardContent(props) {
                 
                 <Route exact path="/full-blog/:blogId" element={<FullBlogView />} /> 
                 <Route exact path="/update/:PostId" element={<PostUpdate />} /> 
-                <Route exact path="/updateProfile" element={<ProfileUpdate />} />
                 <Route exact path="/calender" element={<EditorialCalender />} />
                 
 

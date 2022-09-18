@@ -163,7 +163,7 @@ module.exports = {
   //     console.log("reached-----------");
   //     await User.updateMany(
   //       {},
-  //       { $set: { profileImage: "" } },
+  //       { $set: { profession: "" } },
   //       { upsert: false, multi: true }
   //     );
   //   } catch (err) {

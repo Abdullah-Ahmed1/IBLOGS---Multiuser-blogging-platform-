@@ -171,6 +171,28 @@ module.exports = {
     res.send(user);
   },
 
+  updateProfile: async (req, res) => {
+    const data = req.body;
+    try {
+      const token = req.headers["authorization"];
+      const decoded = jwt.verify(token, "1234567");
+      const a = await User.findOneAndUpdate(
+        { _id: decoded.id },
+        {
+          firstname: data.firstname,
+          lastname: data.lastname,
+          email: data.email,
+          about: data.about,
+          organization: data.organization,
+          profession: data.profession,
+        }
+      );
+      res.send({ message: "Profile Information updated" });
+    } catch (err) {
+      res.send(err);
+    }
+  },
+
   updateProfileImage: async (req, res) => {
     const token = req.headers["authorization"];
     const image = req.body.image;
