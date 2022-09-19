@@ -133,6 +133,24 @@ function DashboardContent(props) {
        console.log("11111111111111111",token)
     },[])
 //------------------Blogs manipulation functions--------------------
+
+    const refreshBlogs = ()=>{
+      let value = JSON.parse(localStorage.getItem("token"));
+      let token = value.token;
+      axios.get('http://127.0.0.1:5000/bloggerDashboard/get',{
+        headers:{
+          "Content-Type":"application/json",
+          "Accept":"application/json",
+          "Authorization": token 
+        }
+      })
+      .then((res)=>{
+          console.log("blogssss----",res.data.blogs)
+          setBlogs(res.data.blogs)
+      }).catch((error)=>{
+          console.log(error)
+      })
+    }
     const handleBlogDelete = (id)=>{
       console.log("clicked id",id)
       setBlogs(blogs.filter(blog => blog._id !== id ))
@@ -361,7 +379,7 @@ function DashboardContent(props) {
           <Grid container spacing={1} direction="row">
             {/* Chart */}
             <Routes>
-                <Route exact path="/" element={<BloggerHome  blogs = {blogs} openModal = {openModal}  token={token}  handleClose={handleClose} />} />
+                <Route exact path="/" element={<BloggerHome  blogs = {blogs} openModal = {openModal}  token={token}  refreshBlogs = {refreshBlogs}  handleClose={handleClose} />} />
                 <Route exact path="/blogs" element={<BloggerBlog />} />
                 <Route exact path="/blogPosts/:blogId" element ={<BlogPost/>}   />
                 <Route exact path="/addpost" element={<AddPost />} />

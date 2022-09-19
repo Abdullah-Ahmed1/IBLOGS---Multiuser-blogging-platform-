@@ -52,14 +52,15 @@ function BasicBreadcrumbs() {
 
 
 
-const BloggerHome = ({openModal,handleClose,token,blogs})=>{
+const BloggerHome = ({openModal,handleClose,token,blogs,refreshBlogs})=>{
   const [snack, setSnack] =useState(false);
 
     
   ////////////////////////////////////////////////////////////////////////////////
     const[blogTitle,setBlogTitle] = useState("");
     const[blogDescription,setBlogDescription] = useState("");
-    const [blogImage,setBlogImage] = useState("") 
+    const [blogImage,setBlogImage] = useState("");
+    const [uploadedFile,setUploadedFile] = useState({});
   /////////////////////////////////////////////////////////////////////////////////
     const theme = useTheme();
     const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
@@ -122,30 +123,40 @@ const BloggerHome = ({openModal,handleClose,token,blogs})=>{
 
  ////////////////////////////////////////////////////////////
 const handleImage = async(e)=>{
+  setUploadedFile(e.target.files[0]);
   console.log("imageeeeeeeeeee--",e.target.files[0])
-  const body = new FormData();
-  body.append('file', e.target.files[0]);
-  body.append('upload_preset',"my-uploads")
-
-  const res = await fetch('https://api.cloudinary.com/v1_1/dlgwvuu5d/image/upload', { method: 'POST', body }).then(r=>r.json());
-  console.log("-----",res.secure_url)
-  setBlogImage(res.secure_url)
-  console.log(res.secure_url)
+ 
 }
 
-const blogFormSubmit = async()=>{
+const blogFormSubmit =  ()=>{
+  console.log("uploaded file",uploadedFile);
 
-  console.log("65464654687132411584",blogImage)
-  const info=  JSON.parse(atob(token.token.split(".")[1]))
+  const body = new FormData();
+  body.append('file', uploadedFile);
+  body.append('upload_preset',"my-uploads")
+
+   axios(
+    {
+      method: "POST",
+      url: "https://api.cloudinary.com/v1_1/dlgwvuu5d/image/upload",
+      data: body,
+    }
+  ).then(res=> {
+    console.log("-----",res.data.secure_url)
+    // setBlogImage(res.data.secure_url)
+    // console.log("ghnlnmlogImage",blogImage)
+    const info=  JSON.parse(atob(token.token.split(".")[1]))
   const data = {
       title : blogTitle,
       description : blogDescription,
-      image : blogImage,
+      image : res.data.secure_url,
       owner : info.id
     }
     console.log(info)
-      await axios.post(`http://127.0.0.1:5000/BloggerDashboard/add/${info.id}`,data)
+        axios.post(`http://127.0.0.1:5000/BloggerDashboard/add/${info.id}`,data)
       .then(response=>{console.log(response)
+        refreshBlogs();
+        handleClose();
       // axios.get('http://127.0.0.1:5000/bloggerDashboard/get')
       // .then((res)=>{
       //     console.log("----",res.data.blogs)
@@ -153,13 +164,38 @@ const blogFormSubmit = async()=>{
 
       // }).catch((error)=>{
       //     console.log(error)
-      // })
+  })    
 
-      }
-      ).catch(err=> console.log(err))
+  }).catch(err =>  console.log(err) )
+ 
+ // console.log("ghnlnmlogImage------------------",blogImage)
+ // console.log(res.secure_url)
+ // console.log("65464654687132411584",blogImage)
+  // const info=  JSON.parse(atob(token.token.split(".")[1]))
+  // const data = {
+  //     title : blogTitle,
+  //     description : blogDescription,
+  //     image : blogImage,
+  //     owner : info.id
+  //   }
+  //   console.log(info)
+  //     await axios.post(`http://127.0.0.1:5000/BloggerDashboard/add/${info.id}`,data)
+  //     .then(response=>{console.log(response)
+  //     // axios.get('http://127.0.0.1:5000/bloggerDashboard/get')
+  //     // .then((res)=>{
+  //     //     console.log("----",res.data.blogs)
+  //     //     setBlogs(res.data.blogs)
+
+  //     // }).catch((error)=>{
+  //     //     console.log(error)
+  //     // })
+
+  //     }
+  //     ).catch(err=> console.log(err))
       
 
-    handleClose();
+     
+    // setBlogImage("")
   }
  ////////////////////////////////////////////////////////////////////
 
@@ -250,6 +286,7 @@ const blogFormSubmit = async()=>{
                 onChange={ handleImage}
                     />
               <Button
+            
                 type="submit"
                  onClick = {blogFormSubmit}
                 fullWidth
@@ -271,7 +308,7 @@ const blogFormSubmit = async()=>{
              <h2>Your blogs</h2>
               <Grid container direction="row" alignItems="stretch" rowSpacing = {5} columnSpacing={20}    >
                  {
-                  blogs.length === 0 ? ( <h5>You have not created any blog yet</h5>)
+                  !blogs ? ( <h5>You have not created any blog yet</h5>)
                   :
                   
                   blogs.map((item)=>{
