@@ -6,3 +6,7 @@
     border-radius: 100px;
     border: none;
 }
+
+.sideScroll::-webkit-scrollbar{
+    width: 0;   
+}

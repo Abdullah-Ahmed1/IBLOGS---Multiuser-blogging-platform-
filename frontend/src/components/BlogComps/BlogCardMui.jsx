@@ -1,5 +1,6 @@
 import * as React from 'react';
 import {useState,useContext} from 'react';
+
 import '../../Pages/scroll.css'
 import {Link} from "react-router-dom"
 import Card from '@mui/material/Card';
@@ -15,11 +16,20 @@ import Badge from "@mui/material/Badge";
 import Typography from '@mui/material/Typography';
 import BlogDeleteDialogue from './BlogDelDialogue';
 import {BloggerContext} from '../../Pages/BloggerDashboard1';
+import BlogShareDialog from './../ShareComps/BlogShare';
 
 
 
 
 export default function BlogCard({item}) {
+
+  const [shareDialogOpen, setShareDialogOpen] = React.useState(false);
+
+  const handleShareDialogClose = (value) => {
+    setShareDialogOpen(false);
+   // setSelectedValue(value);
+  };
+
   const [open, setOpen] = useState(false);
 
   const value = useContext(BloggerContext);
@@ -53,12 +63,13 @@ export default function BlogCard({item}) {
       </CardContent>
       <CardActions  >
         <Button   sx = {{color:"black"}}  size="small"><ArticleIcon/>{item.posts.length}</Button>
-        <Button  sx = {{color:"black"}} size="small"><ShareIcon/></Button>
+        <Button  sx = {{color:"black"}} size="small" onClick= {()=>setShareDialogOpen(true)}  ><ShareIcon/></Button>
         <Button  sx = {{color:"black"}} size="small"><EditIcon/></Button>
         <Button  onClick={()=>setOpen(true)}   sx = {{color:"black"}} size="small"  ><DeleteIcon/></Button>
       </CardActions>
     </Card>
-  
+    
+    <BlogShareDialog  shareDialogOpen = {shareDialogOpen}  handleShareDialogClose={handleShareDialogClose} />
 
     </>
   );

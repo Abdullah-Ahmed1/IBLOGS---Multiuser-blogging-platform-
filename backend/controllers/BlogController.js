@@ -205,16 +205,16 @@ module.exports = {
 
   //--this is a method below to add any field to already added document
 
-  // tempMethod: async (req, res) => {
-  //   try {
-  //     console.log("reached-----------");
-  //     await User.updateMany(
-  //       {},
-  //       { $set: { profession: "" } },
-  //       { upsert: false, multi: true }
-  //     );
-  //   } catch (err) {
-  //     console.log(err);
-  //   }
-  // },
+  //   tempMethod: async (req, res) => {
+  //     try {
+  //       console.log("reached-----------");
+  //       await Post.updateMany(
+  //         {},
+  //         { $set: { parentBlog: "62fa60a45bed9b72d6bbff64" } },
+  //         { upsert: false, multi: true }
+  //       );
+  //     } catch (err) {
+  //       console.log(err);
+  //     }
+  //   },
 };

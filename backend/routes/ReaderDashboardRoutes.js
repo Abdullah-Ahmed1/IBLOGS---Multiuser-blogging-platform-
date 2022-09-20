@@ -3,6 +3,7 @@ const router = express.Router();
 const ReaderDashController = require("../controllers/ReaderDashController");
 
 router.route("/").get(ReaderDashController.getAllData);
-router.route("/all").get(ReaderDashController.getAllData1);
+//router.route("/all").get(ReaderDashController.getAllData1);
+//router.route("/all2").get(ReaderDashController.getAllData2);
 
 module.exports = router;

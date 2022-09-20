@@ -15,7 +15,7 @@ const List_Items = ()=>{
           <Link to="/readerdashboard">
          <ListItemButton>
           <ListItemIcon>
-            <HomeIcon sx={{ color: "#05386b",fontSize:"25px", marginBottom:"10px" }} />
+            <HomeIcon sx={{ color: "#5cdb95",fontSize:"25px", marginBottom:"10px" }} />
           </ListItemIcon>
         </ListItemButton>
         </Link>
@@ -24,7 +24,7 @@ const List_Items = ()=>{
         <Tooltip title="Saved" placement="right" arrow>
         <ListItemButton>
           <ListItemIcon>
-            <BookmarksIcon sx={{ color: "#05386b",fontSize:"25px" , marginBottom:"10px"}} />
+            <BookmarksIcon sx={{ color: "#5cdb95",fontSize:"25px" , marginBottom:"10px"}} />
           </ListItemIcon> 
         </ListItemButton>
         </Tooltip>
@@ -32,7 +32,7 @@ const List_Items = ()=>{
         <Tooltip title="Liked" placement="right" arrow>
         <ListItemButton>
           <ListItemIcon>
-            <ThumbUpAltIcon sx={{ color:"#05386b",fontSize:"25px", marginBottom:"50px" }} />
+            <ThumbUpAltIcon sx={{ color:"#5cdb95",fontSize:"25px", marginBottom:"50px" }} />
           </ListItemIcon> 
         </ListItemButton>
         </Tooltip>
@@ -43,7 +43,7 @@ const List_Items = ()=>{
          <Link to ='/bloggerdashboard' >
         <ListItemButton>
           <ListItemIcon>
-            <DriveFileRenameOutlineIcon sx={{ color:"#05386b",fontSize:"25px", marginBottom:"10px" }} />
+            <DriveFileRenameOutlineIcon sx={{ color:"#5cdb95",fontSize:"25px", marginBottom:"10px" }} />
           </ListItemIcon> 
         </ListItemButton>
         </Link>

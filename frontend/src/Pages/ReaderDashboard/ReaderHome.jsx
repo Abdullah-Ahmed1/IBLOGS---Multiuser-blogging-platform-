@@ -57,22 +57,23 @@ const ReaderHome = ({posts})=>{
         posts.map(item =>{
            
           return (
-            <Box sx = {{ boxShadow:"1px 1px 3px 1px rgba(0,0,0,0.3)",borderRadius:"3px",maxHeight:"300px",minHeight:"300px",width:"95%",marginBottom:"30px",backgroundColor:"white"}} >
+            <Box sx = {{ boxShadow:"1px 1px 3px 1px rgba(0,0,0,0.3)",borderRadius:"3px",minHeight:"300px",width:"98%",marginBottom:"30px",backgroundColor:"white", padding:"20px"}} >
        <Grid container direction="row"   spacing = {0} >
          <Grid lg = {10} md = {12} sm={12} sx= {{p:2}} item direction="column" justifyContent="space-between" spacing={0} container >
             <Grid item container sx = {{maxHeight:"20px"}} spacing={0} lg={8}  >
                 <Grid item lg = {1} md = {1} sm = {1}>
                     
-                    <Avatar sx={{ width: 45, height: 45 }}>A</Avatar>
+                    <Avatar alt={item.parentBlog.owner.firstname} src={item.parentBlog.owner.profileImage} />
                 </Grid>
                 <Grid item container   direction="column" spacing={0} lg = {9}  md = {7} sm={5}>
-                  <Link to = "author-profile"  sx = {{textDecoration:"none"}}>
+                  <Link to = "author-profile"  style = {{textDecoration:"none",color:"#05386b"}}>
                     <Grid item   sx = {{textDecoration:"none",fontSize:"14px",fontWeight:"bold",fontFamily: " Ubuntu, sans-serif"}}>
-                        Abdullah Ahmed -{" 27 April "}
+                      {/* {`${item.parentBlog.owner.firstname} ${item.parentBlog.owner.lastname}     ${item.publishDate.slice(0,10)}`} */}
+                        {item.parentBlog.owner.firstname} {item.parentBlog.owner.lastname}   <span  style={{marginLeft:"50px"}}> {item.publishDate.slice(0,10)}</span>  
                     </Grid>
                   </Link>
                     <Grid item  sx = {{fontSize:"16px",fontFamily: " Ubuntu, sans-serif",color:"#05386b"}}>
-                        From: Reactjs - from begginer to expert
+                        From: {item.parentBlog.title}
                     </Grid>
                    
                 </Grid>
@@ -108,7 +109,7 @@ const ReaderHome = ({posts})=>{
             </Grid>
          </Grid>
 
-          <Grid item container justifyContent="flex-end" sx = {{display:{lg :"flex",md:"none",sm:"none",xs:"none"},height:"300px"}}  alignItems={"center"} lg = {2} >
+          <Grid item container justifyContent="flex-end" sx = {{display:{lg :"flex",md:"none",sm:"none",xs:"none"},height:"300px"}}   lg = {2} >
               <img  style={{maxWidth:"160px",height:"90px"}} src={"https://res.cloudinary.com/dlgwvuu5d/image/upload/v1661858507/my-uploads/crxuibfslasaepf24mvp.png"} alt="" />
           </Grid>       
        </Grid>
@@ -199,13 +200,13 @@ const ReaderHome = ({posts})=>{
         {/* ---------------------------------------------------------------- */}
         </Grid2>
         <Divider orientation='vertical' sx={{width:"29px"}} flexItem/>
-        <Grid2  xs={12} md={5} lg={3 }  sx = {{position:"fixed",top:"0px",right:"0px",height:"100vh",overflow:"auto", background:"rgba(92, 219, 149,1)",marginRight:"0px",paddingLeft:"12px" } }     >
+        <Grid2 className="sideScroll" xs={12} md={5} lg={3.3 }   sx = {{ position:"fixed",bottom:"0px",right:"0px",height:"100vh",overflow:"auto", background:"#05386b",marginRight:"0px",paddingLeft:"20px"} }     >
        
         {/* <Divider /> */}
-        <h4>Recommended Topics</h4>
+        <h4 style={{color:"#379683"}} > Recommended Topics</h4>
         <RecommendedChips/>
         <div>
-        <h4>Trending Posts</h4>
+        <h4 style={{color:"#379683"}}>Trending Posts</h4>
           <TrendPostCard/>
           <TrendPostCard/>
           <TrendPostCard/>

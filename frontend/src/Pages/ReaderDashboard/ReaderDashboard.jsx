@@ -216,7 +216,7 @@ export default function ReaderDashboard() {
             width: drawerWidth,
             boxSizing: 'border-box',
            
-            backgroundColor:"#5cdb95"
+            backgroundColor: "#05386b"
           },
         }}
         variant="permanent"

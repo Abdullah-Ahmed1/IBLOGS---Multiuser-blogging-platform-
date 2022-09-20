@@ -138,8 +138,8 @@ export default function AskConfirmationBeforeSave() {
 }
 
 const columns = [
-  { field: 'name', headerName: 'Name', width: 180, editable: true },
-  { field: 'age', headerName: 'Age', type: 'number', editable: true },
+  { field: 'Post Title', headerName: 'PostTitle', width: 180, editable: true },
+  { field: 'Post Status', headerName: 'Post Status',  editable: true },
   {
     field: 'dateCreated',
     headerName: 'Date Created',
