@@ -57,7 +57,7 @@ const ReaderHome = ({posts})=>{
         posts.map(item =>{
            
           return (
-            <Box sx = {{ boxShadow:"1px 1px 3px 1px rgba(0,0,0,0.3)",borderRadius:"3px",minHeight:"300px",width:"98%",marginBottom:"30px",backgroundColor:"white", padding:"20px"}} >
+            <Box  key ={item._id}  sx = {{ boxShadow:"1px 1px 3px 1px rgba(0,0,0,0.3)",borderRadius:"3px",minHeight:"300px",width:"98%",marginBottom:"30px",backgroundColor:"white", padding:"20px"}} >
        <Grid container direction="row"   spacing = {0} >
          <Grid lg = {10} md = {12} sm={12} sx= {{p:2}} item direction="column" justifyContent="space-between" spacing={0} container >
             <Grid item container sx = {{maxHeight:"20px"}} spacing={0} lg={8}  >
@@ -85,10 +85,10 @@ const ReaderHome = ({posts})=>{
             </Grid>
             {/* <Link to="/ReaderDashboard/full-post">       */}
             <Grid item lg ={8} sx ={{padding:0,margin:0, fontFamily: "Fjalla One, sans-serif"}}>
-                    <Link to="/ReaderDashboard/full-post" style={{textDecoration:"none",color:"black"}} >
+                    <Link to={`/ReaderDashboard/full-post/${item._id}`} style={{textDecoration:"none",color:"black"}} >
                     <h4 style = {{fontWeight:"bolder"}}>{item.postTitle}</h4>
                     </Link>
-                    <Link to="/ReaderDashboard/full-post" style={{textDecoration:"none",color:"black"}} >
+                    <Link to={`/ReaderDashboard/full-post/${item._id}`} style={{textDecoration:"none",color:"black"}} >
                     <div  className="scrollers" style= {{color:"#00000099",width:"98%",maxHeight:"60%",fontSize:"14px",minHeight:"60%",overflow:"auto"}}>
                       {item.postDescription}
                     </div>

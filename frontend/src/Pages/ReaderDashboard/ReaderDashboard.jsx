@@ -192,10 +192,10 @@ export default function ReaderDashboard() {
       })
       .catch((err) => console.log("errr", err));
 
-    return () => {
-      // will run on every unmount.
-       console.log("component is unmounting");
-      }
+    // return () => {
+    //   // will run on every unmount.
+    //    console.log("component is unmounting");}
+      
   },[])
 
   
@@ -241,8 +241,8 @@ export default function ReaderDashboard() {
           flexGrow: 1,paddingLeft:"20px",background:"rgba(255, 255, 255,0.9)" }}
       >
        <Routes>
-       <Route exact path="/" element={<ReaderHome  posts = {posts}/>} />
-       <Route exact path="/full-post" element={<ReaderFullPostView posts = {posts} />} />
+       <Route exact path="/" element={<ReaderHome posts = {posts} />} />
+       <Route exact path="/full-post/:id" element={<ReaderFullPostView  />} />
        <Route exact path="/author-profile" element={<AuthorProfile />} />
        <Route exact path="/your-profile" element={<YourProfile />} />         
        </Routes>

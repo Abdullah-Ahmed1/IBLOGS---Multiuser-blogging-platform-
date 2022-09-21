@@ -74,4 +74,34 @@ module.exports = {
       .then((data) => res.send({ data }))
       .catch((err) => console.log(err));
   },
+
+  getFullPost: (req, res) => {
+    console.log("ccccccccccccccccc");
+    const postId = req.params.id;
+
+    Post.find({ _id: postId })
+      .populate({
+        path: "parentBlog",
+        select: { title: 1 },
+        populate: {
+          path: "owner",
+          select: { firstname: 1, lastname: 1, profileImage: 1, email: 1 },
+        },
+      })
+      .select({
+        title: 1,
+        postTitle: 1,
+        postContent: 1,
+        postDescription: 1,
+        postKeywords: 1,
+        publishDate: 1,
+        publishStatus: 1,
+        allowComments: 1,
+      })
+      .exec()
+      .then((data) => {
+        res.send({ data });
+      })
+      .catch((err) => console.log(err));
+  },
 };
