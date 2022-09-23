@@ -47,7 +47,12 @@ var postSchema = new mongoose.Schema({
     required: true,
   },
   comments: {
-    type: [],
+    type: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Comment",
+      },
+    ],
   },
   parentBlog: {
     type: mongoose.Schema.Types.ObjectId,

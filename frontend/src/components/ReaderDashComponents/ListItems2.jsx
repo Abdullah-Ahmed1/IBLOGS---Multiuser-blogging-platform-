@@ -22,11 +22,13 @@ const List_Items = ()=>{
         </Tooltip>
 
         <Tooltip title="Saved" placement="right" arrow>
-        <ListItemButton>
-          <ListItemIcon>
-            <BookmarksIcon sx={{ color: "#5cdb95",fontSize:"25px" , marginBottom:"10px"}} />
-          </ListItemIcon> 
-        </ListItemButton>
+        <Link to="/readerdashboard/saved-lists">   
+          <ListItemButton>
+            <ListItemIcon>
+              <BookmarksIcon sx={{ color: "#5cdb95",fontSize:"25px" , marginBottom:"10px"}} />
+            </ListItemIcon> 
+          </ListItemButton>
+        </Link>    
         </Tooltip>
 
         <Tooltip title="Liked" placement="right" arrow>

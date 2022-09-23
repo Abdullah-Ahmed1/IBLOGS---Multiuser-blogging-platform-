@@ -2,6 +2,7 @@ const Mongoose = require("mongoose");
 const jwt = require("jsonwebtoken");
 var connection = require("../Connection/connection");
 const Blog = Mongoose.model("Blog");
+const Comment = Mongoose.model("Comment");
 const Post = Mongoose.model("Post");
 const { User, validate } = require("../models/users.model");
 //const { Post, validate } = require("../models/post.model");
@@ -97,7 +98,7 @@ module.exports = {
     const blogId = req.params.blogId;
     const blog = await Blog.findOne({ _id: blogId });
     // console.log("--------", blog);
-    Post.create(req.body)
+    Post.create({ ...req.body, parentBlog: blogId })
       .then(async (post) => {
         console.log("Post has been Added ", post, post._id);
         //  console.log("reached");
@@ -203,18 +204,19 @@ module.exports = {
     }
   },
 
-  //--this is a method below to add any field to already added document
+  //  --this is a method below to add any field to already added document
 
-  //   tempMethod: async (req, res) => {
-  //     try {
-  //       console.log("reached-----------");
-  //       await Post.updateMany(
-  //         {},
-  //         { $set: { parentBlog: "62fa60a45bed9b72d6bbff64" } },
-  //         { upsert: false, multi: true }
-  //       );
-  //     } catch (err) {
-  //       console.log(err);
-  //     }
-  //   },
+  // tempMethod: async (req, res) => {
+  //   try {
+  //     console.log("reached-----------");
+  //     const a = new Date();
+  //     await Comment.updateMany(
+  //       {},
+  //       { $set: { uploadDate: a } },
+  //       { upsert: false, multi: true }
+  //     );
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  // },
 };

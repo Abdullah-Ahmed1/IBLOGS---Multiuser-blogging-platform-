@@ -38,6 +38,8 @@ const Item = styled(Paper)(({ theme }) => ({
 
 
 const ReaderHome = ({posts})=>{
+
+  console.log("got posta data",posts)
     const [added,setAdded] = useState(false) 
     return(
         <>
@@ -52,10 +54,10 @@ const ReaderHome = ({posts})=>{
        {/* ----------------------------------------------------------------------------------- */}
        {/* <Posts  posts = {posts}/> */}
        {
-        posts ?
+        posts !==null ?
         (
         posts.map(item =>{
-           
+         //  console.log("!!!!!!!!!!!!!!!!1",item.parentBlog)
           return (
             <Box  key ={item._id}  sx = {{ boxShadow:"1px 1px 3px 1px rgba(0,0,0,0.3)",borderRadius:"3px",minHeight:"300px",width:"98%",marginBottom:"30px",backgroundColor:"white", padding:"20px"}} >
        <Grid container direction="row"   spacing = {0} >
@@ -63,7 +65,8 @@ const ReaderHome = ({posts})=>{
             <Grid item container sx = {{maxHeight:"20px"}} spacing={0} lg={8}  >
                 <Grid item lg = {1} md = {1} sm = {1}>
                     
-                    <Avatar alt={item.parentBlog.owner.firstname} src={item.parentBlog.owner.profileImage} />
+                    <Avatar 
+                    alt={item.parentBlog.owner.firstname} src={item.parentBlog.owner.profileImage} />
                 </Grid>
                 <Grid item container   direction="column" spacing={0} lg = {9}  md = {7} sm={5}>
                   <Link to = "author-profile"  style = {{textDecoration:"none",color:"#05386b"}}>

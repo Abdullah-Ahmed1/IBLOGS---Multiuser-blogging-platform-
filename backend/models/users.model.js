@@ -23,6 +23,14 @@ const userSchema = new mongoose.Schema({
       },
     ],
   },
+  your_lists: {
+    type: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "SavedList",
+      },
+    ],
+  },
   // Liked_Posts: {
   //   type: [
   //     {

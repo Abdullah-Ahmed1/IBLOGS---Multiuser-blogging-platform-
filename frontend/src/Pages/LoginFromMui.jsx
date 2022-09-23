@@ -64,7 +64,7 @@ export default function SignInSide() {
                 token:res.data.data
                 
             }));
-            navigate('/bloggerdashboard')
+            navigate('/readerdashboard')
 
         }else{
           setOpen(true  )

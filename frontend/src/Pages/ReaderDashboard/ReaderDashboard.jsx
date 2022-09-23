@@ -27,6 +27,7 @@ import ReaderHome from './ReaderHome';
 import ReaderFullPostView from './ReaderFullPostView';
 import AuthorProfile from './AuthorProfile';
 import YourProfile from '../YourProfileInfo';
+import SavedList from './SavedList';
 
 var _  =require('lodash')
 //----------------------------------------------------------------
@@ -52,7 +53,7 @@ export default function ReaderDashboard() {
   const classes = useStyles();
 
   const [visible,setVisible] = useState(false);
-  const [posts,setPosts] = useState([])
+  const [posts,setPosts] = useState(null)
   const [profileData,setProfileData] = useState({});
   const [profileData1,setProfileData1] = useState({});
   const [dataChanged,setDataChanged] = useState(false);
@@ -244,7 +245,8 @@ export default function ReaderDashboard() {
        <Route exact path="/" element={<ReaderHome posts = {posts} />} />
        <Route exact path="/full-post/:id" element={<ReaderFullPostView  />} />
        <Route exact path="/author-profile" element={<AuthorProfile />} />
-       <Route exact path="/your-profile" element={<YourProfile />} />         
+       <Route exact path="/your-profile" element={<YourProfile />} />
+       <Route exact path="/saved-lists" element={<SavedList />} />         
        </Routes>
       </Box>
     </Box>

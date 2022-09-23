@@ -4,6 +4,7 @@ var connection = require("../Connection/connection");
 //const Blog = Mongoose.model("Blog");
 const Post = Mongoose.model("Post");
 const User = Mongoose.model("User");
+const Comment = Mongoose.model("Comment");
 //const { User, validate } = require("../models/users.model");
 module.exports = {
   // getAllData1: (req, res) => {
@@ -103,5 +104,68 @@ module.exports = {
         res.send({ data });
       })
       .catch((err) => console.log(err));
+  },
+
+  addComment: (req, res) => {
+    const postId = req.params.postId;
+    console.log("postId", postId);
+    console.log(req.body.comment);
+    const token = req.headers["authorization"];
+
+    try {
+      const decoded = jwt.verify(token, "1234567");
+      console.log(decoded);
+      const data = {
+        author: decoded.id,
+        comment: req.body.comment,
+        uploadDate: new Date(),
+      };
+      Comment.create(data)
+        .then((comment) => {
+          console.log(comment);
+          Post.findOneAndUpdate(
+            { _id: postId },
+            { $push: { comments: comment._id } },
+            function (error, success) {
+              if (error) {
+                console.log(error);
+              } else {
+                console.log(success);
+              }
+            }
+          ).save();
+          res.send(comment);
+        })
+        .catch((err) => console.log(err));
+    } catch (err) {
+      console.log(err);
+    }
+  },
+
+  getPostComments: (req, res) => {
+    const postId = req.params.postId;
+    const token = req.headers["authorization"];
+    try {
+      const decoded = jwt.verify(token, "1234567");
+      Post.findOne({ _id: postId })
+        .populate({
+          path: "comments",
+          populate: {
+            path: "author",
+            select: {
+              firstname: 1,
+              lastname: 1,
+              profileImage: 1,
+            },
+          },
+        })
+        .select({
+          postTitle: 1,
+        })
+        .exec()
+        .then((response) => res.send(response));
+    } catch (err) {
+      console.log(err);
+    }
   },
 };
