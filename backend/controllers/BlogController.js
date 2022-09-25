@@ -204,19 +204,19 @@ module.exports = {
     }
   },
 
-  //  --this is a method below to add any field to already added document
+  // --this is a method below to add any field to already added document
 
-  // tempMethod: async (req, res) => {
-  //   try {
-  //     console.log("reached-----------");
-  //     const a = new Date();
-  //     await Comment.updateMany(
-  //       {},
-  //       { $set: { uploadDate: a } },
-  //       { upsert: false, multi: true }
-  //     );
-  //   } catch (err) {
-  //     console.log(err);
-  //   }
-  // },
+  tempMethod: async (req, res) => {
+    try {
+      console.log("reached-----------");
+      // const a = new Date();
+      await User.updateMany(
+        {},
+        { $set: { ReadingList: [] } },
+        { upsert: false, multi: true }
+      );
+    } catch (err) {
+      console.log(err);
+    }
+  },
 };

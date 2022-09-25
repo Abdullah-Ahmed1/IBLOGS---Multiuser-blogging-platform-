@@ -7,6 +7,7 @@ import Grid2 from '@mui/material/Unstable_Grid2';
 //import List from '@mui/material/List';
 import { Typography } from '@mui/material';
 import { Link } from 'react-router-dom';
+import Button from '@mui/material/Button';
 import { styled } from '@mui/material/styles';
 import Paper from '@mui/material/Paper';
 import Divider from '@mui/material/Divider';
@@ -17,7 +18,7 @@ import SearchBar from "../../components/ReaderDashComponents/Searchbar"
 //------------
 import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 import ShareIcon from '@mui/icons-material/Share';
-import BookmarkAddIcon from '@mui/icons-material/BookmarkAdd';
+//import BookmarkAddIcon from '@mui/icons-material/BookmarkAdd';
 import BookmarkAddedIcon from '@mui/icons-material/BookmarkAdded';
 import "./../../components/PostComponentsMui/PostCardScroll.css";
 import Avatar from '@mui/material/Avatar';
@@ -27,6 +28,7 @@ import MoreVertIcon from '@mui/icons-material/MoreVert';
 import RecommendedChips from './../../components/PostComponentsMui/RecommendChips';
 import TrendPostCard from './../../components/PostComponentsMui/TrendPostCard';
 //import AccountMenu from './../../components/Avatar/AccountAvatar';
+import CreateListMenu from './../../components/ReaderDashComponents/CreateSavedListMenu';
 
 const Item = styled(Paper)(({ theme }) => ({
     backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
@@ -39,8 +41,17 @@ const Item = styled(Paper)(({ theme }) => ({
 
 const ReaderHome = ({posts})=>{
 
-  console.log("got posta data",posts)
     const [added,setAdded] = useState(false) 
+
+    const handleSaveIconClick =()=>{
+      
+      setAdded(true)
+    } 
+
+
+
+
+
     return(
         <>
         <CssBaseline />
@@ -99,16 +110,17 @@ const ReaderHome = ({posts})=>{
                    
             </Grid>
             {/* </Link> */}
-            <Grid item sx = {{ width:"80%",maxHeight:"20px"}} >
+            <Grid container item sx = {{ width:"90%",maxHeight:"20px"}} >
               {/* <Button  sx = {{width:"20px",color:"#05386b"}} size="small"><ThumbUpIcon/></Button>
              <Button  sx = {{   width:"20px",color:"#05386b"}} size="small"> <ShareIcon/></Button>
              <Button sx = {{   width:"20px",color:"#05386b",display: `${!added ? "inline":"none"}`}} onClick ={()=>setAdded(true)} size="small"><BookmarkAddIcon/></Button>
              <Button sx = {{   width:"20px",color:"#05386b",display: `${!added ? "none":"inline"}`}} onClick ={()=>setAdded(false)}  ><BookmarkAddedIcon/></Button>   
                */}
-           <ThumbUpIcon sx=  {{cursor:"pointer",color:"#05386b",margin:"0px 15px "}}  />
-           <ShareIcon sx=  {{   cursor:"pointer",color:"#05386b",margin:"0px 15px "}} />
-           <BookmarkAddIcon  sx=  {{cursor:"pointer",color:"#05386b",margin:"0px 15px ",display: `${added ? "none":"inline"}`}} onClick ={()=>setAdded(true)}  />
-           <BookmarkAddedIcon sx=  {{cursor:"pointer",color:"#379683 ",margin:"0px 15px ",display: `${!added ? "none":"inline"}`}}  onClick ={()=>setAdded(false)}  />
+           <Button  sx = {{margin:"0px",padding:"0px"}} ><ThumbUpIcon sx=  {{cursor:"pointer",color:"#05386b",margin:"0px 0px "}}  /></Button>
+           <Button  sx = {{margin:"0px",padding:"0px"}}><ShareIcon sx=  {{   cursor:"pointer",color:"#05386b",margin:"0px 0px "}} /></Button>
+           {/* <BookmarkAddIcon  sx=  {{cursor:"pointer",color:"#05386b",margin:"0px 15px ",display: `${added ? "none":"inline"}`}} onClick ={handleSaveIconClick}  /> */}
+           <CreateListMenu  postId = {item._id} /> 
+           {/* <BookmarkAddedIcon sx=  {{cursor:"pointer",color:"#379683 ",margin:"0px 15px ",display: `${!added ? "none":"inline"}`}}  onClick ={()=>setAdded(false)}  /> */}
             </Grid>
          </Grid>
 
@@ -125,81 +137,7 @@ const ReaderHome = ({posts})=>{
        }
        
        
-       {/* <Grid2 item lg ={12}>
-       <ReaderPostCard/>
-       </Grid2>  */}
-       {/* <Grid item lg ={12}>
-       <ReaderPostCard/>
-       </Grid>
-       <Grid item lg ={12}>
-       <ReaderPostCard/>
-       </Grid>
-       <Grid item lg ={12}>
-       <ReaderPostCard/>
-       </Grid>
-       <Grid item lg ={12}>
-       <ReaderPostCard/>
-       </Grid>
-       <Grid item lg ={12}>
-       <ReaderPostCard/>
-       </Grid>
-       <Grid item lg ={12}>
-       <ReaderPostCard/>
-       </Grid>
-       <Grid item lg ={12}>
-       <ReaderPostCard/>
-       </Grid>
-       <Grid item lg ={12}>
-       <ReaderPostCard/>
-       </Grid>
-       <Grid item lg ={12}>
-       <ReaderPostCard/>
-       </Grid>
-       <Grid item lg ={12}>
-       <ReaderPostCard/>
-       </Grid>
-       <Grid item lg ={12}>
-       <ReaderPostCard/>
-       </Grid>
-       <Grid item lg ={12}>
-       <ReaderPostCard/>
-       </Grid>
-       <Grid item lg ={12}>
-       <ReaderPostCard/>
-       </Grid>
-       <Grid item lg ={12}>
-       <ReaderPostCard/>
-       </Grid>
-       <Grid item lg ={12}>
-       <ReaderPostCard/>
-       </Grid> */}
-
-       
-        {/* <Grid item lg={12} >
-        <Card sx={{ display: 'flex' }}>
-          <CardContent sx={{ flex: 1 }}>
-            <Typography component="h2" variant="h5">
-              this is title
-            </Typography>
-            <Typography variant="subtitle1" color="text.secondary">
-              this is subtitle space
-            </Typography>
-            <Typography variant="subtitle1" paragraph>
-              this is description space Lorem ipsum dolor sit amet consectetur adipisicing elit. Totam odit, ut eveniet, qui aspernatur dolores doloribus quis, accusantium corrupti porro quo velit ipsam sunt? Itaque minima ea neque sint quisquam.
-            </Typography>
-            <Typography variant="subtitle1" color="primary">
-              Continue reading...
-            </Typography>
-          </CardContent>
-          <CardMedia
-            component="img"
-            sx={{ width: 160, display: { xs: 'none', sm: 'block' } }}
-            image={"https://res.cloudinary.com/dlgwvuu5d/image/upload/v1661858507/my-uploads/crxuibfslasaepf24mvp.png"}
-            alt=" image"
-          />
-        </Card>
-        </Grid> */}
-
+     
         {/* ---------------------------------------------------------------- */}
         </Grid2>
         <Divider orientation='vertical' sx={{width:"29px"}} flexItem/>

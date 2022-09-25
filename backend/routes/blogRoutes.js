@@ -11,5 +11,5 @@ router.route("/delete-blog/:id").delete(BlogController.deleteBlog);
 //////////////////////// posts ///////////////////////////////////////////////
 router.route("/addpost/:blogId").post(BlogController.addPost);
 router.route("/get-all-posts/:blogId").get(BlogController.getPost);
-//router.route("/temp").get(BlogController.tempMethod);
+//  router.route("/temp").get(BlogController.tempMethod);
 module.exports = router;

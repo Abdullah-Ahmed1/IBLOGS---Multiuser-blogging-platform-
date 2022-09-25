@@ -6,6 +6,9 @@ router.route("/").get(ReaderDashController.getAllData);
 router.route("/full-post/:id").get(ReaderDashController.getFullPost);
 router.route("/add-comment/:postId").post(ReaderDashController.addComment);
 router.route("/get-comments/:postId").get(ReaderDashController.getPostComments);
+router
+  .route("/add-to-reading-list/:postId")
+  .post(ReaderDashController.addReadingList);
 //router.route("/all").get(ReaderDashController.getAllData1);
 //router.route("/all2").get(ReaderDashController.getAllData2);
 

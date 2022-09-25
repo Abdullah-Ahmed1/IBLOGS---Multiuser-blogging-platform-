@@ -168,4 +168,29 @@ module.exports = {
       console.log(err);
     }
   },
+  addReadingList: (req, res) => {
+    console.log("reached", req.params.postId);
+    const postId = req.params.postId;
+    const token = req.headers["authorization"];
+    console.log("token", token);
+    try {
+      const decoded = jwt.verify(token, "1234567");
+      User.updateOne(
+        { _id: decoded.id },
+        { $push: { ReadingList: postId } },
+        function (error, success) {
+          if (error) {
+            console.log(error);
+          } else {
+            console.log(success);
+          }
+        }
+      )
+      .then((res) => res.send(res));
+    } catch (err) {
+      console.log(err);
+      res.send(err);
+    }
+  },
+  addSavedList: (req, res) => {},
 };

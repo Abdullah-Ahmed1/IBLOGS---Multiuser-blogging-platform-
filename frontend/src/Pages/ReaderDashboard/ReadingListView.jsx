@@ -1,24 +1,57 @@
 import Grid2 from '@mui/material/Unstable_Grid2';
 import CssBaseline from '@mui/material/CssBaseline';
 import Divider from '@mui/material/Divider';
+import TrendPostCard from '../../components/PostComponentsMui/TrendPostCard';
+import RecommendedChips from '../../components/PostComponentsMui/RecommendChips';
 import { Typography } from '@mui/material';
-import SearchBar from "../../components/ReaderDashComponents/Searchbar"
-import TrendPostCard from './../../components/PostComponentsMui/TrendPostCard';
-import RecommendedChips from './../../components/PostComponentsMui/RecommendChips';
 
-const SavedList = ()=>{
+const ReadingListView = ()=>{
     return(
         <>
         <CssBaseline />
-        <div style={{marginTop:"20px",display:"flex",width:"73%",flexDirection:"row" ,background:"rgba(237, 245, 225,0)",alignItems:"center",justifyContent:"space-between"}}>
+        {/* <div style={{marginTop:"5px",display:"flex",width:"73%",flexDirection:"row" ,background:"rgba(237, 245, 225,0)",alignItems:"center",justifyContent:"space-between"}}>
           <h2 style = {{color:"#379863"}}>IBlogs</h2>
-          <SearchBar/>
-        </div>
+         
+        </div> */}
         {/* <Divider variant="middle"/> */}
       <Grid2 container spacing={0} justifyContent= "space-between"   >
-        <Grid2 xs={12} md={5} lg={7} spacing={0} sx = {{marginTop:"20px",marginLeft:"30px"}}  >  
+        <Grid2 xs={12} md={5} lg={7} spacing={0} sx = {{height:"100vh",marginTop:"50px",marginLeft:"30px"}}  >  
        {/* ----------------------------------------------------------------------------------- */}
-      
+          {/* <Grid2 container justifyContent={"space-between"}>
+            <Grid2>
+              <h2 style={{margin: 0 ,padding:0}} >Your Lists</h2>
+            </Grid2>
+            <Grid2>
+              <Button sx = {{backgroundColor:"#05386b"}} variant='contained'> New List </Button>
+            </Grid2>
+          </Grid2> */}
+{/* 
+          <Divider  sx = {{ margin: "50px 10px"}} variant="middle" />
+
+          <Grid2>
+          <Grid2 sx ={{backgroundColor:"white",padding:"10px",boxShadow:"0 4px 8px 0 rgba(92,219,149, 0.2), 0 6px 20px 0 rgba(92,219,149, 0.19)"}} >
+          <Grid2 container  justifyContent={"space-between"}>
+            <Grid2 container>
+              <Grid2 sx = {{paddingLeft:"10px",paddingTop:"10px"}}>
+              <h3 style={{padding:"0px",margin:"0px"}}  >Reading List {<LockIcon sx = {{fontSize:"20px",margin:"0px 10px"}} />}</h3>
+              <h4>Posts: 5</h4>
+              <Button onClick={()=>{ navigate("/readerdashboard/saved-lists/reading-list");}}  sx = {{color:"#05386b",borderColor:"#05386b"}}  variant="outlined">View list</Button>
+              </Grid2>
+            
+            </Grid2>
+            <Grid2>
+            <div className='container' ref={container} style={{width:"150px"}}  ></div>
+            </Grid2>
+          </Grid2>
+          <Grid2>
+
+          </Grid2>
+
+          </Grid2>
+
+
+
+          </Grid2> */}
         {/* ---------------------------------------------------------------- */}
         </Grid2>
         <Divider orientation='vertical' sx={{width:"29px"}} flexItem/>
@@ -75,4 +108,4 @@ const SavedList = ()=>{
         </>
     )
 }
-export default SavedList;
+export default ReadingListView;

@@ -23,6 +23,18 @@ const userSchema = new mongoose.Schema({
       },
     ],
   },
+
+  //by default Reading List
+  ReadingList: {
+    type: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Post",
+      },
+    ],
+  },
+
+  //reading list with custom name
   your_lists: {
     type: [
       {

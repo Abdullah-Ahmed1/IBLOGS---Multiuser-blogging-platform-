@@ -13,6 +13,11 @@ var savedListSchema = new mongoose.Schema({
     ],
   },
 
+  listOwner: {
+    type: mongoose.Types.ObjectId,
+    ref: "User",
+  },
+
   CreationDate: {
     type: String,
     required: true,
