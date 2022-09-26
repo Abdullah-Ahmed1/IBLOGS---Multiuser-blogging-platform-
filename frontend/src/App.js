@@ -3,7 +3,7 @@ import "./App.css";
 import Login from "./Pages/LoginForm";
 import Register from "./Pages/RegisterForm";
 import { Routes, Route, Link } from "react-router";
-
+import reactGA from "react-ga";
 import Home from "./Pages/Home";
 import PageNotFound from "./Pages/PageNotFound";
 import Dashboard from "./Pages/BloggerDashboard1";
@@ -15,6 +15,9 @@ import SignInSide from "./Pages/LoginFromMui";
 import SignUp from "./Pages/RegisterFormMui";
 import ReaderDashboard from "./Pages/ReaderDashboard/ReaderDashboard";
 //import YourProfile from "./components/ProfileComps/ProfileInfo";
+
+const TRACKING_ID = "UA-167584801-1";
+reactGA.initialize(TRACKING_ID);
 
 function App() {
   return (

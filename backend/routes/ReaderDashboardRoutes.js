@@ -9,6 +9,9 @@ router.route("/get-comments/:postId").get(ReaderDashController.getPostComments);
 router
   .route("/add-to-reading-list/:postId")
   .post(ReaderDashController.addReadingList);
+
+router.route("/get-reading-list").get(ReaderDashController.getReadingList);
+
 //router.route("/all").get(ReaderDashController.getAllData1);
 //router.route("/all2").get(ReaderDashController.getAllData2);
 

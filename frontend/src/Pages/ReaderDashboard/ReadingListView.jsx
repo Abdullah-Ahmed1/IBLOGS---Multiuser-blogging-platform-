@@ -1,57 +1,126 @@
+import axios from "axios";
+import { useEffect,useState } from "react";
+import Box from '@mui/material/Box';
+import Grid from "@mui/material/Grid";
+import Avatar from '@mui/material/Avatar';
+import Button from '@mui/material/Button';
+import MoreVertIcon from '@mui/icons-material/MoreVert';
+import ThumbUpIcon from '@mui/icons-material/ThumbUp';
+import ShareIcon from '@mui/icons-material/Share';
+import ListIcon from '@mui/icons-material/List';
+import { Link } from 'react-router-dom';
 import Grid2 from '@mui/material/Unstable_Grid2';
 import CssBaseline from '@mui/material/CssBaseline';
 import Divider from '@mui/material/Divider';
 import TrendPostCard from '../../components/PostComponentsMui/TrendPostCard';
 import RecommendedChips from '../../components/PostComponentsMui/RecommendChips';
+import CircularProgress from '@mui/material/CircularProgress';
 import { Typography } from '@mui/material';
 
 const ReadingListView = ()=>{
+    const [readingList,setReadingList]=useState(null);    
+
+    useEffect(()=>{
+        let value = JSON.parse(localStorage.getItem("token"));
+        let token = value.token;
+        axios.get("http://127.0.0.1:5000/readerDashboard/get-reading-list",{
+            headers: {
+                "Content-Type": "application/json",
+                Accept: "application/json",
+                Authorization: token,
+              },
+        }).then(res =>{
+            console.log("reading list",res.data)
+            setReadingList(res.data)
+        })
+    },[])
     return(
         <>
         <CssBaseline />
-        {/* <div style={{marginTop:"5px",display:"flex",width:"73%",flexDirection:"row" ,background:"rgba(237, 245, 225,0)",alignItems:"center",justifyContent:"space-between"}}>
+        <div style={{marginTop:"5px",display:"flex",width:"73%",flexDirection:"row" ,background:"rgba(237, 245, 225,0)",alignItems:"center",justifyContent:"space-between"}}>
           <h2 style = {{color:"#379863"}}>IBlogs</h2>
          
-        </div> */}
+        </div>
+        <div style={{marginLeft:"30px",display:"flex",flexDirection:"row"}}>
+        <ListIcon sx = {{color:"#05386b",marginTop:"2px",marginRight:"5px"}}/>
+            <h3  style = {{margin:"0px",padding:"0px",color:"#05386b"}} >  Reading List</h3>
+        </div>
         {/* <Divider variant="middle"/> */}
       <Grid2 container spacing={0} justifyContent= "space-between"   >
         <Grid2 xs={12} md={5} lg={7} spacing={0} sx = {{height:"100vh",marginTop:"50px",marginLeft:"30px"}}  >  
        {/* ----------------------------------------------------------------------------------- */}
-          {/* <Grid2 container justifyContent={"space-between"}>
-            <Grid2>
-              <h2 style={{margin: 0 ,padding:0}} >Your Lists</h2>
-            </Grid2>
-            <Grid2>
-              <Button sx = {{backgroundColor:"#05386b"}} variant='contained'> New List </Button>
-            </Grid2>
-          </Grid2> */}
-{/* 
-          <Divider  sx = {{ margin: "50px 10px"}} variant="middle" />
-
-          <Grid2>
-          <Grid2 sx ={{backgroundColor:"white",padding:"10px",boxShadow:"0 4px 8px 0 rgba(92,219,149, 0.2), 0 6px 20px 0 rgba(92,219,149, 0.19)"}} >
-          <Grid2 container  justifyContent={"space-between"}>
-            <Grid2 container>
-              <Grid2 sx = {{paddingLeft:"10px",paddingTop:"10px"}}>
-              <h3 style={{padding:"0px",margin:"0px"}}  >Reading List {<LockIcon sx = {{fontSize:"20px",margin:"0px 10px"}} />}</h3>
-              <h4>Posts: 5</h4>
-              <Button onClick={()=>{ navigate("/readerdashboard/saved-lists/reading-list");}}  sx = {{color:"#05386b",borderColor:"#05386b"}}  variant="outlined">View list</Button>
-              </Grid2>
-            
-            </Grid2>
-            <Grid2>
-            <div className='container' ref={container} style={{width:"150px"}}  ></div>
-            </Grid2>
-          </Grid2>
-          <Grid2>
-
-          </Grid2>
-
-          </Grid2>
-
-
-
-          </Grid2> */}
+        {
+            readingList ? (
+                readingList[0].ReadingList.map(item=>{
+                    return(
+                    <Box  key ={item._id}  sx = {{ boxShadow:"1px 1px 3px 1px rgba(0,0,0,0.3)",borderRadius:"3px",minHeight:"300px",width:"98%",marginBottom:"30px",backgroundColor:"white", padding:"20px"}} >
+                    <Grid container direction="row"   spacing = {0} >
+                      <Grid lg = {10} md = {12} sm={12} sx= {{p:2}} item direction="column" justifyContent="space-between" spacing={0} container >
+                         <Grid item container sx = {{maxHeight:"20px"}} spacing={0} lg={8}  >
+                             <Grid item lg = {1} md = {1} sm = {1}>
+                                 
+                                 <Avatar 
+                                 alt={item.parentBlog.owner.firstname} src={item.parentBlog.owner.profileImage} />
+                             </Grid>
+                             <Grid item container   direction="column" spacing={0} lg = {9}  md = {7} sm={5}>
+                               <Link to = "author-profile"  style = {{textDecoration:"none",color:"#05386b"}}>
+                                 <Grid item   sx = {{textDecoration:"none",fontSize:"14px",fontWeight:"bold",fontFamily: " Ubuntu, sans-serif"}}>
+                                   {/* {`${item.parentBlog.owner.firstname} ${item.parentBlog.owner.lastname}     ${item.publishDate.slice(0,10)}`} */}
+                                    
+                                     {item.parentBlog.owner.firstname} {item.parentBlog.owner.lastname}   <span  style={{marginLeft:"50px"}}> {item.publishDate.slice(0,10)}</span>  
+                                 </Grid>
+                               </Link>
+                                 <Grid item  sx = {{fontSize:"16px",fontFamily: " Ubuntu, sans-serif",color:"#05386b"}}>
+                                     From: {item.parentBlog.title}
+                                 
+                                 </Grid>
+                                
+                             </Grid>
+                             <Grid item lg ={2}>
+                                 {/* icons here */}
+                                 <MoreVertIcon  sx ={{color:"#05386b"}}  />
+                             </Grid>
+                             
+                         </Grid>
+                         {/* <Link to="/ReaderDashboard/full-post">       */}
+                         <Grid item lg ={8} sx ={{padding:0,margin:0, fontFamily: "Fjalla One, sans-serif"}}>
+                                 <Link to={`/ReaderDashboard/full-post/${item._id}`} style={{textDecoration:"none",color:"black"}} >
+                                 <h4 style = {{fontWeight:"bolder"}}>{item.postTitle}</h4>
+                                 </Link>
+                                 <Link to={`/ReaderDashboard/full-post/${item._id}`} style={{textDecoration:"none",color:"black"}} >
+                                 <div  className="scrollers" style= {{color:"#00000099",width:"98%",maxHeight:"60%",fontSize:"14px",minHeight:"60%",overflow:"auto"}}>
+                                   {item.postDescription}
+                                 </div>
+                                 </Link>
+                                
+                         </Grid>
+                         {/* </Link> */}
+                         <Grid container item sx = {{ width:"90%",maxHeight:"20px"}} >
+                           {/* <Button  sx = {{width:"20px",color:"#05386b"}} size="small"><ThumbUpIcon/></Button>
+                          <Button  sx = {{   width:"20px",color:"#05386b"}} size="small"> <ShareIcon/></Button>
+                          <Button sx = {{   width:"20px",color:"#05386b",display: `${!added ? "inline":"none"}`}} onClick ={()=>setAdded(true)} size="small"><BookmarkAddIcon/></Button>
+                          <Button sx = {{   width:"20px",color:"#05386b",display: `${!added ? "none":"inline"}`}} onClick ={()=>setAdded(false)}  ><BookmarkAddedIcon/></Button>   
+                            */}
+                        <Button  sx = {{margin:"0px",padding:"0px"}} ><ThumbUpIcon sx=  {{cursor:"pointer",color:"#05386b",margin:"0px 0px "}}  /></Button>
+                        <Button  sx = {{margin:"0px",padding:"0px"}}><ShareIcon sx=  {{   cursor:"pointer",color:"#05386b",margin:"0px 0px "}} /></Button>
+                        {/* <BookmarkAddIcon  sx=  {{cursor:"pointer",color:"#05386b",margin:"0px 15px ",display: `${added ? "none":"inline"}`}} onClick ={handleSaveIconClick}  /> */}
+                        {/* <CreateListMenu  postId = {item._id} />  */}
+                        {/* <BookmarkAddedIcon sx=  {{cursor:"pointer",color:"#379683 ",margin:"0px 15px ",display: `${!added ? "none":"inline"}`}}  onClick ={()=>setAdded(false)}  /> */}
+                         </Grid>
+                      </Grid>
+             
+                       <Grid item container justifyContent="flex-end" sx = {{display:{lg :"flex",md:"none",sm:"none",xs:"none"},height:"300px"}}   lg = {2} >
+                           <img  style={{maxWidth:"160px",height:"90px"}} src={"https://res.cloudinary.com/dlgwvuu5d/image/upload/v1661858507/my-uploads/crxuibfslasaepf24mvp.png"} alt="" />
+                       </Grid>       
+                    </Grid>
+                    
+                    </Box>
+                    )
+                })
+            ):(
+                <CircularProgress />
+            )
+        }
         {/* ---------------------------------------------------------------- */}
         </Grid2>
         <Divider orientation='vertical' sx={{width:"29px"}} flexItem/>

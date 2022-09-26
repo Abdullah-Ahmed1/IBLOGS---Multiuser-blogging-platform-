@@ -185,12 +185,51 @@ module.exports = {
             console.log(success);
           }
         }
-      )
-      .then((res) => res.send(res));
+      ).then((res) => res.send(res));
     } catch (err) {
       console.log(err);
       res.send(err);
     }
   },
+
+  getReadingList: (req, res) => {
+    console.log(" getReadingList reached");
+    const token = req.headers["authorization"];
+    try {
+      const decoded = jwt.verify(token, "1234567");
+
+      User.find({ _id: decoded.id })
+        .populate({
+          path: "ReadingList",
+          select: {
+            postTitle: 1,
+            postDescription: 1,
+            postKeywords: 1,
+
+            publishDate: 1,
+          },
+          populate: {
+            path: "parentBlog",
+            populate: {
+              path: "owner",
+            },
+          },
+        })
+        .select({
+          firstname: 1,
+          lastname: 1,
+          profileImage: 1,
+          email: 1,
+        })
+        .then((data) => {
+          console.log(data);
+          res.send(data);
+        });
+    } catch (err) {
+      console.log(err);
+      res.send(err);
+    }
+  },
+
   addSavedList: (req, res) => {},
 };

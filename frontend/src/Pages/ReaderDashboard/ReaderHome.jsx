@@ -70,7 +70,7 @@ const ReaderHome = ({posts})=>{
         posts.map(item =>{
          //  console.log("!!!!!!!!!!!!!!!!1",item.parentBlog)
           return (
-            <Box  key ={item._id}  sx = {{ boxShadow:"1px 1px 3px 1px rgba(0,0,0,0.3)",borderRadius:"3px",minHeight:"300px",width:"98%",marginBottom:"30px",backgroundColor:"white", padding:"20px"}} >
+           <Box  key ={item._id}  sx = {{ boxShadow:"1px 1px 3px 1px rgba(0,0,0,0.3)",borderRadius:"3px",minHeight:"300px",width:"98%",marginBottom:"30px",backgroundColor:"white", padding:"20px"}} >
        <Grid container direction="row"   spacing = {0} >
          <Grid lg = {10} md = {12} sm={12} sx= {{p:2}} item direction="column" justifyContent="space-between" spacing={0} container >
             <Grid item container sx = {{maxHeight:"20px"}} spacing={0} lg={8}  >

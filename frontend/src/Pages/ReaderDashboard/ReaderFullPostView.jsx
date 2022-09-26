@@ -2,8 +2,9 @@ import * as React from "react"; //import Grid from "@mui/material/Grid";
 //import Backdrop from '@mui/material/Backdrop';
 import CircularProgress from '@mui/material/CircularProgress';
 import Box from '@mui/material/Box';
- import axios from "axios";
- import parse from 'html-react-parser';
+import axios from "axios";
+import reactGA from "react-ga";
+import parse from 'html-react-parser';
  import Tooltip from '@mui/material/Tooltip';
  import { useParams } from 'react-router-dom';
  import Grid2 from '@mui/material/Unstable_Grid2';
@@ -36,6 +37,12 @@ const ReaderFullPostView = ()=>{
     const [post,setPost] = useState(null);
    // const [repos, setRepos] = React.useState({});
     
+  React.useEffect(()=>{
+    reactGA.pageview(window.location.pathname)
+  },[])
+
+
+
     // React.useEffect(() => {
     //     const fetchData = async () => {
     //         const response = await axios.get(`http://127.0.0.1:5000/readerDashboard/full-post/${id}`);
