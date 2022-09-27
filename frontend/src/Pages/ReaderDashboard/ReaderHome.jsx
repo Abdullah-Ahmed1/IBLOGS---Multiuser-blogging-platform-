@@ -125,7 +125,7 @@ const ReaderHome = ({posts})=>{
          </Grid>
 
           <Grid item container justifyContent="flex-end" sx = {{display:{lg :"flex",md:"none",sm:"none",xs:"none"},height:"300px"}}   lg = {2} >
-              <img  style={{maxWidth:"160px",height:"90px"}} src={"https://res.cloudinary.com/dlgwvuu5d/image/upload/v1661858507/my-uploads/crxuibfslasaepf24mvp.png"} alt="" />
+              <img  style={{maxWidth:"160px",height:"90px"}} src={item.postCardImage ? item.postCardImage : "https://res.cloudinary.com/dlgwvuu5d/image/upload/v1662389730/my-uploads/download_1_efhm00.png" } alt="image" />
           </Grid>       
        </Grid>
        

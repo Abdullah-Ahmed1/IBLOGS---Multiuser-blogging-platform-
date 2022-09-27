@@ -33,26 +33,26 @@ export const MainListItems = (props) => {
           <ListItemIcon>
             <DashboardIcon sx={{ color: "#379683" }} />
           </ListItemIcon>
-          <ListItemText primary="Dashboard" />
+          <ListItemText />
         </ListItemButton>
       </Link>
       <ListItemButton onClick={props.handleClick}>
         <ListItemIcon>
           <AddCircleIcon sx={{ color: "#379683" }} />
         </ListItemIcon>
-        <ListItemText primary="Add Blog" />
+        <ListItemText />
       </ListItemButton>
       <ListItemButton>
         <ListItemIcon>
           <PeopleIcon sx={{ color: "#379683" }} />
         </ListItemIcon>
-        <ListItemText primary="Customers" />
+        <ListItemText />
       </ListItemButton>
       <ListItemButton>
         <ListItemIcon>
           <BarChartIcon sx={{ color: "#379683" }} />
         </ListItemIcon>
-        <ListItemText primary="Reports" />
+        <ListItemText />
       </ListItemButton>
       <Link
         style={{ color: "white", textDecoration: "none" }}
@@ -62,7 +62,7 @@ export const MainListItems = (props) => {
           <ListItemIcon>
             <CalendarMonthIcon sx={{ color: "#379683" }} />
           </ListItemIcon>
-          <ListItemText primary="Calender" />
+          <ListItemText />
         </ListItemButton>
       </Link>
     </React.Fragment>
@@ -79,7 +79,7 @@ export const SecondaryListItems = () => {
         <ListItemIcon>
           <AssignmentIcon sx={{ color: "#379683" }} />
         </ListItemIcon>
-        <ListItemText primary="Current month" />
+        <ListItemText />
       </ListItemButton>
       {/* <ListItemButton>
         <ListItemIcon>

@@ -17,7 +17,11 @@ import ReaderDashboard from "./Pages/ReaderDashboard/ReaderDashboard";
 //import YourProfile from "./components/ProfileComps/ProfileInfo";
 
 const TRACKING_ID = "UA-167584801-1";
-reactGA.initialize(TRACKING_ID);
+reactGA.initialize(TRACKING_ID, {
+  gaOptions: {
+    userId: 123,
+  },
+});
 
 function App() {
   return (

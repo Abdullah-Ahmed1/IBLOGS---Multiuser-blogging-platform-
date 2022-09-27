@@ -210,9 +210,9 @@ module.exports = {
     try {
       console.log("reached-----------");
       // const a = new Date();
-      await User.updateMany(
+      await Post.updateMany(
         {},
-        { $set: { ReadingList: [] } },
+        { $set: { postCardImage: "" } },
         { upsert: false, multi: true }
       );
     } catch (err) {

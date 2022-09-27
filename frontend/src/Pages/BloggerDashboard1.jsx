@@ -251,7 +251,7 @@ function DashboardContent(props) {
             pr: "24px", // keep right padding when drawer closed
           }}
         >
-          <IconButton
+          {/* <IconButton
             edge="start"
             color="inherit"
             aria-label="open drawer"
@@ -265,7 +265,7 @@ function DashboardContent(props) {
             <MenuIcon sx = {{
               color:"#05386B"
             }}   />
-          </IconButton>
+          </IconButton> */}
 
           {/* //////////////////////////////////////////////////////////// */}
           <IconButton
@@ -321,18 +321,20 @@ function DashboardContent(props) {
         >
           {drawer}
         </MuiDrawer>
-        <Drawer
+        <MuiDrawer
           variant="permanent"
-          open={open}
+          // open={open}
           color="primary"
           sx={{
+             width:0,
             display: { xs: "none", sm: "flex" },
              "& .MuiDrawer-paper": {
             //   // boxSizing: "border-box",
-            //   width: drawerWidth,
+              width: 75,
             backgroundColor:"#05386B",
             color:"yellow"
           },
+          flexShrink: 0,
           
           }}
         >
@@ -347,9 +349,9 @@ function DashboardContent(props) {
             }}
           >
             <h2 style={{ color: "white", marginRight: "30px " }}>IBlogs</h2>
-            <IconButton onClick={toggleDrawer}>
+            {/* <IconButton onClick={toggleDrawer}>
               <ChevronLeftIcon />
-            </IconButton>
+            </IconButton> */}
           </Toolbar>
           <Divider />
           <List component="nav" color="primary">
@@ -357,7 +359,7 @@ function DashboardContent(props) {
             <Divider sx={{ my: 1 }} />
             <SecondaryListItems/>
           </List>
-        </Drawer>
+        </MuiDrawer>
       </ThemeProvider>
       <Box
         component="main"

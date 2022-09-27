@@ -53,7 +53,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
         // console.log("reached")
         // handleClose();
       }
-     
+    
   
     return (
       <div>
@@ -64,7 +64,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
           onClose={handleClose}
           TransitionComponent={Transition}
         >
-          <AppBar sx={{ position: 'relative' ,position: '-webkit-sticky',
+          {/* <AppBar sx={{ position: 'relative' ,position: '-webkit-sticky',
         position: 'sticky',
         top: 0,backgroundColor:"#379683",color:"white" }}>
             <Toolbar>
@@ -85,10 +85,10 @@ const Transition = React.forwardRef(function Transition(props, ref) {
                 save
               </Button>
             </Toolbar>
-          </AppBar>
+          </AppBar> */}
           <div style={{ display:"flex",justifyContent:"center"}}>
-          <div style={{width:"95%" ,marginTop:"20px"}} >
-            <AddPostStepper/>
+          <div style={{width:"100%"}} >
+            <AddPostStepper  handleClose={handleClose}/>
             </div>
             
           </div>

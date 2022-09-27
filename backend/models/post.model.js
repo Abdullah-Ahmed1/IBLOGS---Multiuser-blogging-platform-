@@ -9,6 +9,9 @@ var postSchema = new mongoose.Schema({
     required: true,
   },
 
+  postCardImage: {
+    type: String,
+  },
   postContent: {
     type: String,
     required: true,

@@ -61,6 +61,7 @@ module.exports = {
         publishDate: 1,
         publishStatus: 1,
         allowComments: 1,
+        postCardImage: 1,
       })
       .exec()
       .then((data) => {
