@@ -3,6 +3,7 @@ const jwt = require("jsonwebtoken");
 var connection = require("../Connection/connection");
 //const Blog = Mongoose.model("Blog");
 const Post = Mongoose.model("Post");
+const Reply = Mongoose.model("Reply");
 const User = Mongoose.model("User");
 const Comment = Mongoose.model("Comment");
 //const { User, validate } = require("../models/users.model");
@@ -140,6 +141,61 @@ module.exports = {
         .catch((err) => console.log(err));
     } catch (err) {
       console.log(err);
+    }
+  },
+
+  addReplyToComment: (req, res) => {
+    const data = req.body;
+    const commentId = req.params.commentId;
+    const token = req.headers["authorization"];
+    console.log("data", data);
+    console.log("comment Id", commentId);
+    try {
+      const decoded = jwt.verify(token, "1234567");
+
+      Reply.create({
+        ...data,
+        author: decoded.id,
+        parentComment: commentId,
+      }).then(async (reply) => {
+        console.log(reply);
+
+        Comment.updateOne(
+          { _id: commentId },
+          { $push: { replies: reply._id } },
+          function (error, success) {
+            if (error) {
+              console.log(error);
+            } else {
+              console.log(success);
+            }
+          }
+        );
+      });
+    } catch (err) {
+      res.send(err);
+    }
+  },
+
+  getAllRepliesToSpecificComment: (req, res) => {
+    const commentId = req.params.commentId;
+    const token = req.headers["authorization"];
+    try {
+      const decoded = jwt.verify(token, "1234567");
+      Reply.find({ parentComment: commentId })
+        .populate({
+          path: "author",
+          select: {
+            firstname: 1,
+            lastname: 1,
+            profileImage: 1,
+          },
+        })
+        .then((data) => {
+          res.send(data);
+        });
+    } catch (err) {
+      res.send(err);
     }
   },
 

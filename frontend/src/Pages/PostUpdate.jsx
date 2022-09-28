@@ -1,7 +1,7 @@
-import ReactQuill from 'react-quill'; // ES6
+//import ReactQuill from 'react-quill'; // ES6
 import { useState,useEffect } from 'react';
 import BloggerSideBar from './../components/BloggerSidebar/BloggerSideBar';
-import Editor from './../components/UpdatePostComps/Add';
+//import Editor from './../components/UpdatePostComps/Add';
 import { useParams } from "react-router-dom";
 
  import parse from "html-react-parser";

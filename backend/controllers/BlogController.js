@@ -4,6 +4,7 @@ var connection = require("../Connection/connection");
 const Blog = Mongoose.model("Blog");
 const Comment = Mongoose.model("Comment");
 const Post = Mongoose.model("Post");
+const Reply = Mongoose.model("Reply");
 const { User, validate } = require("../models/users.model");
 //const { Post, validate } = require("../models/post.model");
 const schedule = require("node-schedule");
@@ -210,9 +211,9 @@ module.exports = {
     try {
       console.log("reached-----------");
       // const a = new Date();
-      await Post.updateMany(
+      await Comment.updateMany(
         {},
-        { $set: { postCardImage: "" } },
+        { $set: { replies: [] } },
         { upsert: false, multi: true }
       );
     } catch (err) {

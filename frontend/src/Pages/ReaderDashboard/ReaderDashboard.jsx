@@ -29,6 +29,7 @@ import AuthorProfile from './AuthorProfile';
 import YourProfile from '../YourProfileInfo';
 import SavedList from './SavedListsPage';
 import SavedListsHome from './SavedListsHome';
+import ResponsesPage from './ResponsesPage';
 
 var _  =require('lodash')
 //----------------------------------------------------------------
@@ -247,6 +248,7 @@ export default function ReaderDashboard() {
        <Route exact path="/full-post/:id" element={<ReaderFullPostView  />} />
        <Route exact path="/author-profile" element={<AuthorProfile />} />
        <Route exact path="/your-profile" element={<YourProfile />} />
+       <Route exact path="/responses" element={<ResponsesPage/>} />
        <Route  path="/saved-lists/*" element={<SavedListsHome />} />    
        {/* <Route exact path="/" element={<SavedList />} />          */}
        </Routes>

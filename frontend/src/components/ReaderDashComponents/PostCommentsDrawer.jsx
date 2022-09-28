@@ -87,7 +87,7 @@ export default function PostCommentDrawer() {
 
   const list = (anchor) => (
     <Box
-      sx={{ width: anchor === 'top' || anchor === 'bottom' ? 'auto' : 425 }}
+      sx={{ width: anchor === 'top' || anchor === 'bottom' ? 'auto' : "auto" }}
       role="presentation"
     //   onClick={toggleDrawer(anchor, false)}
     //   onKeyDown={toggleDrawer(anchor, false)}
@@ -131,6 +131,13 @@ export default function PostCommentDrawer() {
           <Button onClick={toggleDrawer(anchor, true)}>Comment</Button>
           <Drawer
           variant='temporary'
+          sx = {{
+            "& .MuiDrawer-paper":{
+              backgroundColor:"#379683",
+              width: {xs : "100%", sm: "100",md: 425,lg: 425 }
+              // width: 425,
+            }
+          }}
           ModalProps={{
             keepMounted: true,
           }}

@@ -68,7 +68,13 @@ let { id } = useParams();
 //   };
 
   return (
-    <Card sx={{ maxWidth: 380, marginBottom:"10px" }}>
+    <Card 
+    sx={{ 
+      // minWidth: "90%",
+      maxWidth: 380,
+      margin: "auto",
+      marginBottom:"10px" 
+       }}>
       <CardHeader sx = {{maxHeight:"50px",fontSize:"12px"}}
         avatar={
           <Avatar sx={{ bgcolor: red[500],height:"30px",width:"30px" }} aria-label="recipe"  src ={value.profileData.profileImage} />
@@ -84,7 +90,12 @@ let { id } = useParams();
       </CardContent>
     
       <CardActions>
-        <Button   onClick = {handleCommentPublish}   variant = "contained">Publish</Button>
+        <Button
+          disabled = {comment=== ""? true: false}  
+          sx = {{backgroundColor:"#05386b"}} 
+          onClick = {handleCommentPublish}  
+          variant = "contained">Publish
+        </Button>
       </CardActions>
     </Card>
   );

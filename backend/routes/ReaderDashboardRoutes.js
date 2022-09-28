@@ -5,7 +5,13 @@ const ReaderDashController = require("../controllers/ReaderDashController");
 router.route("/").get(ReaderDashController.getAllData);
 router.route("/full-post/:id").get(ReaderDashController.getFullPost);
 router.route("/add-comment/:postId").post(ReaderDashController.addComment);
+router
+  .route("/add-reply-to-comment/:commentId")
+  .post(ReaderDashController.addReplyToComment);
 router.route("/get-comments/:postId").get(ReaderDashController.getPostComments);
+router
+  .route("/get-allReplies-to-specific-comment/:commentId")
+  .get(ReaderDashController.getAllRepliesToSpecificComment);
 router
   .route("/add-to-reading-list/:postId")
   .post(ReaderDashController.addReadingList);

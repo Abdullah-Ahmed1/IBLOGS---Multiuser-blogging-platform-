@@ -17,3 +17,4 @@ require("../models/blogs.model");
 require("../models/post.model");
 require("../models/comments.model");
 require("../models/saved.model");
+require("../models/replies.model");

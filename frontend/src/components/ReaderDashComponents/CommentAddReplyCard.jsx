@@ -1,11 +1,11 @@
 import Card from '@mui/material/Card';
 import CardHeader from '@mui/material/CardHeader';
 import Avatar from '@mui/material/Avatar';
+import axios from "axios";
 import IconButton from '@mui/material/IconButton';
 import TextField from '@mui/material/TextField';
 import  Button  from '@mui/material/Button';
 import { red } from '@mui/material/colors';
-import axios from "axios"
 import { useParams } from 'react-router-dom';
 import { useContext,useState } from 'react';
 //import CardMedia from '@mui/material/CardMedia';
@@ -14,11 +14,33 @@ import { UserContext } from "../../Pages/ReaderDashboard/ReaderDashboard";
 import CardActions from '@mui/material/CardActions';
 //import Collapse from '@mui/material/Collapse';
 
-const CommentReplyCard = ()=>{
+const CommentAddReplyCard = ({commentId})=>{
     let { id } = useParams();
-  const [comment,setComment] = useState("");   
+  const [reply,setReply] = useState("");   
   const value = useContext(UserContext)
-    console.log("yeeeeeeeeee",value)
+  //  console.log("yeeeeeeeeee",value)
+
+    const HandleAddReply = ()=>{
+      const data ={
+        replyText : reply,
+        uploadDate: new Date()
+      }
+      let value = JSON.parse(localStorage.getItem("token"));
+      let token = value.token;
+      axios.post(
+        `http://127.0.0.1:5000/readerDashboard/add-reply-to-comment/${commentId}`,data ,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+            Authorization: token,
+          },
+        }
+      ).then(res =>{
+          console.log(res)
+        }).catch(err=> console.log(err))
+
+    }
     return(
         <Card sx={{ maxWidth: 380, marginBottom:"10px" }}>
       <CardHeader sx = {{maxHeight:"50px",fontSize:"12px"}}
@@ -32,13 +54,18 @@ const CommentReplyCard = ()=>{
       />
      
       <CardContent>
-        <TextField  value={comment} onChange={(e)=>setComment(e.target.value)}  size='small' rows={4} placeholder="whats on your mind?" multiline fullWidth/>
+        <TextField  value={reply} onChange={(e)=>setReply(e.target.value)}  size='small' rows={4} placeholder="whats on your mind?" multiline fullWidth/>
       </CardContent>
     
       <CardActions>
-        <Button    variant = "contained">Publish</Button>
+        <Button   
+          disabled = { reply === ""? true : false}
+          onClick = {HandleAddReply} 
+          sx = {{backgroundColor:"#05386b"}}  
+          variant = "contained">Reply
+         </Button>
       </CardActions>
     </Card>
     )
 }
-export default CommentReplyCard
+export default CommentAddReplyCard

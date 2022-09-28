@@ -2,6 +2,7 @@ import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import HomeIcon from '@mui/icons-material/Home';
 //import ViewListIcon from '@mui/icons-material/ViewList';
+import NotificationsActiveIcon from '@mui/icons-material/NotificationsActive';
 import BookmarksIcon from '@mui/icons-material/Bookmarks';
 import ThumbUpAltIcon from '@mui/icons-material/ThumbUpAlt';
 import {Link} from 'react-router-dom' 
@@ -31,12 +32,14 @@ const List_Items = ()=>{
         </Link>    
         </Tooltip>
 
-        <Tooltip title="Liked" placement="right" arrow>
+        <Tooltip title="Responses" placement="right" arrow>
+        <Link to ='/readerdashboard/responses' >
         <ListItemButton>
           <ListItemIcon>
-            <ThumbUpAltIcon sx={{ color:"#5cdb95",fontSize:"25px", marginBottom:"50px" }} />
+            <NotificationsActiveIcon sx={{ color:"#5cdb95",fontSize:"25px", marginBottom:"50px" }} />
           </ListItemIcon> 
         </ListItemButton>
+        </Link>
         </Tooltip>
 
         <Divider/>

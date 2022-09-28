@@ -130,9 +130,14 @@ const BlogPost= ()=>{
         <div  style= {{ width:"100%"}}>  
             <FullScreenDialog  dialogOpen = {open} blogId = {blogId}  handleClickOpen = {handleClickOpen}  handleClose = {handleClose}  />
             <Grid container sx = {{width:"100%" }} justifyContent="space-between">
-            <Grid item   sx = {{fontSize: "25px", fontWeight:"bold" ,marginBottom:"10px"}}  >
+            <Grid item continer   sx = {{fontSize: "25px", fontWeight:"bold" ,marginBottom:"10px"}}  >
+              
                Posts 
+              <Grid  sx = {{Height:"400px" ,width:"100%",background:"url(https://res.cloudinary.com/dlgwvuu5d/image/upload/v1661858507/my-uploads/crxuibfslasaepf24mvp.png)"}}>
+             
             </Grid>
+            </Grid>
+            
             <Grid item>
                 
             <AddCircleIcon fontSize='large' sx={{cursor:"pointer",color:"#b7410e"}}   onClick = {()=> setOpen(true)} /> 

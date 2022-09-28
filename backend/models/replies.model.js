@@ -1,25 +1,22 @@
 const { required } = require("joi");
 const mongoose = require("mongoose");
-var commentSchema = new mongoose.Schema({
+var replySchema = new mongoose.Schema({
   author: {
     type: mongoose.Types.ObjectId,
     ref: "User",
   },
-  comment: {
+  replyText: {
     type: String,
     required: true,
   },
-  replies: {
-    type: [
-      {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Reply",
-      },
-    ],
+  parentComment: {
+    type: mongoose.Types.ObjectId,
+    ref: "Comment",
   },
+
   uploadDate: {
     type: String,
     required: true,
   },
 });
-mongoose.model("Comment", commentSchema);
+mongoose.model("Reply", replySchema);
