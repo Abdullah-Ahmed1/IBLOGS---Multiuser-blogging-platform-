@@ -87,11 +87,6 @@ module.exports = {
     if (!blog) return res.status(400).send("Class not found");
     res.json(blog);
   },
-  deletePost: async (req, res) => {
-    const post = await Blog.findByIdAndDelete(req.params.id);
-    user;
-    res.json({ deletedPost: post });
-  },
 
   //////////////////////////// Blog Posts functions /////////////////////////////////////////////////////////////////
 
@@ -157,6 +152,20 @@ module.exports = {
         res.json(data);
       });
   },
+  deletePost: (req, res) => {
+    const postId = req.params.postId;
+    const token = req.headers["authorization"];
+    try {
+      const decoded = jwt.verify(token, "1234567");
+      Blog.find({
+        posts: { $elemMatch: { postId } },
+      }).then((data) => {
+        console.log(data);
+      });
+    } catch (err) {
+      res.send(err);
+    }
+  },
 
   // deleteBlog: async(req, res) => {
   //   const blogId = req.params.id;
@@ -207,17 +216,17 @@ module.exports = {
 
   // --this is a method below to add any field to already added document
 
-  tempMethod: async (req, res) => {
-    try {
-      console.log("reached-----------");
-      // const a = new Date();
-      await Comment.updateMany(
-        {},
-        { $set: { replies: [] } },
-        { upsert: false, multi: true }
-      );
-    } catch (err) {
-      console.log(err);
-    }
-  },
+  // tempMethod: async (req, res) => {
+  //   try {
+  //     console.log("reached-----------");
+  //     // const a = new Date();
+  //     await Comment.updateMany(
+  //       {},
+  //       { $set: { replies: [] } },
+  //       { upsert: false, multi: true }
+  //     );
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  // },
 };

@@ -225,14 +225,14 @@ module.exports = {
       console.log(err);
     }
   },
-  addReadingList: (req, res) => {
+  addReadingList: async (req, res) => {
     console.log("reached", req.params.postId);
     const postId = req.params.postId;
     const token = req.headers["authorization"];
     console.log("token", token);
     try {
       const decoded = jwt.verify(token, "1234567");
-      User.updateOne(
+      const data = await User.update(
         { _id: decoded.id },
         { $push: { ReadingList: postId } },
         function (error, success) {
@@ -242,7 +242,8 @@ module.exports = {
             console.log(success);
           }
         }
-      ).then((res) => res.send(res));
+      );
+      res.send(data);
     } catch (err) {
       console.log(err);
       res.send(err);
@@ -286,6 +287,23 @@ module.exports = {
       console.log(err);
       res.send(err);
     }
+  },
+
+  removeFromReadingList: async (req, res) => {
+    const token = req.headers["authorization"];
+    const postId = req.params.postId;
+    try {
+      const decoded = jwt.verify(token, "1234567");
+
+      const data = await User.findOneAndUpdate(
+        { _id: decoded.id },
+        { $pull: { ReadingList: postId } }
+      );
+      res.send(data);
+    } catch (err) {
+      res.send(err);
+    }
+    console.log(req.params.postId);
   },
 
   addSavedList: (req, res) => {},

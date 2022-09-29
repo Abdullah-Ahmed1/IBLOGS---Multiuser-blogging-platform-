@@ -17,6 +17,9 @@ router
   .post(ReaderDashController.addReadingList);
 
 router.route("/get-reading-list").get(ReaderDashController.getReadingList);
+router
+  .route("/remove-for-readingList/:postId")
+  .delete(ReaderDashController.removeFromReadingList);
 
 //router.route("/all").get(ReaderDashController.getAllData1);
 //router.route("/all2").get(ReaderDashController.getAllData2);

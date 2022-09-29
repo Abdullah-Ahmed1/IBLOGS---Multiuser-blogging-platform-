@@ -6,8 +6,9 @@ import axios from "axios";
 import parse from 'html-react-parser';
 import animationData from '../lottie/pencil.json'
 import Lottie from "lottie-web";
+import ArticleIcon from '@mui/icons-material/Article';
 //import PostCard from "../components/PostComponentsMui/PostCardMui"
-
+import Tooltip from '@mui/material/Tooltip';
 import "../components/Css_for_pages/addPostModal.css"
 import * as React from 'react';
 import Button from '@mui/material/Button';
@@ -106,6 +107,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 
 const BlogPost= ()=>{
     const [open, setOpen] = React.useState(false);
+    const [data,setData] = useState({})
     const [posts ,setPosts] = useState([])
     const handleClickOpen = () => {
       setOpen(true);
@@ -115,12 +117,33 @@ const BlogPost= ()=>{
       setOpen(false);
     };
     let { blogId } = useParams();
+
+    const handlePostDelete=(postId)=>{
+      // console.log("postId",postId)
+      // console.log("reached handle Posr")
+      let value = JSON.parse(localStorage.getItem("token"));
+      let token = value.token;
+      axios.delete(`http://127.0.0.1:5000/bloggerDashboard/delete-post/${postId}`,{
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+          Authorization: token,
+        },
+      }).then(res=>{
+        console.log(res)
+      })
+
+
+    }
+
+
     useEffect(()=>{
         console.log(blogId)
 
         axios.get(`http://127.0.0.1:5000/bloggerDashboard/get-all-posts/${blogId}`)
         .then(res=>{
-          console.log("posts",res.data.posts);
+          console.log("posts--------------------",res.data);
+          setData(res.data)
           setPosts(res.data.posts)        
         })
 
@@ -129,28 +152,46 @@ const BlogPost= ()=>{
     return(
         <div  style= {{ width:"100%"}}>  
             <FullScreenDialog  dialogOpen = {open} blogId = {blogId}  handleClickOpen = {handleClickOpen}  handleClose = {handleClose}  />
-            <Grid container sx = {{width:"100%" }} justifyContent="space-between">
-            <Grid item continer   sx = {{fontSize: "25px", fontWeight:"bold" ,marginBottom:"10px"}}  >
+            <Grid container sx = {{width:"100%" , backgroundColor:"white  " }} justifyContent="space-between">
+            <Grid item container   sx = {{height:"410px",padding:0,margin:0,fontSize: "25px",borderRadius:"10px", fontWeight:"bold" ,backgroundImage:`url('${data.image}')`,backgroundRepeat:"no-repeat",backgroundPosition:"center",backgroundSize:"cover",position: "relative"}}  >
               
-               Posts 
-              <Grid  sx = {{Height:"400px" ,width:"100%",background:"url(https://res.cloudinary.com/dlgwvuu5d/image/upload/v1661858507/my-uploads/crxuibfslasaepf24mvp.png)"}}>
+              {/* <div style={{margin:0,padding:0}}> */}
+                  <div style={{padding:"0px 15px",margin:0,height:"410px",width:"100%",borderRadius:"10px",backgroundColor:"black",opacity:"80%",height:"100%"}} >
+                  <h4  style={{color:"white"}}>{data.title}</h4>
+                  <p style={{fontSize:"15px",color:"white"}}>
+                    {data.description}   
+                  </p>
+                  <h5 style={{color:"white"}}><span><ArticleIcon  sx = {{marginTop:"5px"}} /></span>Total posts : {posts.length}</h5>
+
+                  </div>   
+                  {/* </div> */}
+                
              
-            </Grid>
+                
+              {/* <Grid  sx = {{Height:"400px" ,width:"100%"}}>
+                <div style={{height:"200px",width:"100%",backgroundImage:"url('https://res.cloudinary.com/dlgwvuu5d/image/upload/v1661858507/my-uploads/crxuibfslasaepf24mvp.png')"}}>
+                sdjfdsnfkdsfnsdkjfn
+                </div>
+            </Grid> */}
             </Grid>
             
-            <Grid item>
-                
-            <AddCircleIcon fontSize='large' sx={{cursor:"pointer",color:"#b7410e"}}   onClick = {()=> setOpen(true)} /> 
+            <Grid container item  sx = {{marginTop:"10px"}}  justifyContent={"space-between"} >
+             <Grid>
+              <h2 style = {{margin:0,padding:0,color:"#05386b"}}>Posts</h2>
+            </Grid>
+            <Tooltip title="Add Post">   
+              <AddCircleIcon fontSize='large' sx={{cursor:"pointer",color:"#b7410e"}}   onClick = {()=> setOpen(true)} /> 
+            </Tooltip>
             </Grid>
             </Grid>
             <div  >
-            <Grid container spacing={3} >
+            <Grid container  sx = {{marginTop:"10px"}} spacing={3} >
               {
                 
                 posts.map((item)=>{
                   return(
                     <Grid item  key={item._id} lg ={6} xs = {12}>
-                    <PostCardMui  item = {item}/>
+                    <PostCardMui  item = {item}  handlePostDelete={handlePostDelete} />
                     </Grid>
                   )
                 })

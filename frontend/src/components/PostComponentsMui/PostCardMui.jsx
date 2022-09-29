@@ -13,6 +13,8 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import Typography from '@mui/material/Typography';
+import PostDeleteDialog from './PostDeleteDialog';
+import { set } from 'lodash';
 
 const bull = (
   <Box
@@ -23,9 +25,17 @@ const bull = (
   </Box>
 );
 
-export default function PostCardMui({item}) {
-  console.log("items",item)
+export default function PostCardMui({item,handlePostDelete}) {
+  const [postDeleteDialogOpen,setPostDeleteDialogOpen] =React.useState(false)
+
+  const handlePostDeleteDialogClose = ()=>{
+    setPostDeleteDialogOpen(false)
+  }
+
+ // console.log("items",item)
   return (
+    <>
+    <PostDeleteDialog item = {item} handlePostDelete={handlePostDelete}  open = {postDeleteDialogOpen} handleClose={handlePostDeleteDialogClose} />
     <Card  className = "card-container" sx={{ display: 'flex' ,position:"relative",maxHeight:"230px",minHeight:"230px"}}>
       
     <CardContent sx={{ flex: 1 }}>
@@ -46,7 +56,7 @@ export default function PostCardMui({item}) {
        <Button   sx = {{color:"#05386b"}}  size="small"><ThumbUpAltIcon/>5</Button>
         <Button  sx = {{color:"#05386b"}} size="small"><ShareIcon/></Button>
         <Button  sx = {{color:"#05386b"}} size="small"><EditIcon/></Button>
-        <Button  sx = {{color:"#05386b"}} size="small"><DeleteIcon/></Button>
+        <Button  onClick={()=>setPostDeleteDialogOpen(true)}  sx = {{color:"#05386b"}} size="small"><DeleteIcon /></Button>
         <Button  sx = {{color:"#05386b"}} size="small"><VisibilityIcon/></Button>
         
     </div>
@@ -61,6 +71,7 @@ export default function PostCardMui({item}) {
     /> */}
    
   </Card>
+  </>
  
   );
 }
