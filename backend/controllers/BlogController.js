@@ -103,7 +103,7 @@ module.exports = {
         const someDate = new Date("2022-09-11T00:02:00.000+5:30");
         schedule.scheduleJob("MJob", someDate, async () => {
           try {
-            console.log("called");
+            console.log("called---------");
             await Post.updateOne(
               { _id: post._id },
               { publishStatus: "published" }
@@ -158,9 +158,19 @@ module.exports = {
     try {
       const decoded = jwt.verify(token, "1234567");
       Blog.find({
-        posts: { $elemMatch: { postId } },
-      }).then((data) => {
-        console.log(data);
+        posts: { $all: [postId] },
+        // posts: { $elemMatch: postId },
+      }).then((blog) => {
+        console.log("---------!!", blog);
+        Blog.updateOne({ _id: blog[0]._id }, { $pull: { posts: postId } })
+          .then((response) => {
+            console.log("updated blog", response);
+            Post.deleteOne({ _id: postId }).then((data) => {
+              res.send(data);
+            });
+          })
+
+          .catch((err) => console.log(err));
       });
     } catch (err) {
       res.send(err);

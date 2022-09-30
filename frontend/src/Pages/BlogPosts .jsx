@@ -131,6 +131,12 @@ const BlogPost= ()=>{
         },
       }).then(res=>{
         console.log(res)
+        axios.get(`http://127.0.0.1:5000/bloggerDashboard/get-all-posts/${blogId}`)
+        .then(res=>{
+          console.log("posts--------------------",res.data);
+          setData(res.data)
+          setPosts(res.data.posts)        
+        })
       })
 
 
