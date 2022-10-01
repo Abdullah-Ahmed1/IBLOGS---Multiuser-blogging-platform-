@@ -43,6 +43,14 @@ const userSchema = new mongoose.Schema({
       },
     ],
   },
+  followers: {
+    type: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
+      },
+    ],
+  },
   // Liked_Posts: {
   //   type: [
   //     {

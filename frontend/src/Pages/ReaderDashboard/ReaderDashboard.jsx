@@ -166,19 +166,26 @@ export default function ReaderDashboard() {
 
 
   useEffect(()=>{
-
-    axios.get('http://127.0.0.1:5000/readerDashboard')
+    let value = JSON.parse(localStorage.getItem("token"));
+    let token = value.token;
+    axios.get('http://127.0.0.1:5000/readerDashboard',{
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+        Authorization: token,
+      },
+    })
     .then(res =>{
-      console.log("res--------",res.data.data)
-      setPosts(res.data.data)
+      console.log("res--------",res.data    ) 
+      setPosts(res.data)
       
      
     }).catch(err=> console.log(err))
 
 //---------------------------------------------------------
-    let value = JSON.parse(localStorage.getItem("token"));
-    let token = value.token;
-    axios.get(
+    // let value = JSON.parse(localStorage.getItem("token"));
+    // let token = value.token;
+       axios.get(
         "http://127.0.0.1:5000/getProfile",
         {
           headers: {
@@ -246,7 +253,7 @@ export default function ReaderDashboard() {
        <Routes>
        <Route exact path="/" element={<ReaderHome posts = {posts} />} />
        <Route exact path="/full-post/:id" element={<ReaderFullPostView  />} />
-       <Route exact path="/author-profile" element={<AuthorProfile />} />
+       <Route exact path="/author-profile/:userId" element={<AuthorProfile />} />
        <Route exact path="/your-profile" element={<YourProfile />} />
        <Route exact path="/responses" element={<ResponsesPage/>} />
        <Route  path="/saved-lists/*" element={<SavedListsHome />} />    

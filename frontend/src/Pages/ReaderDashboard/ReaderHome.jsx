@@ -61,7 +61,7 @@ const ReaderHome = ({posts})=>{
         </div>
         {/* <Divider variant="middle"/> */}
       <Grid2 container spacing={0} justifyContent= "space-between"   >
-        <Grid2 xs={12} md={5} lg={7} spacing={0} sx = {{marginTop:"20px",marginLeft:"30px"}}  >  
+        <Grid2 xs={12} md={5} lg={7} spacing={0} sx = {{minHeight:"80vh",marginTop:"20px",marginLeft:"30px"}}  >  
        {/* ----------------------------------------------------------------------------------- */}
        {/* <Posts  posts = {posts}/> */}
        {
@@ -80,7 +80,7 @@ const ReaderHome = ({posts})=>{
                     alt={item.parentBlog.owner.firstname} src={item.parentBlog.owner.profileImage} />
                 </Grid>
                 <Grid item container   direction="column" spacing={0} lg = {9}  md = {7} sm={5}>
-                  <Link to = "author-profile"  style = {{textDecoration:"none",color:"#05386b"}}>
+                  <Link to = {`/ReaderDashboard/author-profile/${item.parentBlog.owner._id}`}  style = {{textDecoration:"none",color:"#05386b"}}>
                     <Grid item   sx = {{textDecoration:"none",fontSize:"14px",fontWeight:"bold",fontFamily: " Ubuntu, sans-serif"}}>
                       {/* {`${item.parentBlog.owner.firstname} ${item.parentBlog.owner.lastname}     ${item.publishDate.slice(0,10)}`} */}
                         {item.parentBlog.owner.firstname} {item.parentBlog.owner.lastname}   <span  style={{marginLeft:"50px"}}> {item.publishDate.slice(0,10)}</span>  

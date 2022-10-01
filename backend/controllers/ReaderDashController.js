@@ -45,30 +45,50 @@ module.exports = {
   // },
 
   getAllData: (req, res) => {
-    Post.find()
-      .populate({
-        path: "parentBlog",
-        select: { title: 1 },
-        populate: {
-          path: "owner",
-          select: { firstname: 1, lastname: 1, profileImage: 1, email: 1 },
-        },
-      })
-      .select({
-        title: 1,
-        postTitle: 1,
-        postDescription: 1,
-        postKeywords: 1,
-        publishDate: 1,
-        publishStatus: 1,
-        allowComments: 1,
-        postCardImage: 1,
-      })
-      .exec()
-      .then((data) => {
-        res.send({ data });
-      })
-      .catch((err) => console.log(err));
+    const token = req.headers["authorization"];
+
+    try {
+      const decoded = jwt.verify(token, "1234567");
+      Post.find()
+        .populate({
+          path: "parentBlog",
+          select: { title: 1 },
+          populate: {
+            path: "owner",
+            select: { firstname: 1, lastname: 1, profileImage: 1, email: 1 },
+          },
+        })
+        .select({
+          title: 1,
+          postTitle: 1,
+          postDescription: 1,
+          postKeywords: 1,
+          publishDate: 1,
+          publishStatus: 1,
+          allowComments: 1,
+          postCardImage: 1,
+        })
+        .exec()
+        .then((response) => {
+          console.log(
+            response.filter(
+              (item) => item.parentBlog.owner._id.toString() !== decoded.id
+            )
+          );
+          const data = response.filter((item) => {
+            item.parentBlog.owner._id.toString() === decoded.id;
+          });
+          console.log(data);
+          res.send(
+            response.filter(
+              (item) => item.parentBlog.owner._id.toString() !== decoded.id
+            )
+          );
+        })
+        .catch((err) => console.log(err));
+    } catch (err) {
+      res.send(err);
+    }
   },
 
   getAllData2: (req, res) => {
@@ -305,6 +325,28 @@ module.exports = {
     }
     console.log(req.params.postId);
   },
+
+  getUserData: (req, res) => {
+    const token = req.headers["authorization"];
+    const userId = req.params.userId;
+    console.log("+++++++++++", userId);
+    try {
+      const decoded = jwt.verify(token, "1234567");
+      User.find({ _id: userId })
+        .populate({
+          path: "your_blogs",
+          populate: {
+            path: "posts",
+          },
+        })
+        .then((response) => {
+          res.send(response);
+        });
+    } catch (err) {
+      console.log(err);
+    }
+  },
+  addFollower: (req, res) => {},
 
   addSavedList: (req, res) => {},
 };

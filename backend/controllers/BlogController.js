@@ -230,9 +230,9 @@ module.exports = {
   //   try {
   //     console.log("reached-----------");
   //     // const a = new Date();
-  //     await Comment.updateMany(
+  //     await User.updateMany(
   //       {},
-  //       { $set: { replies: [] } },
+  //       { $set: { followers: [] } },
   //       { upsert: false, multi: true }
   //     );
   //   } catch (err) {

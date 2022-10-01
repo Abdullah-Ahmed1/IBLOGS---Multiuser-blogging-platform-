@@ -20,7 +20,7 @@ const ReaderPostCard = ( )=>{
     const [added,setAdded] = useState(false) 
    // console.log("item",item)
     return(
-        <Box sx = {{ marginBottom:"20px",boxShadow:"1px 1px 3px 1px rgba(0,0,0,0.3)",borderRadius:"3px",maxHeight:"300px",width:"90%",backgroundColor:"white"}} >
+        <Box sx = {{ padding:"20px",marginBottom:"20px",boxShadow:"1px 1px 3px 1px rgba(0,0,0,0.3)",borderRadius:"3px",maxHeight:"400px",width:"90%",backgroundColor:"white"}} >
        <Grid container direction="row" spacing = {0} >
          <Grid lg = {10} md = {12} sm={12} sx= {{p:2}} item direction="column" spacing={1} container >
             <Grid item container sx = {{maxHeight:"45px"}} spacing={0} lg={8}  >
@@ -64,7 +64,7 @@ const ReaderPostCard = ( )=>{
             </Grid>
          </Grid>
 
-         <Grid item container justifyContent="flex-end" sx = {{display:{lg :"flex",md:"none",sm:"none",xs:"none"}}}  alignItems={"center"} lg = {2} >
+         <Grid item container justifyContent="flex-end" sx = {{display:{lg :"flex",md:"none",sm:"none",xs:"none"}}}   lg = {2} >
             <img  style={{height:"90px"}} src={"https://res.cloudinary.com/dlgwvuu5d/image/upload/v1661858507/my-uploads/crxuibfslasaepf24mvp.png"} alt="image" />
         </Grid>       
        </Grid>
