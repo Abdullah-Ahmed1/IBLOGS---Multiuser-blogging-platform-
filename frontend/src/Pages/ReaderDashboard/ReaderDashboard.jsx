@@ -253,7 +253,7 @@ export default function ReaderDashboard() {
        <Routes>
        <Route exact path="/" element={<ReaderHome posts = {posts} />} />
        <Route exact path="/full-post/:id" element={<ReaderFullPostView  />} />
-       <Route exact path="/author-profile/:userId" element={<AuthorProfile />} />
+       <Route exact path="/author-profile/:userId" element={<AuthorProfile  profileData={profileData} />} />
        <Route exact path="/your-profile" element={<YourProfile />} />
        <Route exact path="/responses" element={<ResponsesPage/>} />
        <Route  path="/saved-lists/*" element={<SavedListsHome />} />    

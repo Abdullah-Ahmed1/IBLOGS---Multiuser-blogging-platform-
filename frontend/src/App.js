@@ -14,6 +14,7 @@ import NewPassword from "./Pages/NewPassword";
 import SignInSide from "./Pages/LoginFromMui";
 import SignUp from "./Pages/RegisterFormMui";
 import ReaderDashboard from "./Pages/ReaderDashboard/ReaderDashboard";
+import AdminDashboard from "./Pages/AdminDashboardPages/AdminDashboard";
 //import YourProfile from "./components/ProfileComps/ProfileInfo";
 
 const TRACKING_ID = "UA-167584801-1";
@@ -41,6 +42,7 @@ function App() {
 
         <Route path="/bloggerdashboard/*" element={<Dashboard />} />
         <Route path="/readerdashboard/*" element={<ReaderDashboard />} />
+        <Route path="/admin/*" element={<AdminDashboard />} />
 
         <Route exact path="*" element={<PageNotFound />} />
       </Routes>

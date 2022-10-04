@@ -226,17 +226,17 @@ module.exports = {
 
   // --this is a method below to add any field to already added document
 
-  // tempMethod: async (req, res) => {
-  //   try {
-  //     console.log("reached-----------");
-  //     // const a = new Date();
-  //     await User.updateMany(
-  //       {},
-  //       { $set: { followers: [] } },
-  //       { upsert: false, multi: true }
-  //     );
-  //   } catch (err) {
-  //     console.log(err);
-  //   }
-  // },
+  tempMethod: async (req, res) => {
+    try {
+      console.log("reached-----------");
+      // const a = new Date();
+      await User.updateMany(
+        {},
+        { $set: { following: [] } },
+        { upsert: false, multi: true }
+      );
+    } catch (err) {
+      console.log(err);
+    }
+  },
 };

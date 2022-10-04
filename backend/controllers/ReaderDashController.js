@@ -70,15 +70,15 @@ module.exports = {
         })
         .exec()
         .then((response) => {
-          console.log(
-            response.filter(
-              (item) => item.parentBlog.owner._id.toString() !== decoded.id
-            )
-          );
+          // console.log(
+          //   response.filter(
+          //     (item) => item.parentBlog.owner._id.toString() !== decoded.id
+          //   )
+          // );
           const data = response.filter((item) => {
             item.parentBlog.owner._id.toString() === decoded.id;
           });
-          console.log(data);
+          // console.log(data);
           res.send(
             response.filter(
               (item) => item.parentBlog.owner._id.toString() !== decoded.id
@@ -136,7 +136,7 @@ module.exports = {
 
     try {
       const decoded = jwt.verify(token, "1234567");
-      console.log(decoded);
+      // console.log(decoded);
       const data = {
         author: decoded.id,
         comment: req.body.comment,
@@ -144,7 +144,7 @@ module.exports = {
       };
       Comment.create(data)
         .then((comment) => {
-          console.log(comment);
+          //  console.log(comment);
           Post.findOneAndUpdate(
             { _id: postId },
             { $push: { comments: comment._id } },
@@ -168,8 +168,8 @@ module.exports = {
     const data = req.body;
     const commentId = req.params.commentId;
     const token = req.headers["authorization"];
-    console.log("data", data);
-    console.log("comment Id", commentId);
+    // console.log("data", data);
+    // console.log("comment Id", commentId);
     try {
       const decoded = jwt.verify(token, "1234567");
 
@@ -178,7 +178,7 @@ module.exports = {
         author: decoded.id,
         parentComment: commentId,
       }).then(async (reply) => {
-        console.log(reply);
+        // console.log(reply);
 
         Comment.updateOne(
           { _id: commentId },
@@ -246,10 +246,10 @@ module.exports = {
     }
   },
   addReadingList: async (req, res) => {
-    console.log("reached", req.params.postId);
+    // console.log("reached", req.params.postId);
     const postId = req.params.postId;
     const token = req.headers["authorization"];
-    console.log("token", token);
+    //console.log("token", token);
     try {
       const decoded = jwt.verify(token, "1234567");
       const data = await User.update(
@@ -271,7 +271,7 @@ module.exports = {
   },
 
   getReadingList: (req, res) => {
-    console.log(" getReadingList reached");
+    //console.log(" getReadingList reached");
     const token = req.headers["authorization"];
     try {
       const decoded = jwt.verify(token, "1234567");
@@ -346,7 +346,79 @@ module.exports = {
       console.log(err);
     }
   },
-  addFollower: (req, res) => {},
+  addFollower: async (req, res) => {
+    const token = req.headers["authorization"];
+    const userId = req.params.userId;
+    try {
+      const decoded = jwt.verify(token, "1234567");
+      console.log("-----------", userId);
+      const data = await User.findByIdAndUpdate(
+        { _id: decoded.id },
+        {
+          $push: { following: userId },
+        },
+        function (error, success) {
+          if (error) {
+            console.log(error);
+          } else {
+            User.updateOne(
+              { _id: userId },
+              { $push: { followers: decoded.id } },
+              { upsert: true },
+              function (error, success) {
+                if (error) {
+                  console.log(error);
+                } else {
+                  console.log(success);
+                }
+              }
+            );
+          }
+        }
+      );
 
+      // res.send(data);
+    } catch (err) {
+      res.send(err);
+    }
+  },
+
+  removeFollower: (req, res) => {
+    console.log("remove follower");
+    const token = req.headers["authorization"];
+    const userId = req.params.userId;
+    try {
+      const decoded = jwt.verify(token, "1234567");
+      console.log("-----------", userId);
+      User.findByIdAndUpdate(
+        { _id: decoded.id },
+        {
+          $pull: { following: userId },
+        },
+        function (error, success) {
+          if (error) {
+            console.log(error);
+          } else {
+            User.updateOne(
+              { _id: userId },
+              { $pull: { followers: decoded.id } },
+              { upsert: true },
+              function (error, success) {
+                if (error) {
+                  console.log(error);
+                } else {
+                  console.log(success);
+                }
+              }
+            );
+          }
+        }
+      );
+
+      // res.send(data);
+    } catch (err) {
+      res.send(err);
+    }
+  },
   addSavedList: (req, res) => {},
 };

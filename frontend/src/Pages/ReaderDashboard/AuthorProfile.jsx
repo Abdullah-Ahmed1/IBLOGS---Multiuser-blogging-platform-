@@ -1,19 +1,115 @@
 import axios from "axios";
-import {useState,useEffect} from "react";
+import {useState,useEffect,useContext} from "react";
 import Grid2 from '@mui/material/Unstable_Grid2';
 import Box from '@mui/material/Box';    
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import { useParams } from 'react-router-dom';
-import Avatar from '@mui/material/Avatar';
+//import Avatar from '@mui/material/Avatar';
 import CircularProgress from '@mui/material/CircularProgress';
 import ProfileInfoTabs from '../../components/ProfileComps/ProfileInfoTabs';
-const AuthorProfile = ()=>{
+import { UserContext } from "./ReaderDashboard";
+const AuthorProfile = ({profileData})=>{
+    const value = useContext(UserContext);
+    console.log("profilevalue--",profileData)
     const [userData,setUserData] =useState(null);
+    const [followed,setFollowed,] =useState(true)
     let { userId } = useParams();
-    console.log("userId",userId)
+    //console.log("userId",userId)
 
+//-----------------------------------------------------------------------------------
+    const handleFollowClick = ()=>{
+        let value = JSON.parse(localStorage.getItem("token"));
+        let token = value.token;
+        
+        if(followed){
+            setFollowed(false)
+            axios.post(`http://127.0.0.1:5000/readerDashboard/remove-follower/${userId}`,{},{
+                headers: {
+                    "Content-Type": "application/json",
+                    Accept: "application/json",
+                    Authorization: token,
+                  },
+            }).then(res =>{
+                
+                console.log(res)
+                let value = JSON.parse(localStorage.getItem("token"));
+                let token = value.token;
+                axios.get(`http://127.0.0.1:5000/readerDashboard/getUserData/${userId}`,{
+                    headers: {
+                        "Content-Type": "application/json",
+                        Accept: "application/json",
+                        Authorization: token,
+                      },
+                }).then(res=>{
+                   // console.log("*************************",res.data)
+                    setUserData(res.data[0])
+                     
+                    isFollowed(res.data[0])
+                    
+                })
+            })
+        }else{
+            axios.post(`http://127.0.0.1:5000/readerDashboard/add-follower/${userId}`,{},{
+                headers: {
+                    "Content-Type": "application/json",
+                    Accept: "application/json",
+                    Authorization: token,
+                  },
+            }).then(res =>{
+                console.log(res)
+                let value = JSON.parse(localStorage.getItem("token"));
+                let token = value.token;
+                axios.get(`http://127.0.0.1:5000/readerDashboard/getUserData/${userId}`,{
+                    headers: {
+                        "Content-Type": "application/json",
+                        Accept: "application/json",
+                        Authorization: token,
+                      },
+                }).then(res=>{
+                   // console.log("*************************",res.data)
+                    setUserData(res.data[0]);
+                    isFollowed(res.data[0])
+                    
+                })
+            })
+        }
+          
+    }
+
+//-----------------------------------------------------------------------------------
+   const isFollowed = (userData)=>{
+    console.log("reached**********************************************************")
+    let a = false
+    if( profileData && userData && userData.followers.length !== 0){
+        console.log("+++++++++++++++++++++++++++++++++++++++++++---+")
+        userData.followers.map(item=>{
+            console.log("!!!!!!!!!!!!!!!!!!1",item)
+            console.log(profileData._id)
+            if(item === profileData._id){
+                console.log("+++++++++++++++++++++++++++++++++++++++++++--")
+            //    a = true
+                setFollowed(true)
+                return;
+            }else{
+                setFollowed(false)
+                return;
+            } 
+        })
+    }else{
+        setFollowed(false)
+        return;
+    }
+    
+    return a
+   }
+   
+   
+  // console.log( "a is  :",isFollowed())
+    
     useEffect(()=>{
+      
+        //    console.log("1121212121212112212122121",value)
         let value = JSON.parse(localStorage.getItem("token"));
         let token = value.token;
         axios.get(`http://127.0.0.1:5000/readerDashboard/getUserData/${userId}`,{
@@ -23,9 +119,14 @@ const AuthorProfile = ()=>{
                 Authorization: token,
               },
         }).then(res=>{
-            console.log("*************************",res.data)
+           // console.log("*************************",res.data)
             setUserData(res.data[0])
+            isFollowed(res.data[0]);
         })
+//---------------------------------------------------------------------
+
+
+
     },[])
 
 
@@ -71,7 +172,7 @@ const AuthorProfile = ()=>{
                 <h4 style={{color:"#379863",margin:0,padding:0}}>{userData.profession}@{userData.organization}</h4>
             </Grid2>
             <Grid2>
-            <Button sx = {{backgroundColor:"#379863",color:"#05386b",marginTop:"10px","&:hover":{backgroundColor:"#379863"}}} variant="contained">Follow</Button>
+            <Button   onClick = {handleFollowClick}   sx = {{backgroundColor:"#379863",color:"#05386b",marginTop:"10px","&:hover":{backgroundColor:"#379863"}}}  variant="contained">{followed? "Followed":"Follow"}</Button>
              </Grid2>
              
             </Grid2>

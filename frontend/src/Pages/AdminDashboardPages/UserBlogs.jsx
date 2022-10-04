@@ -1,0 +1,41 @@
+import * as React from 'react';
+import axios from "axios"
+import { useState,useEffect } from 'react';
+import Grid2 from '@mui/material/Unstable_Grid2';
+import CssBaseline from '@mui/material/CssBaseline';
+import CircularProgress from '@mui/material/CircularProgress';
+import "./../../components/PostComponentsMui/PostCardScroll.css";
+import UsersCard from '../../components/AdminDashComps/UsersCard';
+import AdminBlogCard from './AdminBlogCard';
+
+const UserBlogs = ()=>{
+    return(
+          <>
+        <CssBaseline />
+        <div style={{marginTop:"20px",display:"flex",width:"73%",flexDirection:"row" ,background:"rgba(237, 245, 225,0)",alignItems:"center",justifyContent:"space-between"}}>
+          {/* <h2 style = {{color:"#379863"}}>IBlogs</h2> */}
+          {/* <SearchBar/> */}
+        </div>
+        {/* <Divider variant="middle"/> */}
+      <Grid2 container spacing={0} justifyContent= "space-between"   >
+        <Grid2  lg ={11} spacing={0} sx = {{minHeight:"90vh",marginTop:"50px",marginLeft:"30px"}}  >  
+       {/* ----------------------------------------------------------------------------------- */}
+       <h2 style = {{color:"#379863"}}  >All Blogs for Abdullah Ahmed</h2>
+       
+       <Grid2 container direction="row" spacing={2} sx = {{margin:"0px",padding:"0px"}} >
+            <AdminBlogCard/>
+
+       </Grid2>
+       {/* <Posts  posts = {posts}/> */}
+          
+        {/* ---------------------------------------------------------------- */}
+        </Grid2>
+       
+       
+      </Grid2>
+
+        </>
+       )
+   
+}
+export default UserBlogs;

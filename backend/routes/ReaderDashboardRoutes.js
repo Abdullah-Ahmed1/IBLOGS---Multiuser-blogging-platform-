@@ -22,7 +22,11 @@ router
   .delete(ReaderDashController.removeFromReadingList);
 
 router.route("/getUserData/:userId").get(ReaderDashController.getUserData);
-router.route("/add-follower").post(ReaderDashController.addFollower);
+router.route("/add-follower/:userId").post(ReaderDashController.addFollower);
+router
+  .route("/remove-follower/:userId")
+  .post(ReaderDashController.removeFollower);
+
 //router.route("/all").get(ReaderDashController.getAllData1);
 //router.route("/all2").get(ReaderDashController.getAllData2);
 

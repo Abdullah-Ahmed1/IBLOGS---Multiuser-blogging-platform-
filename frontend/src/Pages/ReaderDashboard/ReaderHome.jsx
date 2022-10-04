@@ -48,10 +48,6 @@ const ReaderHome = ({posts})=>{
       setAdded(true)
     } 
 
-
-
-
-
     return(
         <>
         <CssBaseline />

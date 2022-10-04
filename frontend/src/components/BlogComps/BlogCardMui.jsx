@@ -64,7 +64,6 @@ export default function BlogCard({item}) {
       <CardActions  >
         <Button   sx = {{color:"black"}}  size="small"><ArticleIcon/>{item.posts.length}</Button>
         <Button  sx = {{color:"black"}} size="small" onClick= {()=>setShareDialogOpen(true)}  ><ShareIcon/></Button>
-        <Button  sx = {{color:"black"}} size="small"><EditIcon/></Button>
         <Button  onClick={()=>setOpen(true)}   sx = {{color:"black"}} size="small"  ><DeleteIcon/></Button>
       </CardActions>
     </Card>

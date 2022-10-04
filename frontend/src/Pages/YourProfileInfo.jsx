@@ -23,7 +23,7 @@ const YourProfile =()=>{
     const [aboutEdit,setAboutEdit] = useState(false)
 
     const value = useContext(UserContext);
-    console.log("profilevalue--",value.profileData)
+    //console.log("profilevalue--",value.profileData)
     //console.log("!!!!",profileData)
     const handleClickOpen = () => {
         setCropOpen(true);
@@ -37,8 +37,8 @@ const YourProfile =()=>{
         <>
         <CssBaseline/>
          <Grid2 container spacing={0} justifyContent= "space-between"   >
-         <Grid2 xs={12} md={5} lg={7} spacing={0} sx = {{minHeight:"100vh",marginLeft:"30px"}}  >
-         <Grid2   sx = {{fontFamily: '"Source Sans Pro",Arial,sans-serif',marginTop:"50px",boxShadow:"0 4px 8px 0 rgba(92,219,149, 0.2), 0 6px 20px 0 rgba(92,219,149, 0.19)"}}>
+         <Grid2 xs={12} md={5} lg={7.5} spacing={0} sx = {{minHeight:"100vh",marginLeft:"30px"}}  >
+         <Grid2   sx = {{fontFamily: '"Source Sans Pro",Arial,sans-serif',borderRadius:"5   0px",width:"100%",marginTop:"50px",boxShadow:"0 4px 8px 0 rgba(92,219,149, 0.2), 0 6px 20px 0 rgba(92,219,149, 0.19)"}}>
                     <Grid2 container direction="column" sx = {{backgroundColor:"white"}}  >
                     <Grid2  sx = {{paddingLeft:"20px",paddingTop:"30px"}}    >
                             <div>
@@ -170,8 +170,23 @@ const YourProfile =()=>{
                     </Grid2> */}
                 </Grid2>
             </Grid2>
-            <Grid2  xs={12} md={5} lg={3 }  sx = {{position:"fixed",top:"0px",right:"0px",height:"100vh",overflow:"auto", background:"rgba(92, 219, 149,1)",marginRight:"0px",paddingLeft:"12px" } }     >
-       
+            <Grid2  xs={12} md={5} lg={3 }  sx = {{position:"fixed",top:"0px",right:"0px",height:"100vh",overflow:"auto", background:"#05386b",marginRight:"0px",paddingLeft:"12px" } }     >
+            <Grid2 container direction="column" alignItems="center" >
+            <Grid2>
+                <img  style={{width:"150px",height:"150px",borderRadius:"100%",border:"2px solid #379863",marginTop:"30%"}}  src={value.profileData.profileImage} alt="" />
+            </Grid2>
+            <Grid2>
+                <h3 style={{color:"#379863",marginBottom:0,paddingBottom:0}}>{value.profileData.firstname} {value.profileData.lastname}</h3>
+            </Grid2>
+            <Grid2>
+                <h4 style={{color:"#379863",margin:0,padding:0}}>{value.profileData.email}</h4>
+            </Grid2>
+            <Grid2>
+                <h4 style={{color:"#379863",margin:0,padding:0}}>{value.profileData.profession}@{value.profileData.organization}</h4>
+            </Grid2>
+            
+             
+            </Grid2>
 
             </Grid2>
          </Grid2>
