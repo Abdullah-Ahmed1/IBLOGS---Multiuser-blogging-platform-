@@ -1,0 +1,12 @@
+
+
+.trendPostCard_item:hover {
+	transform: scale(1.04);
+	transition: transform .3s;
+	cursor: pointer;
+}
+.postCard_item:hover {
+	transform: scale(1.04);
+	transition: transform .3s;
+	cursor: pointer;
+}

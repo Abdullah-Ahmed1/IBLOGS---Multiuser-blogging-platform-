@@ -5,8 +5,10 @@ import Box from '@mui/material/Box';
 import Stepper from '@mui/material/Stepper';
 import CloseIcon from '@mui/icons-material/Close';
 //import CreateIcon from '@mui/icons-material/Create';
+import Grid2 from '@mui/material/Unstable_Grid2';
 import Step from '@mui/material/Step';
 import PropTypes from 'prop-types';
+import SendIcon from '@mui/icons-material/Send';
 import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
 //import { MobileDatePicker } from '@mui/x-date-pickers/MobileDatePicker';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
@@ -49,7 +51,7 @@ import { useState } from 'react';
 import ConfirmBox from './ConfirmBox';
 
 
-const steps = ['Post Details', 'Create post', 'Upload Options'];
+const steps = ['Post Details','Text Generation', 'Create post', 'Upload Options'];
 
   const QontoStepIconRoot = styled('div')(({ theme, ownerState }) => ({
     color: theme.palette.mode === 'dark' ? theme.palette.grey[700] : '#eaeaf0',
@@ -147,7 +149,8 @@ const steps = ['Post Details', 'Create post', 'Upload Options'];
     const icons = {
       1: <InfoIcon fontSize='small' />,
       2: <CreateIcon fontSize='small'/>,
-      3: <PublishIcon fontSize='small'/>,
+      3: <CreateIcon fontSize='small'/>,
+      4: <PublishIcon fontSize='small'/>,
     };
   
     return (
@@ -260,7 +263,40 @@ ColorlibStepIcon.propTypes = {
     );
   }
 
+  const TextGeneration = ({handleClickGenerate,generatedText})=>{
+    const container = useRef(null)
+    const [test,setTest] = useState(null)
+    const [keyword,setKeyword] = useState("")
+    useEffect(()=>{
+      lottie.loadAnimation({
+        container : container.current,
+        renderer: 'svg',
+        loop:true,
+        autoplay:true,
+        animationData:require('../../lottie/emoji.json')
+  
+      })
 
+    },[test])
+    return(
+      <Box>
+        <Grid2 container direction = {"column"} alignItems={"center"}  justifyContent = {"center"}>
+          <Grid2>
+            <h3>If you want to generate text add key word other wise skip</h3>
+          </Grid2>
+          <Grid2>
+          <div className='container' ref={container} style={{margin:"auto",width:"200px"}}  ></div>
+          </Grid2>
+          <Grid2>
+          <TextField    value={keyword} onChange={(e)=>setKeyword(e.target.value) }  id="outlined-basic"  variant="outlined"  placeholder='Enter Keyword here'/>
+          </Grid2>
+          <Grid2 sx = {{marginTop:"10px"}}>
+          <Button  disabled = {keyword ? false: true}  onClick={()=>handleClickGenerate(keyword)} sx = {{backgroundColor:"#05386b","&:hover":{backgroundColor:"#379683"}}} variant="contained" endIcon={<SendIcon />}>Generate</Button>
+          </Grid2>
+        </Grid2>
+      </Box>
+    )
+  }
 
 
   const PostDetails = ( { handlePostTitle,handlePostDescription,handlePostKeywords,handlePostCardImage})=>{
@@ -331,7 +367,7 @@ ColorlibStepIcon.propTypes = {
           //onChange={handleChange}
           variant="outlined"
         />
-        <CssTextField
+        {/* <CssTextField
            className='keyword-field'
            value={temp}
            onKeyPress={handleEnterPress}
@@ -343,7 +379,7 @@ ColorlibStepIcon.propTypes = {
           //onChange={handleChange}
           variant="outlined"
         />
-        <ChipsArray chip = {chip} />
+        <ChipsArray chip = {chip} /> */}
 
         <div >
         <ImageUploader
@@ -417,7 +453,7 @@ ColorlibStepIcon.propTypes = {
 
   ////////////////////////////////////////////////////////////////////////////////
   ///-----------------------------------------
-  const GetStepContent = ({activeStep,handleSave,handlePostCardImage,handlePostTitle,handlePostDescription,handlePostKeywords,handlePostContent,postContent,handleAllowComments,allowComments,handlePublishStatus,handlePublishDate,publishDate,handleSchedule,handlePublish,openBox,handleOpenBox}) => {
+  const GetStepContent = ({activeStep,handleSave,handleClickGenerate,generatedText,handlePostCardImage,handlePostTitle,handlePostDescription,handlePostKeywords,handlePostContent,postContent,handleAllowComments,allowComments,handlePublishStatus,handlePublishDate,publishDate,handleSchedule,handlePublish,openBox,handleOpenBox}) => {
     console.log()
     switch (activeStep) {
       case 0:
@@ -428,10 +464,14 @@ ColorlibStepIcon.propTypes = {
                          handlePostCardImage = {handlePostCardImage}
             />
         );
-  
-      case 1:
-        return <MyEditor handlePostContent =  {handlePostContent} postContent = {postContent}/>
+        case 1 :
+          return(
+            <TextGeneration handleClickGenerate={handleClickGenerate} generatedText = {generatedText}/>
+          )
+          
       case 2:
+        return <MyEditor handlePostContent =  {handlePostContent} generatedText = {generatedText} postContent = {postContent}/>
+      case 3:
         return (
             <UploadOptions  allowComments = {allowComments} 
             handleAllowComments ={handleAllowComments}  
@@ -453,15 +493,18 @@ ColorlibStepIcon.propTypes = {
 
 export default function AddPostStepper({handleClose}) {
   let { blogId } = useParams();
+  const [generatedText,setGeneratedText] = useState(null) 
   //--------------------------------------------- add post states and functions
     const [postTitle, setPostTitle] = useState("");
     const [postDescription, setPostDescription] = useState("");
     const [postKeywords, setPostKeywords] = useState([]);
-    const [postContent , setPostContent] = useState('');
+    const [postContent , setPostContent] = useState("");
     const [postCardImage,setPostCardImage] = useState(null);
     const [allowComments , setAllowComments] = useState(true);
     const [publishStatus,setPublishStatus] = useState("");
     const [publishDate,setPublishDate] = useState(dayjs('2014-08-18T21:11:54'));
+    //-----------------------------------------------------------------------------
+   
     //----------------confirmation box open-----------------------------------
     const [openBox,SetOpenBox] = useState(false);
     const handleOpenBox = openBox => SetOpenBox(openBox)
@@ -485,6 +528,21 @@ export default function AddPostStepper({handleClose}) {
      // console.log("post Content : ",postContent)
       //console.log("comments",allowComments)
      console.log("confirmation",openBox)
+
+//--------------------------------------Generate Text------------------------------------     
+
+    const handleClickGenerate = (keyword)=>{
+      console.log("reached-----------")
+      var bodyFormData = new FormData();
+      bodyFormData.append('title', keyword);
+     
+      axios.post("http://127.0.0.1:3001/analyze",bodyFormData)
+      .then(res=>{
+        console.log("generated text",res.data)
+        setGeneratedText(res.data)
+        setPostContent(res.data)
+      })
+    }
 
 //------------------------Publish Post---------------------------------------------------
 
@@ -768,7 +826,9 @@ export default function AddPostStepper({handleClose}) {
             </Button>
             </div>
             <GetStepContent activeStep={activeStep}
-             handlePostTitle = {handlePostTitle} 
+            handleClickGenerate = {handleClickGenerate}
+            generatedText = {generatedText} 
+            handlePostTitle = {handlePostTitle} 
              handlePostDescription={handlePostDescription} 
              handlePostKeywords={handlePostKeywords }
               handlePostContent = {handlePostContent} 
@@ -784,6 +844,7 @@ export default function AddPostStepper({handleClose}) {
                  handlePublish = {handlePublish}
                  openBox={openBox}
                  handleOpenBox = {handleOpenBox}
+                 
                  />
             </Paper>
           </Box>

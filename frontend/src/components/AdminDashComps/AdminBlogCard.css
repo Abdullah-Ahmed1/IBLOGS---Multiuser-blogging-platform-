@@ -1,0 +1,12 @@
+.blogCard_item {
+	
+	/* width: 24%; */
+    /* background-color: ; */
+	
+}
+
+.blogCard_item:hover {
+	transform: scale(1.02);
+	transition: transform .3s;
+	cursor: pointer;
+}

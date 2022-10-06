@@ -22,8 +22,9 @@ const ResponsesPage = ()=>{
        {/* ----------------------------------------------------------------------------------- */}
        {/* <Posts  posts = {posts}/> */}
        
-       <ResponseTabs/>
-       
+       {/* <ResponseTabs/> */}
+        <h3>Notifications</h3>
+        
      
         {/* ---------------------------------------------------------------- */}
         </Grid2>
@@ -35,11 +36,7 @@ const ResponsesPage = ()=>{
         <RecommendedChips/>
         <div>
         <h4 style={{color:"#379683"}}>Trending Posts</h4>
-          <TrendPostCard/>
-          <TrendPostCard/>
-          <TrendPostCard/>
-          <TrendPostCard/>
-          <TrendPostCard/>
+         
           </div>
         <Typography paragraph>
           Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod

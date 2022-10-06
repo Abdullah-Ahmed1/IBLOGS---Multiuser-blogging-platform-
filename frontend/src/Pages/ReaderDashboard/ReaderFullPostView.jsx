@@ -113,11 +113,11 @@ const ReaderFullPostView = ()=>{
        <RecommendedChips/>
        <div>
        <h4 style={{color:"#379683"}}>Posts You Should Read</h4>
+         {/* <TrendPostCard/>
          <TrendPostCard/>
          <TrendPostCard/>
          <TrendPostCard/>
-         <TrendPostCard/>
-         <TrendPostCard/>
+         <TrendPostCard/> */}
          </div>
       
        {/* <Typography paragraph>

@@ -1,7 +1,7 @@
 import React, { useState, useRef, useMemo } from "react";
 import JoditEditor from "jodit-react";
 
-const MyEditor = ({ handlePostContent, postContent }) => {
+const MyEditor = ({ handlePostContent, postContent, generatedText }) => {
   const editor = useRef(null);
   console.log("posContent Type: ", typeof postContent);
 

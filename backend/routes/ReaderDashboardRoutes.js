@@ -27,6 +27,8 @@ router
   .route("/remove-follower/:userId")
   .post(ReaderDashController.removeFollower);
 
+router.route("/addNotification").post(ReaderDashController.addNotification);
+
 //router.route("/all").get(ReaderDashController.getAllData1);
 //router.route("/all2").get(ReaderDashController.getAllData2);
 

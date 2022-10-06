@@ -5,6 +5,7 @@ var connection = require("../Connection/connection");
 const Post = Mongoose.model("Post");
 const Reply = Mongoose.model("Reply");
 const User = Mongoose.model("User");
+const Notification = Mongoose.model("Notification");
 const Comment = Mongoose.model("Comment");
 //const { User, validate } = require("../models/users.model");
 module.exports = {
@@ -153,6 +154,17 @@ module.exports = {
                 console.log(error);
               } else {
                 console.log(success);
+                const data = {
+                  notificationText: `${decoded.username} commented on "${success.postTitle}" `,
+                  info: {
+                    commentedPost: success._id,
+                    commentorId: decoded.id,
+                    commentorName: decoded.username,
+                  },
+                  seen: false,
+                  notificationType: "comment",
+                };
+                Notification.create(data).then((data) => console.log(data));
               }
             }
           ).save();
@@ -421,4 +433,11 @@ module.exports = {
     }
   },
   addSavedList: (req, res) => {},
+
+  addNotification: (req, res) => {
+    console.log("reached**-*-*-*");
+    Notification.create(req.body).then((data) => {
+      res.send(data);
+    });
+  },
 };

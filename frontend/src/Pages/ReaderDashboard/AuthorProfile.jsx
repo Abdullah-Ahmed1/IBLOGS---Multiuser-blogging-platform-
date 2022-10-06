@@ -13,15 +13,17 @@ const AuthorProfile = ({profileData})=>{
     const value = useContext(UserContext);
     console.log("profilevalue--",profileData)
     const [userData,setUserData] =useState(null);
-    const [followed,setFollowed,] =useState(true)
+    const [followed,setFollowed,] =useState(false)
     let { userId } = useParams();
     //console.log("userId",userId)
 
 //-----------------------------------------------------------------------------------
     const handleFollowClick = ()=>{
+        
+        console.log("on traget",followed)
         let value = JSON.parse(localStorage.getItem("token"));
         let token = value.token;
-        
+
         if(followed){
             setFollowed(false)
             axios.post(`http://127.0.0.1:5000/readerDashboard/remove-follower/${userId}`,{},{
@@ -42,14 +44,15 @@ const AuthorProfile = ({profileData})=>{
                         Authorization: token,
                       },
                 }).then(res=>{
-                   // console.log("*************************",res.data)
+                    console.log("*************************///",res.data[0])
                     setUserData(res.data[0])
-                     
-                    isFollowed(res.data[0])
+                    profileData && res.data[0].followers.includes(profileData._id)? setFollowed(true): setFollowed(false)
+                    // isFollowed(res.data[0])
                     
                 })
             })
         }else{
+            setFollowed(true)
             axios.post(`http://127.0.0.1:5000/readerDashboard/add-follower/${userId}`,{},{
                 headers: {
                     "Content-Type": "application/json",
@@ -57,6 +60,7 @@ const AuthorProfile = ({profileData})=>{
                     Authorization: token,
                   },
             }).then(res =>{
+                
                 console.log(res)
                 let value = JSON.parse(localStorage.getItem("token"));
                 let token = value.token;
@@ -69,7 +73,10 @@ const AuthorProfile = ({profileData})=>{
                 }).then(res=>{
                    // console.log("*************************",res.data)
                     setUserData(res.data[0]);
-                    isFollowed(res.data[0])
+                    profileData && res.data[0].followers.includes(profileData._id)? setFollowed(true): setFollowed(false)
+                   
+                    
+                    // isFollowed(res.data[0])
                     
                 })
             })
@@ -79,29 +86,30 @@ const AuthorProfile = ({profileData})=>{
 
 //-----------------------------------------------------------------------------------
    const isFollowed = (userData)=>{
-    console.log("reached**********************************************************")
-    let a = false
-    if( profileData && userData && userData.followers.length !== 0){
-        console.log("+++++++++++++++++++++++++++++++++++++++++++---+")
-        userData.followers.map(item=>{
-            console.log("!!!!!!!!!!!!!!!!!!1",item)
-            console.log(profileData._id)
-            if(item === profileData._id){
-                console.log("+++++++++++++++++++++++++++++++++++++++++++--")
-            //    a = true
-                setFollowed(true)
-                return;
-            }else{
-                setFollowed(false)
-                return;
-            } 
-        })
-    }else{
-        setFollowed(false)
-        return;
-    }
     
-    return a
+    // console.log("reached**********************************************************")
+    // let a = false
+    // if( profileData && userData && userData.followers.length !== 0){
+    //     console.log("+++++++++++++++++++++++++++++++++++++++++++---+")
+    //     userData.followers.map(item=>{
+    //         console.log("!!!!!!!!!!!!!!!!!!1",item)
+    //         console.log(profileData._id)
+    //         if(item === profileData._id){
+    //             console.log("+++++++++++++++++++++++++++++++++++++++++++--")
+    //         //    a = true
+    //             setFollowed(true)
+    //             return;
+    //         }else{
+    //             setFollowed(false)
+    //             return;
+    //         } 
+    //     })
+    // }else{
+    //     setFollowed(false)
+    //     return;
+    // }
+    
+    // return a
    }
    
    
@@ -119,15 +127,18 @@ const AuthorProfile = ({profileData})=>{
                 Authorization: token,
               },
         }).then(res=>{
-           // console.log("*************************",res.data)
+            profileData && res.data[0].followers.includes(profileData._id)? setFollowed(true): setFollowed(false)
+            // console.log("********************//--//*****",res.data[0].followers.includes())
             setUserData(res.data[0])
-            isFollowed(res.data[0]);
+            console.log("123324242423",profileData)
+            
+            // isFollowed(res.data[0]);
         })
 //---------------------------------------------------------------------
 
 
 
-    },[])
+    },[profileData])
 
 
     return(
