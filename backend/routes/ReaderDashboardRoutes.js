@@ -27,6 +27,7 @@ router
   .route("/remove-follower/:userId")
   .post(ReaderDashController.removeFollower);
 
+router.route("/add-like/:postId").post(ReaderDashController.addLike);
 router.route("/addNotification").post(ReaderDashController.addNotification);
 
 //router.route("/all").get(ReaderDashController.getAllData1);

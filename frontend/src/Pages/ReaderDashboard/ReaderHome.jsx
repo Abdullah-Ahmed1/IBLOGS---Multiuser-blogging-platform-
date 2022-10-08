@@ -1,6 +1,6 @@
 import * as React from 'react';
-import { useState } from 'react';
-//import axios from "axios";
+import { useState,useEffect } from 'react';
+import axios from "axios";
 import "../../components/PostComponentsMui/TrendPostCard.css"
 import Box from '@mui/material/Box';
 import Grid from "@mui/material/Grid";
@@ -32,23 +32,64 @@ import TrendPostCard from './../../components/PostComponentsMui/TrendPostCard';
 import CreateListMenu from './../../components/ReaderDashComponents/CreateSavedListMenu';
 import ReaderPostCard from './ReaderPostCard';
 
-const Item = styled(Paper)(({ theme }) => ({
-    backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
-    ...theme.typography.body2,
-    padding: theme.spacing(1),
-    textAlign: 'center',
-    color: theme.palette.text.secondary,
-  }));
 
 
-const ReaderHome = ({posts})=>{
-
+const ReaderHome = ()=>{
+  const [posts,setPosts] = useState(null)
     const [added,setAdded] = useState(false) 
-
     const handleSaveIconClick =()=>{
-      
       setAdded(true)
     } 
+
+    const handleLikeClick = (postId)=>{
+      let value = JSON.parse(localStorage.getItem("token"));
+      let token = value.token;
+      console.log("click with postid",postId)
+      
+      axios.post(`http://127.0.0.1:5000/readerDashboard/add-like/${postId}`,{},{
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+          Authorization: token,
+        },
+      }).then(res => {
+        console.log(res)
+        axios.get('http://127.0.0.1:5000/readerDashboard',{
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+            Authorization: token,
+          },
+        })
+        .then(res =>{
+          console.log("res--------",res.data    ) 
+          setPosts(res.data)
+          
+         
+        }).catch(err=> console.log(err))
+      
+      } )
+    
+
+
+    }
+    useEffect(()=>{
+      let value = JSON.parse(localStorage.getItem("token"));
+      let token = value.token;
+      axios.get('http://127.0.0.1:5000/readerDashboard',{
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+          Authorization: token,
+        },
+      })
+      .then(res =>{
+        console.log("res--------",res.data    ) 
+        setPosts(res.data)
+        
+       
+      }).catch(err=> console.log(err))
+    },[])
 
     return(
         <>
@@ -71,7 +112,7 @@ const ReaderHome = ({posts})=>{
           posts.map(item =>{
            //  console.log("!!!!!!!!!!!!!!!!1",item.parentBlog)
             return (
-              <ReaderPostCard item ={item}/>
+              <ReaderPostCard   key = {item._id} item ={item}  handleLikeClick={handleLikeClick} />
         //      <Box  className='postCard_item'  key ={item._id}  sx = {{ boxShadow:"1px 1px 3px 1px rgba(0,0,0,0.3)",borderRadius:"3px",minHeight:"300px",width:"98%",marginBottom:"30px",backgroundColor:"white", padding:"20px"}} >
         //  <Grid container direction="row"   spacing = {0} >
         //    <Grid lg = {10} md = {12} sm={12} sx= {{p:2}} item direction="column" justifyContent="space-between" spacing={0} container >

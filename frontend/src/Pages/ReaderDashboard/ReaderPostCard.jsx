@@ -1,5 +1,6 @@
 import Box from '@mui/material/Box';
 import { useState } from 'react';
+import axios from "axios";
 import Grid from "@mui/material/Grid";
 import Grid2 from '@mui/material/Unstable_Grid2';
 import Avatar from '@mui/material/Avatar';
@@ -12,11 +13,38 @@ import ShareIcon from '@mui/icons-material/Share';
 import BookmarkAddedIcon from '@mui/icons-material/BookmarkAdded';
 import CreateListMenu from './../../components/ReaderDashComponents/CreateSavedListMenu';
 import PostShareDialog from './../../components/ReaderDashComponents/PostShareDialog';
-const ReaderPostCard = ({item})=>{
+import { useEffect } from 'react';
+const ReaderPostCard = ({item,handleLikeClick})=>{
     const [shareDialogOpen,setShareDialogOpen] = useState(false)
+    const [liked,setLiked] = useState(false)
+      console.log("item is :  " ,item)
     const handleShareDialogClose = ()=>{
         setShareDialogOpen(false)
     }
+    const handleLikeIconClick = ()=>{
+      setLiked((liked)=>!liked)
+      handleLikeClick(item._id)
+    }
+
+    useEffect(()=>{
+      let value = JSON.parse(localStorage.getItem("token"));
+      let token = value.token;
+      axios.get('http://127.0.0.1:5000/getProfile',{
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+          Authorization: token,
+        },
+      }).then(res=>{
+        console.log("/-/-/-/-/-/*/-",res.data)
+
+          if(item){
+            item.likes.includes(res.data._id) ? setLiked(true) : setLiked(false)
+          }
+        // item && item.likes.includes(res.data._id) ? console.log("liked") : console.log("not liked")
+      })
+    },[])
+
     return(
         <>
          <Box  className='postCard_item'  key ={item._id}  sx = {{ boxShadow:"1px 1px 3px 1px rgba(0,0,0,0.3)",borderRadius:"3px",minHeight:"300px",width:"98%",marginBottom:"30px",backgroundColor:"white", padding:"20px"}} >
@@ -60,7 +88,7 @@ const ReaderPostCard = ({item})=>{
               </Grid>
           
               <Grid container item sx = {{ width:"90%",maxHeight:"20px"}} >
-              <Button  sx = {{margin:"0px",padding:"0px"}} ><ThumbUpIcon sx=  {{cursor:"pointer",color:"#05386b",margin:"0px 0px "}}  /></Button>
+              <Button onClick = {handleLikeIconClick}   sx = {{margin:"0px",padding:"0px"}} ><ThumbUpIcon sx=  {{cursor:"pointer",color:`${liked? "#379683":"#05386b"}`,margin:"0px 0px "}}  /></Button>
              <Button  sx = {{margin:"0px",padding:"0px"}} onClick = {()=>setShareDialogOpen(true) } ><ShareIcon sx=  {{   cursor:"pointer",color:"#05386b",margin:"0px 0px "}} /></Button>
              <CreateListMenu  postId = {item._id} /> 
               </Grid>

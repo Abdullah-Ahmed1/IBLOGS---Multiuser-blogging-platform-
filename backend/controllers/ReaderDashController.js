@@ -64,6 +64,7 @@ module.exports = {
           postTitle: 1,
           postDescription: 1,
           postKeywords: 1,
+          likes: 1,
           publishDate: 1,
           publishStatus: 1,
           allowComments: 1,
@@ -439,5 +440,35 @@ module.exports = {
     Notification.create(req.body).then((data) => {
       res.send(data);
     });
+  },
+  addLike: (req, res) => {
+    const postId = req.params.postId;
+    console.log(postId);
+    const token = req.headers["authorization"];
+    try {
+      const decoded = jwt.verify(token, "1234567");
+
+      Post.findOne({ _id: postId }).then((post) => {
+        post.likes.includes(decoded.id)
+          ? Post.findOneAndUpdate(
+              { _id: postId },
+              {
+                $pull: { likes: decoded.id },
+              }
+            ).then((data) => {
+              res.send(data);
+            })
+          : Post.findOneAndUpdate(
+              { _id: postId },
+              {
+                $push: { likes: decoded.id },
+              }
+            ).then((data) => {
+              res.send(data);
+            });
+      });
+    } catch (err) {
+      res.send(err);
+    }
   },
 };

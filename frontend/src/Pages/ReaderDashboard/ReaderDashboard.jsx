@@ -55,12 +55,11 @@ export default function ReaderDashboard() {
   const classes = useStyles();
 
   const [visible,setVisible] = useState(false);
-  const [posts,setPosts] = useState(null)
+  
   const [profileData,setProfileData] = useState({});
   const [profileData1,setProfileData1] = useState({});
   const [dataChanged,setDataChanged] = useState(false);
  
-  console.log("post",posts  )
 
   const handleInfoChange = (item)=>{
     setProfileData({...profileData,...item})
@@ -166,25 +165,11 @@ export default function ReaderDashboard() {
 
 
   useEffect(()=>{
-    let value = JSON.parse(localStorage.getItem("token"));
-    let token = value.token;
-    axios.get('http://127.0.0.1:5000/readerDashboard',{
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json",
-        Authorization: token,
-      },
-    })
-    .then(res =>{
-      console.log("res--------",res.data    ) 
-      setPosts(res.data)
-      
-     
-    }).catch(err=> console.log(err))
+   
 
 //---------------------------------------------------------
-    // let value = JSON.parse(localStorage.getItem("token"));
-    // let token = value.token;
+    let value = JSON.parse(localStorage.getItem("token"));
+    let token = value.token;
        axios.get(
         "http://127.0.0.1:5000/getProfile",
         {
@@ -251,7 +236,7 @@ export default function ReaderDashboard() {
           flexGrow: 1,paddingLeft:"20px",background:"rgba(255, 255, 255,0.9)" }}
       >
        <Routes>
-       <Route exact path="/" element={<ReaderHome posts = {posts} />} />
+       <Route exact path="/" element={<ReaderHome />} />
        <Route exact path="/full-post/:id" element={<ReaderFullPostView  />} />
        <Route exact path="/author-profile/:userId" element={<AuthorProfile  profileData={profileData} />} />
        <Route exact path="/your-profile" element={<YourProfile />} />
