@@ -56,7 +56,13 @@ module.exports = {
           select: { title: 1 },
           populate: {
             path: "owner",
-            select: { firstname: 1, lastname: 1, profileImage: 1, email: 1 },
+            select: {
+              firstname: 1,
+              lastname: 1,
+              profileImage: 1,
+              email: 1,
+              ReadingList: 1,
+            },
           },
         })
         .select({
@@ -144,7 +150,7 @@ module.exports = {
         comment: req.body.comment,
         uploadDate: new Date(),
       };
-      Comment.create(data)
+      Comment.create({ ...data, parentPost: postId })
         .then((comment) => {
           //  console.log(comment);
           Post.findOneAndUpdate(
@@ -155,17 +161,29 @@ module.exports = {
                 console.log(error);
               } else {
                 console.log(success);
-                const data = {
-                  notificationText: `${decoded.username} commented on "${success.postTitle}" `,
-                  info: {
-                    commentedPost: success._id,
-                    commentorId: decoded.id,
-                    commentorName: decoded.username,
-                  },
-                  seen: false,
-                  notificationType: "comment",
-                };
-                Notification.create(data).then((data) => console.log(data));
+                Post.findOne({ _id: postId })
+                  .populate({
+                    path: "parentBlog",
+                    select: {
+                      owner: 1,
+                    },
+                  })
+                  .then((res) => {
+                    const data = {
+                      notificationText: `${decoded.username} commented on "${success.postTitle}" "${comment.comment}" `,
+                      info: {
+                        commentedPost: success._id,
+                        commentorId: decoded.id,
+
+                        commentorName: decoded.username,
+                      },
+                      owner: res.parentBlog.owner,
+                      seen: false,
+                      notificationType: "comment",
+                      notificationDate: new Date(),
+                    };
+                    Notification.create(data).then((data) => console.log(data));
+                  });
               }
             }
           ).save();
@@ -441,6 +459,22 @@ module.exports = {
       res.send(data);
     });
   },
+
+  getNotification: (req, res) => {
+    console.log("get Notification rreached");
+    const token = req.headers["authorization"];
+    try {
+      const decoded = jwt.verify(token, "1234567");
+      Notification.find({
+        owner: decoded.id,
+      }).then((data) => {
+        console.log(data);
+
+        res.send(data);
+      });
+    } catch (err) {}
+  },
+
   addLike: (req, res) => {
     const postId = req.params.postId;
     console.log(postId);

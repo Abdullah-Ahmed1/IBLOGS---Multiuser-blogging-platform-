@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {useState,useEffect} from "react";
 import axios from "axios";
-import Button from '@mui/material/Button';
+
 import ClickAwayListener from '@mui/material/ClickAwayListener';
 import Grow from '@mui/material/Grow';
 import Paper from '@mui/material/Paper';
@@ -15,74 +15,54 @@ import CloseIcon from '@mui/icons-material/Close';
 import Stack from '@mui/material/Stack';
 import Input from '@mui/material/Input';
 import Grid2 from '@mui/material/Unstable_Grid2';
-import BookmarkAddIcon from '@mui/icons-material/BookmarkAdd';
-import BookmarkAddedIcon from '@mui/icons-material/BookmarkAdded';
+import CheckboxesGroup from './GroupedCheckBox';
 
 
 
-export default function MenuListComposition({postId}) {
+export default function MenuListComposition({postId,item,customList,handleCustomChange,open,checked,handleToggle,handleChange,handleListKeyDown,handleClose,anchorRef}) {
 
-  const [open, setOpen] = React.useState(false);
-  const [checked,setChecked] = useState(false);
-  const anchorRef = React.useRef(null);
+  var a = [1,2,3,4]
+  console.log("saved??????????????????????????????????",true)
 
-  const handleChange = (event) => {
-    setChecked(event.target.checked);
-    
-    checked? (
-      console.log("cheked")
-    ):(
-      console.log("not cheked")
-    )
+ 
+  // const [saved,setSaved] = useState(saved)
 
-  };
-  const handleToggle = () => {
-    setOpen((prevOpen) => !prevOpen);
-    setChecked(true)
 
-    
-      // let value = JSON.parse(localStorage.getItem("token"));
-      // let token = value.token;
-      // axios.post(`http://127.0.0.1:5000/readerDashboard/add-to-reading-list/${postId}`,{
-      //   headers: {
-      //     "Content-Type": "application/json",
-      //     Accept: "application/json",
-      //     Authorization: token,
-      //   },
-      // }).then(res => console.log(res))
-    
-    
-  };
-  const handleClose = (event) => {
-    if (anchorRef.current && anchorRef.current.contains(event.target)) {
-      return;
-    }
-    setOpen(false);
-  };
-
-  function handleListKeyDown(event) {
-    if (event.key === 'Tab') {
-      event.preventDefault();
-      setOpen(false);
-    } else if (event.key === 'Escape') {
-      setOpen(false);
-    }
-  }
+  // useEffect(()=>{
+  //   setSaved()
+  // })
 
   useEffect(()=>{
-    if(checked){
-    let value = JSON.parse(localStorage.getItem("token"));
-      let token = value.token;
-      console.log("token: ",token)
-      axios.post(`http://127.0.0.1:5000/readerDashboard/add-to-reading-list/${postId}`,{},{
-        headers: {
-          "Content-Type": "application/json", 
-          Accept: "application/json",
-          Authorization: token,
-        },
-      }).then(res => console.log(res))
-    }
-  },[checked,postId])
+    // if(checked){
+    // let value = JSON.parse(localStorage.getItem("token"));
+    //   let token = value.token;
+    //   console.log("token: ",token)
+    //   axios.post(`http://127.0.0.1:5000/readerDashboard/add-to-reading-list/${postId}`,{},{
+    //     headers: {
+    //       "Content-Type": "application/json", 
+    //       Accept: "application/json",
+    //       Authorization: token,
+    //     },
+    //   }).then(res => {
+    //     console.log(res)
+    //          })
+    // }else{
+    //   let value = JSON.parse(localStorage.getItem("token"));
+    //   let token = value.token;
+    //   axios.delete(`http://127.0.0.1:5000/readerDashboard/remove-from-readingList/${postId}`,{
+    //     headers: {
+    //       "Content-Type": "application/json", 
+    //       Accept: "application/json",
+    //       Authorization: token,
+    //     },
+    //   }).then(res=>{
+    //     console.log(res)
+    //   }).catch(err=>{
+    //     console.log(err)
+    //   })
+    // }
+  },[checked])
+
   // return focus to the button when we transitioned from !open -> open
   const prevOpen = React.useRef(open);
   React.useEffect(() => {
@@ -97,17 +77,7 @@ export default function MenuListComposition({postId}) {
     <Stack direction="row" spacing={2}>
      
       <div>
-        <Button
-        sx = {{margin:"0px",padding:"0px"}}
-         ref={anchorRef}
-         id="composition-button"
-         aria-controls={open ? 'composition-menu' : undefined}
-         aria-expanded={open ? 'true' : undefined}
-         aria-haspopup="true"
-         onClick={handleToggle}
-        >
-         {checked ? <BookmarkAddedIcon sx = {{color:"#379863"}}/> : <BookmarkAddIcon sx = {{color:"#05386b"}}/>} 
-        </Button>
+       
        
           
         <Popper
@@ -139,14 +109,29 @@ export default function MenuListComposition({postId}) {
                       <Checkbox checked={checked} onChange={handleChange}  inputProps={{ 'aria-label': 'controlled' }}  />
                       Reading List
                     </MenuItem>
+                    
+                    {
+                     
+                      a.map(item=>{
+                        return(
+                          <MenuItem key = {item}>
+                            <Checkbox   inputProps={{ 'aria-label': 'controlled' }}  />
+                               MyList1
+                              {/* <CheckboxesGroup/> */}
+                          </MenuItem>
+                        )
+
+                      })
+                    }
+                    
                     <Divider />
                     <MenuItem 
-                      // onClick={handleClose}
+                       onClick={()=>handleCustomChange(customList)}
                       >
                       Create new List
                     </MenuItem>
-                    <MenuItem >
-                    <Grid2 container spacing={0}>
+                    <MenuItem  sx = {customList ? {display:"block"}:{display:"none"}} >
+                    <Grid2     container spacing={0}>
                         <Grid2>
                             <Input placeholder='Enter list title' />
                         </Grid2>

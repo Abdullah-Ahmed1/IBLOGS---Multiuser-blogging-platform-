@@ -6,7 +6,9 @@
 	cursor: pointer;
 }
 .postCard_item:hover {
-	transform: scale(1.04);
-	transition: transform .3s;
+	/* transform: scale(1.01); */
+	/* width: 99%; */
+	padding: 30px;
+	transition: padding .5s;
 	cursor: pointer;
 }

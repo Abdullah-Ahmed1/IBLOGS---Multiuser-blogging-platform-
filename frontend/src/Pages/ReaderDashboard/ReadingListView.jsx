@@ -102,14 +102,14 @@ const ReadingListPostCard = ({item,handleRemovePostClick})=>{
 }
 
 
-const ReadingListView = ()=>{
+const   ReadingListView = ()=>{
     const [readingList,setReadingList]=useState(null);   
    
   
     const handleRemovePostClick = (postId)=>{
       let value = JSON.parse(localStorage.getItem("token"));
       let token = value.token;
-       axios.delete(`http://127.0.0.1:5000/readerDashboard/remove-for-readingList/${postId}`,{
+       axios.delete(`http://127.0.0.1:5000/readerDashboard/remove-from-readingList/${postId}`,{
         headers: {
           "Content-Type": "application/json",
           Accept: "application/json",

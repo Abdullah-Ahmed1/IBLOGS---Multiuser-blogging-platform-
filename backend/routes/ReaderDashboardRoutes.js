@@ -18,7 +18,7 @@ router
 
 router.route("/get-reading-list").get(ReaderDashController.getReadingList);
 router
-  .route("/remove-for-readingList/:postId")
+  .route("/remove-from-readingList/:postId")
   .delete(ReaderDashController.removeFromReadingList);
 
 router.route("/getUserData/:userId").get(ReaderDashController.getUserData);
@@ -29,6 +29,7 @@ router
 
 router.route("/add-like/:postId").post(ReaderDashController.addLike);
 router.route("/addNotification").post(ReaderDashController.addNotification);
+router.route("/get-notification").get(ReaderDashController.getNotification);
 
 //router.route("/all").get(ReaderDashController.getAllData1);
 //router.route("/all2").get(ReaderDashController.getAllData2);

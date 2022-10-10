@@ -16,6 +16,12 @@ app.use(bodyParser.json({ limit: "50mb" }));
 app.use(bodyParser.urlencoded());
 require("./Connection/connection");
 
+//--------------------------------------------------
+const Analysis = require("./utils/Analysis");
+// Analysis.commentAnalysis();
+// Analysis.testAnalysis();
+//----------------------------------------------------
+
 const profilingRoutes = require("./routes/userProfilingRoutes");
 app.use("/", profilingRoutes);
 

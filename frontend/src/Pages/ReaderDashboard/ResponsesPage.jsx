@@ -7,8 +7,10 @@ import { Typography } from '@mui/material';
 import RecommendedChips from './../../components/PostComponentsMui/RecommendChips';
 import TrendPostCard from './../../components/PostComponentsMui/TrendPostCard';
 import ResponseTabs from './../../components/ReaderDashComponents/ResponseTabs';
-
+import NotificationBar from './../../components/ReaderDashComponents/NotificationBar';
+import { useEffect,useState } from 'react';
 const ResponsesPage = ()=>{
+
     return(
         <>
         <CssBaseline />
@@ -24,7 +26,9 @@ const ResponsesPage = ()=>{
        
        {/* <ResponseTabs/> */}
         <h3>Notifications</h3>
-        
+        <NotificationBar/>
+        <NotificationBar/>
+        <NotificationBar/>
      
         {/* ---------------------------------------------------------------- */}
         </Grid2>

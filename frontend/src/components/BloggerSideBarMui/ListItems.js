@@ -2,6 +2,7 @@ import * as React from "react";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
+import NotificationsActiveIcon from "@mui/icons-material/NotificationsActive";
 //import ListSubheader from "@mui/material/ListSubheader";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 //import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
@@ -42,12 +43,17 @@ export const MainListItems = (props) => {
         </ListItemIcon>
         <ListItemText />
       </ListItemButton>
-      <ListItemButton>
-        <ListItemIcon>
-          <PeopleIcon sx={{ color: "#379683" }} />
-        </ListItemIcon>
-        <ListItemText />
-      </ListItemButton>
+      <Link
+        style={{ color: "white", textDecoration: "none" }}
+        to="/Bloggerdashboard/notifications"
+      >
+        <ListItemButton>
+          <ListItemIcon>
+            <NotificationsActiveIcon sx={{ color: "#379683" }} />
+          </ListItemIcon>
+          <ListItemText />
+        </ListItemButton>
+      </Link>
       <ListItemButton>
         <ListItemIcon>
           <BarChartIcon sx={{ color: "#379683" }} />

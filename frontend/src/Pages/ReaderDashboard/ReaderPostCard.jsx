@@ -1,15 +1,17 @@
 import Box from '@mui/material/Box';
+import * as React from "react";
 import { useState } from 'react';
 import axios from "axios";
 import Grid from "@mui/material/Grid";
 import Grid2 from '@mui/material/Unstable_Grid2';
+// import Button from '@mui/material/Button';
 import Avatar from '@mui/material/Avatar';
 import { Link } from 'react-router-dom';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import Button from '@mui/material/Button';
 import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 import ShareIcon from '@mui/icons-material/Share';
-//import BookmarkAddIcon from '@mui/icons-material/BookmarkAdd';
+import BookmarkAddIcon from '@mui/icons-material/BookmarkAdd';
 import BookmarkAddedIcon from '@mui/icons-material/BookmarkAdded';
 import CreateListMenu from './../../components/ReaderDashComponents/CreateSavedListMenu';
 import PostShareDialog from './../../components/ReaderDashComponents/PostShareDialog';
@@ -17,6 +19,79 @@ import { useEffect } from 'react';
 const ReaderPostCard = ({item,handleLikeClick})=>{
     const [shareDialogOpen,setShareDialogOpen] = useState(false)
     const [liked,setLiked] = useState(false)
+    //const [saved,setSaved] = useState(false)
+//------------------------------------------------------------------
+    const [open, setOpen] = React.useState(false);
+    const [checked,setChecked] = useState(false);
+    const [customList,setCustomList] = useState(false)
+    const anchorRef = React.useRef(null);
+
+    const handleCustomChange = (customList)=>{
+      setCustomList(customList=>!customList)
+    }
+
+    const handleChange = (event) => {
+     // console.log(event.target)
+       setChecked(event.target.checked);
+      
+      checked? (
+        console.log("cheked")
+      ):(
+        console.log("not cheked")
+      )
+
+
+      if(event.target.checked){
+        let value = JSON.parse(localStorage.getItem("token"));
+          let token = value.token;
+          console.log("token: ",token)
+          axios.post(`http://127.0.0.1:5000/readerDashboard/add-to-reading-list/${item._id}`,{},{
+            headers: {
+              "Content-Type": "application/json", 
+              Accept: "application/json",
+              Authorization: token,
+            },
+          }).then(res => {
+            console.log(res)
+                 })
+        }else{
+          let value = JSON.parse(localStorage.getItem("token"));
+            let token = value.token;
+            axios.delete(`http://127.0.0.1:5000/readerDashboard/remove-from-readingList/${item._id}`,{
+              headers: {
+                "Content-Type": "application/json", 
+                Accept: "application/json",
+                Authorization: token,
+              },
+            }).then(res=>{
+              console.log(res)
+            }).catch(err=>{
+              console.log(err)
+            })
+        }
+  
+    };
+    function handleListKeyDown(event) {
+      if (event.key === 'Tab') {
+        event.preventDefault();
+        setOpen(false);
+      } else if (event.key === 'Escape') {
+        setOpen(false);
+      }
+    }
+    const handleToggle = () => {
+      setOpen((prevOpen) => !prevOpen);
+      //setChecked(true)
+
+      
+    };
+    const handleClose = (event) => {
+      if (anchorRef.current && anchorRef.current.contains(event.target)) {
+        return;
+      }
+      setOpen(false);
+    };
+//-----------------------------------------------------------------    
       console.log("item is :  " ,item)
     const handleShareDialogClose = ()=>{
         setShareDialogOpen(false)
@@ -40,15 +115,20 @@ const ReaderPostCard = ({item,handleLikeClick})=>{
 
           if(item){
             item.likes.includes(res.data._id) ? setLiked(true) : setLiked(false)
+            console.log("aaaabbb//--//--/- :" ,res.data.ReadingList)
+            console.log("item id",item._id)
+             res.data.ReadingList.includes(item._id) ? setChecked(true): setChecked(false)
           }
+          
+          
         // item && item.likes.includes(res.data._id) ? console.log("liked") : console.log("not liked")
       })
     },[])
 
     return(
         <>
-         <Box  className='postCard_item'  key ={item._id}  sx = {{ boxShadow:"1px 1px 3px 1px rgba(0,0,0,0.3)",borderRadius:"3px",minHeight:"300px",width:"98%",marginBottom:"30px",backgroundColor:"white", padding:"20px"}} >
-         <Grid container direction="row"   spacing = {0} >
+         <Box  className='postCard_item'  key ={item._id}  sx = {{ boxShadow:"1px 1px 3px 1px rgba(0,0,0,0.3)",borderRadius:"3px",minHeight:"350px",maxHeight:"350px",width:"98%",marginBottom:"30px",backgroundColor:"white", padding:"20px"}} >
+         <Grid  container direction="row"   spacing = {0} >
            <Grid lg = {10} md = {12} sm={12} sx= {{p:2}} item direction="column" justifyContent="space-between" spacing={0} container >
               <Grid item container sx = {{maxHeight:"20px"}} spacing={0} lg={8}  >
                   <Grid item lg = {1} md = {1} sm = {1}>
@@ -90,7 +170,19 @@ const ReaderPostCard = ({item,handleLikeClick})=>{
               <Grid container item sx = {{ width:"90%",maxHeight:"20px"}} >
               <Button onClick = {handleLikeIconClick}   sx = {{margin:"0px",padding:"0px"}} ><ThumbUpIcon sx=  {{cursor:"pointer",color:`${liked? "#379683":"#05386b"}`,margin:"0px 0px "}}  /></Button>
              <Button  sx = {{margin:"0px",padding:"0px"}} onClick = {()=>setShareDialogOpen(true) } ><ShareIcon sx=  {{   cursor:"pointer",color:"#05386b",margin:"0px 0px "}} /></Button>
-             <CreateListMenu  postId = {item._id} /> 
+             <Button
+                sx = {{margin:"0px",padding:"0px"}}
+                ref={anchorRef}
+                id="composition-button"
+                aria-controls={open ? 'composition-menu' : undefined}
+                aria-expanded={open ? 'true' : undefined}
+                aria-haspopup="true"
+                onClick={handleToggle}
+              >
+              {checked ? <BookmarkAddedIcon sx = {{color:"#379863"}}/> : <BookmarkAddIcon sx = {{color:"#05386b"}}/>} 
+             </Button>
+             <CreateListMenu  customList={customList} handleCustomChange={handleCustomChange}  anchorRef={anchorRef}   handleChange={handleChange} handleClose={handleClose}  checked={checked} handleListKeyDown={handleListKeyDown} handleToggle={handleToggle} open={open}  item={item} postId = {item._id} /> 
+
               </Grid>
            </Grid>
   

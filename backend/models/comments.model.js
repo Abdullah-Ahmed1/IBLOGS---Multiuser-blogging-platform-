@@ -21,5 +21,9 @@ var commentSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  parentPost: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Post",
+  },
 });
 mongoose.model("Comment", commentSchema);

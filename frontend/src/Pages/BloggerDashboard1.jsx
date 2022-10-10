@@ -45,6 +45,7 @@ import {
 import AccountMenu from './../components/Avatar/AccountAvatar';
 import BlogPost from './BlogPosts ';
 import EditorialCalender from './EditorialCalender';
+import BloggerNotification from './BloggerNotifications';
 
 ////////////---------------------------------------------------------------MUI things
 const drawerWidth = 220;
@@ -385,6 +386,7 @@ function DashboardContent(props) {
                 <Route exact path="/blogs" element={<BloggerBlog />} />
                 <Route exact path="/blogPosts/:blogId" element ={<BlogPost/>}   />
                 <Route exact path="/addpost" element={<AddPost />} />
+                <Route exact path="/notifications" element={<BloggerNotification />} />
                 
                 <Route exact path="/full-blog/:blogId" element={<FullBlogView />} /> 
                 <Route exact path="/update/:PostId" element={<PostUpdate />} /> 

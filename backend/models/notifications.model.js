@@ -12,5 +12,12 @@ var notificationSchema = new mongoose.Schema({
   seen: {
     type: Boolean,
   },
+  owner: {
+    type: mongoose.Types.ObjectId,
+    ref: "User",
+  },
+  notificationDate: {
+    type: String,
+  },
 });
 mongoose.model("Notification", notificationSchema);
