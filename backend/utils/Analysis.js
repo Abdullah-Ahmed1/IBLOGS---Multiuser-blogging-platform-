@@ -7,11 +7,13 @@ const Blog = Mongoose.model("Blog");
 const Comment = Mongoose.model("Comment");
 const Post = Mongoose.model("Post");
 const Reply = Mongoose.model("Reply");
+const WeeklyAnalysis = Mongoose.model("WeeklyAnalysis");
 const { User, validate } = require("../models/users.model");
 module.exports = {
-  commentAnalysis: () => {
+  commentAnalysis: async () => {
+    let analysisArr = [];
     console.log("reached-----------------------------------------------");
-    Post.find({})
+    const posts = await Post.find({})
       .populate({
         path: "comments",
         select: {
@@ -20,32 +22,44 @@ module.exports = {
       })
       .select({
         likes: 1,
-      })
-      .then((posts) => {
-        // console.log(post[0].comments[0]);
-
-        posts.map((post) => {
-          let arr = [];
-          // console.log(post.comments);
-          post.comments.map((item) => {
-            //  console.log(item.comment);
-            arr.push(item.comment);
-            axios
-              .post("http://127.0.0.1:3001/semantic", { array: arr })
-              .then((res) => {
-                console.log({
-                  postId: post._id,
-                  postLikes: post.likes.length,
-                  semantics: res.data,
-                });
-              });
-          });
-          // console.log(arr);
-        });
-
-        // axios.post("/http://127.0.0.1:3001/semantic")
-        // .then(res)
       });
+
+    console.log("!!!!", posts);
+    // console.log(post[0].comments[0]);
+
+    await Promise.all(
+      posts.map(async (post) => {
+        let arr = [];
+
+        // console.log(post.comments);
+        post.comments.map(async (item) => {
+          //  console.log(item.comment);
+          arr.push(item.comment);
+
+          // console.log("--------------------", data);
+        });
+        const res1 = await axios.post("http://127.0.0.1:3001/semantic", {
+          array: arr,
+        });
+        const data = {
+          analysisDate: new Date().toISOString(),
+          postId: post._id,
+          postImpressions: null,
+          postLikes: post.likes.length,
+          commentsSemantics: res1.data,
+        };
+        analysisArr.push(data);
+        console.log("---/-", analysisArr);
+        // console.log(arr);
+      })
+    );
+
+    // axios.post("/http://127.0.0.1:3001/semantic")
+    // .then(res)
+    console.log("!!!!!!!!!3333333333333333");
+    WeeklyAnalysis.create({ postAnalysis: analysisArr }).then((res) => {
+      console.log(res);
+    });
   },
   testAnalysis: () => {
     var a = 1;

@@ -17,6 +17,8 @@ import "./../../components/PostComponentsMui/PostCardScroll.css";
 import AdminHome from './AdminHome';
 import List_ItemsAdmin from './../../components/AdminDashComps/ListItemsAdmin';
 import User from './Users';
+import WeeklyReports from './WeeklyReports';
+import Notifications from './Notifications';
 var _  =require('lodash')
 
 //----------------------------------------------------------------
@@ -87,6 +89,8 @@ export default function AdminDashboard() {
       >
        <Routes>
        <Route exact path="/" element={<AdminHome />} />
+       <Route exact path="/weeklyReports" element={<WeeklyReports />} />
+       <Route exact path="/notifications" element={<Notifications />} />
        <Route  path="/users/*" element={<User/>} />
        
        </Routes>

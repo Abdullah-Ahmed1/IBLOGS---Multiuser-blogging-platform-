@@ -65,7 +65,7 @@ export default function AdminBlogCard({item,handleDeleteBlog}) {
         </Typography>
       </CardContent>
       <CardActions  >
-        <Button   sx = {{color:"black"}}  size="small"><ArticleIcon/>15</Button>
+        <Button   sx = {{color:"black"}}  size="small"><ArticleIcon/>{item.posts.length}</Button>
         <Button  onClick = {()=>setOpen(true)}  sx = {{color:"black"}} size="small"  ><DeleteIcon/></Button>
       </CardActions>
     </Card>

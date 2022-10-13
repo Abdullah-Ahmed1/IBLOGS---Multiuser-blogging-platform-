@@ -7,6 +7,7 @@ const Reply = Mongoose.model("Reply");
 const User = Mongoose.model("User");
 const Notification = Mongoose.model("Notification");
 const Comment = Mongoose.model("Comment");
+const WeeklyAnalysis = Mongoose.model("WeeklyAnalysis");
 //const { User, validate } = require("../models/users.model");
 module.exports = {
   // getAllData1: (req, res) => {
@@ -504,5 +505,19 @@ module.exports = {
     } catch (err) {
       res.send(err);
     }
+  },
+  getWeeklyAnalysis: (req, res) => {
+    console.log("reached");
+    WeeklyAnalysis.find({})
+      .populate({
+        path: "postAnalysis.postId",
+        select: {
+          postTitle: 1,
+        },
+      })
+      .then((data) => {
+        res.send(data);
+      })
+      .catch((err) => res.send(err));
   },
 };

@@ -5,6 +5,7 @@ import HomeIcon from '@mui/icons-material/Home';
 import NotificationsActiveIcon from '@mui/icons-material/NotificationsActive';
 import BookmarksIcon from '@mui/icons-material/Bookmarks';
 import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
+import BarChartIcon from '@mui/icons-material/BarChart';
 //import ThumbUpAltIcon from '@mui/icons-material/ThumbUpAlt';
 import {Link} from 'react-router-dom' 
 import Divider from '@mui/material/Divider';
@@ -34,27 +35,25 @@ const List_ItemsAdmin = ()=>{
         </Tooltip>
 
         <Tooltip title="Responses" placement="right" arrow>
-        <Link to ='/readerdashboard/responses' >
+        <Link to ='/admin/notifications' >
         <ListItemButton>
           <ListItemIcon>
-            <NotificationsActiveIcon sx={{ color:"#379863",fontSize:"25px", marginBottom:"50px" }} />
+            <NotificationsActiveIcon sx={{ color:"#379863",fontSize:"25px", marginBottom:"10px" }} />
           </ListItemIcon> 
         </ListItemButton>
         </Link>
         </Tooltip>
 
-        <Divider/>
-
-        {/* <Tooltip title="Switch to Bloggerdashboard" placement="right" arrow>
-         <Link to ='/bloggerdashboard' >
+        <Tooltip title="Weekly Reports" placement="right" arrow>
+         <Link to ='/admin/weeklyReports' >
         <ListItemButton>
           <ListItemIcon>
-            <DriveFileRenameOutlineIcon sx={{ color:"#379863",fontSize:"25px", marginBottom:"10px" }} />
+            <BarChartIcon sx={{ color:"#379863",fontSize:"25px", marginBottom:"10px" }} />
           </ListItemIcon> 
         </ListItemButton>
         </Link>
         </Tooltip>
-         */}
+        
         </>
     )
 }

@@ -114,6 +114,21 @@ module.exports = {
           schedule.cancelJob("MJob");
         });
 
+        // const data = {
+        //   notificationText: `${decoded.username} created new post "${post.postTitle}"  `,
+        //   info: {
+        //     // commentedPost: success._id,
+        //     ownerId: decoded.id,
+
+        //     commentorName: decoded.username,
+        //   },
+        //   owner: res.parentBlog.owner,
+        //   seen: false,
+        //   notificationType: "comment",
+        //   notificationDate: new Date(),
+        // };
+        // Notification.create(data).then((data) => console.log(data));
+
         await Blog.updateOne(
           { _id: blog._id },
           { $push: { posts: post._id } },

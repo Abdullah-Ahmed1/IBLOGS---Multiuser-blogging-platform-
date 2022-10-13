@@ -53,8 +53,16 @@ module.exports = {
   getAllBlogsOfUser: (req, res) => {
     const userId = req.params.userId;
 
-    Blog.find({ owner: userId }).then((data) => {
-      res.send(data);
-    });
+    Blog.find({ owner: userId })
+      .populate({
+        path: "owner",
+        select: {
+          firstname: 1,
+          lastname: 1,
+        },
+      })
+      .then((data) => {
+        res.send(data);
+      });
   },
 };

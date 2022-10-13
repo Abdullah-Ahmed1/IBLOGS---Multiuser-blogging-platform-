@@ -30,7 +30,7 @@ const UserBlogs = ()=>{
   useEffect(()=>{
     axios.get(`http://127.0.0.1:5000/admin/getAllBlogs-ofUser/${userId}`)
     .then(res=>{
-      console.log(res.data)
+      console.log("----------",res.data)
       setBlogs(res.data)
     })
   },[])
@@ -45,7 +45,7 @@ const UserBlogs = ()=>{
       <Grid2 container spacing={0} justifyContent= "space-between"   >
         <Grid2  lg ={11} spacing={0} sx = {{minHeight:"90vh",marginTop:"50px",marginLeft:"30px"}}  >  
        {/* ----------------------------------------------------------------------------------- */}
-       <h2 style = {{color:"#379863"}}  >All Blogs for Abdullah Ahmed</h2>
+       <h2 style = {{color:"#379863"}}  >All Blogs {blogs && blogs.length>0 ?  `for ${blogs[0].owner.firstname} ${blogs[0].owner.lastname}`: ""}  </h2>
        
        <Grid2 container direction="row" columnSpacing={7} sx = {{margin:"0px",padding:"0px"}} >
        {

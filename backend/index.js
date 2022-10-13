@@ -18,7 +18,7 @@ require("./Connection/connection");
 
 //--------------------------------------------------
 const Analysis = require("./utils/Analysis");
-// Analysis.commentAnalysis();
+//Analysis.commentAnalysis();
 // Analysis.testAnalysis();
 //----------------------------------------------------
 

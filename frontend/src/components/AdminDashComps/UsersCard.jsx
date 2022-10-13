@@ -32,9 +32,9 @@ const UsersCard = ({item,handleUserDelete})=>{
                 <div className="userUrl">{item.profession} @ {item.organization}</div>
                 <div className="detail-box">
 
-                    <div className="gitDetail"><span>Articles</span>23</div>
-                    <div className="gitDetail"><span>Following</span>45</div>
-                    <div className="gitDetail"><span>Followers</span>11</div>
+                    <div className="gitDetail"><span>Articles</span>2</div>
+                    <div className="gitDetail"><span>Following</span>3</div>
+                    <div className="gitDetail"><span>Followers</span>3</div>
                 </div>
                 <button className="seeMore" onClick={()=> navigate(`/admin/users/blogs/${item._id}`)} >View Blogs</button>
                 

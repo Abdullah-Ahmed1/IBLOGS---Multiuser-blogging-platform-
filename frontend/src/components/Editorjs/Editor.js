@@ -11,6 +11,9 @@ const MyEditor = ({ handlePostContent, postContent, generatedText }) => {
     readonly: false, // all options from https://xdsoft.net/jodit/doc/,
     height: "650",
     removeButtons: ["source"],
+    uploader: {
+      insertImageAsBase64URI: true,
+    },
     // toolbarAdaptive: false,
     //stoolbarInline: true,
     // enableDragAndDropFileToEditor: true,
