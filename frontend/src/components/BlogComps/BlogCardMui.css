@@ -1,0 +1,9 @@
+
+.BlogCard_item {
+	-webkit-transition:  0.3s ; /*safari and chrome */
+}
+.BlogCard_item:hover {
+	transform: scale(1.04);
+	transition: transform .3s;
+	cursor: pointer;
+}

@@ -1,5 +1,7 @@
 import React, { useState, useRef, useMemo } from "react";
 import JoditEditor from "jodit-react";
+import parse from "html-react-parser";
+var h2p = require("html2plaintext");
 
 const MyEditor = ({ handlePostContent, postContent, generatedText }) => {
   const editor = useRef(null);
@@ -21,6 +23,7 @@ const MyEditor = ({ handlePostContent, postContent, generatedText }) => {
     showWordsCounter: false,
     //showXPathInStatusbar: false,
     spellCheck: true,
+    enter: "BR",
     // height: 1000,
     // maxHeight: 1000,
     // preset: "inline",
@@ -37,7 +40,8 @@ const MyEditor = ({ handlePostContent, postContent, generatedText }) => {
         tabIndex={1} // tabIndex of textarea
         onBlur={(newContent) => handlePostContent(newContent)} // preferred to use only this option to update the content for performance reasons
         onChange={(newContent) => {
-          //  console.log(newContent);
+          // console.log(newContent.replace("/<[^>]+>/g", ""));
+          console.log(h2p(newContent));
         }}
       />
     </div>

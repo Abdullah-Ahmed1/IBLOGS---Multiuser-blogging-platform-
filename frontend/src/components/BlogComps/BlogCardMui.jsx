@@ -1,6 +1,7 @@
 import * as React from 'react';
-import {useState,useContext} from 'react';
-
+import {useState,useContext,useEffect} from 'react';
+import "./BlogCardMui.css";
+import Aos from 'aos';
 import '../../Pages/scroll.css'
 import {Link} from "react-router-dom"
 import Card from '@mui/material/Card';
@@ -40,11 +41,15 @@ export default function BlogCard({item}) {
   };
     //console.log("*****",item.image)
 
+    useEffect(() => {
+      Aos.init({duration :1000});
+
+  }, [])
   return (
      <>
       <BlogDeleteDialogue  title = {item.title} blogId ={item._id}  open = {open} handleClose={handleClose} />
-
-        <Card sx={{ minWidth:400,maxWidth: 400 ,boxShadow:" 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)"}}>
+      <div data-aos="fade-left">
+      <Card   className='BlogCard_item' sx={{ minWidth:400,maxWidth: 400 ,boxShadow:" 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)"}}>
       <CardMedia  
         component="img"
         alt="green iguana"
@@ -67,7 +72,7 @@ export default function BlogCard({item}) {
         <Button  onClick={()=>setOpen(true)}   sx = {{color:"black"}} size="small"  ><DeleteIcon/></Button>
       </CardActions>
     </Card>
-    
+    </div>
     <BlogShareDialog  shareDialogOpen = {shareDialogOpen}  handleShareDialogClose={handleShareDialogClose} />
 
     </>

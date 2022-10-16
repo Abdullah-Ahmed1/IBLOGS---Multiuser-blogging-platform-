@@ -1,14 +1,20 @@
 
+.trendPostCard_item{
+	-webkit-transition:  0.3s
+}
 
 .trendPostCard_item:hover {
 	transform: scale(1.04);
 	transition: transform .3s;
 	cursor: pointer;
 }
+.postCard_item {
+	-webkit-transition:  0.3s ; /*safari and chrome */
+}
 .postCard_item:hover {
 	/* transform: scale(1.01); */
 	/* width: 99%; */
 	padding: 30px;
-	transition: padding .5s;
+	transition: all .3s;
 	cursor: pointer;
 }

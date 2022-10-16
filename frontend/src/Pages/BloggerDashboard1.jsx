@@ -7,7 +7,7 @@ import { styled, createTheme, ThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 import MuiDrawer from "@mui/material/Drawer";
 import Box from "@mui/material/Box";
-import MuiAppBar from "@mui/material/AppBar";
+import AppBar from "@mui/material/AppBar";
 
 import Toolbar from "@mui/material/Toolbar";
 import List from "@mui/material/List";
@@ -47,65 +47,13 @@ import BlogPost from './BlogPosts ';
 import EditorialCalender from './EditorialCalender';
 import BloggerNotification from './BloggerNotifications';
 
-////////////---------------------------------------------------------------MUI things
-const drawerWidth = 220;
-const AppBar = styled(MuiAppBar, {
-  shouldForwardProp: (prop) => prop !== "open",
-})(({ theme, open }) => ({
-  zIndex: theme.zIndex.drawer + 1,
-  transition: theme.transitions.create(["width", "margin"], {
-    easing: theme.transitions.easing.sharp,
-    duration: theme.transitions.duration.leavingScreen,
-  }),
-  ...(open && {
-    marginLeft: drawerWidth,
-    width: `calc(100% - ${drawerWidth}px)`,
-    transition: theme.transitions.create(["width", "margin"], {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.enteringScreen,
-    }),
-  }),
-}));
-const Drawer = styled(MuiDrawer, {
-  shouldForwardProp: (prop) => prop !== "open",
-})(({ theme, open }) => ({
-  "& .MuiDrawer-paper": {
-    position: "relative",
-    whiteSpace: "nowrap",
-    width: drawerWidth,
-    transition: theme.transitions.create("width", {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.enteringScreen,
-    }),
-    boxSizing: "border-box",
-    ...(!open && {
-      overflowX: "hidden",
-      transition: theme.transitions.create("width", {
-        easing: theme.transitions.easing.sharp,
-        duration: theme.transitions.duration.leavingScreen,
-      }),
-      width: theme.spacing(6),
-      [theme.breakpoints.up("sm")]: {
-        width: theme.spacing(9),
-      },
-    }),
-  },
-}));
+
+
 const mdTheme = createTheme({
  
 
   
 
-  //  overrides: {
-  //   MuiCssBaseline: {
-     
-  //       body: {
-  //         backgroundImage:
-  //           "url(https://designshack.net/wp-content/uploads/gradient-background.jpg)"
-  //       }
-     
-  //   }
-  // }
  
 });
 const mdTheme2 = createTheme({
@@ -117,11 +65,11 @@ const mdTheme2 = createTheme({
 
 export const  BloggerContext = createContext(null);
 
-function DashboardContent(props) {
+function DashboardContent() {
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
   const[openModal,setOpenModal] = useState(false);
-  const { window } = props;
+  
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const [ token ,  setToken ] = useState({});
   const [profileData,setProfileData] = useState({});
@@ -174,9 +122,7 @@ function DashboardContent(props) {
       ) 
     }
 //-------------------------------------------------    
-  const container =
-    window !== undefined ? () => window().document.body : undefined;
-  //console.log("match", match);
+   //console.log("match", match);
   const toggleDrawer = () => {
     setOpen(!open);
   };
@@ -245,28 +191,15 @@ function DashboardContent(props) {
     <Box sx={{ display: "flex" }}>
       
       <AppBar 
-        sx = {{ backgroundColor:"#379683" }}
-      position="absolute" open={open}>
+        sx = {{ backgroundColor:"#379683" ,zIndex: (theme) => theme.zIndex.drawer + 1 }}
+        position="fixed"
+      >
         <Toolbar
           sx={{
-            pr: "24px", // keep right padding when drawer closed
+            pr: "10px", // keep right padding when drawer closed
           }}
         >
-          {/* <IconButton
-            edge="start"
-            color="inherit"
-            aria-label="open drawer"
-            onClick={toggleDrawer}
-            sx={{
-              marginRight: "36px",
-              ...(open && { display: "none" }),
-              display: { xs: "none", sm: "flex" },
-            }}
-          >
-            <MenuIcon sx = {{
-              color:"#05386B"
-            }}   />
-          </IconButton> */}
+        
 
           {/* //////////////////////////////////////////////////////////// */}
           <IconButton
@@ -304,7 +237,7 @@ function DashboardContent(props) {
       </AppBar>
       <ThemeProvider theme={mdTheme2}>
         <MuiDrawer
-          container={container}
+          // container={container}
           variant="temporary"
           color="primary"
           open={mobileOpen}
@@ -316,7 +249,7 @@ function DashboardContent(props) {
             display: { xs: "block", sm: "none" },
             "& .MuiDrawer-paper": {
               boxSizing: "border-box",
-              width: drawerWidth,
+              
             },
           }}
         >

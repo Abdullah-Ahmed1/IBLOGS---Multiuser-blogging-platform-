@@ -1,4 +1,5 @@
 import Dialog from '@mui/material/Dialog';
+import React from "react";
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import { useEffect,useState } from 'react';
@@ -7,24 +8,19 @@ import axios from "axios";
 import TextField from '@mui/material/TextField';
 import Snackbar from '@mui/material/Snackbar';
 import Slide from '@mui/material/Slide';
-import { confirmAlert } from 'react-confirm-alert'; // Import
-//import CssBaseline from "@mui/material/CssBaseline";
 import 'react-confirm-alert/src/react-confirm-alert.css'; // Import css
 import Button from '@mui/material/Button';
-//import FormControlLabel from '@mui/material/FormControlLabel';
 import Breadcrumbs from '@mui/material/Breadcrumbs';
 import Box from "@mui/material/Box";
-// import Paper from "@mui/material/Paper";
  import Grid from "@mui/material/Grid";
-// import Blogs from './../components/BlogComps/Blogs';
-// import Backdrop from '@mui/material/Backdrop';
  import Typography from '@mui/material/Typography';
 // import Fade from '@mui/material/Fade';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material/styles';
 import 'react-toastify/dist/ReactToastify.css';
 import BlogCard from './../components/BlogComps/BlogCardMui';
-
+import Backdrop from '@mui/material/Backdrop';
+import CircularProgress from '@mui/material/CircularProgress';
 function handleClick(event) {
   event.preventDefault();
   console.info('You clicked a breadcrumb.');
@@ -54,7 +50,7 @@ function BasicBreadcrumbs() {
 
 const BloggerHome = ({openModal,handleClose,token,blogs,refreshBlogs})=>{
   const [snack, setSnack] =useState(false);
-
+  const [openBackDrop, setOpenBackDrop] = React.useState(false);
     
   ////////////////////////////////////////////////////////////////////////////////
     const[blogTitle,setBlogTitle] = useState("");
@@ -129,6 +125,9 @@ const handleImage = async(e)=>{
 }
 
 const blogFormSubmit =  ()=>{
+  handleClose();
+  setOpenBackDrop(true)
+
   console.log("uploaded file",uploadedFile);
 
   const body = new FormData();
@@ -155,8 +154,10 @@ const blogFormSubmit =  ()=>{
     console.log(info)
         axios.post(`http://127.0.0.1:5000/BloggerDashboard/add/${info.id}`,data)
       .then(response=>{console.log(response)
+
         refreshBlogs();
-        handleClose();
+        setOpenBackDrop(false)
+        
       // axios.get('http://127.0.0.1:5000/bloggerDashboard/get')
       // .then((res)=>{
       //     console.log("----",res.data.blogs)
@@ -215,6 +216,13 @@ const blogFormSubmit =  ()=>{
 
     return(
         <>
+          <Backdrop
+        sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+        open={openBackDrop}
+       
+      >
+        <CircularProgress color="inherit" />
+      </Backdrop>
         
          <Snackbar
         anchorOrigin={{vertical:"top",horizontal:"right"}}
@@ -304,9 +312,9 @@ const blogFormSubmit =  ()=>{
       </div>
       <BasicBreadcrumbs />                 
 
-      <Box sx={{ flexGrow: 1 }}>
+      <Box sx={{ flexGrow: 1,width:"100%" }}>
              <h2>Your blogs</h2>
-              <Grid container direction="row" alignItems="stretch" rowSpacing = {5} columnSpacing={20}    >
+              <Grid container direction="row"  rowSpacing = {5} columnSpacing={10} justifyContent="stretch"    >
                  {
                   !blogs ? ( <h5>You have not created any blog yet</h5>)
                   :
@@ -348,7 +356,7 @@ const blogFormSubmit =  ()=>{
                  </Grid> */}
                  </Grid>
               </Box>
-            
+          
         </>
     )
 }

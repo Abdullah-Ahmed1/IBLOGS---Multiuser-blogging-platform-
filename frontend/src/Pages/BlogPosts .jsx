@@ -24,6 +24,7 @@ import { useState } from 'react';
 import AddPostStepper from './../components/StepperAddPostMUI/stepper';
 import { useRef } from 'react';
 import PostCardMui from './../components/PostComponentsMui/PostCardMui';
+import lottie from 'lottie-web';
 
 
 //---------------------- FULL SCREEN MUI DIALOGUE BOX     ------------------------------------------
@@ -36,6 +37,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
    function FullScreenDialog({handleClose,handleClickOpen,dialogOpen ,blogId  }) {
 
     //  const container = useRef(null)
+  
       const [content,setContent] = useState("")
       console.log("-----------------------------------------",content)
       const id =  JSON.parse(atob((JSON.parse(localStorage.getItem('token'))).token.split(".")[1])).id
@@ -55,7 +57,6 @@ const Transition = React.forwardRef(function Transition(props, ref) {
         // handleClose();
       }
     
-  
     return (
       <div>
 
@@ -106,6 +107,8 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 
 
 const BlogPost= ()=>{
+  const container = useRef(null)
+  const [test,setTest] = useState(null)
     const [open, setOpen] = React.useState(false);
     const [data,setData] = useState({})
     const [posts ,setPosts] = useState([])
@@ -142,6 +145,18 @@ const BlogPost= ()=>{
 
     }
 
+    useEffect(()=>{
+      
+      lottie.loadAnimation({
+        container : container.current,
+        renderer: 'svg',
+        loop:true,
+        autoplay:true,
+        animationData:require('./../lottie/add.json')
+  
+      })
+      
+    },[test])
 
     useEffect(()=>{
         console.log(blogId)
@@ -183,20 +198,23 @@ const BlogPost= ()=>{
             
             <Grid container item  sx = {{marginTop:"10px"}}  justifyContent={"space-between"} >
              <Grid>
-              <h2 style = {{margin:0,padding:0,color:"#05386b"}}>Posts</h2>
+              <h1 style = {{margin:0,padding:0,color:"#05386b"}}>Posts</h1>
             </Grid>
+            <Grid>
             <Tooltip title="Add Post">   
-              <AddCircleIcon fontSize='large' sx={{cursor:"pointer",color:"#b7410e"}}   onClick = {()=> setOpen(true)} /> 
+              {/* <AddCircleIcon fontSize='large' sx={{cursor:"pointer",color:"#b7410e"}}   onClick = {()=> setOpen(true)} />  */}
+              <div  className='container' ref={container} style={{padding:"0px",margin:"0px",width:"50px"}} onClick = {()=> setOpen(true)} ></div>
             </Tooltip>
             </Grid>
             </Grid>
+            </Grid>
             <div  >
-            <Grid container  sx = {{marginTop:"10px"}} spacing={3} >
+            <Grid container  sx = {{marginTop:"10px",marginBottom:"10px"}} spacing={3} >
               {
                 
                 posts.map((item)=>{
                   return(
-                    <Grid item  key={item._id} lg ={6} xs = {12}>
+                    <Grid item    key={item._id} lg ={6} xs = {12}>
                     <PostCardMui  item = {item}  handlePostDelete={handlePostDelete} />
                     </Grid>
                   )

@@ -132,14 +132,15 @@ export default function SignInSide() {
               alignItems: 'center',
             }}
           >
-            <Avatar sx={{ m: 1, bgcolor: 'black' }}>
+            <Avatar sx={{ m: 1, bgcolor: '#5cdb95' }}>
               <LockOutlinedIcon />
             </Avatar>
-            <Typography component="h1" variant="h5">
+            <Typography component="h1" variant="h5" sx = {{color:"#05386b"}} >
               Sign in
             </Typography>
             <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 1 }}>
               <TextField
+              sx = {{ '& label' :{color:"#5cdb95"},'& label.Mui-focused':{color:"#5cdb95"},'& .MuiOutlinedInput-root':{ '&.Mui-focused fieldset': {  borderColor:"#5cdb95"} }}}
                 margin="normal"
                 required
                 fullWidth
@@ -151,7 +152,8 @@ export default function SignInSide() {
                 autoFocus
               />
               <TextField
-                margin="normal"
+               sx = {{ '& label' :{color:"#5cdb95"},'& label.Mui-focused':{color:"#5cdb95"},'& .MuiOutlinedInput-root':{ '&.Mui-focused fieldset': {  borderColor:"#5cdb95"} }}}
+               margin="normal"
                 required
                 fullWidth
                 name="password"
@@ -168,7 +170,7 @@ export default function SignInSide() {
                 type="submit"
                 fullWidth
                 variant="contained"
-                sx={{ mt: 3, mb: 2 , backgroundColor:"#5cdb95" }}
+                sx={{ mt: 3, mb: 2 , backgroundColor:"#5cdb95",'&:hover':{backgroundColor:"#05386b"} }}
               >
                 Sign In
               </Button>
@@ -179,7 +181,7 @@ export default function SignInSide() {
                   </Link>
                 </Grid>
                 <Grid item>
-                  <Link style={{cursor:"pointer", color:"black"}}   to = "/register" >
+                  <Link style={{cursor:"pointer", color:"#05386b"}}   to = "/register" >
                     {"Don't have an account? Sign Up"}
                   </Link>
                 </Grid>
