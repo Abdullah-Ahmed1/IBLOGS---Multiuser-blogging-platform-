@@ -277,6 +277,7 @@ const blogFormSubmit =  ()=>{
                 type="Description"
                 //id="Description"
                 autoComplete="Description"
+                inputProps={{maxLength:20}}
               />
           
               <TextField

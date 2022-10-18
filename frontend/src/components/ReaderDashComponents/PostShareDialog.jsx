@@ -31,10 +31,6 @@ export default function PostShareDialog({shareDialogOpen,handleShareDialogClose}
   
 //   const [selectedValue, setSelectedValue] = React.useState(emails[1]);
 
-  
-
-  
-
   return (
     <Dialog onClose={handleShareDialogClose} open={shareDialogOpen}  >
       <DialogTitle>Select to Share</DialogTitle>
@@ -50,16 +46,16 @@ export default function PostShareDialog({shareDialogOpen,handleShareDialogClose}
             </Grid2>
             <Grid2>
                 <FacebookShareButton
-                    url={'https://github.com/next-share'}
-                    title={'next-share is a social share buttons for your next React apps.'}
+                    url={'https://Iblogs.com'}
+                    title={'An intelligent blogging platform.'}
                     separator=":: ">
                     <FacebookIcon size={32} round />
                 </FacebookShareButton>
             </Grid2>
             <Grid2>
                 <TwitterShareButton
-                url={'https://github.com/next-share'}
-                title={'next-share is a social share buttons for your next React apps.'}
+                url={'https://Iblogs.com'}
+                title={'An intelligent blogging platform.'}
                 >
                     <TwitterIcon size={32} round />
                 </TwitterShareButton>

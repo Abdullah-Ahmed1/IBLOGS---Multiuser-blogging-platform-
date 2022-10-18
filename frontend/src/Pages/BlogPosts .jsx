@@ -1,62 +1,31 @@
 import {useParams } from 'react-router-dom';
 import {useEffect} from 'react';
 import Grid from "@mui/material/Grid";
-import AddCircleIcon from '@mui/icons-material/AddCircle';
-import axios from "axios";
-import parse from 'html-react-parser';
-import animationData from '../lottie/pencil.json'
-import Lottie from "lottie-web";
-import ArticleIcon from '@mui/icons-material/Article';
-//import PostCard from "../components/PostComponentsMui/PostCardMui"
+import EditIcon from '@mui/icons-material/Edit';
 import Tooltip from '@mui/material/Tooltip';
+import axios from "axios";
+import Grid2 from '@mui/material/Unstable_Grid2';
+import ArticleIcon from '@mui/icons-material/Article';
+import DoneIcon from '@mui/icons-material/Done';
 import "../components/Css_for_pages/addPostModal.css"
 import * as React from 'react';
-import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
-import AppBar from '@mui/material/AppBar';
-import Toolbar from '@mui/material/Toolbar';
-import IconButton from '@mui/material/IconButton';
-import Typography from '@mui/material/Typography';
-import CloseIcon from '@mui/icons-material/Close';
 import Slide from '@mui/material/Slide';
-//import { TransitionProps } from '@mui/material/transitions';
+import TextField from '@mui/material/TextField';
 import { useState } from 'react';
 import AddPostStepper from './../components/StepperAddPostMUI/stepper';
 import { useRef } from 'react';
 import PostCardMui from './../components/PostComponentsMui/PostCardMui';
 import lottie from 'lottie-web';
-
-
+import { Description } from '@mui/icons-material';
+var _  =require('lodash')
 //---------------------- FULL SCREEN MUI DIALOGUE BOX     ------------------------------------------
 
 const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
   });
-
-
    function FullScreenDialog({handleClose,handleClickOpen,dialogOpen ,blogId  }) {
-
-    //  const container = useRef(null)
   
-      const [content,setContent] = useState("")
-      console.log("-----------------------------------------",content)
-      const id =  JSON.parse(atob((JSON.parse(localStorage.getItem('token'))).token.split(".")[1])).id
-      const date = new Date();
-      const   data = {
-        title: "this is a dummy title",
-        content : content,
-        date:date,
-        status: "save"
-
-      }
-     const handlePostSave= ()=>{
-         axios.post(`http://127.0.0.1:5000/bloggerDashboard/addpost/${blogId}`,data)
-         .then((res)=>console.log(res))
-         .catch((err)=>console.log(err))
-        // console.log("reached")
-        // handleClose();
-      }
-    
     return (
       <div>
 
@@ -66,28 +35,6 @@ const Transition = React.forwardRef(function Transition(props, ref) {
           onClose={handleClose}
           TransitionComponent={Transition}
         >
-          {/* <AppBar sx={{ position: 'relative' ,position: '-webkit-sticky',
-        position: 'sticky',
-        top: 0,backgroundColor:"#379683",color:"white" }}>
-            <Toolbar>
-              <IconButton
-                edge="start"
-                color="inherit"
-                onClick={handleClose}
-                aria-label="close"
-              >
-                <CloseIcon sx = {{color:"#05386b "}} />
-              </IconButton>
-              <Typography sx={{ ml: 2, flex: 1, color:"#05386b",fontWeight:"bolder" }} variant="h6" component="div">
-                Create Post
-               
-              </Typography>
-                       
-              <Button className ="saveButton"   onClick={handlePostSave}  sx = {{backgroundColor:"white",color:"black"}}  >
-                save
-              </Button>
-            </Toolbar>
-          </AppBar> */}
           <div style={{ display:"flex",justifyContent:"center"}}>
           <div style={{width:"100%"}} >
             <AddPostStepper  handleClose={handleClose}/>
@@ -102,25 +49,58 @@ const Transition = React.forwardRef(function Transition(props, ref) {
     );
   }
 //-----------------------------------------------------------------
+const BlogPost= ({refreshBlogs})=>{
 
-
-
-
-const BlogPost= ()=>{
   const container = useRef(null)
   const [test,setTest] = useState(null)
     const [open, setOpen] = React.useState(false);
     const [data,setData] = useState({})
+    const [data1,setData1] = useState({})
     const [posts ,setPosts] = useState([])
+//---------------------------------------------------
+  const [titleEdit,setEditTitle] = useState(false);
+  const [descriptionEdit,setDescriptionEdit] = useState(false)
+  //const [title, setTitle] = useState(null)
+  const [description,setDescription] = useState(null)
+
+
+  const handleChangeItem = (item)=>{
+   const a = (/^\w+(?:\s+\w+){0,249}$/).test(item.description)
+   console.log("--!",a)
+    setData({...data,...item})
+  }
+  const EditInfo = ()=>{
+    
+    
+
+    if(_.isEqual(data,data1)){
+      console.log("not changed")
+    }else
+    {
+      let value = JSON.parse(localStorage.getItem("token"));
+      let token = value.token;
+      axios.post(`http://127.0.0.1:5000/bloggerDashboard/update-blog-info/${blogId}`,data, {
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+          Authorization: token,
+        },
+      }).then(res=>{
+        console.log(res)
+        refreshBlogs()
+      })
+    }
+  }
+
+//-------------------------------------------------
+  
     const handleClickOpen = () => {
       setOpen(true);
     };
-  
     const handleClose = () => {
       setOpen(false);
     };
     let { blogId } = useParams();
-
     const handlePostDelete=(postId)=>{
       // console.log("postId",postId)
       // console.log("reached handle Posr")
@@ -141,21 +121,15 @@ const BlogPost= ()=>{
           setPosts(res.data.posts)        
         })
       })
-
-
     }
-
-    useEffect(()=>{
-      
+    useEffect(()=>{ 
       lottie.loadAnimation({
         container : container.current,
         renderer: 'svg',
         loop:true,
         autoplay:true,
         animationData:require('./../lottie/add.json')
-  
       })
-      
     },[test])
 
     useEffect(()=>{
@@ -165,6 +139,7 @@ const BlogPost= ()=>{
         .then(res=>{
           console.log("posts--------------------",res.data);
           setData(res.data)
+          setData1(res.data)
           setPosts(res.data.posts)        
         })
 
@@ -178,10 +153,67 @@ const BlogPost= ()=>{
               
               {/* <div style={{margin:0,padding:0}}> */}
                   <div style={{padding:"0px 15px",margin:0,height:"410px",width:"100%",borderRadius:"10px",backgroundColor:"black",opacity:"80%",height:"100%"}} >
-                  <h4  style={{color:"white"}}>{data.title}</h4>
-                  <p style={{fontSize:"15px",color:"white"}}>
-                    {data.description}   
-                  </p>
+                {
+                  titleEdit ? (
+                    <Grid2 container  alignItems={"center"}  justifyContent={"space-between"}  >
+                      <Grid2 lg ={10} >
+                      <TextField  value ={data.title} onChange={(e)=>handleChangeItem({title: e.target.value})}  sx = {{backgroundColor:"white",marginTop:"10px",marginBottom:"10px",padding:"10px"}} id="standard-basic" fullWidth label="Title" variant="standard" />
+                       
+                      </Grid2>  
+                      <Grid2>
+                        <Tooltip title={"Done"}>
+                          <DoneIcon  onClick={()=>{setEditTitle(false);EditInfo()}} sx = {{color:"white"}}/> 
+                       </Tooltip>
+                      </Grid2>
+                    </Grid2>
+                   )
+                  :
+                  (
+                    <Grid2 container direction="row"  alignItems ={"center"} justifyContent ={"space-between"} >
+                      <Grid2>
+                      <h4  style={{color:"white"}}>{data.title}</h4>
+                      </Grid2>
+                      <Grid2>
+                      <Tooltip title={"Edit Title"}>
+                        <EditIcon  onClick={()=>setEditTitle(true)}  sx = {{color:"white",cursor:"pointer"}}/>
+                      </Tooltip>
+                      </Grid2>
+                    </Grid2>
+                    
+                  )    
+                }
+                {
+                  descriptionEdit ? (
+                    <Grid2 container direction={"row"} alignItems = {"center"} justifyContent={"space-between"}>
+                      <Grid2 lg = {10}  sx ={{backgroundColor:"white"}}>
+                      <TextField  value={data.description} onChange={(e)=>handleChangeItem({description:e.target.value})}  id="filled-basic" sx = {{backgroundColor:"white"}} multiline size="small" label="About" rows={5} fullWidth variant="filled" />
+                      </Grid2>
+                      <Grid2>
+                      <Tooltip title={"Done"}>
+                      <DoneIcon  onClick={()=>{setDescriptionEdit(false);EditInfo()}}  sx = {{color:"white",cursor:"pointer"}}/>
+                      </Tooltip>
+                      </Grid2>
+                    </Grid2>
+                                           
+                  ):(
+                    <Grid2 container direction = {"row"} alignItems = {"center"} justifyContent={"space-between"} >
+                      <Grid2 sx = {{width:"90%",minHeight:"140px"}}>
+                        <p style={{fontSize:"15px",color:"white"}}>
+                          {data.description}   
+                        </p>
+                      </Grid2>
+                      <Grid2>
+                      <Tooltip title={"Edit Description"}>
+                        <EditIcon  onClick={()=>setDescriptionEdit(true)}  sx = {{color:"white",cursor:"pointer"}}/>
+                      </Tooltip>
+                      </Grid2>
+                    </Grid2>
+                    
+                  )
+                }
+                 
+
+                 
                   <h5 style={{color:"white"}}><span><ArticleIcon  sx = {{marginTop:"5px"}} /></span>Total posts : {posts.length}</h5>
 
                   </div>   
@@ -219,7 +251,6 @@ const BlogPost= ()=>{
                     </Grid>
                   )
                 })
-                
               }
               </Grid>
             </div>

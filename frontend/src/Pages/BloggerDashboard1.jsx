@@ -317,7 +317,7 @@ function DashboardContent() {
             <Routes>
                 <Route exact path="/" element={<BloggerHome  blogs = {blogs} openModal = {openModal}  token={token}  refreshBlogs = {refreshBlogs}  handleClose={handleClose} />} />
                 <Route exact path="/blogs" element={<BloggerBlog />} />
-                <Route exact path="/blogPosts/:blogId" element ={<BlogPost/>}   />
+                <Route exact path="/blogPosts/:blogId" element ={<BlogPost  refreshBlogs={refreshBlogs}/>}   />
                 <Route exact path="/addpost" element={<AddPost />} />
                 <Route exact path="/notifications" element={<BloggerNotification />} />
                 

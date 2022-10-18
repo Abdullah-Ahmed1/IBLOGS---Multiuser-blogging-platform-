@@ -6,14 +6,11 @@ import { Route } from 'react-router';
 import Box from '@mui/material/Box';
 import Drawer from '@mui/material/Drawer';
 import Toolbar from '@mui/material/Toolbar';
-
 import List from '@mui/material/List';
-
 import Divider from '@mui/material/Divider';
 import { createStyles, makeStyles } from '@mui/styles';
 // import CssBaseline from '@mui/material/CssBaseline';
 import List_Items from '../../components/ReaderDashComponents/ListItems2';
-
 import "./../../components/PostComponentsMui/PostCardScroll.css";
 // import Avatar from '@mui/material/Avatar';
 // //import Grid from "@mui/material/Grid";
@@ -112,29 +109,7 @@ export default function ReaderDashboard() {
     
     }
 
-    // _.isEqual(profileData,profileData1)? 
-    //    "data is not changed"
-    //  : 
-      
-    //     console.log("uuuuuuuuuuuuuu");
-    //     let value = JSON.parse(localStorage.getItem("token"));
-    //     let token = value.token;
-    //       axios.get(
-    //         "http://127.0.0.1:5000/getProfile",
-    //         {
-    //           headers: {
-    //             "Content-Type": "application/json",
-    //             Accept: "application/json",
-    //             Authorization: token,
-    //           },
-    //         }
-    //       )
-    //       .then((res) => {
-    //         console.log("Got Profile", res);
-    //         setProfileData(res.data)
-    //       })
-    //       .catch((err) => console.log("errr", err));
-      
+   
     
     
     

@@ -167,6 +167,20 @@ module.exports = {
         res.json(data);
       });
   },
+  updateBlogInfo: (req, res) => {
+    console.log("reaxhed");
+    const data = req.body;
+    const blogId = req.params.blogId;
+    console.log(data);
+
+    Blog.findByIdAndUpdate(
+      { _id: blogId },
+      {
+        title: data.title,
+        description: data.description,
+      }
+    ).then((data) => res.send(data));
+  },
   deletePost: (req, res) => {
     const postId = req.params.postId;
     const token = req.headers["authorization"];

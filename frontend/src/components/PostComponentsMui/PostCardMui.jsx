@@ -1,6 +1,7 @@
 import * as React from 'react';
 import './PostCardMui.css'
 import Box from '@mui/material/Box';
+import Chip from '@mui/material/Chip';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
@@ -15,6 +16,7 @@ import VisibilityIcon from '@mui/icons-material/Visibility';
 import Typography from '@mui/material/Typography';
 import PostDeleteDialog from './PostDeleteDialog';
 import { set } from 'lodash';
+import PostShareDialog from './../ReaderDashComponents/PostShareDialog';
 
 const bull = (
   <Box
@@ -27,7 +29,11 @@ const bull = (
 
 export default function PostCardMui({item,handlePostDelete}) {
   const [postDeleteDialogOpen,setPostDeleteDialogOpen] =React.useState(false)
+  const [shareDialogOpen,setShareDialogOpen] = React.useState(false) 
 
+  const handleShareDialogClose = ()=>{
+    setShareDialogOpen(false)
+  }
   const handlePostDeleteDialogClose = ()=>{
     setPostDeleteDialogOpen(false)
   }
@@ -54,11 +60,11 @@ export default function PostCardMui({item,handlePostDelete}) {
      
        <div  >
        <Button   sx = {{color:"#05386b"}}  size="small"><ThumbUpAltIcon/>5</Button>
-        <Button  sx = {{color:"#05386b"}} size="small"><ShareIcon/></Button>
+        <Button  onClick = {()=>setShareDialogOpen(true )}   sx = {{color:"#05386b"}} size="small"><ShareIcon/></Button>
         <Button  sx = {{color:"#05386b"}} size="small"><EditIcon/></Button>
         <Button  onClick={()=>setPostDeleteDialogOpen(true)}  sx = {{color:"#05386b"}} size="small"><DeleteIcon /></Button>
         <Button  sx = {{color:"#05386b"}} size="small"><VisibilityIcon/></Button>
-        
+        <Chip  sx = {{backgroundColor:"#379683",color:"white"}}  label={item.publishStatus} />
     </div>
     </CardContent>
       
@@ -71,6 +77,7 @@ export default function PostCardMui({item,handlePostDelete}) {
     /> */}
    
   </Card>
+  <PostShareDialog shareDialogOpen ={shareDialogOpen} handleShareDialogClose={handleShareDialogClose} />
   </>
  
   );
