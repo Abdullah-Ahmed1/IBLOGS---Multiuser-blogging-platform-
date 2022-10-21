@@ -16,28 +16,68 @@ import Stack from '@mui/material/Stack';
 import Input from '@mui/material/Input';
 import Grid2 from '@mui/material/Unstable_Grid2';
 import CheckboxesGroup from './GroupedCheckBox';
+import SavedListComponent from './SavedListComponent ';
+import { SignalCellularNullSharp } from '@material-ui/icons';
 
 
 
 export default function MenuListComposition({postId,item,customList,handleCustomChange,open,checked,handleToggle,handleChange,handleListKeyDown,handleClose,anchorRef}) {
-
-  var a = [1,2,3,4]
+  
+  const [listTitle,setListTitle] = useState("");
+  const [lists,setLists] = useState(null)
   console.log("saved??????????????????????????????????",true)
 
+  const handleDone = ()=>{
+    // console.log(postId)
+
+    let value = JSON.parse(localStorage.getItem("token"));
+    let token = value.token;
+    axios.post(`http://127.0.0.1:5000/readerDashboard/create-custom-list`,{
+          listName: listTitle
+    },{
+      headers: {
+                "Content-Type": "application/json", 
+                Accept: "application/json",
+                Authorization: token,
+            },
+    }).then(res=>{
+      console.log(res)
+      axios.get('http://127.0.0.1:5000/readerDashboard/get-customLists',{
+        headers: {
+          "Content-Type": "application/json", 
+          Accept: "application/json",
+          Authorization: token,
+      },
+      })
+      .then(res=>{
+        console.log("---/---",res.data)
+        setLists(res.data.your_lists)
+      })  
+    
+    })
+  }
  
-  // const [saved,setSaved] = useState(saved)
-
-
-  // useEffect(()=>{
-  //   setSaved()
-  // })
-
+  useEffect(()=>{
+    let value = JSON.parse(localStorage.getItem("token"));
+    let token = value.token;
+    axios.get('http://127.0.0.1:5000/readerDashboard/get-customLists',{
+      headers: {
+        "Content-Type": "application/json", 
+        Accept: "application/json",
+        Authorization: token,
+    },
+    })
+    .then(res=>{
+      console.log("---/---",res.data)
+      setLists(res.data.your_lists)
+    })
+  },[])
   useEffect(()=>{
     // if(checked){
     // let value = JSON.parse(localStorage.getItem("token"));
     //   let token = value.token;
     //   console.log("token: ",token)
-    //   axios.post(`http://127.0.0.1:5000/readerDashboard/add-to-reading-list/${postId}`,{},{
+    //   axios.post(`c/add-to-reading-list/${postId}`,{},{
     //     headers: {
     //       "Content-Type": "application/json", 
     //       Accept: "application/json",
@@ -86,7 +126,8 @@ export default function MenuListComposition({postId,item,customList,handleCustom
           role={undefined}
           placement="bottom-start"
           transition
-          disablePortal
+          
+          // disablePortal
         >
           {({ TransitionProps, placement }) => (
             <Grow
@@ -98,6 +139,7 @@ export default function MenuListComposition({postId,item,customList,handleCustom
             >
               <Paper sx={{ width: 300 }}>
                 <ClickAwayListener onClickAway={handleClose}>
+                  <>
                   <MenuList
                      dense
                     autoFocusItem={open}
@@ -109,42 +151,62 @@ export default function MenuListComposition({postId,item,customList,handleCustom
                       <Checkbox checked={checked} onChange={handleChange}  inputProps={{ 'aria-label': 'controlled' }}  />
                       Reading List
                     </MenuItem>
-                    
                     {
-                     
-                      a.map(item=>{
-                        return(
-                          <MenuItem key = {item}>
-                            <Checkbox   inputProps={{ 'aria-label': 'controlled' }}  />
-                               MyList1
-                              {/* <CheckboxesGroup/> */}
-                          </MenuItem>
-                        )
-
-                      })
+                      lists?(
+                        lists.map(list=>{
+                          return (
+                            <MenuItem>
+                              <SavedListComponent  list ={list} key ={list._id}/>
+                            </MenuItem> 
+                          )
+                        })
+                      ):(
+                        null
+                      )
+                      
                     }
-                    
+                   
+                  
                     <Divider />
                     <MenuItem 
                        onClick={()=>handleCustomChange(customList)}
                       >
                       Create new List
                     </MenuItem>
-                    <MenuItem  sx = {customList ? {display:"block"}:{display:"none"}} >
+                    {/* <MenuItem  sx = {customList ? {display:"block"}:{display:"none"}} >
+                    <div>
                     <Grid2     container spacing={0}>
                         <Grid2>
-                            <Input placeholder='Enter list title' />
+                            <Input onChange={(e)=>setListTitle(e.target.value)}  placeholder='Enter list title' />
                         </Grid2>
                         <Grid2 justifyContent={"center"} alignItems="center" >
-                            <DoneIcon/>
+                            <DoneIcon  onClick = {handleDone} />
                         </Grid2>
                         <Grid2   justifyContent={"center"} alignItems="center" >
                             <CloseIcon/>
                         </Grid2>
                     </Grid2>
-                    </MenuItem>
+                    </div>
+                    </MenuItem> */}
                   </MenuList>
+                  <div  style = {customList ? {display:"block",padding:"5px 10px"}:{display:"none"}} >
+                    
+                    <Grid2     container spacing={0}>
+                        <Grid2>
+                            <Input onChange={(e)=>setListTitle(e.target.value)}  placeholder='Enter list title' />
+                        </Grid2>
+                        <Grid2 justifyContent={"center"} alignItems="center" >
+                            <DoneIcon  onClick = {handleDone} />
+                        </Grid2>
+                        <Grid2   justifyContent={"center"} alignItems="center" >
+                            <CloseIcon/>
+                        </Grid2>
+                    </Grid2>
+                    
+                    </div>
+                    </>
                 </ClickAwayListener>
+               
               </Paper>
             </Grow>
           )}

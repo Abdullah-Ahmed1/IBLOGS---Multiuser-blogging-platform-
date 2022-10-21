@@ -30,6 +30,8 @@ router
 router.route("/add-like/:postId").post(ReaderDashController.addLike);
 router.route("/addNotification").post(ReaderDashController.addNotification);
 router.route("/get-notification").get(ReaderDashController.getNotification);
+router.route("/create-custom-list").post(ReaderDashController.CreateCustomList);
+router.route("/get-customLists").get(ReaderDashController.getCustomLists);
 router.route("/get-analysis").get(ReaderDashController.getWeeklyAnalysis);
 //router.route("/all").get(ReaderDashController.getAllData1);
 //router.route("/all2").get(ReaderDashController.getAllData2);

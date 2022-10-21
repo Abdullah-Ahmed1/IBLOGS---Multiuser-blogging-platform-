@@ -18,7 +18,7 @@ var savedListSchema = new mongoose.Schema({
     ref: "User",
   },
 
-  CreationDate: {
+  creationDate: {
     type: String,
     required: true,
   },

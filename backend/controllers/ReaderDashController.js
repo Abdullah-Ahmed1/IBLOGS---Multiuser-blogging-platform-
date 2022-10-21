@@ -4,6 +4,7 @@ var connection = require("../Connection/connection");
 //const Blog = Mongoose.model("Blog");
 const Post = Mongoose.model("Post");
 const Reply = Mongoose.model("Reply");
+const SavedList = Mongoose.model("SavedList");
 const User = Mongoose.model("User");
 const Notification = Mongoose.model("Notification");
 const Comment = Mongoose.model("Comment");
@@ -519,5 +520,50 @@ module.exports = {
         res.send(data);
       })
       .catch((err) => res.send(err));
+  },
+
+  getCustomLists: (req, res) => {
+    const token = req.headers["authorization"];
+    try {
+      const decoded = jwt.verify(token, "1234567");
+      User.findById({ _id: decoded.id })
+        .populate({
+          path: "your_lists",
+          select: {
+            listName: 1,
+          },
+        })
+        .select({
+          firstname: 1,
+        })
+        .then((user) => {
+          res.send(user);
+        });
+    } catch (err) {
+      res.send(err);
+    }
+  },
+
+  CreateCustomList: (req, res) => {
+    const token = req.headers["authorization"];
+    console.log(req.body);
+    try {
+      const decoded = jwt.verify(token, "1234567");
+      const data = {
+        listName: req.body.listName,
+        savedPosts: [],
+        listOwner: decoded.id,
+        creationDate: new Date().toISOString(),
+      };
+      SavedList.create(data).then((list) => {
+        User.updateOne(
+          { _id: decoded.id },
+          { $push: { your_lists: list._id } }
+        ).then((user) => res.send(user));
+        // res.send(list);
+      });
+    } catch (err) {
+      res.send(err);
+    }
   },
 };
