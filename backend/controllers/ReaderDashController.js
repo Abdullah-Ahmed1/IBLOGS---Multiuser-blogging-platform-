@@ -531,6 +531,8 @@ module.exports = {
           path: "your_lists",
           select: {
             listName: 1,
+            savedPosts: 1,
+            creationDate: 1,
           },
         })
         .select({
@@ -562,6 +564,31 @@ module.exports = {
         ).then((user) => res.send(user));
         // res.send(list);
       });
+    } catch (err) {
+      res.send(err);
+    }
+  },
+  addToCustomList: (req, res) => {
+    const token = req.headers["authorization"];
+    try {
+      const decoded = jwt.verify(token, "1234567");
+      SavedList.findByIdAndUpdate(
+        { _id: req.body.listId },
+        { $push: { savedPosts: req.body.postId } }
+      ).then((list) => res.send(list));
+    } catch (err) {
+      res.send(err);
+    }
+  },
+  removeFromCustomList: (req, res) => {
+    const data = req.body;
+    // console.log(data);
+    const token = req.headers["authorization"];
+    try {
+      SavedList.findByIdAndUpdate(
+        { _id: req.body.listId },
+        { $pull: { savedPosts: req.body.postId } }
+      ).then((list) => res.send(list));
     } catch (err) {
       res.send(err);
     }

@@ -1,19 +1,22 @@
 import Grid2 from '@mui/material/Unstable_Grid2';
 import CssBaseline from '@mui/material/CssBaseline';
 import { useNavigate } from "react-router-dom";
+import { useState } from 'react';
 import lottie from 'lottie-web';
+import axios from 'axios';
 import { useEffect,useRef } from 'react';
 import Divider from '@mui/material/Divider';
 import Button from '@mui/material/Button';
 import { Typography } from '@mui/material';
 //import SearchBar from "../../components/ReaderDashComponents/Searchbar"
-import TrendPostCard from '../../components/PostComponentsMui/TrendPostCard';
+//import TrendPostCard from '../../components/PostComponentsMui/TrendPostCard';
 import LockIcon from '@mui/icons-material/Lock';
 import RecommendedChips from '../../components/PostComponentsMui/RecommendChips';
 //import { Grid } from '@mui/material/Grid';
 
 const SavedList = ()=>{
   const container = useRef(null)
+  const [lists,setLists] =useState(null);
   const navigate = useNavigate();
 
   useEffect(()=>{
@@ -27,6 +30,26 @@ const SavedList = ()=>{
     })
     
   },[])
+
+  useEffect(()=>{
+    let value = JSON.parse(localStorage.getItem("token"));
+    let token = value.token;
+
+    axios.get('http://127.0.0.1:5000/readerDashboard/get-customLists',{
+      headers: {
+        "Content-Type": "application/json", 
+        Accept: "application/json",
+        Authorization: token,
+    },
+    })
+    .then(res=>{
+      console.log("---/---/",res.data)
+      setLists(res.data)
+     
+    })  
+    
+  },[])
+
     return(
         <>
         <CssBaseline />
@@ -50,7 +73,7 @@ const SavedList = ()=>{
           <Divider  sx = {{ margin: "50px 10px"}} variant="middle" />
 
           <Grid2>
-          <Grid2 sx ={{backgroundColor:"white",padding:"10px",boxShadow:"0 4px 8px 0 rgba(92,219,149, 0.2), 0 6px 20px 0 rgba(92,219,149, 0.19)"}} >
+          <Grid2 sx ={{backgroundColor:"white",marginBottom:"20px",padding:"10px",boxShadow:"0 4px 8px 0 rgba(92,219,149, 0.2), 0 6px 20px 0 rgba(92,219,149, 0.19)"}} >
           <Grid2 container  justifyContent={"space-between"}>
             <Grid2 container>
               <Grid2 sx = {{paddingLeft:"10px",paddingTop:"10px"}}>
@@ -69,6 +92,37 @@ const SavedList = ()=>{
           </Grid2>
 
           </Grid2>
+          {
+            lists ?(
+              lists.your_lists.map(list=>{
+                return(
+                  <Grid2  key={list._id}  sx ={{backgroundColor:"white",marginBottom:"20px",padding:"10px",boxShadow:"0 4px 8px 0 rgba(92,219,149, 0.2), 0 6px 20px 0 rgba(92,219,149, 0.19)"}} >
+                  <Grid2 container  justifyContent={"space-between"}>
+                    <Grid2 container>
+                      <Grid2 sx = {{paddingLeft:"10px",paddingTop:"10px"}}>
+                      <h3 style={{padding:"0px",margin:"0px"}}  >{list.listName}</h3>
+                      <h4>Posts: 5</h4>
+                      <Button onClick={()=>{ navigate(`/readerdashboard/saved-lists/custom-list/${list._id}`);}}  sx = {{color:"#05386b",borderColor:"#05386b"}}  variant="outlined">View list</Button>
+                      </Grid2>
+                    
+                    </Grid2>
+                    <Grid2>
+                    <div className='container' ref={container} style={{width:"150px"}}  ></div>
+                    </Grid2>
+                  </Grid2>
+                  <Grid2>
+        
+                  </Grid2>
+        
+                  </Grid2>
+                )
+              })
+            ):
+            (
+              null
+            )
+          }
+         
 
 
 

@@ -25,6 +25,8 @@ export default function MenuListComposition({postId,item,customList,handleCustom
   
   const [listTitle,setListTitle] = useState("");
   const [lists,setLists] = useState(null)
+  const [customChecked,setCustomChecked] =useState(true) 
+  
   console.log("saved??????????????????????????????????",true)
 
   const handleDone = ()=>{
@@ -56,7 +58,70 @@ export default function MenuListComposition({postId,item,customList,handleCustom
     
     })
   }
- 
+  // const handleCustomChecked = (event,listId)=>{
+  //   console.log("----------------------",event.target.checked)
+  //   setCustomChecked("status",event.target.checked)
+  //   console.log("postId",postId)
+  //   console.log("listId",listId)
+  //   const values ={
+  //     postId:postId,
+  //     listId:listId 
+  //   }
+  //   if(event.target.checked ===true){
+      
+
+  //     let value = JSON.parse(localStorage.getItem("token"));
+  //     let token = value.token;
+  //     axios.post(`http://127.0.0.1:5000/readerDashboard/add-to-customList`,values,{
+  //       headers: {
+  //         "Content-Type": "application/json", 
+  //         Accept: "application/json",
+  //         Authorization: token,
+  //     },
+  //     }).then(res=>{
+  //       console.log(res)
+  //       axios.get('http://127.0.0.1:5000/readerDashboard/get-customLists',{
+  //         headers: {
+  //           "Content-Type": "application/json", 
+  //           Accept: "application/json",
+  //           Authorization: token,
+  //       },
+  //       })
+  //       .then(res=>{
+  //         console.log("---/---",res.data)
+  //         setLists(res.data.your_lists)
+  //       })
+
+  //     })
+  //   }else{
+  //     let value = JSON.parse(localStorage.getItem("token"));
+  //     let token = value.token;
+  //     axios.delete(`http://127.0.0.1:5000/readerDashboard/remove-from-customList/${values}`,{
+  //       headers: {
+  //         "Content-Type": "application/json", 
+  //         Accept: "application/json",
+  //         Authorization: token,
+  //     },
+  //     })
+  //   }
+    
+  // }
+  const refreshLists = ()=>{
+    let value = JSON.parse(localStorage.getItem("token"));
+    let token = value.token;
+    axios.get('http://127.0.0.1:5000/readerDashboard/get-customLists',{
+      headers: {
+        "Content-Type": "application/json", 
+        Accept: "application/json",
+        Authorization: token,
+    },
+    })
+    .then(res=>{
+      //console.log("---/---",res.data)
+      setLists(res.data.your_lists)
+    })
+  } 
+
   useEffect(()=>{
     let value = JSON.parse(localStorage.getItem("token"));
     let token = value.token;
@@ -72,37 +137,7 @@ export default function MenuListComposition({postId,item,customList,handleCustom
       setLists(res.data.your_lists)
     })
   },[])
-  useEffect(()=>{
-    // if(checked){
-    // let value = JSON.parse(localStorage.getItem("token"));
-    //   let token = value.token;
-    //   console.log("token: ",token)
-    //   axios.post(`c/add-to-reading-list/${postId}`,{},{
-    //     headers: {
-    //       "Content-Type": "application/json", 
-    //       Accept: "application/json",
-    //       Authorization: token,
-    //     },
-    //   }).then(res => {
-    //     console.log(res)
-    //          })
-    // }else{
-    //   let value = JSON.parse(localStorage.getItem("token"));
-    //   let token = value.token;
-    //   axios.delete(`http://127.0.0.1:5000/readerDashboard/remove-from-readingList/${postId}`,{
-    //     headers: {
-    //       "Content-Type": "application/json", 
-    //       Accept: "application/json",
-    //       Authorization: token,
-    //     },
-    //   }).then(res=>{
-    //     console.log(res)
-    //   }).catch(err=>{
-    //     console.log(err)
-    //   })
-    // }
-  },[checked])
-
+  
   // return focus to the button when we transitioned from !open -> open
   const prevOpen = React.useRef(open);
   React.useEffect(() => {
@@ -139,7 +174,7 @@ export default function MenuListComposition({postId,item,customList,handleCustom
             >
               <Paper sx={{ width: 300 }}>
                 <ClickAwayListener onClickAway={handleClose}>
-                  <>
+                  <div>
                   <MenuList
                      dense
                     autoFocusItem={open}
@@ -155,8 +190,8 @@ export default function MenuListComposition({postId,item,customList,handleCustom
                       lists?(
                         lists.map(list=>{
                           return (
-                            <MenuItem>
-                              <SavedListComponent  list ={list} key ={list._id}/>
+                            <MenuItem key ={list._id}>
+                              <SavedListComponent  refreshLists={refreshLists} postId={postId}  list ={list}    />
                             </MenuItem> 
                           )
                         })
@@ -204,7 +239,7 @@ export default function MenuListComposition({postId,item,customList,handleCustom
                     </Grid2>
                     
                     </div>
-                    </>
+                    </div>
                 </ClickAwayListener>
                
               </Paper>
