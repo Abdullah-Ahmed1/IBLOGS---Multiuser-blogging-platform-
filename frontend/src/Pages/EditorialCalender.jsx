@@ -120,7 +120,7 @@ export default function AskConfirmationBeforeSave() {
   };
 
   return (
-    <div style={{ height: 400, width: '100%' }}>
+    <div style={{backgroundColor:"white", height: 400, width: '100%' }}>
       {renderConfirmDialog()}
       <DataGrid
         rows={rows}
@@ -166,7 +166,7 @@ const rows = [
     id: 2,
     name: "Ali Ahmed",
     age: 36,
-    dateCreated: "34/5/34",
+    dateCreated: "34/ /34",
     lastLogin:"34/34/3324",
   },
   {

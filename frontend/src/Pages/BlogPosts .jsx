@@ -148,8 +148,8 @@ const BlogPost= ({refreshBlogs})=>{
     return(
         <div  style= {{ width:"100%"}}>  
             <FullScreenDialog  dialogOpen = {open} blogId = {blogId}  handleClickOpen = {handleClickOpen}  handleClose = {handleClose}  />
-            <Grid container sx = {{width:"100%" , backgroundColor:"white  " }} justifyContent="space-between">
-            <Grid item container   sx = {{height:"410px",padding:0,margin:0,fontSize: "25px",borderRadius:"10px", fontWeight:"bold" ,backgroundImage:`url('${data.image}')`,backgroundRepeat:"no-repeat",backgroundPosition:"center",backgroundSize:"cover",position: "relative"}}  >
+            <Grid container sx = {{width:"100%",padding:"0px 20px"  }} justifyContent="space-between">
+            <Grid item container   sx = {{height:"410px",margin:0,fontSize: "25px",borderRadius:"10px", fontWeight:"bold" ,backgroundImage:`url('${data.image}')`,backgroundRepeat:"no-repeat",backgroundPosition:"center",backgroundSize:"cover",position: "relative"}}  >
               
               {/* <div style={{margin:0,padding:0}}> */}
                   <div style={{padding:"0px 15px",margin:0,height:"410px",width:"100%",borderRadius:"10px",backgroundColor:"black",opacity:"80%",height:"100%"}} >
@@ -228,7 +228,7 @@ const BlogPost= ({refreshBlogs})=>{
             </Grid> */}
             </Grid>
             
-            <Grid container item  sx = {{marginTop:"10px"}}  justifyContent={"space-between"} >
+            <Grid container item  sx = {{padding:"0px 20px",marginTop:"10px" ,backgroundColor:"transparent"}}  justifyContent={"space-between"} >
              <Grid>
               <h1 style = {{margin:0,padding:0,color:"#05386b"}}>Posts</h1>
             </Grid>
@@ -241,7 +241,7 @@ const BlogPost= ({refreshBlogs})=>{
             </Grid>
             </Grid>
             <div  >
-            <Grid container  sx = {{marginTop:"10px",marginBottom:"10px"}} spacing={3} >
+            <Grid container  sx = {{padding:"0px 20px",marginTop:"10px",marginBottom:"10px"}} spacing={3} >
               {
                 
                 posts.map((item)=>{

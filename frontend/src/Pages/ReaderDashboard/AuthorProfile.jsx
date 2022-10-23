@@ -7,7 +7,7 @@ import CssBaseline from '@mui/material/CssBaseline';
 import { useParams } from 'react-router-dom';
 //import Avatar from '@mui/material/Avatar';
 import CircularProgress from '@mui/material/CircularProgress';
-import ProfileInfoTabs from '../../components/ProfileComps/ProfileInfoTabs';
+ import ProfileInfoTabs from '../../components/ProfileComps/ProfileInfoTabs';
 import { UserContext } from "./ReaderDashboard";
 const AuthorProfile = ({profileData})=>{
     const value = useContext(UserContext);
@@ -164,7 +164,7 @@ const AuthorProfile = ({profileData})=>{
                         </Grid2>
                     </Grid2>
                     <Grid2 sx = {{backgroundColor:"transparent"}}>
-                    <ProfileInfoTabs/>
+                    {/* <ProfileInfoTabs/>  */}
                     </Grid2>
                 </Grid2>
             </Grid2>

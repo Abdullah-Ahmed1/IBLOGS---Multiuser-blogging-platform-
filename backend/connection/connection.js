@@ -18,5 +18,6 @@ require("../models/post.model");
 require("../models/comments.model");
 require("../models/saved.model");
 require("../models/replies.model");
+require("../models/admin.model");
 require("../models/notifications.model");
 require("../models/weeklyAnalysis.model");

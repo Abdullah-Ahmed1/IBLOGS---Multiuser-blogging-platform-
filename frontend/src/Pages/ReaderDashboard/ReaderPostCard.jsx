@@ -136,7 +136,7 @@ const ReaderPostCard = ({item,handleLikeClick})=>{
                       <Avatar 
                       alt={item.parentBlog.owner.firstname} src={item.parentBlog.owner.profileImage} />
                   </Grid>
-                  <Grid item container   direction="column" spacing={0} lg = {9}  md = {7} sm={5}>
+                  <Grid item container   direction="column" spacing={0} lg = {9}  md = {7} sm={3}>
                     <Link to = {`/ReaderDashboard/author-profile/${item.parentBlog.owner._id}`}  style = {{textDecoration:"none",color:"#05386b"}}>
                       <Grid item   sx = {{textDecoration:"none",fontSize:"14px",fontWeight:"bold",fontFamily: " Ubuntu, sans-serif"}}>
                         {/* {`${item.parentBlog.owner.firstname} ${item.parentBlog.owner.lastname}     ${item.publishDate.slice(0,10)}`} */}
@@ -148,7 +148,7 @@ const ReaderPostCard = ({item,handleLikeClick})=>{
                       </Grid>
                      
                   </Grid>
-                  <Grid item lg ={2}>
+                  <Grid item lg ={2} sm={12}>
                       {/* icons here */}
                       <MoreVertIcon  sx ={{color:"#05386b"}}  />
                   </Grid>

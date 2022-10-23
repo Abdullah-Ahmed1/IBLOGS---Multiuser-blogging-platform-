@@ -16,6 +16,7 @@ import SignUp from "./Pages/RegisterFormMui";
 import ReaderDashboard from "./Pages/ReaderDashboard/ReaderDashboard";
 import AdminDashboard from "./Pages/AdminDashboardPages/AdminDashboard";
 //import YourProfile from "./components/ProfileComps/ProfileInfo";
+import AdminLogin from "./Pages/AdminLogin";
 
 const TRACKING_ID = "UA-167584801-1";
 reactGA.initialize(TRACKING_ID, {
@@ -42,6 +43,7 @@ function App() {
 
         <Route path="/bloggerdashboard/*" element={<Dashboard />} />
         <Route path="/readerdashboard/*" element={<ReaderDashboard />} />
+        <Route exact path="/admin" element={<AdminLogin />} />
         <Route path="/admin/*" element={<AdminDashboard />} />
 
         <Route exact path="*" element={<PageNotFound />} />

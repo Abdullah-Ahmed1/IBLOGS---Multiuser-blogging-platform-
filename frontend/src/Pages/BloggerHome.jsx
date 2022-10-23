@@ -313,16 +313,16 @@ const blogFormSubmit =  ()=>{
       </div>
       <BasicBreadcrumbs />                 
 
-      <Box sx={{ flexGrow: 1,width:"100%" }}>
+      <Box sx={{ flexGrow: 1 }}>
              <h2>Your blogs</h2>
-              <Grid container direction="row"  rowSpacing = {5} columnSpacing={10} justifyContent="stretch"    >
+              <Grid container direction="row"  rowSpacing = {1} columnSpacing={0.5}  justifyContent="center"   >
                  {
                   !blogs ? ( <h5>You have not created any blog yet</h5>)
                   :
                   
                   blogs.map((item)=>{
                     return (
-                      <Grid item lg={4} md = {6}  key = {item._id}  xs = {12} >
+                      <Grid item lg={3.5} md = {6}  key = {item._id}  xs = {12} >
                         <BlogCard  item = {item}  key = {item._id} />
                       </Grid>
                     )

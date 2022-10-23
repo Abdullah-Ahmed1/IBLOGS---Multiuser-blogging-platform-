@@ -6,6 +6,7 @@ import { Route } from 'react-router';
 import Box from '@mui/material/Box';
 import Drawer from '@mui/material/Drawer';
 import Toolbar from '@mui/material/Toolbar';
+import Paper from '@mui/material/Paper';
 import List from '@mui/material/List';
 import Divider from '@mui/material/Divider';
 import { createStyles, makeStyles } from '@mui/styles';
@@ -27,6 +28,7 @@ import YourProfile from '../YourProfileInfo';
 import SavedList from './SavedListsPage';
 import SavedListsHome from './SavedListsHome';
 import ResponsesPage from './ResponsesPage';
+import BottomNavigation1 from './../../components/ReaderDashComponents/BottomNavigation';
 
 var _  =require('lodash')
 //----------------------------------------------------------------
@@ -37,6 +39,7 @@ const drawerWidth = 70;
 const useStyles = makeStyles((theme)=>({
   root:{
    // height :'100vh',
+   //width:"100%",
     backgroundImage: 'url(https://res.cloudinary.com/dlgwvuu5d/image/upload/v1661960761/my-uploads/4665_zuak4h.jpg)',
     backgroundRepeat : "repeat",
     backgroundAttachment:"fixed",
@@ -204,11 +207,14 @@ export default function ReaderDashboard() {
         </List>
         <AccountMenu profileData={profileData}  sx = {{position :"absolute", bottom:"80px",left:"15px",backgroundColor:"#05386b",cursor:"pointer"}}/>
       </Drawer>
+      <Paper sx={{ display: {sm:"flex", lg:"none"} , position: 'fixed', bottom: 0, left: 0, right: 0,backgroundColor:"green" }} elevation={3}>
+      <BottomNavigation1 />
+      </Paper>
       <Box  
       
         component="main"
         sx={{ 
-          flexGrow: 1,paddingLeft:"20px",background:"rgba(255, 255, 255,0.9)" }}
+          flexGrow: 1,paddingLeft:"5px",background:"rgba(255, 255, 255,0.9)" }}
       >
        <Routes>
        <Route exact path="/" element={<ReaderHome />} />

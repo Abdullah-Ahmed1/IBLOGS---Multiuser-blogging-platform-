@@ -58,54 +58,7 @@ export default function MenuListComposition({postId,item,customList,handleCustom
     
     })
   }
-  // const handleCustomChecked = (event,listId)=>{
-  //   console.log("----------------------",event.target.checked)
-  //   setCustomChecked("status",event.target.checked)
-  //   console.log("postId",postId)
-  //   console.log("listId",listId)
-  //   const values ={
-  //     postId:postId,
-  //     listId:listId 
-  //   }
-  //   if(event.target.checked ===true){
-      
-
-  //     let value = JSON.parse(localStorage.getItem("token"));
-  //     let token = value.token;
-  //     axios.post(`http://127.0.0.1:5000/readerDashboard/add-to-customList`,values,{
-  //       headers: {
-  //         "Content-Type": "application/json", 
-  //         Accept: "application/json",
-  //         Authorization: token,
-  //     },
-  //     }).then(res=>{
-  //       console.log(res)
-  //       axios.get('http://127.0.0.1:5000/readerDashboard/get-customLists',{
-  //         headers: {
-  //           "Content-Type": "application/json", 
-  //           Accept: "application/json",
-  //           Authorization: token,
-  //       },
-  //       })
-  //       .then(res=>{
-  //         console.log("---/---",res.data)
-  //         setLists(res.data.your_lists)
-  //       })
-
-  //     })
-  //   }else{
-  //     let value = JSON.parse(localStorage.getItem("token"));
-  //     let token = value.token;
-  //     axios.delete(`http://127.0.0.1:5000/readerDashboard/remove-from-customList/${values}`,{
-  //       headers: {
-  //         "Content-Type": "application/json", 
-  //         Accept: "application/json",
-  //         Authorization: token,
-  //     },
-  //     })
-  //   }
-    
-  // }
+ 
   const refreshLists = ()=>{
     let value = JSON.parse(localStorage.getItem("token"));
     let token = value.token;

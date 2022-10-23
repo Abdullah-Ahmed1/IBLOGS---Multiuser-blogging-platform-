@@ -5,14 +5,15 @@ import { useParams } from 'react-router-dom';
 import Drawer from '@mui/material/Drawer';
 import Button from '@mui/material/Button';
 import Grid2 from '@mui/material/Unstable_Grid2';
-import List from '@mui/material/List';
-import Divider from '@mui/material/Divider';
-import ListItem from '@mui/material/ListItem';
-import ListItemButton from '@mui/material/ListItemButton';
-import ListItemIcon from '@mui/material/ListItemIcon';
-import ListItemText from '@mui/material/ListItemText';
-import InboxIcon from '@mui/icons-material/MoveToInbox';
-import MailIcon from '@mui/icons-material/Mail';
+// import List from '@mui/material/List';
+// import Divider from '@mui/material/Divider';
+// import ListItem from '@mui/material/ListItem';
+// import ListItemButton from '@mui/material/ListItemButton';
+// import ListItemIcon from '@mui/material/ListItemIcon';
+// import ListItemText from '@mui/material/ListItemText';
+// import InboxIcon from '@mui/icons-material/MoveToInbox';
+// import MailIcon from '@mui/icons-material/Mail';
+import InsertCommentIcon from '@mui/icons-material/InsertComment';
 import CommentCard from './CommentCard';
 import AddCommentCard from './AddCommentCard';
 import CircularProgress from '@mui/material/CircularProgress';
@@ -128,7 +129,7 @@ export default function PostCommentDrawer() {
     <div>
       {[ 'right'].map((anchor) => (
         <React.Fragment key={anchor}>
-          <Button onClick={toggleDrawer(anchor, true)}>Comment</Button>
+          <Button onClick={toggleDrawer(anchor, true)}><InsertCommentIcon  sx = {{marginLeft:"10px" ,  fontSize: "40px",color:"#379863"}}/></Button>
           <Drawer
           variant='temporary'
           sx = {{

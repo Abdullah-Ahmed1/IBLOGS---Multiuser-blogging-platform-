@@ -19,6 +19,7 @@ import List_ItemsAdmin from './../../components/AdminDashComps/ListItemsAdmin';
 import User from './Users';
 import WeeklyReports from './WeeklyReports';
 import Notifications from './Notifications';
+import AdminLogin from './../AdminLogin';
 var _  =require('lodash')
 
 //----------------------------------------------------------------
@@ -88,7 +89,8 @@ export default function AdminDashboard() {
           flexGrow: 1,paddingLeft:"20px",background:"rgba(255, 255, 255,0.9)" }}
       >
        <Routes>
-       <Route exact path="/" element={<AdminHome />} />
+       
+       <Route exact path="/home" element={<AdminHome />} />
        <Route exact path="/weeklyReports" element={<WeeklyReports />} />
        <Route exact path="/notifications" element={<Notifications />} />
        <Route  path="/users/*" element={<User/>} />

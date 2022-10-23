@@ -1,6 +1,7 @@
 import * as React from "react"; //import Grid from "@mui/material/Grid";
 //import Backdrop from '@mui/material/Backdrop';
 import CircularProgress from '@mui/material/CircularProgress';
+import {Link} from "react-router-dom";
 import Box from '@mui/material/Box';
 import axios from "axios";
 import reactGA from "react-ga";
@@ -10,13 +11,13 @@ import parse from 'html-react-parser';
  import Grid2 from '@mui/material/Unstable_Grid2';
  import ThumbUpIcon from '@mui/icons-material/ThumbUp';
  import Divider from '@mui/material/Divider';
- import { Typography } from '@mui/material';    
+ //import { Typography } from '@mui/material';    
  import CssBaseline from '@mui/material/CssBaseline';
  import InsertCommentIcon from '@mui/icons-material/InsertComment';
  import Avatar from '@mui/material/Avatar';
  import RecommendedChips from './../../components/PostComponentsMui/RecommendChips';
  import { useEffect,useState } from 'react';
- import TrendPostCard from './../../components/PostComponentsMui/TrendPostCard';
+ //import TrendPostCard from './../../components/PostComponentsMui/TrendPostCard';
  import PostCommentDrawer from "../../components/ReaderDashComponents/PostCommentsDrawer"
 
    function Progress() {
@@ -26,39 +27,19 @@ import parse from 'html-react-parser';
       </Box>
     );
   }      
- 
-
-
 const ReaderFullPostView = ()=>{
-    
-    
+      
     let { id } = useParams();
     console.log("idddd",id)
     const [post,setPost] = useState(null);
-   // const [repos, setRepos] = React.useState({});
     
   React.useEffect(()=>{
     reactGA.pageview(window.location.pathname)
   },[])
 
-
-
-    // React.useEffect(() => {
-    //     const fetchData = async () => {
-    //         const response = await axios.get(`http://127.0.0.1:5000/readerDashboard/full-post/${id}`);
-    //         setRepos(response.data);
-    //         console.log(response.data)
-    //     }
-    
-    //     fetchData();
-    //   }, []);
     useEffect(()=>{
         console.log("rrrrrrrrrrr");
-        // const api =async()=>{
-        //     const a=await axios.get(`http://127.0.0.1:5000/readerDashboard/full-post/${id}`)  
-        //     setPost(a.data.data[0])  
-        // }
-        // api()
+       
         axios.get(`http://127.0.0.1:5000/readerDashboard/full-post/${id}`)
         .then(res => {
             console.log("fullpost response" ,res.data.data[0])
@@ -66,7 +47,7 @@ const ReaderFullPostView = ()=>{
         }).catch(err=>console.log (err))
 
     },[])   
-//console.log("possssss",post)
+
     return(
         <div>
             {/* <SimpleBackdrop open ={open} handleClose={handleClose}/> */}
@@ -81,11 +62,13 @@ const ReaderFullPostView = ()=>{
             
                 </Grid2>
                 <Grid2 container  flexDirection="column" rowSpacing={0}  >
+                  <Link to= {`/ReaderDashboard/author-profile/${post.parentBlog.owner._id}`}>
                     <Grid2 sx ={{fontSize:"14px",fontWeight:"bold"}}>
                        
                        { post.parentBlog.owner.firstname } { post.parentBlog.owner.lastname } 
                        
                     </Grid2>
+                  </Link>  
                     <Grid2 sx ={{fontSize:"14px",fontWeight:"bold"}}>
                         {post.parentBlog.title}
                         
@@ -96,13 +79,14 @@ const ReaderFullPostView = ()=>{
 
             <Grid2  sx = {{marginTop:"50px"}} spacing={3} >
             <Divider variant="middle" sx = {{margin:"20px 20px"}} />
+            <div style={{display:"flex",flexDirection:"row"}}>
             <Tooltip title="Comment">
-                <InsertCommentIcon sx = {{marginLeft:"10px" ,  fontSize: "40px",color:"#379863"}} />
+                < PostCommentDrawer/>
                 </Tooltip>
                 <Tooltip title="Like">
                 <ThumbUpIcon sx = {{ marginLeft:"20px",fontSize: "40px",color:"#379863"}} />
                 </Tooltip>
-               < PostCommentDrawer/>
+            </div>  
             </Grid2>
              </Grid2>
              
@@ -145,10 +129,8 @@ const ReaderFullPostView = ()=>{
             ):(
                 <Progress/>
             )
-
-            
+           
         }
-        
             
         </div>
     )

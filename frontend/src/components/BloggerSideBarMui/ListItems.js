@@ -10,10 +10,9 @@ import PeopleIcon from "@mui/icons-material/People";
 import BarChartIcon from "@mui/icons-material/BarChart";
 //import LayersIcon from "@mui/icons-material/Layers";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import AssignmentIcon from "@mui/icons-material/Assignment";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
-
 import Toolbar from "@material-ui/core/Toolbar";
 
 import List from "@material-ui/core/List";
@@ -24,6 +23,8 @@ import MailIcon from "@material-ui/icons/Mail";
 //import MenuIcon from "@material-ui/icons/Menu";
 
 export const MainListItems = (props) => {
+  let location = useLocation();
+  console.log("//------", location.pathname);
   return (
     <React.Fragment>
       <Link
@@ -37,12 +38,14 @@ export const MainListItems = (props) => {
           <ListItemText />
         </ListItemButton>
       </Link>
-      <ListItemButton onClick={props.handleClick}>
-        <ListItemIcon>
-          <AddCircleIcon sx={{ color: "#379683" }} />
-        </ListItemIcon>
-        <ListItemText />
-      </ListItemButton>
+      {location.pathname == "/Bloggerdashboard" ? (
+        <ListItemButton onClick={props.handleClick}>
+          <ListItemIcon>
+            <AddCircleIcon sx={{ color: "#379683" }} />
+          </ListItemIcon>
+          <ListItemText />
+        </ListItemButton>
+      ) : null}
       <Link
         style={{ color: "white", textDecoration: "none" }}
         to="/Bloggerdashboard/notifications"
@@ -81,12 +84,12 @@ export const SecondaryListItems = () => {
       {/* <ListSubheader component="div" inset>
       Saved reports
     </ListSubheader> */}
-      <ListItemButton>
+      {/* <ListItemButton>
         <ListItemIcon>
           <AssignmentIcon sx={{ color: "#379683" }} />
         </ListItemIcon>
         <ListItemText />
-      </ListItemButton>
+      </ListItemButton> */}
       {/* <ListItemButton>
         <ListItemIcon>
           <AssignmentIcon />

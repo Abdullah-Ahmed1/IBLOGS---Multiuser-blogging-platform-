@@ -44,14 +44,7 @@ const SavedListComponent =({list,postId,refreshLists,customChecked,handleCustomC
     })
         }
     }
-    // const search=()=>{
-       
-    //     return list.savedPosts.includes(postId)
-        // list.savedPosts.includes(postId)
-    // }
-    // useEffect(()=>{
-    //     list.savedPosts.includes(postId)
-    // },[])
+  
     return(
         <>
            <Checkbox   checked={checked} onChange = {(event)=>handleChange(event,list._id)}   inputProps={{ 'aria-label': 'controlled' }}  />

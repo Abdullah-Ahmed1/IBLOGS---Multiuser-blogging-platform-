@@ -3,12 +3,12 @@ import axios from "axios";
 import {useState,useEffect,createContext} from "react";
 import {Link} from "react-router-dom";
 //import { useMediaQuery } from "react-responsive";
-import { styled, createTheme, ThemeProvider } from "@mui/material/styles";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 import MuiDrawer from "@mui/material/Drawer";
 import Box from "@mui/material/Box";
 import AppBar from "@mui/material/AppBar";
-
+import { createStyles, makeStyles } from '@mui/styles';
 import Toolbar from "@mui/material/Toolbar";
 import List from "@mui/material/List";
 import Typography from "@mui/material/Typography";
@@ -36,7 +36,7 @@ import PostUpdate from './PostUpdate';
 import {
   MainListItems,
   SecondaryListItems,
-  drawer,
+  // drawer,
 } from "../components/BloggerSideBarMui/ListItems";
 //import BlogCard from "../components/BlogCard";
 //import Chart from "./Chart";
@@ -48,13 +48,20 @@ import EditorialCalender from './EditorialCalender';
 import BloggerNotification from './BloggerNotifications';
 
 
+const useStyles = makeStyles((theme)=>({
+  root:{
+   // height :'100vh',
+   //width:"100%",
+    backgroundImage: 'url(https://res.cloudinary.com/dlgwvuu5d/image/upload/v1661960761/my-uploads/4665_zuak4h.jpg)',
+    backgroundRepeat : "repeat",
+    backgroundAttachment:"fixed",
+     backgroundSize:"contain",
+   
+  }
+}))
 
 const mdTheme = createTheme({
- 
 
-  
-
- 
 });
 const mdTheme2 = createTheme({
   palette: {
@@ -66,6 +73,7 @@ const mdTheme2 = createTheme({
 export const  BloggerContext = createContext(null);
 
 function DashboardContent() {
+  const classes = useStyles();
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
   const[openModal,setOpenModal] = useState(false);
@@ -188,7 +196,7 @@ function DashboardContent() {
     <BloggerContext.Provider value = {{handleBlogDelete}}>
     <ThemeProvider theme={mdTheme}>
       <CssBaseline />
-    <Box sx={{ display: "flex" }}>
+    <Box sx={{ display: "flex" }}   className={classes.root} >
       
       <AppBar 
         sx = {{ backgroundColor:"#379683" ,zIndex: (theme) => theme.zIndex.drawer + 1 }}
@@ -236,7 +244,7 @@ function DashboardContent() {
         </Toolbar>
       </AppBar>
       <ThemeProvider theme={mdTheme2}>
-        <MuiDrawer
+        {/* <MuiDrawer
           // container={container}
           variant="temporary"
           color="primary"
@@ -254,7 +262,7 @@ function DashboardContent() {
           }}
         >
           {drawer}
-        </MuiDrawer>
+        </MuiDrawer> */}
         <MuiDrawer
           variant="permanent"
           // open={open}
@@ -287,7 +295,7 @@ function DashboardContent() {
               <ChevronLeftIcon />
             </IconButton> */}
           </Toolbar>
-          <Divider />
+          
           <List component="nav" color="primary">
             <MainListItems   handleClick = {handleClick} />
             <Divider sx={{ my: 1 }} />
@@ -298,21 +306,17 @@ function DashboardContent() {
       <Box
         component="main"
         sx={{
-        //  background:"https://res.cloudinary.com/dlgwvuu5d/image/upload/v1661858507/my-uploads/crxuibfslasaepf24mvp.png",
-              
-         // backgroundColor:"yellow",
-          //  backgroundColor: (theme) =>
-          //    theme.palette.mode === "light"
-          //      ? theme.palette.grey[100]
-          //      : theme.palette.grey[900],
           flexGrow: 1,
           height: "100vh",
-          overflow: "auto",
+          width:"90%",
+          p: "10px 70px",
+          background:"rgba(255, 255, 255,0.9)"
+          // overflow: "auto",
         }}
       >
         <Toolbar />
-        <Container maxWidth="lg" sx={{ mt: 4 }} >
-          <Grid container spacing={1} direction="row">
+        {/* <Container maxWidth="lg" sx={{ mt: 4 }} > */}
+          <Grid container spacing={1} direction="row"sx = {{margin:"20px 50px"}} >
             {/* Chart */}
             <Routes>
                 <Route exact path="/" element={<BloggerHome  blogs = {blogs} openModal = {openModal}  token={token}  refreshBlogs = {refreshBlogs}  handleClose={handleClose} />} />
@@ -329,7 +333,7 @@ function DashboardContent() {
             </Routes>
           </Grid>
           
-        </Container>
+        {/* </Container> */}
       </Box>
     </Box>
   </ThemeProvider>
