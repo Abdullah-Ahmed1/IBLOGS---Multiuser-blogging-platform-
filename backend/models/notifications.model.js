@@ -6,7 +6,7 @@ var notificationSchema = new mongoose.Schema({
   info: {
     type: Object,
   },
-  NotificationType: {
+  notificationType: {
     type: String,
   },
   seen: {

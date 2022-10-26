@@ -1,16 +1,47 @@
-import Box from '@mui/material/Box';
-import Grid from "@mui/material/Grid";
+// import Box from '@mui/material/Box';
+// import Grid from "@mui/material/Grid";
 import CssBaseline from '@mui/material/CssBaseline';
 import Divider from '@mui/material/Divider';
 import Grid2 from '@mui/material/Unstable_Grid2';
 import { Typography } from '@mui/material';
+import lottie from 'lottie-web';
 import RecommendedChips from './../../components/PostComponentsMui/RecommendChips';
-import TrendPostCard from './../../components/PostComponentsMui/TrendPostCard';
-import ResponseTabs from './../../components/ReaderDashComponents/ResponseTabs';
+// import TrendPostCard from './../../components/PostComponentsMui/TrendPostCard';
+// import ResponseTabs from './../../components/ReaderDashComponents/ResponseTabs';
 import NotificationBar from './../../components/ReaderDashComponents/NotificationBar';
-import { useEffect,useState } from 'react';
-const ResponsesPage = ()=>{
+import { useEffect,useState,useRef } from 'react';
+import axios from 'axios';
 
+const ResponsesPage = ()=>{
+  const container = useRef(null)
+    const [test,setTest] = useState(null)
+  const [notifications,setNotifications]  =useState(null)
+  useEffect(()=>{
+      
+    lottie.loadAnimation({
+      container : container.current,
+      renderer: 'svg',
+      loop:true,
+      autoplay:true,
+      animationData:require('../../lottie/notifications.json')
+
+    })
+    
+  },[test])
+  useEffect(()=>{
+    let value = JSON.parse(localStorage.getItem("token"));
+    let token = value.token;
+    axios.get("http://127.0.0.1:5000/readerDashboard/get-reader-notifications",{
+      headers:{
+        "Content-Type":"application/json",
+        "Accept":"application/json",
+        "Authorization": token 
+      }
+    }).then(res=>{
+     // console.log(res.data)
+      setNotifications(res.data)
+    })
+  },[])
     return(
         <>
         <CssBaseline />
@@ -23,13 +54,34 @@ const ResponsesPage = ()=>{
         <Grid2 xs={12} md={5} lg={7} spacing={0} sx = {{height:"100vh",marginTop:"20px",marginLeft:"30px"}}  >  
        {/* ----------------------------------------------------------------------------------- */}
        {/* <Posts  posts = {posts}/> */}
-       
+       <Grid2 container direction = {"row"} justifyContent="space-between" alignItems={"center"}>
+            <Grid2>
+            <h2 style={{color:"#379683"}}>Notifications</h2>
+            </Grid2>
+            <Grid2>
+            <div className='container' ref={container} style={{width:"80px"}}  ></div>
+        
+            </Grid2>
+        </Grid2>
+      
        {/* <ResponseTabs/> */}
-        <h3>Notifications</h3>
+      
+        {/* <NotificationBar/>
         <NotificationBar/>
-        <NotificationBar/>
-        <NotificationBar/>
-     
+        <NotificationBar/> */}
+           {
+        notifications !== null ? (
+          notifications.length > 0 ?  (
+            notifications.map(notification =>{
+              return <NotificationBar notification={notification} key={notification._id}  />
+            })
+          ):(
+            <h2>no notifications yet </h2>
+          )
+        ):(
+          null
+        )
+       }
         {/* ---------------------------------------------------------------- */}
         </Grid2>
         <Divider orientation='vertical' sx={{width:"29px"}} flexItem/>

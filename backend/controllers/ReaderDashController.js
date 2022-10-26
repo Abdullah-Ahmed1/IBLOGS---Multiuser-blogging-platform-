@@ -462,6 +462,27 @@ module.exports = {
     });
   },
 
+  getReaderNotifications: (req, res) => {
+    console.log("get reader notification invoked");
+    const token = req.headers["authorization"];
+    try {
+      const decoded = jwt.verify(token, "1234567");
+      Notification.find({ notificationType: "post" }).then((notifications) => {
+        const newArray = notifications.filter((notification) => {
+          console.log(notification.info.ownerId);
+          User.findOne({ _id: notification.info.ownerId }).then((user) => {
+            // console.log(user);
+            console.log(user.followers.includes(decoded.id));
+            user.followers.includes(decoded.id);
+          });
+        });
+        console.log("---", newArray);
+        res.send(notifications);
+      });
+    } catch (err) {
+      res.send(err);
+    }
+  },
   getNotification: (req, res) => {
     console.log("get Notification rreached");
     const token = req.headers["authorization"];

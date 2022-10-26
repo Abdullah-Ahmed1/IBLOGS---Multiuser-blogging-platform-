@@ -494,7 +494,7 @@ ColorlibStepIcon.propTypes = {
 export default function AddPostStepper({handleClose}) {
   let { blogId } = useParams();
   const [generatedText,setGeneratedText] = useState(null) 
-  //--------------------------------------------- add post states and functions
+  //--------------------------------------------- add post states and functons
     const [postTitle, setPostTitle] = useState("");
     const [postDescription, setPostDescription] = useState("");
     const [postKeywords, setPostKeywords] = useState([]);
@@ -585,7 +585,16 @@ export default function AddPostStepper({handleClose}) {
     
     }
     console.log("url: ",res.data.secure_url)
-    axios.post(`http://127.0.0.1:5000/bloggerDashboard/addpost/${blogId}`,data)
+    
+    let value = JSON.parse(localStorage.getItem("token"));
+    let token = value.token;
+    axios.post(`http://127.0.0.1:5000/bloggerDashboard/addpost/${blogId}`,data,{
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+        Authorization: token,
+      },
+    })
          .then(res => console.log(res))
          .catch(err=>console.log(err))
 
@@ -603,7 +612,16 @@ export default function AddPostStepper({handleClose}) {
         publishStatus : "published",
         publishDate: new Date()
       }
-        axios.post(`http://127.0.0.1:5000/bloggerDashboard/addpost/${blogId}`,data)
+      
+      let value = JSON.parse(localStorage.getItem("token"));
+      let token = value.token;
+        axios.post(`http://127.0.0.1:5000/bloggerDashboard/addpost/${blogId}`,data,{
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+            Authorization: token,
+          },
+        })
          .then(res => console.log(res))
          .catch(err=>console.log(err))
       }
@@ -654,7 +672,16 @@ export default function AddPostStepper({handleClose}) {
         publishDate: dayjs(publishDate).format()
       
       }
-      axios.post(`http://127.0.0.1:5000/bloggerDashboard/addpost/${blogId}`,data)
+      
+      let value = JSON.parse(localStorage.getItem("token"));
+      let token = value.token;
+      axios.post(`http://127.0.0.1:5000/bloggerDashboard/addpost/${blogId}`,data,{
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+          Authorization: token,
+        },
+      })
       .then(res => console.log(res))
       .catch(err=>console.log(err))
 
@@ -675,15 +702,32 @@ export default function AddPostStepper({handleClose}) {
           publishDate: dayjs(publishDate).format()
         
         }
-        axios.post(`http://127.0.0.1:5000/bloggerDashboard/addpost/${blogId}`,data)
+        
+        let value = JSON.parse(localStorage.getItem("token"));
+        let token = value.token;
+        axios.post(`http://127.0.0.1:5000/bloggerDashboard/addpost/${blogId}`,data,{
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+            Authorization: token,
+          },
+        })
         .then(res => console.log(res))
         .catch(err=>console.log(err))
   
       }
 
 
-
-         axios.post(`http://127.0.0.1:5000/bloggerDashboard/addpost/${blogId}`,data)
+        
+      let value = JSON.parse(localStorage.getItem("token"));
+      let token = value.token;
+         axios.post(`http://127.0.0.1:5000/bloggerDashboard/addpost/${blogId}`,data,{
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+            Authorization: token,
+          },
+         })
          .then(res => console.log(res))
          .catch(err=>console.log(err))
 

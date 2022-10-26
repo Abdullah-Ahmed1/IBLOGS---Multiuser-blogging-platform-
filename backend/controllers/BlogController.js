@@ -4,6 +4,7 @@ var connection = require("../Connection/connection");
 const Blog = Mongoose.model("Blog");
 const Comment = Mongoose.model("Comment");
 const Post = Mongoose.model("Post");
+const Notification = Mongoose.model("Notification");
 const Reply = Mongoose.model("Reply");
 const { User, validate } = require("../models/users.model");
 //const { Post, validate } = require("../models/post.model");
@@ -91,69 +92,77 @@ module.exports = {
   //////////////////////////// Blog Posts functions /////////////////////////////////////////////////////////////////
 
   addPost: async (req, res) => {
-    const blogId = req.params.blogId;
-    const blog = await Blog.findOne({ _id: blogId });
-    // console.log("--------", blog);
-    Post.create({ ...req.body, parentBlog: blogId })
-      .then(async (post) => {
-        console.log("Post has been Added ", post, post._id);
-        //  console.log("reached");
-        console.log("spot1");
+    const token = req.headers["authorization"];
 
-        const someDate = new Date("2022-09-11T00:02:00.000+5:30");
-        schedule.scheduleJob("MJob", someDate, async () => {
-          try {
-            console.log("called---------");
-            await Post.updateOne(
-              { _id: post._id },
-              { publishStatus: "published" }
-            );
-          } catch (err) {
-            console.log(err);
-          }
-          schedule.cancelJob("MJob");
-        });
+    try {
+      const decoded = jwt.verify(token, "1234567"); // Verify token
 
-        // const data = {
-        //   notificationText: `${decoded.username} created new post "${post.postTitle}"  `,
-        //   info: {
-        //     // commentedPost: success._id,
-        //     ownerId: decoded.id,
+      const blogId = req.params.blogId;
+      const blog = await Blog.findOne({ _id: blogId });
+      // console.log("--------", blog);
+      Post.create({ ...req.body, parentBlog: blogId })
+        .then((post) => {
+          console.log("Post has been Added ", post, post._id);
+          //  console.log("reached");
+          console.log("spot1");
 
-        //     commentorName: decoded.username,
-        //   },
-        //   owner: res.parentBlog.owner,
-        //   seen: false,
-        //   notificationType: "comment",
-        //   notificationDate: new Date(),
-        // };
-        // Notification.create(data).then((data) => console.log(data));
+          // const someDate = new Date("2022-09-11T00:02:00.000+5:30");
+          // schedule.scheduleJob("MJob", someDate, async () => {
+          //   try {
+          //     console.log("called---------");
+          //     await Post.updateOne(
+          //       { _id: post._id },
+          //       { publishStatus: "published" }
+          //     );
+          //   } catch (err) {
+          //     console.log(err);
+          //   }
+          //   schedule.cancelJob("MJob");
+          // });
 
-        await Blog.updateOne(
-          { _id: blog._id },
-          { $push: { posts: post._id } },
-          function (error, success) {
-            if (error) {
-              console.log(error);
-            } else {
-              console.log(success);
+          Blog.updateOne(
+            { _id: blog._id },
+            { $push: { posts: post._id } },
+            function (error, success) {
+              if (error) {
+                console.log(error);
+              } else {
+                console.log(success);
+                const data = {
+                  notificationText: `${decoded.username} created new post "${post.postTitle}"  `,
+                  info: {
+                    // commentedPost: success._id,
+                    ownerId: decoded.id,
+                    postId: post._id,
+                    // commentorName: decoded.username,
+                  },
+                  owner: post.parentBlog.owner,
+                  seen: false,
+                  notificationType: "post",
+                  notificationDate: new Date(),
+                };
+                Notification.create(data).then((data) => console.log(data));
+              }
             }
-          }
-          // { returnOriginal: false }
-        );
-        res.statusCode = 200;
-        res.setHeader("Content-Type", "application/json");
+            // { returnOriginal: false }
+          );
+          res.statusCode = 200;
+          // res.setHeader("Content-Type", "application/json");
 
-        res.json(post);
-        console.log("spot2");
-      })
-      .catch((err) => res.json(err));
+          res.json(post);
+          console.log("spot2");
+        })
+        .catch((err) => res.json(err));
 
-    // const someDate = new Date("2022-09-10T16:25:00.000+5:30");
-    // schedule.scheduleJob("MJob", someDate, () => {
-    //   console.log(req.body, "---------");
-    //   schedule.cancelJob("MJob");
-    // });
+      // const someDate = new Date("2022-09-10T16:25:00.000+5:30");
+
+      // schedule.scheduleJob("MJob", someDate, () => {
+      //   console.log(req.body, "---------");
+      //   schedule.cancelJob("MJob");
+      // });
+    } catch (err) {
+      res.send(err);
+    }
   },
 
   getPost: (req, res) => {
@@ -255,17 +264,17 @@ module.exports = {
 
   // --this is a method below to add any field to already added document
 
-  tempMethod: async (req, res) => {
-    try {
-      console.log("reached-----------");
-      // const a = new Date();
-      await User.updateMany(
-        {},
-        { $set: { following: [] } },
-        { upsert: false, multi: true }
-      );
-    } catch (err) {
-      console.log(err);
-    }
-  },
+  //   tempMethod: async (req, res) => {
+  //     try {
+  //       console.log("reached-----------");
+  //       // const a = new Date();
+  //       await Notification.updateMany(
+  //         {},
+  //         { $set: { notificationType: "" } },
+  //         { upsert: false, multi: true }
+  //       );
+  //     } catch (err) {
+  //       console.log(err);
+  //     }
+  //   },
 };

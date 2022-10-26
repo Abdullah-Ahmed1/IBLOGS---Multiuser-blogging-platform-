@@ -37,6 +37,9 @@ router
   .route("/remove-from-customList")
   .post(ReaderDashController.removeFromCustomList);
 router.route("/get-analysis").get(ReaderDashController.getWeeklyAnalysis);
+router
+  .route("/get-reader-notifications")
+  .get(ReaderDashController.getReaderNotifications);
 //router.route("/all").get(ReaderDashController.getAllData1);
 //router.route("/all2").get(ReaderDashController.getAllData2);
 
