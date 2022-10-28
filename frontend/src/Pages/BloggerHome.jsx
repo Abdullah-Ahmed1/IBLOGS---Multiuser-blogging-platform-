@@ -2,6 +2,7 @@ import Dialog from '@mui/material/Dialog';
 import React from "react";
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
+import Grid2 from '@mui/material/Unstable_Grid2';
 import { useEffect,useState } from 'react';
 import {Link} from "react-router-dom"
 import axios from "axios";
@@ -56,7 +57,7 @@ const BloggerHome = ({openModal,handleClose,token,blogs,refreshBlogs})=>{
     const[blogTitle,setBlogTitle] = useState("");
     const[blogDescription,setBlogDescription] = useState("");
     const [blogImage,setBlogImage] = useState("");
-    const [uploadedFile,setUploadedFile] = useState({});
+    const [uploadedFile,setUploadedFile] = useState(null);
   /////////////////////////////////////////////////////////////////////////////////
     const theme = useTheme();
     const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
@@ -127,48 +128,61 @@ const handleImage = async(e)=>{
 const blogFormSubmit =  ()=>{
   handleClose();
   setOpenBackDrop(true)
+  if (uploadedFile){
+    console.log("uploaded file",uploadedFile);
 
-  console.log("uploaded file",uploadedFile);
-
-  const body = new FormData();
-  body.append('file', uploadedFile);
-  body.append('upload_preset',"my-uploads")
-
-   axios(
-    {
-      method: "POST",
-      url: "https://api.cloudinary.com/v1_1/dlgwvuu5d/image/upload",
-      data: body,
-    }
-  ).then(res=> {
-    console.log("-----",res.data.secure_url)
-    // setBlogImage(res.data.secure_url)
-    // console.log("ghnlnmlogImage",blogImage)
-    const info=  JSON.parse(atob(token.token.split(".")[1]))
-  const data = {
-      title : blogTitle,
-      description : blogDescription,
-      image : res.data.secure_url,
-      owner : info.id
-    }
-    console.log(info)
-        axios.post(`http://127.0.0.1:5000/BloggerDashboard/add/${info.id}`,data)
-      .then(response=>{console.log(response)
-
-        refreshBlogs();
-        setOpenBackDrop(false)
+    const body = new FormData();
+    body.append('file', uploadedFile);
+    body.append('upload_preset',"my-uploads")
+  
+     axios(
+      {
+        method: "POST",
+        url: "https://api.cloudinary.com/v1_1/dlgwvuu5d/image/upload",
+        data: body,
+      }
+    ).then(res=> {
+      console.log("-----",res.data.secure_url)
+      // setBlogImage(res.data.secure_url)
+      // console.log("ghnlnmlogImage",blogImage)
+      const info=  JSON.parse(atob(token.token.split(".")[1]))
+    const data = {
+        title : blogTitle,
+        description : blogDescription,
+        image : res.data.secure_url,
+        owner : info.id
+      }
+      console.log(info)
+          axios.post(`http://127.0.0.1:5000/BloggerDashboard/add/${info.id}`,data)
+        .then(response=>{console.log(response)
+  
+          refreshBlogs();
+          setOpenBackDrop(false)
+          
         
-      // axios.get('http://127.0.0.1:5000/bloggerDashboard/get')
-      // .then((res)=>{
-      //     console.log("----",res.data.blogs)
-      //     setBlogs(res.data.blogs)
-
-      // }).catch((error)=>{
-      //     console.log(error)
-  })    
-
-  }).catch(err =>  console.log(err) )
- 
+    })    
+  
+    }).catch(err =>  console.log(err) )
+   
+  }else{
+    const info=  JSON.parse(atob(token.token.split(".")[1]))
+    const data = {
+        title : blogTitle,
+        description : blogDescription,
+        image : "",
+        owner : info.id
+      }
+      console.log(info)
+          axios.post(`http://127.0.0.1:5000/BloggerDashboard/add/${info.id}`,data)
+        .then(response=>{console.log(response)
+  
+          refreshBlogs();
+          setOpenBackDrop(false)
+          
+        
+    })    
+  }
+  
  // console.log("ghnlnmlogImage------------------",blogImage)
  // console.log(res.secure_url)
  // console.log("65464654687132411584",blogImage)
@@ -277,7 +291,7 @@ const blogFormSubmit =  ()=>{
                 type="Description"
                 //id="Description"
                 autoComplete="Description"
-                inputProps={{maxLength:20}}
+                
               />
           
               <TextField
@@ -311,11 +325,14 @@ const blogFormSubmit =  ()=>{
       </Dialog>
     
       </div>
-      <BasicBreadcrumbs />                 
-
-      <Box sx={{ flexGrow: 1 }}>
+      <Grid2 container direction ={"column"} sx= {{margin:0,padding:0,width:"100%"}} >
+        <Grid2>
+           <BasicBreadcrumbs />  
+        </Grid2>
+        <Grid2>
+        <Box sx={{ flexGrow: 1 }}>
              <h2>Your blogs</h2>
-              <Grid container direction="row"  rowSpacing = {1} columnSpacing={0.5}  justifyContent="center"   >
+              <Grid container direction="row"  rowSpacing = {1} columnSpacing={5}     >
                  {
                   !blogs ? ( <h5>You have not created any blog yet</h5>)
                   :
@@ -357,6 +374,11 @@ const blogFormSubmit =  ()=>{
                  </Grid> */}
                  </Grid>
               </Box>
+          </Grid2>        
+      </Grid2>
+                   
+
+      
           
         </>
     )

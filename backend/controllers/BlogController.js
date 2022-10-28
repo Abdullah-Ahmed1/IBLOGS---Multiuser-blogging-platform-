@@ -203,7 +203,8 @@ module.exports = {
         Blog.updateOne({ _id: blog[0]._id }, { $pull: { posts: postId } })
           .then((response) => {
             console.log("updated blog", response);
-            Post.deleteOne({ _id: postId }).then((data) => {
+            Post.deleteOne({ _id: postId }).then(async (data) => {
+              await User.updateMany({}, { $pull: { ReadingList: postId } });
               res.send(data);
             });
           })

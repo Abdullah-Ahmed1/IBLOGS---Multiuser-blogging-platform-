@@ -13,6 +13,11 @@ const Users = ()=>{
         axios.delete(`http://127.0.0.1:5000/admin/deleteUser/${userId}`)
         .then(res=>{
             console.log(res)
+            axios.get("http://127.0.0.1:5000/admin/getAllUsers")
+            .then(res=>{
+              console.log("!!££££££",res.data)
+              setUserData(res.data.data)
+            })
         })
     }
 //---------------------------------------------------------------------------
@@ -23,7 +28,8 @@ const Users = ()=>{
           console.log("!!££££££",res.data)
           setUserData(res.data.data)
         })
-    },[])
+
+    },[userData])
 
     return(
        <Routes>

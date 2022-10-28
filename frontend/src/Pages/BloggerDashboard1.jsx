@@ -307,7 +307,7 @@ function DashboardContent() {
         component="main"
         sx={{
           flexGrow: 1,
-          height: "100vh",
+          minHeight: "100vh",
           width:"90%",
           p: "10px 70px",
           background:"rgba(255, 255, 255,0.9)"

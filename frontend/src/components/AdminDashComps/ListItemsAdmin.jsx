@@ -15,7 +15,7 @@ const List_ItemsAdmin = ()=>{
     return(
         <>
         <Tooltip title="Home" placement="right" arrow>
-          <Link to="/admin">
+          <Link to="/admin/home">
          <ListItemButton>
           <ListItemIcon>
             <HomeIcon sx={{ color: "#379863",fontSize:"25px", marginBottom:"10px" }} />

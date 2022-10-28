@@ -27,7 +27,7 @@ const UsersCard = ({item,handleUserDelete})=>{
             
             <div className="card_inner">
             
-                <img src={item.profileImage} alt="3453353" />
+                <img src={item.profileImage? item.profileImage: "https://res.cloudinary.com/dlgwvuu5d/image/upload/v1663106838/my-uploads/ppp_rufoeg.png"} alt="3453353" />
                 <div className="userName">{item.firstname} {item.lastname}</div>
                 <div className="userUrl">{item.profession} @ {item.organization}</div>
                 <div className="detail-box">
