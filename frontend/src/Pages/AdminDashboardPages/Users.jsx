@@ -10,26 +10,50 @@ const Users = ()=>{
     const [userData,setUserData] = useState(null) 
 
     const handleUserDelete = (userId)=>{
-        axios.delete(`http://127.0.0.1:5000/admin/deleteUser/${userId}`)
+        let value = JSON.parse(localStorage.getItem("adminToken"));
+        let token = value.adminToken;
+        axios.delete(`http://127.0.0.1:5000/admin/deleteUser/${userId}`,{
+            headers: {
+                "Content-Type": "application/json",
+                Accept: "application/json",
+                Authorization: token,
+              },
+        })
         .then(res=>{
             console.log(res)
-            axios.get("http://127.0.0.1:5000/admin/getAllUsers")
+            let value = JSON.parse(localStorage.getItem("adminToken"));
+        let token = value.adminToken;
+            axios.get("http://127.0.0.1:5000/admin/getAllUsers",{
+                headers: {
+                    "Content-Type": "application/json",
+                    Accept: "application/json",
+                    Authorization: token,
+                  },
+            })
             .then(res=>{
               console.log("!!££££££",res.data)
               setUserData(res.data.data)
             })
         })
     }
-//---------------------------------------------------------------------------
+//---------------------------------------------------------------------------------
 
     useEffect(()=>{
-        axios.get("http://127.0.0.1:5000/admin/getAllUsers")
+        let value = JSON.parse(localStorage.getItem("adminToken"));
+    let token = value.adminToken;
+        axios.get("http://127.0.0.1:5000/admin/getAllUsers",{
+            headers: {
+                "Content-Type": "application/json",
+                Accept: "application/json",
+                Authorization: token,
+              },
+        })
         .then(res=>{
           console.log("!!££££££",res.data)
           setUserData(res.data.data)
         })
 
-    },[userData])
+    },[])
 
     return(
        <Routes>
