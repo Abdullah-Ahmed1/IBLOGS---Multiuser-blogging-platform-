@@ -20,6 +20,8 @@ module.exports = {
         re.send(err);
       });
   },
+
+  //---------------------------------------------------------------------------------------------------
   deleteUser: async (req, res) => {
     const userId = req.params.userId;
     console.log("///////////////////*/", userId);
@@ -83,18 +85,44 @@ module.exports = {
       res.send({ msg: "User is Deleted" });
     });
   },
+  //--------------------------------------------------------------------------------------------------
+
   deleteBlog: async (req, res) => {
     const blogId = req.params.blogId;
     const userId = req.body.userId;
     console.log("blogId : ", blogId);
     console.log("userId: ", userId);
+    let posts = [];
+    let comments = [];
     try {
-      const data = await Blog.find({ _id: blogId }, { posts: 1, _id: 0 });
-      console.log("data", data[0].posts);
+      const data = await Blog.findById({ _id: blogId }, { posts: 1, _id: 0 });
+      // console.log("data", data[0].posts);
+
+      posts.push(...data.posts);
+      console.log(posts);
 
       await Promise.all(
-        data[0].posts.forEach(async (item) => {
+        posts.map(async (item) => {
+          await SavedList.updateOne({}, { $pull: { savedPosts: item } });
+          await User.updateOne({}, { $pull: { ReadingList: item } });
           await Post.deleteOne({ _id: item });
+        })
+      );
+
+      await Promise.all(
+        posts.map(async (post) => {
+          await Post.findById({ _id: post }).then(async (post) => {
+            if (post) {
+              comments.push(...post.comments);
+            }
+          });
+        })
+      );
+
+      await Promise.all(
+        comments.map(async (comment) => {
+          await Comment.deleteMany({ _id: comment });
+          await Reply.deleteMany({ parentComment: comment });
         })
       );
 
@@ -102,17 +130,14 @@ module.exports = {
       await Blog.deleteOne({ _id: blogId });
 
       //------------- Remove blogId from your_blogs array of user ---------
-      const updatedUser = await User.updateOne(
-        { _id: userId },
-        { $pull: { your_blogs: blogId } }
-      );
+      await User.updateOne({ _id: userId }, { $pull: { your_blogs: blogId } });
 
-      res.send(updatedUser);
+      res.send({ msg: "deleted successfully" });
     } catch (err) {
       console.log(err);
     }
   },
-
+  //------------------------------------------------------------------------------------------------------------------
   getAllBlogsOfUser: (req, res) => {
     const userId = req.params.userId;
 
