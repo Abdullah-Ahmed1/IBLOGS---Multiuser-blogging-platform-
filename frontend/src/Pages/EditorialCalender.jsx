@@ -1,10 +1,6 @@
 import * as React from 'react';
 import { DataGrid } from '@mui/x-data-grid';
-// import {
-//   randomCreatedDate,
-//   randomTraderName,
-//   randomUpdatedDate,
-// } from '@mui/x-data-grid-generator';
+import "./EditorialCalender.css"
 import Snackbar from '@mui/material/Snackbar';
 import Dialog from '@mui/material/Dialog';
 import DialogTitle from '@mui/material/DialogTitle';
@@ -120,11 +116,27 @@ export default function AskConfirmationBeforeSave() {
   };
 
   return (
-    <div style={{backgroundColor:"white", height: 400, width: '100%' }}>
+    <div className = "scrolling1" style={{backgroundColor:"white", height: 600, width: '100%' }}>
       {renderConfirmDialog()}
       <DataGrid
+      className = "scrolling1"
+      sx={{
+        "&::-webkit-scrollbar": {
+        width: 20,
+        
+
+        },
+        "&::-webkit-scrollbar-track": {
+        backgroundColor: "orange"
+        },
+        "&::-webkit-scrollbar-thumb": {
+        backgroundColor: "red",
+        borderRadius: 2
+        }
+      }}
         rows={rows}
         columns={columns}
+        rowHeight={100}
         processRowUpdate={processRowUpdate}
         experimentalFeatures={{ newEditingApi: true }}
       />
@@ -139,7 +151,12 @@ export default function AskConfirmationBeforeSave() {
 
 const columns = [
   { field: 'Post Title', headerName: 'PostTitle', width: 180, editable: true },
-  { field: 'Post Status', headerName: 'Post Status',  editable: true },
+  // { field: 'Post Status', headerName: 'Post Status',  editable: true },
+  {
+    field: 'PostDescription',
+    headerName: 'Post Description',
+    width: 180,
+  },
   {
     field: 'dateCreated',
     headerName: 'Date Created',
@@ -147,9 +164,33 @@ const columns = [
     width: 180,
   },
   {
-    field: 'lastLogin',
-    headerName: 'Last Login',
-    type: 'dateTime',
+    field: 'status',
+    headerName: 'Status',
+    type: 'String',
+    width: 220,
+  },
+  {
+    field: 'PostKeywords',
+    headerName: 'Post Keywords',
+    type: 'String',
+    width: 220,
+  },
+  {
+    field: 'Likes',
+    headerName: 'Likes',
+    type: 'String',
+    width: 220,
+  },
+  {
+    field: 'AllowComments',
+    headerName: 'Allow Comments',
+    type: 'String',
+    width: 220,
+  },
+  {
+    field: 'Categories',
+    headerName: 'Categories',
+    type: 'String',
     width: 220,
   },
 ];

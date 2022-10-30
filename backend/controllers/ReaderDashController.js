@@ -373,6 +373,7 @@ module.exports = {
           },
         })
         .then((response) => {
+          console.log(response);
           res.send(response);
         });
     } catch (err) {
@@ -472,8 +473,10 @@ module.exports = {
           console.log(notification.info.ownerId);
           User.findOne({ _id: notification.info.ownerId }).then((user) => {
             // console.log(user);
-            console.log(user.followers.includes(decoded.id));
-            user.followers.includes(decoded.id);
+            if (user) {
+              console.log(user.followers.includes(decoded.id));
+              user.followers.includes(decoded.id);
+            }
           });
         });
         console.log("---", newArray);

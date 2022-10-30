@@ -1,6 +1,23 @@
 import Grid2 from '@mui/material/Unstable_Grid2';
 import CssBaseline from '@mui/material/CssBaseline';
+import lottie from 'lottie-web';
+import { useEffect,useState,useRef } from 'react';
 const Notifications =()=>{
+  const container = useRef(null)
+  
+const [notifications,setNotifications]  =useState(null)
+useEffect(()=>{
+    
+  lottie.loadAnimation({
+    container : container.current,
+    renderer: 'svg',
+    loop:true,
+    autoplay:true,
+    animationData:require('../../lottie/noNotifications.json')
+
+  })
+  
+})
     return(
         <>
         <CssBaseline />
@@ -18,6 +35,9 @@ const Notifications =()=>{
        yReportsItems/> */}
         </div> 
        <h3>Notifications will be shown here</h3>
+       <div style={{margin:"auto"}}>
+       <div className='container' ref={container} style={{width:"350px"}}  ></div>
+       </div>
        
      
         {/* ---------------------------------------------------------------- */}

@@ -1,24 +1,52 @@
 import * as React from 'react';
 import axios from "axios"
 import {useParams } from "react-router-dom"
-import { useState,useEffect } from 'react';
+import { useState,useEffect,useRef } from 'react';
 import Grid2 from '@mui/material/Unstable_Grid2';
 import CssBaseline from '@mui/material/CssBaseline';
 import CircularProgress from '@mui/material/CircularProgress';
 import "./../../components/PostComponentsMui/PostCardScroll.css";
+import lottie from 'lottie-web';
 import UsersCard from '../../components/AdminDashComps/UsersCard';
 import AdminBlogCard from '../../components/AdminDashComps/AdminBlogCard';
 
 const UserBlogs = ()=>{
   let { userId } = useParams();
+  const container = useRef(null)
+  const [test,setTest] = useState(null)
   const [blogs,setBlogs] = useState(null);
+  useEffect(()=>{
+      
+    lottie.loadAnimation({
+      container : container.current,
+      renderer: 'svg',
+      loop:true,
+      autoplay:true,
+      animationData:require('../../lottie/empty.json')
 
+    })
+    
+  })
   const handleDeleteBlog = (blogId)=>{
     console.log("*********",blogId)
-    axios.delete(`http://127.0.0.1:5000/admin/deleteBlog/${blogId}`,{data:{userId}})
+    let value = JSON.parse(localStorage.getItem("adminToken"));
+        let token = value.adminToken;
+    axios.delete(`http://127.0.0.1:5000/admin/deleteBlog/${blogId}`,{data:{userId}},{
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+        Authorization: token,
+      },
+    })
     .then(data =>{
       console.log(data);
-      axios.get(`http://127.0.0.1:5000/admin/getAllBlogs-ofUser/${userId}`)
+      axios.get(`http://127.0.0.1:5000/admin/getAllBlogs-ofUser/${userId}`,{
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+          Authorization: token,
+        },
+      })
       .then(res=>{
         console.log(res.data)
         setBlogs(res.data)
@@ -28,7 +56,15 @@ const UserBlogs = ()=>{
 
 
   useEffect(()=>{
-    axios.get(`http://127.0.0.1:5000/admin/getAllBlogs-ofUser/${userId}`)
+    let value = JSON.parse(localStorage.getItem("adminToken"));
+        let token = value.adminToken;
+    axios.get(`http://127.0.0.1:5000/admin/getAllBlogs-ofUser/${userId}`,{
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+        Authorization: token,
+      },
+    })
     .then(res=>{
       console.log("----------",res.data)
       setBlogs(res.data)
@@ -61,7 +97,10 @@ const UserBlogs = ()=>{
                     })
                 
             ):(
-                <h3>No Blogs so far</h3>
+              <div style={{margin:"auto"}}>
+                <div className='container' ref={container} style={{width:"350px"}}  ></div>
+                
+              </div>
             )
         ):(
             <CircularProgress  sx = {{color:"green"}}/>

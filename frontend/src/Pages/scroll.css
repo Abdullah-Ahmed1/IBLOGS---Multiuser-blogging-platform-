@@ -1,6 +1,9 @@
 .scrolling::-webkit-scrollbar {
     width: 5px;
 }
+.scrolling::-webkit-scrollbar:horizontal     {
+    height: 5px;
+}
 .scrolling::-webkit-scrollbar-track {
     background-color: #e4e4e4;
     border-radius: 100px;
