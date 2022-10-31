@@ -68,6 +68,7 @@ const userSchema = new mongoose.Schema({
   //   ],
   // },
   verified: { type: Boolean, default: false },
+  lastLogin: { type: String, default: "" },
 });
 
 userSchema.methods.generateAuthToken = function () {

@@ -49,9 +49,11 @@ const ReaderFullPostView = ()=>{
     },[])   
 
     return(
-        <div>
+        <>
             {/* <SimpleBackdrop open ={open} handleClose={handleClose}/> */}
         <CssBaseline />
+        <Grid2 sx = {{minHeight:"100vh"}}>
+
         {
             post? (
                 <Grid2 container spacing={0} justifyContent= "space-between"   >
@@ -131,8 +133,8 @@ const ReaderFullPostView = ()=>{
             )
            
         }
-            
-        </div>
+      </Grid2> 
+        </>
     )
 }
 export default ReaderFullPostView

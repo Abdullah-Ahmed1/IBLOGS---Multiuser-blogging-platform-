@@ -136,7 +136,11 @@ module.exports = {
       { username: user.firstname, password: user.password, id: user._id },
       "1234567"
     );
-    return res.json({ status: "ok", data: token });
+    return res.json({
+      status: "ok",
+      data: token,
+      firstLogin: user.lastLogin === "" ? true : false,
+    });
   },
 
   me: (req, res) => {

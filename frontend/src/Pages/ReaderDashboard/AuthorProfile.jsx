@@ -72,8 +72,8 @@ const AuthorProfile = ({profileData})=>{
                       },
                 }).then(res=>{
                    // console.log("*************************",res.data)
-                    setUserData(res.data[0]);
-                    profileData && res.data[0].followers.includes(profileData._id)? setFollowed(true): setFollowed(false)
+                    setUserData(res.data);
+                    profileData && res.data.followers.includes(profileData._id)? setFollowed(true): setFollowed(false)
                    
                     
                     // isFollowed(res.data[0])
@@ -116,7 +116,7 @@ const AuthorProfile = ({profileData})=>{
   // console.log( "a is  :",isFollowed())
     
     useEffect(()=>{
-      
+      console.log("caledd")
         //    console.log("1121212121212112212122121",value)
         let value = JSON.parse(localStorage.getItem("token"));
         let token = value.token;
@@ -127,14 +127,15 @@ const AuthorProfile = ({profileData})=>{
                 Authorization: token,
               },
         }).then(res=>{
-            if(res.data.length>0){
-                profileData && res.data[0].followers.includes(profileData._id)? setFollowed(true): setFollowed(false)
+            console.log("111111",res.data)
+            if(typeof(res.data)=="object"){
+                profileData && res.data.followers.includes(profileData._id)? setFollowed(true): setFollowed(false)
                 // console.log("********************//--//*****",res.data[0].followers.includes())
-                setUserData(res.data[0])
+                setUserData(res.data)
                 console.log("111111",res)
                 console.log("123324242423",profileData)
             }else{
-                setUserData([])
+                setUserData(" ")
             }
            
             

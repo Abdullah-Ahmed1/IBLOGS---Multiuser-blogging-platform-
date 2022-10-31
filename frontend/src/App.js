@@ -17,6 +17,7 @@ import ReaderDashboard from "./Pages/ReaderDashboard/ReaderDashboard";
 import AdminDashboard from "./Pages/AdminDashboardPages/AdminDashboard";
 //import YourProfile from "./components/ProfileComps/ProfileInfo";
 import AdminLogin from "./Pages/AdminLogin";
+import Welcome from "./Pages/ReaderDashboard/Welcome";
 
 const TRACKING_ID = "UA-167584801-1";
 reactGA.initialize(TRACKING_ID, {
@@ -40,6 +41,7 @@ function App() {
           element={<NewPassword />}
         />
         <Route exact path="/users/:id/verify/:token" element={<VerifyUser />} />
+        <Route exact path="/welcome" element={<Welcome />} />
 
         <Route path="/bloggerdashboard/*" element={<Dashboard />} />
         <Route path="/readerdashboard/*" element={<ReaderDashboard />} />

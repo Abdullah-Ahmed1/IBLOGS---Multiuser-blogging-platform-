@@ -57,14 +57,20 @@ export default function SignInSide() {
     .then((res)=>{
         console.log(res)
         if(res.data.status=="ok"){
-            console.log("-------------->",res.data.data)
+            console.log("-------------->",res.data)
 
             localStorage.setItem('token',JSON.stringify({
                 login:true,
                 token:res.data.data
                 
             }));
-            navigate('/readerdashboard')
+            if(!res.data.firstLogin){
+              navigate('/readerdashboard')
+            }else{
+              navigate('/welcome')
+              
+            }
+            
 
         }else{
           setOpen(true  )

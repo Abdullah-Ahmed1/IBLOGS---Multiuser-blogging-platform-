@@ -70,7 +70,7 @@ const BloggerHome = ({openModal,handleClose,token,blogs,refreshBlogs})=>{
          let token = value.token
          console.log("token",token)
         //let token = "something will be token here"
-        setSnack(true);
+        // setSnack(true);
         // console.log("this is token",token)
           axios.get('http://127.0.0.1:5000/me',{
             headers:{

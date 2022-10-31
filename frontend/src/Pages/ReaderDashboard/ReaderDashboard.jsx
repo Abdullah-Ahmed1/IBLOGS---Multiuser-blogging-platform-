@@ -222,7 +222,8 @@ export default function ReaderDashboard() {
        <Route exact path="/author-profile/:userId" element={<AuthorProfile  profileData={profileData} />} />
        <Route exact path="/your-profile" element={<YourProfile />} />
        <Route exact path="/responses" element={<ResponsesPage/>} />
-       <Route  path="/saved-lists/*" element={<SavedListsHome />} />    
+       <Route  path="/saved-lists/*" element={<SavedListsHome />} /> 
+         
        {/* <Route exact path="/" element={<SavedList />} />          */}
        </Routes>
       </Box>

@@ -123,15 +123,19 @@ module.exports = {
           Blog.updateOne(
             { _id: blog._id },
             { $push: { posts: post._id } },
-            function (error, success) {
+            async function (error, success) {
               if (error) {
                 console.log(error);
               } else {
                 console.log(success);
+                const user1 = await User.findOne({ _id: decoded.id });
                 const data = {
                   notificationText: `${decoded.username} created new post "${post.postTitle}"  `,
                   info: {
                     // commentedPost: success._id,
+                    name: user1.firstname + " " + user1.lastname,
+                    image: user1.profileImage,
+                    postTitle: post.postTitle,
                     ownerId: decoded.id,
                     postId: post._id,
                     // commentorName: decoded.username,
@@ -278,4 +282,13 @@ module.exports = {
   //       console.log(err);
   //     }
   //   },
+  // tempMethod1: async (req, res) => {
+  //   try {
+  //     console.log("reached-----------");
+  //     // const a = new Date();
+  //     await User.updateMany({}, { lastLogin: "" });
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  // },
 };

@@ -123,7 +123,7 @@ export default function AskConfirmationBeforeSave() {
       sx={{
         "&::-webkit-scrollbar": {
         width: 20,
-        
+          
 
         },
         "&::-webkit-scrollbar-track": {
@@ -150,10 +150,10 @@ export default function AskConfirmationBeforeSave() {
 }
 
 const columns = [
-  { field: 'Post Title', headerName: 'PostTitle', width: 180, editable: true },
+  { field: 'postTitle', headerName: 'Post Title', width: 180, editable: true },
   // { field: 'Post Status', headerName: 'Post Status',  editable: true },
   {
-    field: 'PostDescription',
+    field: 'postDescription',
     headerName: 'Post Description',
     width: 180,
   },
@@ -170,19 +170,19 @@ const columns = [
     width: 220,
   },
   {
-    field: 'PostKeywords',
+    field: 'postKeywords',
     headerName: 'Post Keywords',
     type: 'String',
     width: 220,
   },
   {
-    field: 'Likes',
+    field: 'likes',
     headerName: 'Likes',
     type: 'String',
     width: 220,
   },
   {
-    field: 'AllowComments',
+    field: 'allowComments',
     headerName: 'Allow Comments',
     type: 'String',
     width: 220,
@@ -198,37 +198,58 @@ const columns = [
 const rows = [
   {
     id: 1,
-    name: "",
-    age: "",
-    dateCreated: "",
-    lastLogin: "",
+    postTitle: "Coding with me",
+    postDescription: "This is a test description",
+    dateCreated: "12/34/2002",
+    status: "published",
+    postKeywords: "[science, technology,education]",
+    likes:"50",
+    allowComments:"false",
+    Categories:"" 
   },
   {
-    id: 2,
-    name: "Ali Ahmed",
-    age: 36,
-    dateCreated: "34/ /34",
-    lastLogin:"34/34/3324",
+    id: 1,
+    postTitle: "Coding with me",
+    postDescription: "This is a test description",
+    dateCreated: "12/34/2002",
+    status: "published",
+    postKeywords: "[science, technology,education]",
+    likes:"50",
+    allowComments:"false",
+    Categories:"" 
   },
   {
-    id: 3,
-    name: "Ali Ahmed",
-    age: 36,
-    dateCreated: "34/5/34",
-    lastLogin:"34/34/3324",
+    id: 1,
+    postTitle: "Coding with me",
+    postDescription: "This is a test description",
+    dateCreated: "12/34/2002",
+    status: "published",
+    postKeywords: "[science, technology,education]",
+    likes:"50",
+    allowComments:"false",
+    Categories:"" 
   },
   {
-    id: 4,
-    name: "Ali Ahmed",
-    age: 36,
-    dateCreated: "34/5/34",
-    lastLogin:"34/34/3324",
+    id: 1,
+    postTitle: "Coding with me",
+    postDescription: "This is a test description",
+    dateCreated: "12/34/2002",
+    status: "published",
+    postKeywords: "[science, technology,education]",
+    likes:"50",
+    allowComments:"false",
+    Categories:"" 
   },
   {
-    id: 5,
-    name: "Ali Ahmed",
-    age: 36,
-    dateCreated: "34/5/34",
-    lastLogin:"34/34/3324",
+    id: 1,
+    postTitle: "Coding with me",
+    postDescription: "This is a test description",
+    dateCreated: "12/34/2002",
+    status: "published",
+    postKeywords: "[science, technology,education]",
+    likes:"50",
+    allowComments:"false",
+    Categories:"" 
   },
+  
 ];

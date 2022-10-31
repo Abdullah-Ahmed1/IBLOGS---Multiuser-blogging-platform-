@@ -365,7 +365,7 @@ module.exports = {
     console.log("+++++++++++", userId);
     try {
       const decoded = jwt.verify(token, "1234567");
-      User.find({ _id: userId })
+      User.findOne({ _id: userId })
         .populate({
           path: "your_blogs",
           populate: {
@@ -468,20 +468,28 @@ module.exports = {
     const token = req.headers["authorization"];
     try {
       const decoded = jwt.verify(token, "1234567");
-      Notification.find({ notificationType: "post" }).then((notifications) => {
-        const newArray = notifications.filter((notification) => {
-          console.log(notification.info.ownerId);
-          User.findOne({ _id: notification.info.ownerId }).then((user) => {
-            // console.log(user);
-            if (user) {
-              console.log(user.followers.includes(decoded.id));
-              user.followers.includes(decoded.id);
-            }
-          });
-        });
-        console.log("---", newArray);
-        res.send(notifications);
-      });
+      Notification.find({ notificationType: "post" }).then(
+        async (notifications) => {
+          let newArray = [];
+          await Promise.all(
+            notifications.map(async (notification) => {
+              console.log("t!!!!!!!!!!!!", notification.info.ownerId);
+              const user = await User.findOne({
+                _id: notification.info.ownerId,
+              });
+              console.log("******", user);
+              if (user) {
+                "test---------------------",
+                  user.followers.includes(decoded.id)
+                    ? newArray.push(notification)
+                    : null;
+              }
+            })
+          );
+          console.log("---!", newArray);
+          res.send(newArray);
+        }
+      );
     } catch (err) {
       res.send(err);
     }
