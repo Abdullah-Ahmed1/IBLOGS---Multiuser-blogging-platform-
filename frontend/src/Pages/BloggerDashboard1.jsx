@@ -47,6 +47,7 @@ import BlogPost from './BlogPosts ';
 import EditorialCalender from './EditorialCalender';
 import BloggerNotification from './BloggerNotifications';
 import SpreadSheet from './SpreadSheet';
+import EditorialCalenderTabs from './../components/BlogComps/EditorialCalenderTabs';
 
 
 const useStyles = makeStyles((theme)=>({
@@ -74,6 +75,15 @@ const mdTheme2 = createTheme({
 export const  BloggerContext = createContext(null);
 
 function DashboardContent() {
+  // tabs value 
+  const [value, setValue] = React.useState(0);
+    const handleChange = (event, newValue) => {
+      setValue(newValue);
+    };
+    const handleChangeIndex = (index) => {
+      setValue(index);
+    };
+  //----------------------------
   const classes = useStyles();
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
@@ -105,6 +115,7 @@ function DashboardContent() {
       .then((res)=>{
           console.log("blogssss----",res.data.blogs)
           setBlogs(res.data.blogs)
+         
       }).catch((error)=>{
           console.log(error)
       })
@@ -181,6 +192,7 @@ function DashboardContent() {
       .then((res)=>{
           console.log("blogssss----",res.data.blogs)
           setBlogs(res.data.blogs)
+          // setValue(res.data.blogs[0]._id)
       }).catch((error)=>{
           console.log(error)
       })
@@ -328,7 +340,7 @@ function DashboardContent() {
                 
                 <Route exact path="/full-blog/:blogId" element={<FullBlogView />} /> 
                 <Route exact path="/update/:PostId" element={<PostUpdate />} /> 
-                <Route exact path="/calender" element={<EditorialCalender />} />
+                <Route exact path="/calender" element={<EditorialCalenderTabs  blogs={blogs} value={value} handleChange={handleChange} handleChangeIndex={handleChangeIndex} />}/>
                 
 
             </Routes>
