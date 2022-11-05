@@ -284,19 +284,19 @@ module.exports = {
 
   // --this is a method below to add any field to already added document
 
-  tempMethod: async (req, res) => {
-    try {
-      console.log("reached-----------");
-      // const a = new Date();
-      await Notification.updateMany(
-        {},
-        { $set: { dateCreated: "" } },
-        { upsert: false, multi: true }
-      );
-    } catch (err) {
-      console.log(err);
-    }
-  },
+  // tempMethod: async (req, res) => {
+  //   try {
+  //     console.log("reached-----------");
+  //     // const a = new Date();
+  //     await Post.updateMany(
+  //       {},
+  //       { $set: { dateCreated: "" } },
+  //       { upsert: false, multi: true }
+  //     );
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  // },
   // tempMethod1: async (req, res) => {
   //   try {
   //     console.log("reached-----------");

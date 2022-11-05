@@ -24,6 +24,9 @@ var postSchema = new mongoose.Schema({
   publishDate: {
     type: String,
   },
+  dateCreated: {
+    type: String,
+  },
   publishStatus: {
     type: String,
     required: true,
