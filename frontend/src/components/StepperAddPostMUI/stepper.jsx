@@ -757,7 +757,7 @@ export default function AddPostStepper({handleClose}) {
   };
 
   const handleNext = () => {
-    console.log("activeStep",activeStep)
+  console.log("activeStep",activeStep)
     if(activeStep ==2){
      console.log("----------------------------------//",h2p(postContent)) 
      axios.post("http://127.0.0.1:3001/classify",{value:postContent})
