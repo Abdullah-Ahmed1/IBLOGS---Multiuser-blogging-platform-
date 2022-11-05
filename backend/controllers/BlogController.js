@@ -241,6 +241,21 @@ module.exports = {
   //   console.log("$$$$$$$$$$", blogId);
   // },
 
+  updatePost: (req, res) => {
+    const postId = req.params.postId;
+    console.log(req.params.postId);
+    console.log(req.body.newRow.postTitle);
+    Post.findOneAndUpdate(
+      { _id: postId },
+      {
+        postTitle: req.body.newRow.postTitle,
+        allowComments: req.body.newRow.allowComments,
+      }
+    ).then((post) => {
+      console.log(post);
+    });
+  },
+
   deleteBlog: async (req, res) => {
     const blogId = req.params.id;
     const token = req.headers["authorization"];
@@ -269,19 +284,19 @@ module.exports = {
 
   // --this is a method below to add any field to already added document
 
-  //   tempMethod: async (req, res) => {
-  //     try {
-  //       console.log("reached-----------");
-  //       // const a = new Date();
-  //       await Notification.updateMany(
-  //         {},
-  //         { $set: { notificationType: "" } },
-  //         { upsert: false, multi: true }
-  //       );
-  //     } catch (err) {
-  //       console.log(err);
-  //     }
-  //   },
+  tempMethod: async (req, res) => {
+    try {
+      console.log("reached-----------");
+      // const a = new Date();
+      await Notification.updateMany(
+        {},
+        { $set: { dateCreated: "" } },
+        { upsert: false, multi: true }
+      );
+    } catch (err) {
+      console.log(err);
+    }
+  },
   // tempMethod1: async (req, res) => {
   //   try {
   //     console.log("reached-----------");

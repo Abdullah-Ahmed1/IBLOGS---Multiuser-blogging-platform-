@@ -49,7 +49,7 @@ import lottie from 'lottie-web'
 import { useRef, useEffect } from 'react';
 import { useState } from 'react';
 import ConfirmBox from './ConfirmBox';
-
+var h2p = require("html2plaintext");
 
 const steps = ['Post Details','Text Generation', 'Create post', 'Upload Options'];
 
@@ -757,6 +757,17 @@ export default function AddPostStepper({handleClose}) {
   };
 
   const handleNext = () => {
+    console.log("activeStep",activeStep)
+    if(activeStep ==2){
+     console.log("----------------------------------//",h2p(postContent)) 
+     axios.post("http://127.0.0.1:3001/classify",{value:postContent})
+     .then(res=>{
+       console.log("classification",res.data)
+       
+     })
+
+    }
+
     let newSkipped = skipped;
     if (isStepSkipped(activeStep)) {
       newSkipped = new Set(newSkipped.values());

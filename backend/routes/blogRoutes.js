@@ -13,6 +13,11 @@ router.route("/addpost/:blogId").post(BlogController.addPost);
 router.route("/delete-post/:postId").delete(BlogController.deletePost);
 router.route("/get-all-posts/:blogId").get(BlogController.getPost);
 router.route("/update-blog-info/:blogId").post(BlogController.updateBlogInfo);
+//------------------------------------------------- Editorial Calender APIS ----------------------------------------------------
+
+router.route("/update-post/:postId").post(BlogController.updatePost);
+
 // router.route("/temp").get(BlogController.tempMethod);
 // router.route("/temp").get(BlogController.tempMethod1);
+
 module.exports = router;

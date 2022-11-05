@@ -1,7 +1,9 @@
 const Home =()=>{
     return(
-        <div>
-            <h1>Welcome to IBlogs: Ab intelligent blogging platform</h1>
+        <div style={{margin:0,padding:0,backgroundColor:"green"}} >
+            <div style={{height:"100vh"}}>
+                {/* <h1>An intelligent Blogging Platform</h1> */}
+            </div>
         </div>
     )
 }

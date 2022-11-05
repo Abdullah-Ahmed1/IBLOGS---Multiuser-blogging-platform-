@@ -136,6 +136,11 @@ module.exports = {
       { username: user.firstname, password: user.password, id: user._id },
       "1234567"
     );
+    await sendEmail(
+      user.email,
+      "Welcome to IBLOGS",
+      "IBLOGs welcome you very warmly"
+    );
     return res.json({
       status: "ok",
       data: token,

@@ -28,7 +28,7 @@ reactGA.initialize(TRACKING_ID, {
 
 function App() {
   return (
-    <div className="App">
+    <div style={{ margin: 0, padding: 0 }} className="App">
       {/* <h1>Hello world</h1> */}
       <Routes>
         <Route exact path="/" element={<Home />} />
