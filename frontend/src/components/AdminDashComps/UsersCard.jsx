@@ -36,7 +36,7 @@ const UsersCard = ({item,handleUserDelete})=>{
                     <div className="gitDetail"><span>Following</span>3</div>
                     <div className="gitDetail"><span>Followers</span>3</div>
                 </div>
-                <button className="seeMore" onClick={()=> navigate(`/admin/users/blogs/${item._id}`)} >View Blogs</button>
+                <button className="seeMore" onClick={()=> navigate(`/admin/users/detail/${item._id}`)} >View Details</button>
                 
             </div>
             </div>

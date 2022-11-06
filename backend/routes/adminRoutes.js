@@ -11,4 +11,5 @@ router
 router.route("/login").post(AdminController.adminLogin);
 router.route("/deleteUser/:userId").delete(AdminController.deleteUser);
 router.route("/deleteBlog/:blogId").delete(AdminController.deleteBlog);
+router.route("/get-one-user/:userId").get(AdminController.getOneUser);
 module.exports = router;

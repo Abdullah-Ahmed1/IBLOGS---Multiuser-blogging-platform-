@@ -52,7 +52,7 @@ export default function AdminBlogCard({item,handleDeleteBlog}) {
         height="140"
         image={item.image? item.image : "https://res.cloudinary.com/dlgwvuu5d/image/upload/v1660213469/my-uploads/phzatp2folb3pglrxkea.jpg"}
       />
-      <CardContent  textoverflow="ellipsis"  >
+      <CardContent  textOverflow="ellipsis"  >
       {/* <Link   style = {{textDecoration:"none",color:"black"}}  to= {`/Bloggerdashboard/blogPosts/${item._id}`}> */}
         <Typography gutterBottom variant="h6" sx = {{   color:"black",fontWeight:"bold",textDecoration:"none"}}   component="div">
           {item.title}

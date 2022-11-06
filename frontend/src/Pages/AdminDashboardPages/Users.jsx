@@ -4,8 +4,9 @@ import { Route } from 'react-router';
 import UsersProfilePage from './UsersProfilesPage';
 import axios from 'axios';
 import UserBlogs from './UserBlogs';
+import UserDetail from './UserDetail';
 
-const Users = ()=>{
+const   Users = ()=>{
 
     const [userData,setUserData] = useState(null) 
 
@@ -58,6 +59,7 @@ const Users = ()=>{
     return(
        <Routes>
               <Route exact path="/" element={<UsersProfilePage  userData = {userData} handleUserDelete={handleUserDelete} />} />
+              <Route exact path="/detail/:userId" element={<UserDetail  userData = {userData} />} />
               <Route exact path="/blogs/:userId" element={<UserBlogs   />} />
 
         </Routes>

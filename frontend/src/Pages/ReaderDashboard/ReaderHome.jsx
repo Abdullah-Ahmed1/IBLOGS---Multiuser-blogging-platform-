@@ -102,16 +102,16 @@ const ReaderHome = ()=>{
     return(
         <>
         <CssBaseline />
-        <div style={{marginTop:"0px",display:"flex",width:"73%",flexDirection:"row" ,background:"rgba(237, 245, 225,0)",alignItems:"center",justifyContent:"space-between"}}>
+        <div style={{marginTop:"30px",marginBottom:"30px",display:"flex",width:"73%",flexDirection:"row" ,background:"rgba(237, 245, 225,0)",alignItems:"center",justifyContent:"space-between"}}>
           {/* <h2 style = {{color:"#379863"}}>IBlogs</h2> */}
-          <img style={{width:"200px",height:"180px"}} src={'/logo1.png'} alt="iblogs" />
+          <img style={{width:"200px"}} src={'/logo2.png'} alt="iblogs" />
           <SearchBar/>
         </div>
         {/* <Divider variant="middle"/> */}
       <Grid2 container spacing={0} justifyContent= "space-between"   >
         <Grid2 xs={12} sm={12} md={5} lg={7} spacing={0} 
           // sx = {}
-          sx = {small? {minHeight:"80vh",marginTop:"20px",marginLeft:"5px", marginRight:"5px"}  : {minHeight:"80vh",marginTop:"20px",marginLeft:"30px"} }
+          sx = {small? {minHeight:"80vh",marginTop:"40px",marginLeft:"5px", marginRight:"5px"}  : {minHeight:"80vh",marginTop:"20px",marginLeft:"30px"} }
           >  
        {/* ----------------------------------------------------------------------------------- */}
        {/* <Posts  posts = {posts}/> */}

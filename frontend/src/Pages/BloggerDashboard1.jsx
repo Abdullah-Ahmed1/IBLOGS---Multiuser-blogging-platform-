@@ -232,7 +232,7 @@ function DashboardContent() {
           >
             <MenuIcon fill = "green" />
           </IconButton>
-          <Typography
+          {/* <Typography
             component="h1"
             variant="h6"
             color="inherit"
@@ -240,7 +240,10 @@ function DashboardContent() {
             sx={{ flexGrow: 1, fontWeight: "bold" ,color:"#05386B" }}
           >
             IBlogs
-          </Typography>
+          </Typography> */}
+          <div style={{flexGrow:1}}>
+           <img style={{width:"120px"}} src={'/logo3.png'} alt="iblogs" />
+           </div>
           <div style={{fontWeight:"bolder" , backgroundColor:"#05386b",color:"#EDF5E1" ,padding:"10px" ,  border:"0px solid #EDF5E1", borderRadius:"10px" ,cursor:"pointer",':hover':{backgroundColor:"green"} }}  >
            <Link  style = {{ color:"#EDF5E1",textDecoration:"none"}} to = "/readerdashboard"  >Switch to Reading</Link> 
             </div>
@@ -303,7 +306,8 @@ function DashboardContent() {
               px: [1],
             }}
           >
-            <h2 style={{ color: "white", marginRight: "30px " }}>IBlogs</h2>
+            {/* <h2 style={{ color: "white", marginRight: "30px " }}>IBlogs</h2> */}
+            {/* <img style={{width:"200px"}} src={'/logo3.png'} alt="iblogs" /> */}
             {/* <IconButton onClick={toggleDrawer}>
               <ChevronLeftIcon />
             </IconButton> */}

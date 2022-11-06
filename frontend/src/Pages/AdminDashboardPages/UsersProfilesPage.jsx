@@ -42,28 +42,9 @@ const UsersProfilePage = ({userData,handleUserDelete})=>{
             <CircularProgress  sx = {{color:"green"}}/>
         )
        }
-       </Grid2>
-       {/* <Posts  posts = {posts}/> */}
+       </Grid2> 
+         </Grid2>
     
-        {/* ---------------------------------------------------------------- */}
-        </Grid2>
-        {/* <Divider orientation='vertical' sx={{width:"29px"}} flexItem/> */}
-        {/* <Grid2 className="sideScroll" xs={12} md={5} lg={3.3 }   sx = {{ position:"fixed",bottom:"0px",right:"0px",height:"100vh",overflow:"auto", background:"#05386b",marginRight:"0px",paddingLeft:"20px"} }     >
-       
-        {/* <Divider /> */}
-        {/* <h4 style={{color:"#379683"}} > Recommended Topics</h4> */}
-        {/* <RecommendedChips/> */}
-        {/* <div> */}
-        {/* <h4 style={{color:"#379683"}}>Trending Posts</h4> */}
-          {/* <TrendPostCard/> */}
-          {/* <TrendPostCard/> */}
-          {/* <TrendPostCard/> */}
-          {/* <TrendPostCard/> */}
-          {/* <TrendPostCard/> */}
-          {/* </div> */}
-       
-
-        {/* </Grid2> */} 
       </Grid2>
 
         </>

@@ -217,4 +217,33 @@ module.exports = {
       res.send(err);
     }
   },
+
+  getOneUser: (req, res) => {
+    console.log("----*-*----", req.params.userId);
+    const userId = req.params.userId;
+    User.findOne({ _id: userId })
+      .populate({
+        path: "followers",
+        select: {
+          firstname: 1,
+          lastname: 1,
+          profileImage: 1,
+        },
+      })
+      .populate({
+        path: "following",
+      })
+      .then((user) => {
+        res.send(user);
+      });
+  },
+  // getUserFollowers : (req,res)=>{
+  //   const userId = req.params.userId
+
+  //   User.findOne({ _id: userId }).then((user) => {
+  //     user.follower.map(user=>{
+
+  //     })
+  //   });
+  // }
 };

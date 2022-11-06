@@ -203,7 +203,7 @@ const [validated,setValidated] = useState(false);
             {responseMsg? responseMsg.msg: "this is dummy"}
           </Alert>
         </Snackbar>
-        ):(<div>"</div>)
+        ):(<div></div>)
       }
       
       <Grid container component="main" sx={{ height: '100vh' }}>

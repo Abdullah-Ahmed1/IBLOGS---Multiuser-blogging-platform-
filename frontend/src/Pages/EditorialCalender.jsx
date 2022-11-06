@@ -472,12 +472,7 @@ const columns  = [
       type: 'String',
       width: 220,
     },
-    {
-      field: 'postKeywords',
-      headerName: 'Post Keywords',
-      type: 'String',
-      width: 220,
-    },
+   
     {
       field: 'likes',
       headerName: 'Likes',
