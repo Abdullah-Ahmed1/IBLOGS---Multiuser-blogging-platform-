@@ -5,6 +5,7 @@ import UsersProfilePage from './UsersProfilesPage';
 import axios from 'axios';
 import UserBlogs from './UserBlogs';
 import UserDetail from './UserDetail';
+import AdminBlogPosts from './AdminBlogPosts';
 
 const   Users = ()=>{
 
@@ -61,6 +62,7 @@ const   Users = ()=>{
               <Route exact path="/" element={<UsersProfilePage  userData = {userData} handleUserDelete={handleUserDelete} />} />
               <Route exact path="/detail/:userId" element={<UserDetail  userData = {userData} />} />
               <Route exact path="/blogs/:userId" element={<UserBlogs   />} />
+              <Route exact path="/blog-posts/:blogId" element={<AdminBlogPosts  />} />
 
         </Routes>
     )

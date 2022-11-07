@@ -195,6 +195,31 @@ module.exports = {
       res.send(err);
     }
   },
+
+  deletePost: async (req, res) => {
+    const postId = req.params.postId;
+    console.log(postId);
+    const comments = [];
+
+    await SavedList.updateOne({}, { $pull: { savedPosts: postId } });
+    await User.updateOne({}, { $pull: { ReadingList: postId } });
+
+    Post.findOne({ _id: postId }).then(async (post) => {
+      if (post) {
+        comments.push(...post.comments);
+      }
+
+      await Promise.all(
+        comments.map(async (comment) => {
+          await Comment.deleteMany({ _id: comment });
+          await Reply.deleteMany({ parentComment: comment });
+        })
+      );
+      await Post.findByIdAndDelete({ _id: postId });
+
+      res.send("Post Deleted Successfully");
+    });
+  },
   //------------------------------------------------------------------------------------------------------------------
   getAllBlogsOfUser: (req, res) => {
     const token = req.headers["authorization"];
@@ -235,6 +260,17 @@ module.exports = {
       })
       .then((user) => {
         res.send(user);
+      });
+  },
+  getPostOfBlog: (req, res) => {
+    const blogId = req.params.blogId;
+
+    Post.find({ parentBlog: blogId })
+      .then((posts) => {
+        res.send(posts);
+      })
+      .catch((err) => {
+        res.send(err);
       });
   },
   // getUserFollowers : (req,res)=>{

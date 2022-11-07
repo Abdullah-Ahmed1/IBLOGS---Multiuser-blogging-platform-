@@ -10,6 +10,8 @@ import { Link } from 'react-router-dom';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import Button from '@mui/material/Button';
 import ThumbUpIcon from '@mui/icons-material/ThumbUp';
+import useMediaQuery from '@mui/material/useMediaQuery';
+import { useTheme } from '@mui/material/styles';
 import ShareIcon from '@mui/icons-material/Share';
 import BookmarkAddIcon from '@mui/icons-material/BookmarkAdd';
 import BookmarkAddedIcon from '@mui/icons-material/BookmarkAdded';
@@ -20,6 +22,8 @@ const ReaderPostCard = ({item,handleLikeClick})=>{
     const [shareDialogOpen,setShareDialogOpen] = useState(false)
     const [liked,setLiked] = useState(false)
     //const [saved,setSaved] = useState(false)
+    const theme = useTheme();
+    const small = useMediaQuery(theme.breakpoints.down('xs'));
 //------------------------------------------------------------------
     const [open, setOpen] = React.useState(false);
     const [checked,setChecked] = useState(false);
@@ -130,17 +134,17 @@ const ReaderPostCard = ({item,handleLikeClick})=>{
          <Box  className='postCard_item'  key ={item._id}  sx = {{ boxShadow:"1px 1px 3px 1px rgba(0,0,0,0.3)",borderRadius:"3px",minHeight:"350px",maxHeight:"350px",width:"98%",marginBottom:"30px",backgroundColor:"white", padding:"20px"}} >
          <Grid  container direction="row"   spacing = {0} >
            <Grid lg = {10} md = {12} sm={12} sx= {{p:2}} item direction="column" justifyContent="space-between" spacing={0} container >
-              <Grid item container sx = {{maxHeight:"20px"}} spacing={0} lg={8}  >
-                  <Grid item lg = {1} md = {1} sm = {1}>
+              <Grid item container sx = {{maxHeight:"20px"}} spacing={0} lg={8} xs = {12}  >
+                  <Grid item lg = {1} md = {1} sm = {1} xs={1}>
                       
                       <Avatar 
                       alt={item.parentBlog.owner.firstname} src={item.parentBlog.owner.profileImage} />
                   </Grid>
-                  <Grid item container   direction="column" spacing={0} lg = {9}  md = {7} sm={3}>
+                  <Grid item container   direction="column" spacing={0} lg = {9}  md = {7} sm={8} xs = {9}>
                     <Link to = {`/ReaderDashboard/author-profile/${item.parentBlog.owner._id}`}  style = {{textDecoration:"none",color:"#05386b"}}>
                       <Grid item   sx = {{textDecoration:"none",fontSize:"14px",fontWeight:"bold",fontFamily: " Ubuntu, sans-serif"}}>
                         {/* {`${item.parentBlog.owner.firstname} ${item.parentBlog.owner.lastname}     ${item.publishDate.slice(0,10)}`} */}
-                          {item.parentBlog.owner.firstname} {item.parentBlog.owner.lastname}   <span  style={{marginLeft:"50px"}}> {item.publishDate.slice(0,10)}</span>  
+                          {item.parentBlog.owner.firstname} {item.parentBlog.owner.lastname}   <span  style={small ?{marginLeft:"10px"}:{marginLeft:"50px"}}> {item.publishDate.slice(0,10)}</span>  
                       </Grid>
                     </Link>
                       <Grid item  sx = {{fontSize:"16px",fontFamily: " Ubuntu, sans-serif",color:"#05386b"}}>
@@ -148,7 +152,7 @@ const ReaderPostCard = ({item,handleLikeClick})=>{
                       </Grid>
                      
                   </Grid>
-                  <Grid item lg ={2} sm={12}>
+                  <Grid item lg ={2} sm={1} xs = {1}>
                       {/* icons here */}
                       <MoreVertIcon  sx ={{color:"#05386b"}}  />
                   </Grid>

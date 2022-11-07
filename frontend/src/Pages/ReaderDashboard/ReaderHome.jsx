@@ -104,7 +104,7 @@ const ReaderHome = ()=>{
         <CssBaseline />
         <div style={{marginTop:"30px",marginBottom:"30px",display:"flex",width:"73%",flexDirection:"row" ,background:"rgba(237, 245, 225,0)",alignItems:"center",justifyContent:"space-between"}}>
           {/* <h2 style = {{color:"#379863"}}>IBlogs</h2> */}
-          <img style={{width:"200px"}} src={'/logo2.png'} alt="iblogs" />
+          <img style={{width:"180px"}} src={'/logo2.png'} alt="iblogs" />
           <SearchBar/>
         </div>
         {/* <Divider variant="middle"/> */}

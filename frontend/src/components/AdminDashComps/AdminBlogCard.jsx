@@ -53,12 +53,12 @@ export default function AdminBlogCard({item,handleDeleteBlog}) {
         image={item.image? item.image : "https://res.cloudinary.com/dlgwvuu5d/image/upload/v1660213469/my-uploads/phzatp2folb3pglrxkea.jpg"}
       />
       <CardContent  textOverflow="ellipsis"  >
-      {/* <Link   style = {{textDecoration:"none",color:"black"}}  to= {`/Bloggerdashboard/blogPosts/${item._id}`}> */}
+      <Link   style = {{textDecoration:"none",color:"black"}}  to= {`/admin/users/blog-posts/${item._id}`}>
         <Typography gutterBottom variant="h6" sx = {{   color:"black",fontWeight:"bold",textDecoration:"none"}}   component="div">
           {item.title}
           {/* askdasldknaslanda */}
         </Typography>
-        {/* </Link> */}
+        </Link>
         <Typography variant="body2" className='scrolling'  sx = {{height:"100px",overflow:"auto"}}   color="text.secondary">
          {item.description}
          {/* asdaskdsjfskjsdfjbsfsdj */}

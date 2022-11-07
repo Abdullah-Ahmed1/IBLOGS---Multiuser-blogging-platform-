@@ -98,7 +98,7 @@ const ReaderFullPostView = ()=>{
        <h4 style={{color:"#379683"}} > Recommended Topics</h4>
        <RecommendedChips/>
        <div>
-       <h4 style={{color:"#379683"}}>Posts You Should Read</h4>
+       <h4 style={{color:"#379683"}}>Posts From Same Blog</h4>
          {/* <TrendPostCard/>
          <TrendPostCard/>
          <TrendPostCard/>

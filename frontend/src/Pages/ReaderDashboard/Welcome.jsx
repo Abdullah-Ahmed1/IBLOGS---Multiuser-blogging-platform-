@@ -17,7 +17,7 @@ const Welcome = ()=>{
       const classes = useStyles();
 return(
     <Box className={classes.root}>
-    <Grid2 container direction={"column"} sx={{padding:"10px",minHeight:"85vh",background:"rgba(92, 219, 149,0.95)",boxShadow:"0 4px 8px 0 rgba(0,0,0, 0.9), 0 6px 20px 0 rgba(0,0,0, 0.9)"}} >
+    <Grid2 container direction={"column"} sx={{padding:"10px",minHeight:"90vh",background:"rgba(92, 219, 149,0.95)",}} >
         <Grid2>
           <h2 style={{color:"#05386b"}}>IBlogs</h2>  
         </Grid2>
@@ -26,7 +26,7 @@ return(
             <Grid2>
             <h2>Which categories you are interested in?</h2>
             </Grid2>
-            <Grid2 sx = {{backgroundColor:"white",padding:"15px",minHeight:"500px",borderRadius:"10px"}}>
+            <Grid2 sx = {{backgroundColor:"white",padding:"15px",minHeight:"450px",borderRadius:"10px",boxShadow:"0 4px 8px 0 rgba(0,0,0, 0.9), 0 6px 20px 0 rgba(0,0,0, 0.9)"  }}>
                 sdjfnskdfjnsdkfjsdnksnfsdjfnsdkfsnskdnffdskfnsdkfnk
             </Grid2>
             
