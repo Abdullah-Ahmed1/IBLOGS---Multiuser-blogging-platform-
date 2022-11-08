@@ -34,6 +34,7 @@ import TrendPostCard from './../../components/PostComponentsMui/TrendPostCard';
 //import CreateListMenu from './../../components/ReaderDashComponents/CreateSavedListMenu';
 import ReaderPostCard from './ReaderPostCard';
 import PostCardMobile from './../../components/PostComponentsMui/PostCardMobile';
+import Searching from '../../components/ReaderDashComponents/Searching';
 
 
 
@@ -102,10 +103,11 @@ const ReaderHome = ()=>{
     return(
         <>
         <CssBaseline />
-        <div style={{marginTop:"30px",marginBottom:"30px",display:"flex",width:"73%",flexDirection:"row" ,background:"rgba(237, 245, 225,0)",alignItems:"center",justifyContent:"space-between"}}>
+        <div style={{marginTop:"30px",marginBottom:"30px",display:"flex",justifyContent:"flex-start",width:"50%",flexDirection:"row" ,background:"rgba(237, 245, 225,0)",alignItems:"center",justifyContent:"space-between"}}>
           {/* <h2 style = {{color:"#379863"}}>IBlogs</h2> */}
-          <img style={{width:"180px"}} src={'/logo2.png'} alt="iblogs" />
-          <SearchBar/>
+          <img style={{width:"180px",marginRight:"50px"}} src={'/logo2.png'} alt="iblogs" />
+          {/* <SearchBar/> */}
+          <Searching/>
         </div>
         {/* <Divider variant="middle"/> */}
       <Grid2 container spacing={0} justifyContent= "space-between"   >
@@ -150,10 +152,10 @@ const ReaderHome = ()=>{
         >
        
         {/* <Divider /> */}
-        <h4 style={{color:"#379683"}} > Recommended Topics</h4>
+        <h4 style={{color:"#5cdb95"}} > Recommended Topics</h4>
         <RecommendedChips/>
         <div>
-        <h4 style={{color:"#379683"}}>Trending Posts</h4>
+        <h4 style={{color:"#5cdb95"}}>Trending Posts</h4>
           {
             posts !== null? (
               posts.length > 0?(

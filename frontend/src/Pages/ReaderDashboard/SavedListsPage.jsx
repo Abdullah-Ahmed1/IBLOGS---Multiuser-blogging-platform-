@@ -54,7 +54,7 @@ const SavedList = ()=>{
         <>
         <CssBaseline />
         {/* <div style={{marginTop:"5px",display:"flex",width:"73%",flexDirection:"row" ,background:"rgba(237, 245, 225,0)",alignItems:"center",justifyContent:"space-between"}}>
-          <h2 style = {{color:"#379863"}}>IBlogs</h2>
+          <h2 style = {{color:"#5cdb95"}}>IBlogs</h2>
          
         </div> */}
         {/* <Divider variant="middle"/> */}
@@ -133,10 +133,10 @@ const SavedList = ()=>{
         <Grid2 className="sideScroll" xs={12} md={5} lg={3.3 }   sx = {{ position:"fixed",bottom:"0px",right:"0px",height:"100vh",overflow:"auto", background:"#05386b",marginRight:"0px",paddingLeft:"20px"} }     >
        
         {/* <Divider /> */}
-        <h4 style={{color:"#379683"}} > Recommended Topics</h4>
+        <h4 style={{color:"#5cdb95"}} > Recommended Topics</h4>
         <RecommendedChips/>
         <div>
-        <h4 style={{color:"#379683"}}>Trending Posts</h4>
+        <h4 style={{color:"#5cdb95"}}>Trending Posts</h4>
           {/* <TrendPostCard/>
           <TrendPostCard/>
           <TrendPostCard/>

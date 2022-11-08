@@ -625,4 +625,60 @@ module.exports = {
       res.send(err);
     }
   },
+  //----------------------------------------------------------------------
+
+  search: (req, res) => {
+    const keyword = req.params.data;
+    console.log(keyword);
+    const data = {};
+    User.aggregate([
+      {
+        $addFields: {
+          nameFilter: {
+            $concat: ["$firstname", " ", "$lastname"],
+          },
+        },
+      },
+      {
+        $match: {
+          $or: [
+            {
+              nameFilter: {
+                $regex: keyword,
+                $options: "i",
+              },
+            },
+            {
+              gender: { $regex: `^${keyword}`, $options: "i" },
+            },
+            {
+              profession: { $regex: `^${keyword}`, $options: "i" },
+            },
+          ],
+        },
+      },
+    ]).exec(function (err, users) {
+      console.log("!!!!!!!!!!!!!!!!!!!!!!", users);
+      // res.json(user);
+      var data = { ...data, users: users };
+
+      Post.aggregate([
+        {
+          $match: {
+            $or: [
+              {
+                postTitle: { $regex: keyword, $options: "i" },
+              },
+              {
+                postDescription: { $regex: keyword, $options: "i" },
+              },
+            ],
+          },
+        },
+      ]).exec((err, posts) => {
+        data = { ...data, posts: posts };
+        res.send(data);
+      });
+    });
+  },
 };

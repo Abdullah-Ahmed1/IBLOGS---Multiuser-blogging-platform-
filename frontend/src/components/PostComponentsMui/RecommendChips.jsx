@@ -43,7 +43,7 @@ export default function RecommendedChips() {
           <ListItem key={data.key}>
             <Chip
               //icon={icon}
-              sx = {{backgroundColor:"#379683",color:"#05386b",fontWeight:"bold"}}
+              sx = {{backgroundColor:"#5cdb95",color:"#05386b",fontWeight:"bold"}}
               label={data.label}
              
             />

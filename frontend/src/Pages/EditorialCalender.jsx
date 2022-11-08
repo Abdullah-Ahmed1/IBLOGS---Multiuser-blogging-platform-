@@ -416,7 +416,7 @@ export default function AskConfirmationBeforeSave({blogId}) {
             columns={columns}
             getRowId={(row)=> row._id}
             processRowUpdate={processRowUpdate}
-            rowHeight={100}
+            // rowHeight={100}
             experimentalFeatures={{ newEditingApi: true }}
           />
 
@@ -439,6 +439,10 @@ export default function AskConfirmationBeforeSave({blogId}) {
     </div>
   );
 }
+
+const rows1 = [
+
+]
 
 const columns  = [
     { field: 'postTitle', headerName: 'Post Title', width: 180,renderCell: renderCellExpand,editable: true },
@@ -467,8 +471,8 @@ const columns  = [
       width: 180,
     },
     {
-      field: 'status',
-      headerName: 'Status',
+      field: 'publishStatus',
+      headerName: 'Publish Status',
       type: 'String',
       width: 220,
     },
@@ -478,6 +482,9 @@ const columns  = [
       headerName: 'Likes',
       type: 'String',
       width: 220,
+      renderCell: (params)=>{
+        return params.value.length
+      }
     },
     {
       field: 'allowComments',
@@ -494,17 +501,17 @@ const columns  = [
       width: 220,
     },
   ]
-  const rows = [
-    {
-      id:  1,
-      postTitle :"test1",
-      postDescription: "tsdinsdfsdhfbsjh",
-      dateCreated:"12/32/300",
-      status: "published",
-      postKeywords:"weerwfwcs",
-      likes:"123",
-      allowComments:"true",
-      Categories:""
+  // const rows1 = [
+  //   {
+  //     id:  1,
+  //     postTitle :"test1",
+  //     postDescription: "tsdinsdfsdhfbsjh",
+  //     dateCreated:"12/32/300",
+  //     status: "published",
+  //     postKeywords:"weerwfwcs",
+  //     likes:"123",
+  //     allowComments:"true",
+  //     Categories:""
   
-    }
-  ]
+  //   }
+  // ]
