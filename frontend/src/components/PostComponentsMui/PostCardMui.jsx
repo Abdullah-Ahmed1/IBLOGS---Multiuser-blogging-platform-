@@ -45,7 +45,7 @@ export default function PostCardMui({item,handlePostDelete}) {
     <Card  className = "card-container" sx={{ display: 'flex' ,position:"relative",maxHeight:"230px",minHeight:"230px"}}>
       
     <CardContent sx={{ flex: 1 }}>
-    {item.publishDate}
+    {new Date(item.publishDate).toDateString()}
       <Typography component="h6" variant="h6" sx ={{fontWeight:"bolder",maxHeight:"30px",minHeight:"30px",  display: "block",lineClamp: 2 ,overflow:"hidden",boxOrient:"vertical"}}  >
        {item.postTitle}
       </Typography>

@@ -93,77 +93,177 @@ module.exports = {
 
   addPost: async (req, res) => {
     const token = req.headers["authorization"];
-
+    console.log("reached  ");
     try {
       const decoded = jwt.verify(token, "1234567"); // Verify token
 
       const blogId = req.params.blogId;
       const blog = await Blog.findOne({ _id: blogId });
       // console.log("--------", blog);
-      Post.create({ ...req.body, parentBlog: blogId })
-        .then((post) => {
-          console.log("Post has been Added ", post, post._id);
-          //  console.log("reached");
-          console.log("spot1");
-
-          // const someDate = new Date("2022-09-11T00:02:00.000+5:30");
-          // schedule.scheduleJob("MJob", someDate, async () => {
-          //   try {
-          //     console.log("called---------");
-          //     await Post.updateOne(
-          //       { _id: post._id },
-          //       { publishStatus: "published" }
-          //     );
-          //   } catch (err) {
-          //     console.log(err);
-          //   }
-          //   schedule.cancelJob("MJob");
-          // });
-
-          Blog.updateOne(
-            { _id: blog._id },
-            { $push: { posts: post._id } },
-            async function (error, success) {
-              if (error) {
-                console.log(error);
-              } else {
-                console.log(success);
-                const user1 = await User.findOne({ _id: decoded.id });
-                const data = {
-                  notificationText: `${decoded.username} created new post "${post.postTitle}"  `,
-                  info: {
-                    // commentedPost: success._id,
-                    name: user1.firstname + " " + user1.lastname,
-                    image: user1.profileImage,
-                    postTitle: post.postTitle,
-                    ownerId: decoded.id,
-                    postId: post._id,
-                    // commentorName: decoded.username,
-                  },
-                  owner: post.parentBlog.owner,
-                  seen: false,
-                  notificationType: "post",
-                  notificationDate: new Date(),
-                };
-                Notification.create(data).then((data) => console.log(data));
+      if (req.body.publishStatus === "published") {
+        console.log("it has to be published");
+        Post.create({ ...req.body, parentBlog: blogId })
+          .then((post) => {
+            Blog.updateOne(
+              { _id: blog._id },
+              { $push: { posts: post._id } },
+              async function (error, success) {
+                if (error) {
+                  console.log(error);
+                } else {
+                  console.log(success);
+                  const user1 = await User.findOne({ _id: decoded.id });
+                  const data = {
+                    notificationText: `${decoded.username} created new post "${post.postTitle}"  `,
+                    info: {
+                      // commentedPost: success._id,
+                      name: user1.firstname + " " + user1.lastname,
+                      image: user1.profileImage,
+                      postTitle: post.postTitle,
+                      ownerId: decoded.id,
+                      postId: post._id,
+                      // commentorName: decoded.username,
+                    },
+                    owner: post.parentBlog.owner,
+                    seen: false,
+                    notificationType: "post",
+                    notificationDate: new Date(),
+                  };
+                  Notification.create(data).then((data) => console.log(data));
+                }
               }
-            }
-            // { returnOriginal: false }
-          );
-          res.statusCode = 200;
-          // res.setHeader("Content-Type", "application/json");
+              // { returnOriginal: false }
+            );
+            res.statusCode = 200;
+            // res.setHeader("Content-Type", "application/json");
 
-          res.json(post);
-          console.log("spot2");
-        })
-        .catch((err) => res.json(err));
+            res.json(post);
+            console.log("spot2");
+          })
+          .catch((err) => res.json(err));
 
-      // const someDate = new Date("2022-09-10T16:25:00.000+5:30");
+        // const someDate = new Date("2022-09-10T16:25:00.000+5:30");
 
-      // schedule.scheduleJob("MJob", someDate, () => {
-      //   console.log(req.body, "---------");
-      //   schedule.cancelJob("MJob");
-      // });
+        // schedule.scheduleJob("MJob", someDate, () => {
+        //   console.log(req.body, "---------");
+        //   schedule.cancelJob("MJob");
+        // });
+      } else if (req.body.publishStatus === "Draft") {
+        console.log("it has to be drafted");
+        Post.create({ ...req.body, parentBlog: blogId })
+          .then((post) => {
+            //     // const someDate = new Date("2022-09-11T00:02:00.000+5:30");
+            //     // schedule.scheduleJob("MJob", someDate, async () => {
+            //     //   try {
+            //     //     console.log("called---------");
+            //     //     await Post.updateOne(
+            //     //       { _id: post._id },
+            //     //       { publishStatus: "published" }
+            //     //     );
+            //     //   } catch (err) {
+            //     //     console.log(err);
+            //     //   }
+            //     //   schedule.cancelJob("MJob");
+            //     // });
+
+            Blog.updateOne(
+              { _id: blog._id },
+              { $push: { posts: post._id } },
+              async function (error, success) {
+                if (error) {
+                  console.log(error);
+                } else {
+                  // console.log(success);
+                  // const user1 = await User.findOne({ _id: decoded.id });
+                  // const data = {
+                  //   notificationText: `${decoded.username} created new post "${post.postTitle}"  `,
+                  //   info: {
+                  //     // commentedPost: success._id,
+                  //     name: user1.firstname + " " + user1.lastname,
+                  //     image: user1.profileImage,
+                  //     postTitle: post.postTitle,
+                  //     ownerId: decoded.id,
+                  //     postId: post._id,
+                  //     // commentorName: decoded.username,
+                  //   },
+                  //   owner: post.parentBlog.owner,
+                  //   seen: false,
+                  //   notificationType: "post",
+                  //   notificationDate: new Date(),
+                  // };
+                  // Notification.create(data).then((data) => console.log(data));
+                }
+              }
+              // { returnOriginal: false }
+            );
+            res.statusCode = 200;
+            // res.setHeader("Content-Type", "application/json");
+
+            res.json(post);
+            console.log("spot2");
+          })
+          .catch((err) => res.json(err));
+      } else if (req.body.publishStatus === "scheduled") {
+        // console.log("------?????", req.body.publishDate);
+        Post.create({ ...req.body, parentBlog: blogId })
+          .then((post) => {
+            Blog.updateOne(
+              { _id: blog._id },
+              { $push: { posts: post._id } },
+              async function (error, success) {
+                if (error) {
+                  console.log(error);
+                } else {
+                  console.log(success);
+
+                  const someDate = new Date(req.body.publishDate);
+
+                  schedule.scheduleJob("PostSchedule", someDate, async () => {
+                    try {
+                      console.log("called---------", req.body.postTitle);
+                      await Post.updateOne(
+                        { _id: post._id },
+                        { publishStatus: "published" }
+                      );
+                      //------------------------notification feature--------------------------------------------
+                      const user1 = await User.findOne({ _id: decoded.id });
+                      const data = {
+                        notificationText: `${decoded.username} created new post "${post.postTitle}"  `,
+                        info: {
+                          // commentedPost: success._id,
+                          name: user1.firstname + " " + user1.lastname,
+                          image: user1.profileImage,
+                          postTitle: post.postTitle,
+                          ownerId: decoded.id,
+                          postId: post._id,
+                          // commentorName: decoded.username,
+                        },
+                        owner: post.parentBlog.owner,
+                        seen: false,
+                        notificationType: "post",
+                        notificationDate: new Date(),
+                      };
+                      await Notification.create(data);
+                      //-----------------------------------------------------------------------------------
+                    } catch (err) {
+                      console.log(err);
+                    }
+                    schedule.cancelJob("PostSchedule");
+                  });
+                }
+              }
+              // { returnOriginal: false }
+            );
+            res.statusCode = 200;
+            // res.setHeader("Content-Type", "application/json");
+
+            res.json(post);
+            console.log("spot2");
+          })
+          .catch((err) => res.json(err));
+
+        //--------------------------------------------------
+      }
     } catch (err) {
       res.send(err);
     }
@@ -280,6 +380,44 @@ module.exports = {
     } catch (err) {
       console.log(err);
     }
+  },
+
+  getNotifications: (req, res) => {
+    const token = req.headers["authorization"];
+    try {
+      const decoded = jwt.verify(token, "1234567");
+      Notification.find({ "info.ownerId": decoded.id }).then((data) => {
+        res.send(data);
+      });
+    } catch (err) {
+      res.send(err);
+    }
+  },
+
+  draftToPublish: async (req, res) => {
+    const postId = req.params.postId;
+    console.log(postId);
+
+    await Post.updateOne({ _id: post._id }, { publishStatus: "published" });
+    //------------------------notification feature--------------------------------------------
+    const user1 = await User.findOne({ _id: decoded.id });
+    const data = {
+      notificationText: `${decoded.username} created new post "${post.postTitle}"  `,
+      info: {
+        // commentedPost: success._id,
+        name: user1.firstname + " " + user1.lastname,
+        image: user1.profileImage,
+        postTitle: post.postTitle,
+        ownerId: decoded.id,
+        postId: post._id,
+        // commentorName: decoded.username,
+      },
+      owner: post.parentBlog.owner,
+      seen: false,
+      notificationType: "post",
+      notificationDate: new Date(),
+    };
+    await Notification.create(data);
   },
 
   // --this is a method below to add any field to already added document

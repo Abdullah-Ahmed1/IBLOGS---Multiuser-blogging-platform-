@@ -6,6 +6,7 @@ import DialogTitle from '@mui/material/DialogTitle';
 import DialogContent from '@mui/material/DialogContent';
 import DialogActions from '@mui/material/DialogActions';
 import Button from '@mui/material/Button';
+import dayjs from 'dayjs';
 import JoditEditor from "jodit-react";
 import Typography from "@mui/material/Typography";
 //import Dialog from '@mui/material/Dialog';
@@ -20,6 +21,8 @@ import Popper from "@mui/material/Popper";
 import { useEffect,useState,useRef } from 'react';
 import axios from "axios";
 import TextField from '@mui/material/TextField';
+import PublishStatusMenu from '../components/EditorialCalenderComps/PublishStatusMenu';
+import PublishDateDialog from '../components/EditorialCalenderComps/PublishDateDialog';
 var h2p = require("html2plaintext");
 
 //--------------------------------------------------------------------------------------
@@ -154,7 +157,7 @@ GridCellExpand.propTypes = {
 };
 
 function renderCellExpand(params) {
-  console.log("params",params)
+  // console.log("params",params)
   return (
     <GridCellExpand
       value={params.value || ""}
@@ -178,6 +181,7 @@ renderCellExpand.propTypes = {
 
 
 //--------------------------------------------------------------------------------------
+
 
 //------------------------------- Custom Description Edit Cell --------------------------------------------------
 
@@ -285,19 +289,22 @@ const useFakeMutation = () => {
 
 function computeMutation(newRow, oldRow) {
   if (newRow.postTitle !== oldRow.postTitle) {
-    return `Name from '${oldRow.postTitle}' to '${newRow.postTitle}'`;
+    return {filed:"postTitle",msg:`Name from '${oldRow.postTitle}' to '${newRow.postTitle}'`};
   }
   if(newRow.postDescription !== oldRow.postDescription){
-    return `Post Description`;
+    return {field:"postDescription",msg:`Post Description`};
   }
   if(newRow.postContent !== oldRow.postContent){
-    return `Post Content`;
+    return {field:"postContent",msg:`Post Content`};
   }
   if (newRow.age !== oldRow.age) {
-    return `Age from '${oldRow.age || ''}' to '${newRow.age || ''}'`;
+    return {field:"age",msg: `Age from '${oldRow.age || ''}' to '${newRow.age || ''}'`};
   }
   if (newRow.allowComments !== oldRow.allowComments) {
-    return `Allow Comments from '${oldRow.allowComments || ''}' to '${newRow.allowComments || ''}'`;
+    return {field: "allowComments",msg: `Allow Comments from '${oldRow.allowComments || ''}' to '${newRow.allowComments || ''}'`};
+  }
+  if(newRow.publishStatus !== oldRow.publishStatus){
+    return { field:"publishStatus" , msg: `Publish status from '${oldRow.publishStatus || ''}' to '${newRow.publishStatus || ''}'`};
   }
 
   return null;
@@ -308,6 +315,28 @@ export default function AskConfirmationBeforeSave({blogId}) {
   const [posts, setPosts] = useState(null);
   const noButtonRef = React.useRef(null);
   const [promiseArguments, setPromiseArguments] = React.useState(null);
+  const [open, setOpen] = React.useState(false);
+  const [value, setValue] = React.useState(dayjs(new Date()));
+
+  const[progress,setProgress] = useState(false);
+  const[progress1,setProgress1] = useState(false)
+  const handleChange = (newValue) => {
+    setValue(newValue);
+  };
+
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+  const handleOk = ()=>{
+    console.log("reached-----------")
+    setProgress(true)
+    setOpen(false)
+  }
+  useEffect(()=>{
+    console.log("progress is changed")
+    setProgress1(true)
+  },[progress])
 
   const [snackbar, setSnackbar] = React.useState(null);
 
@@ -321,7 +350,22 @@ export default function AskConfirmationBeforeSave({blogId}) {
         const mutation = computeMutation(newRow, oldRow);
         if (mutation) {
           // Save the arguments to resolve or reject the promise later
-          setPromiseArguments({ resolve, reject, newRow, oldRow });
+          if(mutation.field==="publishStatus"){
+            console.log("reached------------------------------------>",newRow)
+            if(newRow.publishStatus ==="scheduled"){
+              // console.log("row dialog will be open here")
+              setOpen(true)
+              
+              console.log("progresss",progress1)
+
+              if(progress1){
+                setPromiseArguments({ resolve, reject, newRow, oldRow,mutation });    
+              }
+            }
+          }else{
+            setPromiseArguments({ resolve, reject, newRow, oldRow,mutation });  
+          }
+          
         } else {
           resolve(oldRow); // Nothing was changed
         }
@@ -348,15 +392,23 @@ export default function AskConfirmationBeforeSave({blogId}) {
   };
 
   const handleYes = async () => {
-    const { newRow, oldRow, reject, resolve } = promiseArguments;
+    const { mutation,newRow, oldRow, reject, resolve } = promiseArguments;
 
     try {
       // Make the HTTP request to save in the backend
+      if(mutation.field ==="publishStatus"){
+        console.log(
+          "here it is ------",newRow.publishStatus
+        )
+      }else{
+
+      
       axios.post(`http://127.0.0.1:5000/bloggerDashboard/update-post/${newRow._id}`,{newRow})
       .then(res=>{
         console.log("data")
                 
       })
+    }
       console.log("New row!!!!!",newRow)
       const response = await mutateRow(newRow);
       setSnackbar({ children: 'User successfully saved', severity: 'success' });
@@ -393,7 +445,7 @@ export default function AskConfirmationBeforeSave({blogId}) {
       >
         <DialogTitle>Are you sure?</DialogTitle>
         <DialogContent dividers>
-          {`Pressing 'Yes' will change ${mutation}.`}
+          {`Pressing 'Yes' will change ${mutation.msg}.`}
         </DialogContent>
         <DialogActions>
           <Button ref={noButtonRef} onClick={handleNo}>
@@ -407,6 +459,7 @@ export default function AskConfirmationBeforeSave({blogId}) {
 
   return (
     <div style={{ height: 400, width: '100%' }}>
+      <PublishDateDialog open ={open} handleClose={handleClose} value = {value} handleChange={handleChange} handleOk={handleOk} />
       {renderConfirmDialog()}
       {
         posts? (
@@ -440,9 +493,9 @@ export default function AskConfirmationBeforeSave({blogId}) {
   );
 }
 
-const rows1 = [
+// const rows1 = [
 
-]
+// ]
 
 const columns  = [
     { field: 'postTitle', headerName: 'Post Title', width: 180,renderCell: renderCellExpand,editable: true },
@@ -473,7 +526,9 @@ const columns  = [
     {
       field: 'publishStatus',
       headerName: 'Publish Status',
-      type: 'String',
+      editable: true,
+      type: 'singleSelect',
+      valueOptions:['published','Draft', 'scheduled'],
       width: 220,
     },
    

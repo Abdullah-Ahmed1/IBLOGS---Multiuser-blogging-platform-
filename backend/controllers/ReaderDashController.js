@@ -386,12 +386,12 @@ module.exports = {
     try {
       const decoded = jwt.verify(token, "1234567");
       console.log("-----------", userId);
-      const data = await User.findByIdAndUpdate(
+      await User.findByIdAndUpdate(
         { _id: decoded.id },
         {
           $push: { following: userId },
         },
-        function (error, success) {
+        function (error, success1) {
           if (error) {
             console.log(error);
           } else {
@@ -399,19 +399,43 @@ module.exports = {
               { _id: userId },
               { $push: { followers: decoded.id } },
               { upsert: true },
-              function (error, success) {
+              async function (error, success2) {
                 if (error) {
                   console.log(error);
                 } else {
-                  console.log(success);
+                  console.log(success2);
+
+                  const data = await User.findOne({ _id: userId });
+                  const NotificationData = {
+                    notificationText: `${
+                      success1.firstname + " " + success1.lastname
+                    } started following ${
+                      data.firstname + " " + data.lastname
+                    }`,
+                    info: {
+                      followerId: decoded.id,
+                      followerName:
+                        success1.firstname + " " + success1.lastname,
+                      followerImage: success1.profileImage,
+                      followedId: userId,
+                      followedName: data.firstname + " " + data.lastname,
+                      ownerId: userId,
+                    },
+                    notificationType: "follow",
+                    seen: "false",
+                    notificationDate: new Date(),
+                  };
+
+                  Notification.create(NotificationData).then((data) => {
+                    // res.send("Followed successfully");
+                    console.log(data);
+                  });
                 }
               }
             );
           }
         }
       );
-
-      // res.send(data);
     } catch (err) {
       res.send(err);
     }

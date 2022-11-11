@@ -32,7 +32,7 @@ const BloggerNotification = ()=>{
     useEffect(()=>{
         let value = JSON.parse(localStorage.getItem("token"));
         let token = value.token;
-        axios.get("http://127.0.0.1:5000/readerDashboard/get-notification",{
+        axios.get("http://127.0.0.1:5000/bloggerDashboard/get-blogger-notifications",{
             headers: {
                 "Content-Type": "application/json",
                 Accept: "application/json",

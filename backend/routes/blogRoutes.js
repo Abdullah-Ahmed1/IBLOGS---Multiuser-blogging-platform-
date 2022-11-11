@@ -13,6 +13,7 @@ router.route("/addpost/:blogId").post(BlogController.addPost);
 router.route("/delete-post/:postId").delete(BlogController.deletePost);
 router.route("/get-all-posts/:blogId").get(BlogController.getPost);
 router.route("/update-blog-info/:blogId").post(BlogController.updateBlogInfo);
+router.route("/get-blogger-notifications").get(BlogController.getNotifications);
 //------------------------------------------------- Editorial Calender APIS ----------------------------------------------------
 
 router.route("/update-post/:postId").post(BlogController.updatePost);

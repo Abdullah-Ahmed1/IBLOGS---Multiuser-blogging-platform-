@@ -502,7 +502,7 @@ export default function AddPostStepper({handleClose}) {
     const [postCardImage,setPostCardImage] = useState(null);
     const [allowComments , setAllowComments] = useState(true);
     const [publishStatus,setPublishStatus] = useState("");
-    const [publishDate,setPublishDate] = useState(dayjs('2014-08-18T21:11:54'));
+    const [publishDate,setPublishDate] = useState(dayjs(new Date()));
     //-----------------------------------------------------------------------------
    
     //----------------confirmation box open-----------------------------------
@@ -557,7 +557,8 @@ export default function AddPostStepper({handleClose}) {
         allowComments,
         postCardImage: postCardImage ? postCardImage : ""  ,
         publishStatus : "published",
-        publishDate: new Date()
+        publishDate: new Date(),
+        dateCreated: new Date()
       
       }
       if(postCardImage){
@@ -581,7 +582,8 @@ export default function AddPostStepper({handleClose}) {
       allowComments,
       postCardImage: res.data.secure_url ,
       publishStatus : "published",
-      publishDate: new Date()
+      publishDate: new Date(),
+      dateCreated: new Date()
     
     }
     console.log("url: ",res.data.secure_url)
@@ -610,7 +612,8 @@ export default function AddPostStepper({handleClose}) {
         allowComments,
         postCardImage: ""  ,
         publishStatus : "published",
-        publishDate: new Date()
+        publishDate: new Date(),
+        dateCreated: new Date()
       }
       
       let value = JSON.parse(localStorage.getItem("token"));
@@ -646,7 +649,8 @@ export default function AddPostStepper({handleClose}) {
         postContent,
         allowComments,
         publishStatus : "scheduled",
-        publishDate: dayjs(publishDate).format()
+        publishDate: dayjs(publishDate).format(),
+        dateCreated: new Date()
       
       }
       if(postCardImage){
@@ -669,7 +673,8 @@ export default function AddPostStepper({handleClose}) {
         postCardImage: res.data.secure_url ,
         allowComments,
         publishStatus : "scheduled",
-        publishDate: dayjs(publishDate).format()
+        publishDate: dayjs(publishDate).format(),
+        dateCreated: new Date()
       
       }
       
@@ -699,7 +704,8 @@ export default function AddPostStepper({handleClose}) {
           postCardImage: "",
           allowComments,
           publishStatus : "scheduled",
-          publishDate: dayjs(publishDate).format()
+          publishDate: dayjs(publishDate).format(),
+          dateCreated: new Date()
         
         }
         
@@ -719,17 +725,17 @@ export default function AddPostStepper({handleClose}) {
 
 
         
-      let value = JSON.parse(localStorage.getItem("token"));
-      let token = value.token;
-         axios.post(`http://127.0.0.1:5000/bloggerDashboard/addpost/${blogId}`,data,{
-          headers: {
-            "Content-Type": "application/json",
-            Accept: "application/json",
-            Authorization: token,
-          },
-         })
-         .then(res => console.log(res))
-         .catch(err=>console.log(err))
+      // let value = JSON.parse(localStorage.getItem("token"));
+      // let token = value.token;
+      //    axios.post(`http://127.0.0.1:5000/bloggerDashboard/addpost/${blogId}`,data,{
+      //     headers: {
+      //       "Content-Type": "application/json",
+      //       Accept: "application/json",
+      //       Authorization: token,
+      //     },
+      //    })
+      //    .then(res => console.log(res))
+      //    .catch(err=>console.log(err))
 
     }
 
@@ -739,7 +745,89 @@ export default function AddPostStepper({handleClose}) {
       
     // }
     const handleSave = ()=>{
-      console.log("-------")
+      console.log("image : ", postCardImage )
+      console.log("puvlish")
+      const data = {
+        postTitle,
+        postDescription,
+        postKeywords,
+        postContent,
+        allowComments,
+        postCardImage: postCardImage ? postCardImage : ""  ,
+        publishStatus : "Draft",
+        publishDate: new Date(),
+        dateCreated: new Date()
+      
+      }
+      if(postCardImage){
+            const body = new FormData();
+      body.append('file', postCardImage);
+      body.append('upload_preset',"my-uploads")
+
+   axios(
+    {
+      method: "POST",
+      url: "https://api.cloudinary.com/v1_1/dlgwvuu5d/image/upload",
+      data: body,
+    }
+  )
+  .then(res=>{
+    const data = {
+      postTitle,
+      postDescription,
+      postKeywords,
+      postContent,
+      allowComments,
+      postCardImage: res.data.secure_url ,
+      publishStatus : "Draft",
+      publishDate: new Date(),
+      dateCreated: new Date()
+    
+    }
+    console.log("url: ",res.data.secure_url)
+    
+    let value = JSON.parse(localStorage.getItem("token"));
+    let token = value.token;
+    axios.post(`http://127.0.0.1:5000/bloggerDashboard/addpost/${blogId}`,data,{
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+        Authorization: token,
+      },
+    })
+         .then(res => console.log(res))
+         .catch(err=>console.log(err))
+
+  } )
+    
+      }else{
+            console.log("invoked")
+          const data = {
+        postTitle,
+        postDescription,
+        postKeywords,
+        postContent,
+        allowComments,
+        postCardImage: ""  ,
+        publishStatus : "Draft",
+        publishDate: new Date(),
+        dateCreated: new Date()
+      }
+      
+      let value = JSON.parse(localStorage.getItem("token"));
+      let token = value.token;
+        axios.post(`http://127.0.0.1:5000/bloggerDashboard/addpost/${blogId}`,data,{
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+            Authorization: token,
+          },
+        })
+         .then(res => console.log(res))
+         .catch(err=>console.log(err))
+      }
+
+ 
     }
 
       //---------------------------------------------
