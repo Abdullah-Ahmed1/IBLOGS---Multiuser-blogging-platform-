@@ -34,6 +34,9 @@ router.route("/create-custom-list").post(ReaderDashController.CreateCustomList);
 router.route("/get-customLists").get(ReaderDashController.getCustomLists);
 router.route("/add-to-customList").post(ReaderDashController.addToCustomList);
 router
+  .route("/get-customList-post/:listId")
+  .get(ReaderDashController.getCustomListPost);
+router
   .route("/remove-from-customList")
   .post(ReaderDashController.removeFromCustomList);
 router.route("/get-analysis").get(ReaderDashController.getWeeklyAnalysis);

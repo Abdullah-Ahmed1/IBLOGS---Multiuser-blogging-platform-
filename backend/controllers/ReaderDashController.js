@@ -602,6 +602,19 @@ module.exports = {
     }
   },
 
+  getCustomListPost: (req, res) => {
+    const listId = req.params.listId;
+    console.log("reached");
+    SavedList.findById({ _id: listId })
+      .populate({
+        path: "savedPosts",
+      })
+      .then((list) => {
+        console.log(list);
+        res.send(list);
+      });
+  },
+
   CreateCustomList: (req, res) => {
     const token = req.headers["authorization"];
     console.log(req.body);

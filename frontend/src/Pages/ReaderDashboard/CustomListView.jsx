@@ -4,8 +4,22 @@ import Divider from '@mui/material/Divider';
 import RecommendedChips from '../../components/PostComponentsMui/RecommendChips';
 import { Typography } from '@mui/material';
 import ListIcon from '@mui/icons-material/List';
+import axios from "axios";
+import {useParams} from "react-router-dom";
+import { useEffect,useState } from 'react';
 
 const CustomListView = ()=>{
+  const {listId} = useParams();
+    console.log("LostUD",listId) 
+
+    useEffect(()=>{
+      axios.get(`http://127.0.0.1:5000/readerDashboard/get-customList-post/${listId}`)
+      .then(res=>{
+        console.log("**--**",res.data)
+      })
+    },[])
+
+
     return(
         <>
         <CssBaseline />
