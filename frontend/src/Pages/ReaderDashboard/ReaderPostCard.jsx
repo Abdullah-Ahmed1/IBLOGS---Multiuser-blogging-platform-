@@ -18,6 +18,7 @@ import BookmarkAddedIcon from '@mui/icons-material/BookmarkAdded';
 import CreateListMenu from './../../components/ReaderDashComponents/CreateSavedListMenu';
 import PostShareDialog from './../../components/ReaderDashComponents/PostShareDialog';
 import { useEffect } from 'react';
+import PostCardMenu from './../../components/PostComponentsMui/PostCardMenu';
 const ReaderPostCard = ({item,handleLikeClick})=>{
     const [shareDialogOpen,setShareDialogOpen] = useState(false)
     const [liked,setLiked] = useState(false)
@@ -154,7 +155,8 @@ const ReaderPostCard = ({item,handleLikeClick})=>{
                   </Grid>
                   <Grid item lg ={2} sm={1} xs = {1}>
                       {/* icons here */}
-                      <MoreVertIcon  sx ={{color:"#05386b"}}  />
+                      {/* <MoreVertIcon  sx ={{color:"#05386b"}}  /> */}
+                      <PostCardMenu/>
                   </Grid>
                   
               </Grid>

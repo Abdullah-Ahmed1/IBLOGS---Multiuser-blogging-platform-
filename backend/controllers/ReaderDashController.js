@@ -608,7 +608,21 @@ module.exports = {
     SavedList.findById({ _id: listId })
       .populate({
         path: "savedPosts",
+        select: {
+          postTitle: 1,
+          postDescription: 1,
+          postKeywords: 1,
+
+          publishDate: 1,
+        },
+        populate: {
+          path: "parentBlog",
+          populate: {
+            path: "owner",
+          },
+        },
       })
+
       .then((list) => {
         console.log(list);
         res.send(list);
@@ -636,6 +650,10 @@ module.exports = {
     } catch (err) {
       res.send(err);
     }
+  },
+  RemoveCustomList: (req, res) => {
+    const listId = req.params.listId;
+    console.log("listId", listId);
   },
   addToCustomList: (req, res) => {
     const token = req.headers["authorization"];

@@ -31,6 +31,9 @@ router.route("/add-like/:postId").post(ReaderDashController.addLike);
 router.route("/addNotification").post(ReaderDashController.addNotification);
 router.route("/get-notification").get(ReaderDashController.getNotification);
 router.route("/create-custom-list").post(ReaderDashController.CreateCustomList);
+router
+  .route("/remove-custom-list/:listId")
+  .delete(ReaderDashController.RemoveCustomList);
 router.route("/get-customLists").get(ReaderDashController.getCustomLists);
 router.route("/add-to-customList").post(ReaderDashController.addToCustomList);
 router

@@ -7,6 +7,7 @@ import axios from 'axios';
 import { useEffect,useRef } from 'react';
 import Divider from '@mui/material/Divider';
 import Button from '@mui/material/Button';
+import DeleteIcon from '@mui/icons-material/Delete';
 import { Typography } from '@mui/material';
 //import SearchBar from "../../components/ReaderDashComponents/Searchbar"
 //import TrendPostCard from '../../components/PostComponentsMui/TrendPostCard';
@@ -30,6 +31,14 @@ const SavedList = ()=>{
     })
     
   },[])
+
+  const handleDeleteList = (id)=>{
+    console.log(id)
+    axios.delete(`http://127.0.0.1:5000/readerDashboard/remove-custom-list/${id}`)
+    .then(res=>{
+      console.log("!!!",res.data)
+    })
+  }
 
   useEffect(()=>{
     let value = JSON.parse(localStorage.getItem("token"));
@@ -102,7 +111,10 @@ const SavedList = ()=>{
                       <Grid2 sx = {{paddingLeft:"10px",paddingTop:"10px"}}>
                       <h3 style={{padding:"0px",margin:"0px"}}  >{list.listName}</h3>
                       <h4>Posts: 5</h4>
+                      <Grid2 container  alignItems={"center"}>
                       <Button onClick={()=>{ navigate(`/readerdashboard/saved-lists/custom-list/${list._id}`);}}  sx = {{color:"#05386b",borderColor:"#05386b"}}  variant="outlined">View list</Button>
+                      <DeleteIcon sx={{fontSize: "30px"}} onClick={()=>handleDeleteList(list._id)}/>
+                      </Grid2>
                       </Grid2>
                     
                     </Grid2>
