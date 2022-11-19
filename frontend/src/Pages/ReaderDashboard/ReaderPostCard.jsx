@@ -148,10 +148,11 @@ const ReaderPostCard = ({item,handleLikeClick})=>{
                           {item.parentBlog.owner.firstname} {item.parentBlog.owner.lastname}   <span  style={small ?{marginLeft:"10px"}:{marginLeft:"50px"}}> {item.publishDate.slice(0,10)}</span>  
                       </Grid>
                     </Link>
+                    <Link to = {`/ReaderDashboard/blog/${item.parentBlog._id}`}>
                       <Grid item  sx = {{fontSize:"16px",fontFamily: " Ubuntu, sans-serif",color:"#05386b"}}>
                           From: {item.parentBlog.title}
                       </Grid>
-                     
+                    </Link>
                   </Grid>
                   <Grid item lg ={2} sm={1} xs = {1}>
                       {/* icons here */}

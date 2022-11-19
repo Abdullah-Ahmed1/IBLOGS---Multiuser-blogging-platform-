@@ -4,11 +4,13 @@ import Grid2 from '@mui/material/Unstable_Grid2';
 import Box from '@mui/material/Box';    
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
+import Avatar from '@mui/material/Avatar';
 import { useParams } from 'react-router-dom';
 //import Avatar from '@mui/material/Avatar';
 import CircularProgress from '@mui/material/CircularProgress';
  import ProfileInfoTabs from '../../components/ProfileComps/ProfileInfoTabs';
 import { UserContext } from "./ReaderDashboard";
+
 const AuthorProfile = ({profileData})=>{
     const value = useContext(UserContext);
     console.log("profilevalue--",profileData)
@@ -115,6 +117,22 @@ const AuthorProfile = ({profileData})=>{
    
   // console.log( "a is  :",isFollowed())
     
+   useEffect(()=>{
+    let value = JSON.parse(localStorage.getItem("token"));
+        let token = value.token;
+    axios.get(`http://127.0.0.1:5000/readerDashboard/get-user-followers`,{
+        headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+            Authorization: token,
+          }, 
+    }).then(res=>{
+        console.log(res.data)
+    })    
+   },[])
+
+
+
     useEffect(()=>{
       console.log("caledd")
         //    console.log("1121212121212112212122121",value)
@@ -133,7 +151,8 @@ const AuthorProfile = ({profileData})=>{
                 // console.log("********************//--//*****",res.data[0].followers.includes())
                 setUserData(res.data)
                 console.log("111111",res)
-                console.log("123324242423",profileData)
+                console.log("123324242423",profileData.followers)
+
             }else{
                 setUserData(" ")
             }
@@ -172,7 +191,7 @@ const AuthorProfile = ({profileData})=>{
                                 </Grid2>
                             </Grid2>
                             <Grid2 sx = {{backgroundColor:"transparent"}}>
-                            {/* <ProfileInfoTabs/>  */}
+                            <ProfileInfoTabs  userData = {userData} /> 
                             </Grid2>
                         </Grid2>
                     </Grid2>
@@ -198,6 +217,37 @@ const AuthorProfile = ({profileData})=>{
                      <Grid2 container>
                         <Grid2 sx = {{marginTop:"10px"}}>
                             <h4 style={{color:"#379863"}}>Others followers:</h4>
+                            {
+                                userData.followers.map(follower=>{
+                                    return(
+                                        <Grid2 container sx = {{cursor:"pointer"}} direction={"row"} alignItems={"center"} columnSpacing={2} >
+                                            <Grid2>
+                                                <Avatar sx= {{ width: 24, height: 24}} alt={follower.firstname} src={follower.profileImage} />
+                                            </Grid2>
+                                            <Grid2>
+                                                <p style={{color:"#379863",fontSize:"12px"}}>{follower.firstname} {follower.lastname}</p>
+                                            </Grid2>
+                                        </Grid2>
+                                        
+                                    )
+                                })
+                            }
+                             <h4 style={{color:"#379863"}}>Following</h4>
+                             {
+                                userData.following.map(following=>{
+                                    return(
+                                        <Grid2 container sx = {{cursor:"pointer"}} direction={"row"} alignItems={"center"} columnSpacing={2} >
+                                            <Grid2>
+                                                <Avatar sx= {{ width: 24, height: 24}} alt={following.firstname} src={following.profileImage} />
+                                            </Grid2>
+                                            <Grid2>
+                                                <p style={{color:"#379863",fontSize:"12px"}}>{following.firstname} {following.lastname}</p>
+                                            </Grid2>
+                                        </Grid2>
+                                        
+                                    )
+                                })
+                            } 
                         </Grid2>
                     </Grid2>   
                        </Grid2>

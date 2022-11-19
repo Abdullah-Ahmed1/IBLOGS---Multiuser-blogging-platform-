@@ -46,7 +46,10 @@ router.route("/get-analysis").get(ReaderDashController.getWeeklyAnalysis);
 router
   .route("/get-reader-notifications")
   .get(ReaderDashController.getReaderNotifications);
-
+router.route("/get-blog-posts/:blogId").get(ReaderDashController.getBlogPosts);
+// router
+//   .route("/get-user-followers")
+//   .get(ReaderDashController.getFollowersOfUser);
 router.route("/search/:data").get(ReaderDashController.search);
 //router.route("/all").get(ReaderDashController.getAllData1);
 //router.route("/all2").get(ReaderDashController.getAllData2);

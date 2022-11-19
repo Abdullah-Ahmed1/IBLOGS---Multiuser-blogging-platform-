@@ -29,6 +29,7 @@ import SavedList from './SavedListsPage';
 import SavedListsHome from './SavedListsHome';
 import ResponsesPage from './ResponsesPage';
 import BottomNavigation1 from './../../components/ReaderDashComponents/BottomNavigation';
+import ReaderBlogPage from './ReaderBlogPage';
 
 var _  =require('lodash')
 //----------------------------------------------------------------
@@ -221,6 +222,7 @@ export default function ReaderDashboard() {
        <Route exact path="/full-post/:id" element={<ReaderFullPostView  />} />
        <Route exact path="/author-profile/:userId" element={<AuthorProfile  profileData={profileData} />} />
        <Route exact path="/your-profile" element={<YourProfile />} />
+       <Route exact path="/blog/:blogId" element={<ReaderBlogPage/>} />
        <Route exact path="/responses" element={<ResponsesPage/>} />
        <Route  path="/saved-lists/*" element={<SavedListsHome />} /> 
          

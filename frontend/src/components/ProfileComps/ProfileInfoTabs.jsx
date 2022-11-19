@@ -4,8 +4,8 @@ import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
-import { useState } from 'react';
-import ReaderPostCard from './../PostComponentsMui/ReaderPostCard';
+import BlogCard from './../BlogComps/BlogCardMui';
+import Grid2 from '@mui/material/Unstable_Grid2';
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -40,33 +40,43 @@ function a11yProps(index) {
   };
 }
 
-export default function ProfileInfoTabs() {
+export default function ProfileInfoTabs({userData}) {
   const [value, setValue] = React.useState(0);
-  const [arr, setArr] = useState([1,2,3,4,5,6])
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
+  console.log("!!!!",userData)
 
   return (
     <Box sx={{ width: '100%' }}>
-      <Box sx={{ borderBottom: 1, borderColor: 'divider',backgroundColor:"white" }}>
-        <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
-          <Tab label="Popular Posts" {...a11yProps(0)} />
-          <Tab label="Blogs" {...a11yProps(1)} />
+      <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+        <Tabs value={value} sx = {{backgroundColor:"white"}} onChange={handleChange} aria-label="basic tabs example">
+          <Tab label="Blogs" {...a11yProps(0)} />
+          <Tab label="Posts" {...a11yProps(1)} />
           {/* <Tab label="Item Three" {...a11yProps(2)} /> */}
         </Tabs>
       </Box>
       <TabPanel value={value} index={0}>
-        Item1
-        {arr.map(item=>{
-            return <ReaderPostCard key={arr} />
-        })}
+        <Grid2 container flexDirection={"row"} spacing ={2}>
+        {
+          userData.your_blogs.map(blog=>{
+
+            return (
+              <Grid2>
+                <BlogCard  item={blog}  />
+              </Grid2>
+            )
+          })
+        }
+        </Grid2>
       </TabPanel>
       <TabPanel value={value} index={1}>
-        Item Two
+        All posts will be shown here
       </TabPanel>
-     
+      {/* <TabPanel value={value} index={2}>
+        Item Three
+      </TabPanel> */}
     </Box>
   );
 }

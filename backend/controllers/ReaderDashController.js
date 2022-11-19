@@ -1,7 +1,7 @@
 const Mongoose = require("mongoose");
 const jwt = require("jsonwebtoken");
 var connection = require("../Connection/connection");
-//const Blog = Mongoose.model("Blog");
+const Blog = Mongoose.model("Blog");
 const Post = Mongoose.model("Post");
 const Reply = Mongoose.model("Reply");
 const SavedList = Mongoose.model("SavedList");
@@ -372,8 +372,24 @@ module.exports = {
             path: "posts",
           },
         })
+        .populate({
+          path: "followers",
+          select: {
+            firstname: 1,
+            lastname: 1,
+            profileImage: 1,
+          },
+        })
+        .populate({
+          path: "following",
+          select: {
+            firstname: 1,
+            lastname: 1,
+            profileImage: 1,
+          },
+        })
         .then((response) => {
-          console.log(response);
+          console.log(response.followers.length);
           res.send(response);
         });
     } catch (err) {
@@ -602,6 +618,25 @@ module.exports = {
     }
   },
 
+  getBlogPosts: (req, res) => {
+    console.log("get blog posts reached");
+    const token = req.headers["authorization"];
+    const blogId = req.params.blogId;
+    console.log(blogId);
+
+    try {
+      const decoded = jwt.verify(token, "1234567");
+      Blog.findById(blogId)
+        .populate("posts")
+        .exec()
+        .then((data) => {
+          res.json(data);
+        });
+    } catch (err) {
+      res.send(err);
+    }
+  },
+
   getCustomListPost: (req, res) => {
     const listId = req.params.listId;
     console.log("reached");
@@ -736,4 +771,15 @@ module.exports = {
       });
     });
   },
+
+  // getFollowersOfUser: (req, res) => {
+  //   console.log("reached get followers of user");
+  //   const token = req.headers["authorization"];
+  //   try {
+  //     const decoded = jwt.verify(token, "1234567");
+  //     User.find
+  //   } catch (err) {
+  //     res.send(err);
+  //   }
+  // },
 };
