@@ -8,9 +8,22 @@ import Popper from '@mui/material/Popper';
 import MenuItem from '@mui/material/MenuItem';
 import MenuList from '@mui/material/MenuList';
 import Stack from '@mui/material/Stack';
+import ReportDialog from './ReportDialog';
 
 export default function PostCardMenu() {
   const [open, setOpen] = React.useState(false);
+  const [openReportDialog, setOpenReportDialog] = React.useState(false);
+  const [selectedValue, setSelectedValue] = React.useState();
+
+  const handleClickOpenDialReport = () => {
+    setOpenReportDialog(true);
+  };
+
+  const handleCloseDialogReport = (value) => {
+    setOpenReportDialog(false);
+    setSelectedValue(value);
+  };
+
   const anchorRef = React.useRef(null);
 
   const handleToggle = () => {
@@ -23,6 +36,7 @@ export default function PostCardMenu() {
     }
 
     setOpen(false);
+    handleClickOpenDialReport();
   };
 
   function handleListKeyDown(event) {
@@ -45,6 +59,8 @@ export default function PostCardMenu() {
   }, [open]);
 
   return (
+    <>
+    <ReportDialog  open={openReportDialog}  selectedValue={selectedValue}  handleClose={handleCloseDialogReport}   handleClickOpen={handleClickOpenDialReport}  />
     <Stack direction="row" spacing={2}>
      
       <div>
@@ -64,7 +80,10 @@ export default function PostCardMenu() {
         aria-controls={open ? 'composition-menu' : undefined}
         aria-expanded={open ? 'true' : undefined}
         aria-haspopup="true"
-        onClick={handleToggle}
+        onClick={()=>{
+          handleToggle();
+          // handleClickOpenDialReport();
+        }}
         />
         <Popper
           open={open}
@@ -101,5 +120,6 @@ export default function PostCardMenu() {
         </Popper>
       </div>
     </Stack>
+    </>
   );
 }
