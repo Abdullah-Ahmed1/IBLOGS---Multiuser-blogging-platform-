@@ -7,14 +7,48 @@ import { useTheme } from '@mui/material/styles';
 import {useEffect,useState} from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
+import ReaderPostCard from './ReaderPostCard';
 const ReaderBlogPage = ()=>{
     const {blogId} = useParams();
     const theme = useTheme();
     const[blog,setBlog]=useState(null);
+    const [posts,setPosts] = useState(null)
     const large = useMediaQuery(theme.breakpoints.down('lg'));
     const medium = useMediaQuery(theme.breakpoints.down('md'));
     const small = useMediaQuery(theme.breakpoints.down('sm'));
   
+    const handleLikeClick = (postId)=>{
+      let value = JSON.parse(localStorage.getItem("token"));
+      let token = value.token;
+      console.log("click with postid",postId)
+      
+      axios.post(`http://127.0.0.1:5000/readerDashboard/add-like/${postId}`,{},{
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+          Authorization: token,
+        },
+      }).then(res => {
+        console.log(res)
+        axios.get('http://127.0.0.1:5000/readerDashboard',{
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+            Authorization: token,
+          },
+        })
+        .then(res =>{
+          console.log("res--------",res.data    ) 
+          setPosts(res.data)
+          
+         
+        }).catch(err=> console.log(err))
+      
+      } )
+    
+
+
+    }
 
 
     useEffect(()=>{
@@ -31,7 +65,21 @@ const ReaderBlogPage = ()=>{
             console.log("--------------------/",res.data)
             setBlog(res.data)
         })
-    })
+    },[])
+
+    useEffect(()=>{
+      let value = JSON.parse(localStorage.getItem("token"));
+      let token = value.token;
+      axios.get('http://127.0.0.1:5000/readerDashboard',{
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+          Authorization: token,
+        },
+      }).then(res=>{
+        setPosts(res.data)
+      })
+    },[])
     return( 
         <>
         <CssBaseline />
@@ -82,13 +130,28 @@ const ReaderBlogPage = ()=>{
               <h5 style={{color:"white"}}><span><ArticleIcon  sx = {{marginTop:"5px"}} /></span>Total posts : {blog.posts.length}</h5>
 
               </div>
-              </Grid2>  
+              </Grid2>
+              
+              
                 ):(
                     null
                 )
               }
+              <div style={{marginTop:"20px"}}>
+              {
+                posts?(
+                  posts.map(post=>{
+                    return(
+                      
+                      <ReaderPostCard key={post._id} item={post} handleLikeClick={handleLikeClick}  />
+                    )
+                  })
+                ):(
+                  null
+                )
+              }
                    
-                  
+              </div>      
                 
              
                 

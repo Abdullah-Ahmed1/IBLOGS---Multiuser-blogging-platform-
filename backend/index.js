@@ -18,6 +18,7 @@ require("./Connection/connection");
 
 //--------------------------------------------------
 const Analysis = require("./utils/Analysis");
+Analysis.googleAPI();
 //Analysis.commentAnalysis();
 // Analysis.testAnalysis();
 //----------------------------------------------------
