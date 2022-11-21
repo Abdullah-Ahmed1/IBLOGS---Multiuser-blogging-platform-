@@ -453,7 +453,7 @@ ColorlibStepIcon.propTypes = {
 
   ////////////////////////////////////////////////////////////////////////////////
   ///-----------------------------------------
-  const GetStepContent = ({activeStep,handleSave,handleClickGenerate,generatedText,handlePostCardImage,handlePostTitle,handlePostDescription,handlePostKeywords,handlePostContent,postContent,handleAllowComments,allowComments,handlePublishStatus,handlePublishDate,publishDate,handleSchedule,handlePublish,openBox,handleOpenBox}) => {
+  const GetStepContent = ({activeStep,nextWord,handleSave,handleClickGenerate,generatedText,handlePostCardImage,handlePostTitle,handlePostDescription,handlePostKeywords,handlePostContent,postContent,handleAllowComments,allowComments,handlePublishStatus,handlePublishDate,publishDate,handleSchedule,handlePublish,openBox,handleOpenBox}) => {
     console.log()
     switch (activeStep) {
       case 0:
@@ -470,7 +470,7 @@ ColorlibStepIcon.propTypes = {
           )
           
       case 2:
-        return <MyEditor handlePostContent =  {handlePostContent} generatedText = {generatedText} postContent = {postContent}/>
+        return <MyEditor  nextWord = {nextWord}  handlePostContent =  {handlePostContent} generatedText = {generatedText} postContent = {postContent}/>
       case 3:
         return (
             <UploadOptions  allowComments = {allowComments} 
@@ -503,6 +503,7 @@ export default function AddPostStepper({handleClose}) {
     const [allowComments , setAllowComments] = useState(true);
     const [publishStatus,setPublishStatus] = useState("");
     const [publishDate,setPublishDate] = useState(dayjs(new Date()));
+    const [tempWord,setTempWord] = useState("");
     //-----------------------------------------------------------------------------
    
     //----------------confirmation box open-----------------------------------
@@ -528,7 +529,21 @@ export default function AddPostStepper({handleClose}) {
      // console.log("post Content : ",postContent)
       //console.log("comments",allowComments)
      console.log("confirmation",openBox)
+//-------------------------------------------NextWord------------------------------------------------------
+const nextWord = (postContent) => {
+  
+    // console.log("key pressed");
+    axios
+      .post("http://localhost:3001/next_word", { value: h2p(postContent) })
+      .then((res) => {
+        console.log("predicted word", res);
+        // setPostContent(res.data)
+        var arr = res.data.split(" ")
 
+        setTempWord(arr[arr.length-1])
+      });
+  
+};
 //--------------------------------------Generate Text------------------------------------     
 
     const handleClickGenerate = (keyword)=>{
@@ -636,6 +651,9 @@ export default function AddPostStepper({handleClose}) {
 
     }
 
+    const handleWordClick = ()=>{
+      setPostContent(postContent+tempWord)
+    }
 //--------------------------Schedule Post------------------------------------------------
     const handleSchedule=()=>{
       console.log("schedule clicked")
@@ -947,7 +965,11 @@ export default function AddPostStepper({handleClose}) {
                
           <Box sx={{ display: 'flex', flexDirection: 'column', pt: 2 }}>
           <Paper elevation={3} sx = {{minHeight:"500px"}}  >
-            <div  style={{display: 'flex', flexDirection: 'row',justifyContent:"flex-end" ,pt: 2}} >           
+            <div  style={{display: 'flex', flexDirection: 'row',justifyContent:"space-between" ,pt: 2}} >
+              <div  onClick = {handleWordClick}  style={{cursor:"pointer",padding:"10px 20px",border: "2px solid black",borderRadius:"5px"}}>
+                {tempWord}
+              </div>  
+            <div style={{display:'flex',flexDirection:'row'}}>         
             <Button
               color="inherit"
             
@@ -968,6 +990,7 @@ export default function AddPostStepper({handleClose}) {
               {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
             </Button>
             </div>
+            </div>
             <GetStepContent activeStep={activeStep}
             handleClickGenerate = {handleClickGenerate}
             generatedText = {generatedText} 
@@ -986,6 +1009,7 @@ export default function AddPostStepper({handleClose}) {
                 handleSchedule={handleSchedule}
                  handlePublish = {handlePublish}
                  openBox={openBox}
+                 nextWord={nextWord}
                  handleOpenBox = {handleOpenBox}
                  
                  />
