@@ -13,7 +13,7 @@ import AddIcon from '@mui/icons-material/Add';
 import Typography from '@mui/material/Typography';
 import { blue } from '@mui/material/colors';
 
-const emails = ['Its spam', 'hate speech'];
+const emails = ['Its spam', 'hate speech','scam or fraud'];
 
 function SimpleDialog(props) {
   const { onClose, selectedValue, open } = props;

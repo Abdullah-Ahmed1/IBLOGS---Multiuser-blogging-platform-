@@ -166,6 +166,16 @@ module.exports = {
             //     //   schedule.cancelJob("MJob");
             //     // });
 
+            // schedule.scheduleJob("1123", '* * * * *', async () => {
+            //         try {
+            //           console.log("called---------");
+
+            //         } catch (err) {
+            //           console.log(err);
+            //         }
+            //         schedule.cancelJob("MJob");
+            //       });
+
             Blog.updateOne(
               { _id: blog._id },
               { $push: { posts: post._id } },
@@ -418,6 +428,21 @@ module.exports = {
       notificationDate: new Date(),
     };
     await Notification.create(data);
+  },
+
+  startSchedule: (req, res) => {
+    schedule.scheduleJob("1123", "* * * * *", async () => {
+      try {
+        console.log("called---------");
+      } catch (err) {
+        console.log(err);
+      }
+      // schedule.cancelJob("MJob");
+    });
+  },
+
+  stopSchedule: (req, res) => {
+    schedule.cancelJob("1123");
   },
 
   // --this is a method below to add any field to already added document

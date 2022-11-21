@@ -6,7 +6,6 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import TextField from '@mui/material/TextField';
-import dayjs from 'dayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
@@ -30,6 +29,7 @@ export default function PublishDateDialog({open,handleClose,value,handleChange,h
         <DateTimePicker
           label="Date&Time picker"
           value={value}
+          onClose = {handleOk}
           onChange={handleChange}
           renderInput={(params) => <TextField {...params} />}
         />
@@ -37,9 +37,9 @@ export default function PublishDateDialog({open,handleClose,value,handleChange,h
         </DialogContent>
         <DialogActions>
           {/* <Button onClick={handleClose}>Disagree</Button> */}
-          <Button onClick={handleOk} autoFocus>
+          {/* <Button onClick={handleOk} autoFocus>
             OK
-          </Button>
+          </Button> */}
         </DialogActions>
       </Dialog>
     </div>

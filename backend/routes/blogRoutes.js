@@ -17,6 +17,8 @@ router.route("/get-blogger-notifications").get(BlogController.getNotifications);
 //------------------------------------------------- Editorial Calender APIS ----------------------------------------------------
 
 router.route("/update-post/:postId").post(BlogController.updatePost);
+router.route("/schedule").get(BlogController.startSchedule);
+router.route("/stop").get(BlogController.stopSchedule);
 
 // router.route("/temp").get(BlogController.tempMethod);
 // router.route("/temp").get(BlogController.tempMethod1);

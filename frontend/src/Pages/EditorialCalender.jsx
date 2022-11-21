@@ -315,6 +315,7 @@ export default function AskConfirmationBeforeSave({blogId}) {
   const [posts, setPosts] = useState(null);
   const noButtonRef = React.useRef(null);
   const [promiseArguments, setPromiseArguments] = React.useState(null);
+  const [tempArguments,setTempArguments] = useState(null);
   const [open, setOpen] = React.useState(false);
   const [value, setValue] = React.useState(dayjs(new Date()));
 
@@ -330,6 +331,17 @@ export default function AskConfirmationBeforeSave({blogId}) {
   };
   const handleOk = ()=>{
     console.log("reached-----------")
+    console.log("date value",dayjs(value).format())
+    console.log("..",tempArguments)
+    setPromiseArguments(
+      {
+       oldRow: tempArguments.oldRow,
+       mutation:tempArguments.mutation,
+       newRow:{...tempArguments.newRow,publishDate: dayjs(value).format() } ,
+       reject: tempArguments.reject,
+       resolve: tempArguments.resolve
+      }
+    )
     setProgress(true)
     setOpen(false)
   }
@@ -355,12 +367,14 @@ export default function AskConfirmationBeforeSave({blogId}) {
             if(newRow.publishStatus ==="scheduled"){
               // console.log("row dialog will be open here")
               setOpen(true)
-              
-              console.log("progresss",progress1)
+              setTempArguments({ resolve, reject, newRow, oldRow,mutation})
+              // console.log("progresss",progress1)
 
-              if(progress1){
-                setPromiseArguments({ resolve, reject, newRow, oldRow,mutation });    
-              }
+              // if(progress1){
+              //   setPromiseArguments({ resolve, reject, newRow, oldRow,mutation });    
+              // }
+            }else{
+              
             }
           }else{
             setPromiseArguments({ resolve, reject, newRow, oldRow,mutation });  
@@ -398,7 +412,7 @@ export default function AskConfirmationBeforeSave({blogId}) {
       // Make the HTTP request to save in the backend
       if(mutation.field ==="publishStatus"){
         console.log(
-          "here it is ------",newRow.publishStatus
+          "here it is ------",newRow.publishStatus, newRow.publishDate, oldRow.publishDate
         )
       }else{
 
