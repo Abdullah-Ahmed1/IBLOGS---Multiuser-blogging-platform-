@@ -9,9 +9,12 @@ import MenuItem from '@mui/material/MenuItem';
 import MenuList from '@mui/material/MenuList';
 import Stack from '@mui/material/Stack';
 import ReportDialog from './ReportDialog';
+import axios from "axios";
+import ReportSnack from './ReportSnack';
 
-export default function PostCardMenu() {
+export default function PostCardMenu({ownerId,postId}) {
   const [open, setOpen] = React.useState(false);
+  const [reportSnackOpen, setReportSnackOpen] = React.useState(false);
   const [openReportDialog, setOpenReportDialog] = React.useState(false);
   const [selectedValue, setSelectedValue] = React.useState();
 
@@ -19,9 +22,36 @@ export default function PostCardMenu() {
     setOpenReportDialog(true);
   };
 
-  const handleCloseDialogReport = (value) => {
+  const handleCloseReportSnack = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    setReportSnackOpen(false);
+  };
+
+  const handleCloseDialogReport = async(value1) => {
     setOpenReportDialog(false);
-    setSelectedValue(value);
+    console.log("---",postId)
+    setSelectedValue(value1);
+    const  data = {
+      postId : postId,
+      ownerId: ownerId,
+      reason: value1  
+    }
+    
+    let value = JSON.parse(localStorage.getItem("token"));
+    let token = value.token;
+    await axios.post('http://127.0.0.1:5000/readerDashboard/report',data,{
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+        Authorization: token,
+      },
+    })
+      setReportSnackOpen(true)
+    
+
   };
 
   const anchorRef = React.useRef(null);
@@ -60,6 +90,7 @@ export default function PostCardMenu() {
 
   return (
     <>
+    <ReportSnack  open= {reportSnackOpen} handleClose = {handleCloseReportSnack} />
     <ReportDialog  open={openReportDialog}  selectedValue={selectedValue}  handleClose={handleCloseDialogReport}   handleClickOpen={handleClickOpenDialReport}  />
     <Stack direction="row" spacing={2}>
      

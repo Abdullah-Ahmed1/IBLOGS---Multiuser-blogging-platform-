@@ -4,6 +4,7 @@ var connection = require("../Connection/connection");
 const Blog = Mongoose.model("Blog");
 const Post = Mongoose.model("Post");
 const Reply = Mongoose.model("Reply");
+const Report = Mongoose.model("Report");
 const SavedList = Mongoose.model("SavedList");
 const User = Mongoose.model("User");
 const Notification = Mongoose.model("Notification");
@@ -770,6 +771,34 @@ module.exports = {
         res.send(data);
       });
     });
+  },
+
+  addReport: (req, res) => {
+    console.log("reached--- report");
+    const postId = req.body.postId;
+    const ownerId = req.body.ownerId;
+    const reason = req.body.reason;
+    console.log(postId);
+    const token = req.headers["authorization"];
+    try {
+      const decoded = jwt.verify(token, "1234567");
+      const data = {
+        reporter: decoded.id,
+        info: {
+          postId: postId,
+          ownerId: ownerId,
+        },
+        reason: reason,
+        reportType: "post",
+        reportDate: new Date(),
+      };
+
+      Report.create(data).then((item) => {
+        res.send(item);
+      });
+    } catch (err) {
+      console.log(err);
+    }
   },
 
   // getFollowersOfUser: (req, res) => {

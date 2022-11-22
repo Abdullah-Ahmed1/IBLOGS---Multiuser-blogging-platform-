@@ -20,10 +20,12 @@ function SimpleDialog(props) {
 
   const handleClose = () => {
     onClose(selectedValue);
+    console.log("--*")
   };
 
   const handleListItemClick = (value) => {
     onClose(value);
+   
   };
 
   return (
@@ -60,9 +62,9 @@ SimpleDialog.propTypes = {
   selectedValue: PropTypes.string.isRequired,
 };
 
-export default function ReportDialog({open,selectedValue,handleClose}) {
+export default function ReportDialog({open,handleClose}) {
 //   const [open, setOpen] = React.useState(false);
-//   const [selectedValue, setSelectedValue] = React.useState(emails[1]);
+   const [selectedValue, setSelectedValue] = React.useState(emails[1]);
 
 //   const handleClickOpen = () => {
 //     setOpen(true);

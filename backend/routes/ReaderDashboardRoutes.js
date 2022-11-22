@@ -47,6 +47,7 @@ router
   .route("/get-reader-notifications")
   .get(ReaderDashController.getReaderNotifications);
 router.route("/get-blog-posts/:blogId").get(ReaderDashController.getBlogPosts);
+router.route("/report").post(ReaderDashController.addReport);
 // router
 //   .route("/get-user-followers")
 //   .get(ReaderDashController.getFollowersOfUser);

@@ -157,7 +157,7 @@ const ReaderPostCard = ({item,handleLikeClick})=>{
                   <Grid item lg ={2} sm={1} xs = {1}>
                       {/* icons here */}
                       {/* <MoreVertIcon  sx ={{color:"#05386b"}}  /> */}
-                      <PostCardMenu/>
+                      <PostCardMenu ownerId = {item.parentBlog.owner._id} postId={item._id} />
                   </Grid>
                   
               </Grid>
