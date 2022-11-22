@@ -1,5 +1,6 @@
 import Grid2 from '@mui/material/Unstable_Grid2';
 import CssBaseline from '@mui/material/CssBaseline';
+import axios from 'axios';
 import lottie from 'lottie-web';
 import { useEffect,useState,useRef } from 'react';
 const Notifications =()=>{
@@ -17,7 +18,16 @@ useEffect(()=>{
 
   })
   
-})
+},[])
+
+  useEffect(()=>{
+    axios.get(`http://127.0.0.1:5000/admin/get-notifications`)
+    .then(res=>{
+      console.log(res)
+    })
+  },[])
+
+
     return(
         <>
         <CssBaseline />

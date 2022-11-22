@@ -4,6 +4,7 @@ var connection = require("../Connection/connection");
 const Blog = Mongoose.model("Blog");
 const Post = Mongoose.model("Post");
 const Admin = Mongoose.model("Admin");
+const Notification = Mongoose.model("Notification");
 const Reply = Mongoose.model("Reply");
 const SavedList = Mongoose.model("SavedList");
 const User = Mongoose.model("User");
@@ -242,7 +243,60 @@ module.exports = {
       res.send(err);
     }
   },
+  getPostComments: (req, res) => {
+    const postId = req.params.postId;
 
+    try {
+      Post.findOne({ _id: postId })
+        .populate({
+          path: "comments",
+          populate: {
+            path: "author",
+            select: {
+              firstname: 1,
+              lastname: 1,
+              profileImage: 1,
+            },
+          },
+        })
+        .select({
+          postTitle: 1,
+        })
+        .exec()
+        .then((response) => res.send(response));
+    } catch (err) {
+      console.log(err);
+    }
+  },
+  getFullPost: (req, res) => {
+    console.log("Admin get fullPost reached");
+    const postId = req.params.postId;
+
+    Post.find({ _id: postId })
+      .populate({
+        path: "parentBlog",
+        select: { title: 1 },
+        populate: {
+          path: "owner",
+          select: { firstname: 1, lastname: 1, profileImage: 1, email: 1 },
+        },
+      })
+      .select({
+        title: 1,
+        postTitle: 1,
+        postContent: 1,
+        postDescription: 1,
+        postKeywords: 1,
+        publishDate: 1,
+        publishStatus: 1,
+        allowComments: 1,
+      })
+      .exec()
+      .then((data) => {
+        res.send({ data });
+      })
+      .catch((err) => console.log(err));
+  },
   getOneUser: (req, res) => {
     console.log("----*-*----", req.params.userId);
     const userId = req.params.userId;
@@ -261,6 +315,12 @@ module.exports = {
       .then((user) => {
         res.send(user);
       });
+  },
+  getNotification: (req, res) => {
+    console.log("admin get notifiacation reached");
+    Notification.find({ notificationType: "report" }).then((item) => {
+      res.send(item);
+    });
   },
   getPostOfBlog: (req, res) => {
     const blogId = req.params.blogId;

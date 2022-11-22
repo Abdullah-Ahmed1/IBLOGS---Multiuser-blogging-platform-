@@ -6,6 +6,7 @@ import axios from 'axios';
 import UserBlogs from './UserBlogs';
 import UserDetail from './UserDetail';
 import AdminBlogPosts from './AdminBlogPosts';
+import AdminFullPostViewPage from './AdminFullPostViewPage';
 
 const   Users = ()=>{
 
@@ -63,6 +64,7 @@ const   Users = ()=>{
               <Route exact path="/detail/:userId" element={<UserDetail  userData = {userData} />} />
               <Route exact path="/blogs/:userId" element={<UserBlogs   />} />
               <Route exact path="/blog-posts/:blogId" element={<AdminBlogPosts  />} />
+              <Route exact path="/full-postView/:postId" element={<AdminFullPostViewPage  />} />
 
         </Routes>
     )

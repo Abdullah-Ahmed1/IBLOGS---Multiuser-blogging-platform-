@@ -782,7 +782,7 @@ module.exports = {
     const token = req.headers["authorization"];
     try {
       const decoded = jwt.verify(token, "1234567");
-      const data = {
+      const data1 = {
         reporter: decoded.id,
         info: {
           postId: postId,
@@ -793,8 +793,25 @@ module.exports = {
         reportDate: new Date(),
       };
 
-      Report.create(data).then((item) => {
-        res.send(item);
+      Report.create(data1).then(async (item) => {
+        const user = await User.find({ _id: decoded.id });
+        const data2 = {
+          notificationText: "",
+          info: {
+            reporter: decoded.id,
+            ownerName: user.firstname + " " + user.lastname,
+            postId: postId,
+            ownerId: ownerId,
+            reason: reason,
+          },
+          notificationType: "report",
+          seen: false,
+          notificationDate: new Date(),
+        };
+        Notification.create(data2).then((data) => {
+          res.send(data);
+        });
+        // res.send(item);
       });
     } catch (err) {
       console.log(err);

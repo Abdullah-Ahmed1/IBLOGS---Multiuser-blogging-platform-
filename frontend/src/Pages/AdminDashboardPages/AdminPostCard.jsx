@@ -1,5 +1,6 @@
 import * as React from 'react';
 import './../../components/PostComponentsMui/PostCardMui.css'
+import { useNavigate } from 'react-router-dom';
 import Box from '@mui/material/Box';
 import Chip from '@mui/material/Chip';
 import Card from '@mui/material/Card';
@@ -29,7 +30,7 @@ const bull = (
 export default function AdminPostCard({item,handlePostDelete}) {
   const [postDeleteDialogOpen,setPostDeleteDialogOpen] =React.useState(false)
   const [shareDialogOpen,setShareDialogOpen] = React.useState(false) 
-
+  const navigate = useNavigate();
   const handleShareDialogClose = ()=>{
     setShareDialogOpen(false)
   }
@@ -62,7 +63,7 @@ export default function AdminPostCard({item,handlePostDelete}) {
         {/* <Button  onClick = {()=>setShareDialogOpen(true )}   sx = {{color:"#05386b"}} size="small"><ShareIcon/></Button> */}
         {/* <Button  sx = {{color:"#05386b"}} size="small"><EditIcon/></Button> */}
         <Button  onClick={()=>setPostDeleteDialogOpen(true)}  sx = {{color:"#05386b"}} size="small"><DeleteIcon /></Button>
-        <Button  sx = {{color:"#05386b"}} size="small"><VisibilityIcon/></Button>
+        <Button  onClick={()=>navigate(`/admin/users/full-postView/${item._id}`)}  sx = {{color:"#05386b"}} size="small"><VisibilityIcon/></Button>
         <Chip  sx = {{backgroundColor:"#379683",color:"white"}}  label={item.publishStatus} />
     </div>
     </CardContent>
