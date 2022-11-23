@@ -20,6 +20,7 @@ import AdminDashboard from "./Pages/AdminDashboardPages/AdminDashboard";
 import AdminLogin from "./Pages/AdminLogin";
 import Welcome from "./Pages/ReaderDashboard/Welcome";
 import UserProtectedRoute from "./components/ProtectedRoutes/UserProtectedRoute";
+import AdminProtectedRoute from "./components/ProtectedRoutes/AdminProtectedRoutes";
 
 const TRACKING_ID = "UA-167584801-1";
 reactGA.initialize(TRACKING_ID, {
@@ -27,6 +28,14 @@ reactGA.initialize(TRACKING_ID, {
     userId: 123,
   },
 });
+
+const validateAdmin = () => {
+  if (localStorage.getItem("adminToken")) {
+    return true;
+  } else {
+    return false;
+  }
+};
 
 const validateUserToken = (token) =>
   new Promise((resolve, reject) => {
@@ -89,9 +98,10 @@ function App() {
           <Route path="/bloggerdashboard/*" element={<Dashboard />} />
           <Route path="/readerdashboard/*" element={<ReaderDashboard />} />
         </Route>
-
+        <Route element={<AdminProtectedRoute isAuth={validateAdmin} />}>
+          <Route path="/admin/*" element={<AdminDashboard />} />
+        </Route>
         <Route exact path="/admin" element={<AdminLogin />} />
-        <Route path="/admin/*" element={<AdminDashboard />} />
 
         <Route exact path="*" element={<PageNotFound />} />
       </Routes>

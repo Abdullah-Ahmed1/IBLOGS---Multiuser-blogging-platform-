@@ -27,8 +27,17 @@ const AdminFullPostViewPage = ()=>{
     const [adminPostDeleteDialogOpen,setAdminPostDeleteDialogOpen] = useState(false)
 
     const handlePostDelete = async(id)=>{
+      let value = JSON.parse(localStorage.getItem("adminToken"));
+      let token = value.adminToken;
         console.log("reached handlePost Delete",id,post.parentBlog._id)
-        await axios.delete(`http://127.0.0.1:5000/admin/deletePost/${id}`)
+        
+        await axios.delete(`http://127.0.0.1:5000/admin/deletePost/${id}`,{
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+            Authorization: token,
+          },
+        })
 
         navigate(`/admin/users/blog-posts/${post.parentBlog._id}`)
     }
@@ -41,7 +50,15 @@ const AdminFullPostViewPage = ()=>{
     }
 
     useEffect(()=>{
-        axios.get(`http://127.0.0.1:5000/admin/get-fullPost/${postId}`)
+      let value = JSON.parse(localStorage.getItem("adminToken"));
+      let token = value.adminToken;
+        axios.get(`http://127.0.0.1:5000/admin/get-fullPost/${postId}`,{
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+            Authorization: token,
+          },
+        })
         .then(res=>{
             //console.log(res.data.data[0])
             setPost(res.data.data[0])
@@ -49,7 +66,15 @@ const AdminFullPostViewPage = ()=>{
     },[])  
 
     useEffect(()=>{
-        axios.get(`http://127.0.0.1:5000/admin/get-post-comments/${postId}`)
+      let value = JSON.parse(localStorage.getItem("adminToken"));
+      let token = value.adminToken;
+        axios.get(`http://127.0.0.1:5000/admin/get-post-comments/${postId}`,{
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+            Authorization: token,
+          },
+        })
         .then(res=>{
             console.log("--->",res.data)
             setComments(res.data)

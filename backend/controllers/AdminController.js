@@ -201,25 +201,30 @@ module.exports = {
     const postId = req.params.postId;
     console.log(postId);
     const comments = [];
+    const token = req.headers["authorization"];
+    try {
+      const decoded = jwt.verify(token, "1122334455");
+      await SavedList.updateOne({}, { $pull: { savedPosts: postId } });
+      await User.updateOne({}, { $pull: { ReadingList: postId } });
 
-    await SavedList.updateOne({}, { $pull: { savedPosts: postId } });
-    await User.updateOne({}, { $pull: { ReadingList: postId } });
+      Post.findOne({ _id: postId }).then(async (post) => {
+        if (post) {
+          comments.push(...post.comments);
+        }
 
-    Post.findOne({ _id: postId }).then(async (post) => {
-      if (post) {
-        comments.push(...post.comments);
-      }
+        await Promise.all(
+          comments.map(async (comment) => {
+            await Comment.deleteMany({ _id: comment });
+            await Reply.deleteMany({ parentComment: comment });
+          })
+        );
+        await Post.findByIdAndDelete({ _id: postId });
 
-      await Promise.all(
-        comments.map(async (comment) => {
-          await Comment.deleteMany({ _id: comment });
-          await Reply.deleteMany({ parentComment: comment });
-        })
-      );
-      await Post.findByIdAndDelete({ _id: postId });
-
-      res.send("Post Deleted Successfully");
-    });
+        res.send("Post Deleted Successfully");
+      });
+    } catch (err) {
+      res.send(err);
+    }
   },
   //------------------------------------------------------------------------------------------------------------------
   getAllBlogsOfUser: (req, res) => {
@@ -243,10 +248,12 @@ module.exports = {
       res.send(err);
     }
   },
+
   getPostComments: (req, res) => {
     const postId = req.params.postId;
-
+    const token = req.headers["authorization"];
     try {
+      const decoded = jwt.verify(token, "1122334455");
       Post.findOne({ _id: postId })
         .populate({
           path: "comments",
@@ -266,72 +273,98 @@ module.exports = {
         .then((response) => res.send(response));
     } catch (err) {
       console.log(err);
+      res.send(err);
     }
   },
   getFullPost: (req, res) => {
     console.log("Admin get fullPost reached");
     const postId = req.params.postId;
-
-    Post.find({ _id: postId })
-      .populate({
-        path: "parentBlog",
-        select: { title: 1 },
-        populate: {
-          path: "owner",
-          select: { firstname: 1, lastname: 1, profileImage: 1, email: 1 },
-        },
-      })
-      .select({
-        title: 1,
-        postTitle: 1,
-        postContent: 1,
-        postDescription: 1,
-        postKeywords: 1,
-        publishDate: 1,
-        publishStatus: 1,
-        allowComments: 1,
-      })
-      .exec()
-      .then((data) => {
-        res.send({ data });
-      })
-      .catch((err) => console.log(err));
+    const token = req.headers["authorization"];
+    try {
+      const decoded = jwt.verify(token, "1122334455");
+      Post.find({ _id: postId })
+        .populate({
+          path: "parentBlog",
+          select: { title: 1 },
+          populate: {
+            path: "owner",
+            select: { firstname: 1, lastname: 1, profileImage: 1, email: 1 },
+          },
+        })
+        .select({
+          title: 1,
+          postTitle: 1,
+          postContent: 1,
+          postDescription: 1,
+          postKeywords: 1,
+          publishDate: 1,
+          publishStatus: 1,
+          allowComments: 1,
+        })
+        .exec()
+        .then((data) => {
+          res.send({ data });
+        })
+        .catch((err) => console.log(err));
+    } catch (err) {
+      res.send(err);
+    }
   },
   getOneUser: (req, res) => {
     console.log("----*-*----", req.params.userId);
     const userId = req.params.userId;
-    User.findOne({ _id: userId })
-      .populate({
-        path: "followers",
-        select: {
-          firstname: 1,
-          lastname: 1,
-          profileImage: 1,
-        },
-      })
-      .populate({
-        path: "following",
-      })
-      .then((user) => {
-        res.send(user);
-      });
+    const token = req.headers["authorization"];
+    try {
+      const decoded = jwt.verify(token, "1122334455");
+      User.findOne({ _id: userId })
+        .populate({
+          path: "followers",
+          select: {
+            firstname: 1,
+            lastname: 1,
+            profileImage: 1,
+          },
+        })
+        .populate({
+          path: "following",
+        })
+        .then((user) => {
+          res.send(user);
+        });
+    } catch (err) {
+      res.send(err);
+    }
   },
+
   getNotification: (req, res) => {
-    console.log("admin get notifiacation reached");
-    Notification.find({ notificationType: "report" }).then((item) => {
-      res.send(item);
-    });
+    const token = req.headers["authorization"];
+    try {
+      const decoded = jwt.verify(token, "1122334455");
+      console.log("admin get notifiacation reached");
+      Notification.find({ notificationType: "report" }).then((item) => {
+        res.send(item);
+      });
+    } catch (err) {
+      res.send(err);
+    }
   },
   getPostOfBlog: (req, res) => {
     const blogId = req.params.blogId;
-
-    Post.find({ parentBlog: blogId })
-      .then((posts) => {
-        res.send(posts);
-      })
-      .catch((err) => {
-        res.send(err);
-      });
+    const token = req.headers["authorization"];
+    console.log(token);
+    try {
+      const decoded = jwt.verify(token, "1122334455");
+      Post.find({ parentBlog: blogId })
+        .then((posts) => {
+          res.send(posts);
+        })
+        .catch((err) => {
+          res.send(err);
+        });
+    } catch (err) {
+      //  console.log(err);
+      res.send(err);
+    }
   },
   // getUserFollowers : (req,res)=>{
   //   const userId = req.params.userId

@@ -14,8 +14,8 @@ const AdminBlogPosts = ()=>{
     const handlePostDelete=(postId)=>{
          console.log("postId",postId)
          console.log("reached handle Posr")
-        let value = JSON.parse(localStorage.getItem("token"));
-        let token = value.token;
+         let value = JSON.parse(localStorage.getItem("adminToken"));
+         let token = value.adminToken;
         axios.delete(`http://127.0.0.1:5000/admin/deletePost/${postId}`,{
           headers: {
             "Content-Type": "application/json",
@@ -24,7 +24,15 @@ const AdminBlogPosts = ()=>{
           },
         }).then(res=>{
           console.log(res)
-          axios.get(`http://127.0.0.1:5000/admin/getPosts-of-blog/${blogId}`)
+          let value = JSON.parse(localStorage.getItem("adminToken"));
+          let token = value.adminToken;
+          axios.get(`http://127.0.0.1:5000/admin/getPosts-of-blog/${blogId}`,{
+            headers: {
+              "Content-Type": "application/json",
+              Accept: "application/json",
+              Authorization: token,
+            },
+          })
           .then(res=>{
               console.log("--//",res.data)
               setPosts(res.data)
@@ -44,7 +52,15 @@ const AdminBlogPosts = ()=>{
         
       },[])
     useEffect(()=>{
-        axios.get(`http://127.0.0.1:5000/admin/getPosts-of-blog/${blogId}`)
+      let value = JSON.parse(localStorage.getItem("adminToken"));
+      let token = value.adminToken;
+        axios.get(`http://127.0.0.1:5000/admin/getPosts-of-blog/${blogId}`,{
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+            Authorization: token,
+          },
+        })
         .then(res=>{
             console.log("--//",res.data)
             setPosts(res.data)

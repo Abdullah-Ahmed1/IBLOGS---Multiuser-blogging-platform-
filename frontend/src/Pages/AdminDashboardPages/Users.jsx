@@ -8,7 +8,7 @@ import UserDetail from './UserDetail';
 import AdminBlogPosts from './AdminBlogPosts';
 import AdminFullPostViewPage from './AdminFullPostViewPage';
 
-const   Users = ()=>{
+const Users = ()=>{
 
     const [userData,setUserData] = useState(null) 
 

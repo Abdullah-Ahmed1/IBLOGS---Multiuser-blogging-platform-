@@ -22,13 +22,19 @@ const UserDetail = ()=>{
     let { userId } = useParams();
 
 useEffect(()=>{
-    axios.get(`http://127.0.0.1:5000/admin/get-one-user/${userId}`)
+    let value = JSON.parse(localStorage.getItem("adminToken"));
+    let token = value.adminToken;
+    axios.get(`http://127.0.0.1:5000/admin/get-one-user/${userId}`,{
+        headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+            Authorization: token,
+          },
+    })
     .then(res=>{
         console.log("---->",res.data)
         setUser(res.data)
     })
-
-    
 
 },[])
 
