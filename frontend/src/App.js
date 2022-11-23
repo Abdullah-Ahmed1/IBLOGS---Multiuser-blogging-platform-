@@ -1,7 +1,8 @@
-import logo from "./logo.svg";
+// import logo from "./logo.svg";
 import "./App.css";
-import Login from "./Pages/LoginForm";
-import Register from "./Pages/RegisterForm";
+import axios from "axios";
+// import Login from "./Pages/LoginForm";
+// import Register from "./Pages/RegisterForm";
 import { Routes, Route, Link } from "react-router";
 import reactGA from "react-ga";
 import Home from "./Pages/Home";
@@ -18,6 +19,7 @@ import AdminDashboard from "./Pages/AdminDashboardPages/AdminDashboard";
 //import YourProfile from "./components/ProfileComps/ProfileInfo";
 import AdminLogin from "./Pages/AdminLogin";
 import Welcome from "./Pages/ReaderDashboard/Welcome";
+import UserProtectedRoute from "./components/ProtectedRoutes/UserProtectedRoute";
 
 const TRACKING_ID = "UA-167584801-1";
 reactGA.initialize(TRACKING_ID, {
@@ -25,6 +27,47 @@ reactGA.initialize(TRACKING_ID, {
     userId: 123,
   },
 });
+
+const validateUserToken = (token) =>
+  new Promise((resolve, reject) => {
+    axios
+      .post("http://127.0.0.1:5000/me", null, {
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+          Authorization: token,
+        },
+      })
+      .then(function (response) {
+        resolve(true);
+      })
+      .catch(function (error) {
+        reject(false);
+      });
+  });
+
+const checkUserSession = () => {
+  if (localStorage.getItem("token")) {
+    let value = JSON.parse(localStorage.getItem("token"));
+    let token = value.token;
+    // let value = JSON.parse(localStorage.getItem('token'));
+    // let token ='Bearer ';
+    // if(value!==null){
+    //   token = token +value.token;
+    // }
+    return validateUserToken(token)
+      .then((res) => {
+        return true;
+      })
+      .catch(() => {
+        console.log("----------");
+        return false;
+      });
+  } else {
+    console.log("===========");
+    return false;
+  }
+};
 
 function App() {
   return (
@@ -41,10 +84,12 @@ function App() {
           element={<NewPassword />}
         />
         <Route exact path="/users/:id/verify/:token" element={<VerifyUser />} />
-        <Route exact path="/welcome" element={<Welcome />} />
+        <Route element={<UserProtectedRoute isAuth={checkUserSession} />}>
+          <Route exact path="/welcome" element={<Welcome />} />
+          <Route path="/bloggerdashboard/*" element={<Dashboard />} />
+          <Route path="/readerdashboard/*" element={<ReaderDashboard />} />
+        </Route>
 
-        <Route path="/bloggerdashboard/*" element={<Dashboard />} />
-        <Route path="/readerdashboard/*" element={<ReaderDashboard />} />
         <Route exact path="/admin" element={<AdminLogin />} />
         <Route path="/admin/*" element={<AdminDashboard />} />
 
