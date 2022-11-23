@@ -91,10 +91,12 @@ module.exports = {
           ids: "ga:" + view_id,
           "start-date": "10daysAgo",
           "end-date": "today",
-          dimensions: "ga:pagePath,ga:pageTitle,ga:date",
-          metrics: "ga:pageviews",
+          dimensions: "ga:pagePath,ga:date",
+          metrics: "ga:pageViews,ga:sessions",
+          // dimensions: "ga:pagePath,ga:pageTitle,ga:date",
+          // metrics: "ga:pageviews",
         });
-        console.log(response.data.rows);
+        console.log(response.data);
       } catch (err) {
         console.log(err);
       }

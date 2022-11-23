@@ -794,13 +794,16 @@ module.exports = {
       };
 
       Report.create(data1).then(async (item) => {
-        const user = await User.find({ _id: decoded.id });
+        const user = await User.findOne({ _id: decoded.id });
+        const post = await Post.findOne({ _id: postId });
         const data2 = {
           notificationText: "",
           info: {
             reporter: decoded.id,
-            ownerName: user.firstname + " " + user.lastname,
+            reporterName: user.firstname + " " + user.lastname,
+            reporterImage: user.profileImage,
             postId: postId,
+            postTitle: post.postTitle,
             ownerId: ownerId,
             reason: reason,
           },

@@ -6,9 +6,13 @@ import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
 import Grid2 from '@mui/material/Unstable_Grid2';
 import { styled } from '@mui/material/styles';
 import Paper from '@mui/material/Paper';
+import ArticleIcon from '@mui/icons-material/Article';
 import CssBaseline from '@mui/material/CssBaseline';
+import FeedIcon from '@mui/icons-material/Feed';
 //------------
 import "./../../components/PostComponentsMui/PostCardScroll.css";
+import UserLineChart from '../../components/AdminDashComps/UserLineChart';
+import PostLineChart from './../../components/AdminDashComps/PostLineChart';
 
 // const Item = styled(Paper)(({ theme }) => ({
 //     backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
@@ -56,7 +60,47 @@ const ReaderHome = ()=>{
             
               </Grid2>
               <Grid2>
-            <h2 style={{margin:"0px",padding:"0px"}}></h2>
+            <h2 style={{margin:"0px",padding:"0px"}}>5</h2>
+            </Grid2>    
+            </Grid2>
+            
+          </Grid2>
+          
+        </Paper>
+        </Grid2>
+        <Grid2 xs={12} md={6} lg={6}>
+        <Paper sx = {{height:"70px"}}>
+          <Grid2 container>
+            <Grid2  container  sx={{margin:"auto"}} flexDirection="row" alignItems = "center" justifyContent={"space-around"}   >
+              <Grid2>
+                <ArticleIcon/>
+              </Grid2>
+              <Grid2>
+              <h2 style={{margin:"0px",padding:"0px"}}>Total Blogs</h2>
+            
+              </Grid2>
+              <Grid2>
+            <h2 style={{margin:"0px",padding:"0px"}}>10</h2>
+            </Grid2>    
+            </Grid2>
+            
+          </Grid2>
+          
+        </Paper>
+        </Grid2>
+        <Grid2 xs={12} md={6} lg={6}>
+        <Paper sx = {{height:"70px"}}>
+          <Grid2 container>
+            <Grid2  container  sx={{margin:"auto"}} flexDirection="row" alignItems = "center" justifyContent={"space-around"}   >
+              <Grid2>
+                <FeedIcon/>
+              </Grid2>
+              <Grid2>
+              <h2 style={{margin:"0px",padding:"0px"}}>Total Posts</h2>
+            
+              </Grid2>
+              <Grid2>
+            <h2 style={{margin:"0px",padding:"0px"}}>10</h2>
             </Grid2>    
             </Grid2>
             
@@ -72,11 +116,11 @@ const ReaderHome = ()=>{
                 <PeopleAltIcon/>
               </Grid2>
               <Grid2>
-              <h2 style={{margin:"0px",padding:"0px"}}>Total Blogs</h2>
+              <h2 style={{margin:"0px",padding:"0px"}}>Total Comments</h2>
             
               </Grid2>
               <Grid2>
-            <h2 style={{margin:"0px",padding:"0px"}}>10</h2>
+            <h2 style={{margin:"0px",padding:"0px"}}>20</h2>
             </Grid2>    
             </Grid2>
             
@@ -85,7 +129,15 @@ const ReaderHome = ()=>{
         </Paper>
         </Grid2>
        </Grid2>
-       
+       <Grid2 container flexDirection={"row"} spacing = {3} >
+          <Grid2 lg = {6}>
+            <UserLineChart/>
+          </Grid2>
+          <Grid2 lg = {6}>
+            <PostLineChart/>
+          </Grid2>
+       </Grid2>
+        
        
        
      

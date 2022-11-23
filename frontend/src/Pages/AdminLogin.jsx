@@ -5,6 +5,7 @@ import axios from "axios"
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
+import Paper from '@mui/material/Paper';
 import TextField from '@mui/material/TextField';
 //import FormControlLabel from '@mui/material/FormControlLabel';
 //import Checkbox from '@mui/material/Checkbox';
@@ -79,7 +80,7 @@ export default function AdminLogin() {
           Invalid username or password!
         </Alert>
       </Snackbar>
-      <Container  sx = {{backgroundColor:"white",width:500,height:500,borderRadius:"10px"}} component="main" maxWidth="xs">
+      <Container  sx = {{backgroundColor:"white",width:500,height:500,borderRadius:"10px"}} component={Paper} maxWidth="xs">
         <CssBaseline />
         <Box
           sx={{
@@ -90,7 +91,9 @@ export default function AdminLogin() {
       
             
           }}
+          
         >
+
           <Avatar sx={{ m: 1, bgcolor: ' #05386b' }}>
             <LockOutlinedIcon sx = {{color:"#5cdb95"}}/>
           </Avatar>

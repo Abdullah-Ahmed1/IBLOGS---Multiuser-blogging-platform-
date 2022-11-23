@@ -3,6 +3,8 @@ import CssBaseline from '@mui/material/CssBaseline';
 import axios from 'axios';
 import lottie from 'lottie-web';
 import { useEffect,useState,useRef } from 'react';
+import { CircularProgress } from '@mui/material';
+import AdminNotificationBar from './../../components/AdminDashComps/AdminNotificationBar';
 const Notifications =()=>{
   const container = useRef(null)
   
@@ -24,6 +26,7 @@ useEffect(()=>{
     axios.get(`http://127.0.0.1:5000/admin/get-notifications`)
     .then(res=>{
       console.log(res)
+      setNotifications(res.data)
     })
   },[])
 
@@ -44,10 +47,27 @@ useEffect(()=>{
         <Paper sx = {{padding:"15px"}}>
        yReportsItems/> */}
         </div> 
-       <h3>Notifications will be shown here</h3>
-       <div style={{margin:"auto"}}>
-       <div className='container' ref={container} style={{width:"350px"}}  ></div>
-       </div>
+        <h3>Notifications</h3>
+        {
+          notifications?(
+            notifications.length> 0? (
+              
+              notifications.map(notification=>{
+                return <AdminNotificationBar key={notification._id} notification = {notification} />
+              })
+              
+            ):(
+
+              <div style={{margin:"auto"}}>
+              <div className='container' ref={container} style={{width:"350px"}}  ></div>
+              </div>
+            )
+          ):(
+            <CircularProgress/>
+          )
+        }
+       {/* <h3>Notifications will be shown here</h3> */}
+      
        
      
         {/* ---------------------------------------------------------------- */}
