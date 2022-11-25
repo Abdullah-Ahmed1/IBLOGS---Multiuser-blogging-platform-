@@ -30,6 +30,9 @@ export default function PostCardMenu({ownerId,postId}) {
     setReportSnackOpen(false);
   };
 
+  const handleCloseDialogReportSimple = ()=>{
+    setOpenReportDialog(false);
+  }
   const handleCloseDialogReport = async(value1) => {
     setOpenReportDialog(false);
     console.log("---",postId)
@@ -60,7 +63,7 @@ export default function PostCardMenu({ownerId,postId}) {
     setOpen((prevOpen) => !prevOpen);
   };
 
-  const handleClose = (event) => {
+  const handleClose1 = (event) => {
     if (anchorRef.current && anchorRef.current.contains(event.target)) {
       return;
     }
@@ -68,6 +71,13 @@ export default function PostCardMenu({ownerId,postId}) {
     setOpen(false);
     handleClickOpenDialReport();
   };
+  const handleClose = (event)=>{
+    if (anchorRef.current && anchorRef.current.contains(event.target)) {
+      return;
+    }
+
+    setOpen(false); 
+  }
 
   function handleListKeyDown(event) {
     if (event.key === 'Tab') {
@@ -91,7 +101,7 @@ export default function PostCardMenu({ownerId,postId}) {
   return (
     <>
     <ReportSnack  open= {reportSnackOpen} handleClose = {handleCloseReportSnack} />
-    <ReportDialog  open={openReportDialog}  selectedValue={selectedValue}  handleClose={handleCloseDialogReport}   handleClickOpen={handleClickOpenDialReport}  />
+    <ReportDialog  open={openReportDialog}  selectedValue={selectedValue}  handleClose={handleCloseDialogReport} handleClose1 = {handleCloseDialogReportSimple}  handleClickOpen={handleClickOpenDialReport}  />
     <Stack direction="row" spacing={2}>
      
       <div>
@@ -140,7 +150,7 @@ export default function PostCardMenu({ownerId,postId}) {
                     aria-labelledby="composition-button"
                     onKeyDown={handleListKeyDown}
                   >
-                    <MenuItem onClick={handleClose}>Report this post</MenuItem>
+                    <MenuItem onClick={handleClose1}>Report this post</MenuItem>
                     {/* <MenuItem onClick={handleClose}>My account</MenuItem>
                     <MenuItem onClick={handleClose}>Logout</MenuItem> */}
                   </MenuList>

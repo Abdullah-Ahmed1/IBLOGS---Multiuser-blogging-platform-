@@ -13,10 +13,10 @@ import AddIcon from '@mui/icons-material/Add';
 import Typography from '@mui/material/Typography';
 import { blue } from '@mui/material/colors';
 
-const emails = ['Its spam', 'hate speech','scam or fraud'];
+const reasons = ['Its spam', 'hate speech','scam or fraud'];
 
 function SimpleDialog(props) {
-  const { onClose, selectedValue, open } = props;
+  const { onClose,onClose1, selectedValue, open } = props;
 
   const handleClose = () => {
     onClose(selectedValue);
@@ -29,17 +29,17 @@ function SimpleDialog(props) {
   };
 
   return (
-    <Dialog onClose={handleClose} open={open}>
+    <Dialog onClose={onClose1} open={open}>
       <DialogTitle>Choose Reason for Report</DialogTitle>
       <List sx={{ pt: 0 }}>
-        {emails.map((email) => (
-          <ListItem button onClick={() => handleListItemClick(email)} key={email}>
+        {reasons.map((reason) => (
+          <ListItem button onClick={() => handleListItemClick(reason)} key={reason}>
             {/* <ListItemAvatar>
               {/* <Avatar sx={{ bgcolor: blue[100], color: blue[600] }}>
                 <PersonIcon /> */}
               {/* </Avatar> */}
             {/* </ListItemAvatar> */} 
-            <ListItemText primary={email} />
+            <ListItemText primary={reason} />
           </ListItem>
         ))}
 
@@ -62,9 +62,9 @@ SimpleDialog.propTypes = {
   selectedValue: PropTypes.string.isRequired,
 };
 
-export default function ReportDialog({open,handleClose}) {
+export default function ReportDialog({open,handleClose,handleClose1}) {
 //   const [open, setOpen] = React.useState(false);
-   const [selectedValue, setSelectedValue] = React.useState(emails[1]);
+   const [selectedValue, setSelectedValue] = React.useState(reasons[1]);
 
 //   const handleClickOpen = () => {
 //     setOpen(true);
@@ -83,6 +83,7 @@ export default function ReportDialog({open,handleClose}) {
         selectedValue={selectedValue}
         open={open}
         onClose={handleClose}
+        onClose1 = {handleClose1}
       />
     </div>
   );

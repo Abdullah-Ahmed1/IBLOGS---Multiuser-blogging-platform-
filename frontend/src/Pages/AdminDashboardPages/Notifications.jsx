@@ -23,7 +23,15 @@ useEffect(()=>{
 },[])
 
   useEffect(()=>{
-    axios.get(`http://127.0.0.1:5000/admin/get-notifications`)
+    let value = JSON.parse(localStorage.getItem("adminToken"));
+    let token = value.adminToken;
+    axios.get(`http://127.0.0.1:5000/admin/get-notifications`,{
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+        Authorization: token,
+      },
+    })
     .then(res=>{
       console.log(res)
       setNotifications(res.data)
