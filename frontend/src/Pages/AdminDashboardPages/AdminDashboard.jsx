@@ -20,6 +20,7 @@ import User from './Users';
 import WeeklyReports from './WeeklyReports';
 import Notifications from './Notifications';
 import AdminLogin from './../AdminLogin';
+import AdminEmailing from './AdminEmailing';
 var _  =require('lodash')
 
 //----------------------------------------------------------------
@@ -93,6 +94,7 @@ export default function AdminDashboard() {
        <Route exact path="/home" element={<AdminHome />} />
        <Route exact path="/weeklyReports" element={<WeeklyReports />} />
        <Route exact path="/notifications" element={<Notifications />} />
+       <Route exact path="/email" element={<AdminEmailing />} />
        <Route  path="/users/*" element={<User/>} />
        
        </Routes>

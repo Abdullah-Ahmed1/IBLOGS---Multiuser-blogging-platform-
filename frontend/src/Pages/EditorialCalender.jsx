@@ -358,7 +358,7 @@ export default function AskConfirmationBeforeSave({blogId}) {
     (newRow, oldRow) =>
     
       new Promise((resolve, reject) => {
-        console.log("---/",newRow);
+        console.log("---/",newRow); 
         const mutation = computeMutation(newRow, oldRow);
         if (mutation) {
           // Save the arguments to resolve or reject the promise later

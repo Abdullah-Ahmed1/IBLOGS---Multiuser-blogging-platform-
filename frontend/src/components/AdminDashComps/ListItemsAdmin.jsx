@@ -10,7 +10,9 @@ import BarChartIcon from '@mui/icons-material/BarChart';
 import {Link} from 'react-router-dom' 
 import Divider from '@mui/material/Divider';
 import Tooltip from '@mui/material/Tooltip';
+import EmailIcon from '@mui/icons-material/Email';
 import DriveFileRenameOutlineIcon from '@mui/icons-material/DriveFileRenameOutline';
+
 const List_ItemsAdmin = ()=>{
     return(
         <>
@@ -39,6 +41,15 @@ const List_ItemsAdmin = ()=>{
         <ListItemButton>
           <ListItemIcon>
             <NotificationsActiveIcon sx={{ color:"#379863",fontSize:"25px", marginBottom:"10px" }} />
+          </ListItemIcon> 
+        </ListItemButton>
+        </Link>
+        </Tooltip>
+        <Tooltip title="Emailing" placement="right" arrow>
+        <Link to ='/admin/emails' >
+        <ListItemButton>
+          <ListItemIcon>
+            <EmailIcon sx={{ color:"#379863",fontSize:"25px", marginBottom:"10px" }} />
           </ListItemIcon> 
         </ListItemButton>
         </Link>

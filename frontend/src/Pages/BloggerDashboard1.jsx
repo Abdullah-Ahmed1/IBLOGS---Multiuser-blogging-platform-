@@ -252,11 +252,11 @@ function DashboardContent() {
             <AccountMenu  profileData={profileData} />
 
           {/* ------------------------------------------ */}
-          <IconButton color="inherit">
+          {/* <IconButton color="inherit">
             <Badge badgeContent={4} color="secondary">
               <Notifications sx = {{color:"#05386b"}} />
             </Badge>
-          </IconButton>
+          </IconButton> */}
         </Toolbar>
       </AppBar>
       <ThemeProvider theme={mdTheme2}>

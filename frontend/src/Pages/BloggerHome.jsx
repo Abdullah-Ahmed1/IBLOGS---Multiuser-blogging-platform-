@@ -334,17 +334,32 @@ const blogFormSubmit =  ()=>{
              <h2>Your blogs</h2>
               <Grid container direction="row"  rowSpacing = {1} columnSpacing={5}     >
                  {
-                  !blogs ? ( <h5>You have not created any blog yet</h5>)
-                  :
+                  // !blogs ? ( <h5>You have not created any blog yet</h5>)
+                  // :
                   
-                  blogs.map((item)=>{
-                    return (
-                      <Grid item lg={3.5} md = {6}  key = {item._id}  xs = {12} >
-                        <BlogCard  item = {item}  key = {item._id} />
-                      </Grid>
-                    )
-                  })
+                  // blogs.map((item)=>{
+                  //   return (
+                  //     <Grid item lg={3.5} md = {6}  key = {item._id}  xs = {12} >
+                  //       <BlogCard  item = {item}  key = {item._id} />
+                  //     </Grid>
+                  //   )
+                  // })
                   
+                  blogs? (
+                    blogs.length> 0 ? (
+                      blogs.map((item)=>{
+                          return (
+                            <Grid item lg={3.5} md = {6}  key = {item._id}  xs = {12} >
+                              <BlogCard  item = {item}  key = {item._id} />
+                            </Grid>
+                          )
+                        })
+                    ):(
+                      <h2 style ={{margin:"auto"}}>No blogs to show</h2>
+                    ) 
+                  ):(
+                    <h2>Loading</h2>
+                  )
                  }         
 
                 {/* <Grid item lg={4} md = {6}  xs = {12} >
