@@ -1,6 +1,7 @@
 const Mongoose = require("mongoose");
 const jwt = require("jsonwebtoken");
 var connection = require("../Connection/connection");
+const sendEmail = require("../utils/sendEmail");
 const Blog = Mongoose.model("Blog");
 const Post = Mongoose.model("Post");
 const Admin = Mongoose.model("Admin");
@@ -366,6 +367,20 @@ module.exports = {
       res.send(err);
     }
   },
+
+  sendEmail: async (req, res) => {
+    console.log("send email reached");
+    const token = req.headers["authorization"];
+    try {
+      const decoded = jwt.verify(token, "1122334455");
+      await sendEmail(req.body.email, req.body.subject, req.body.body);
+
+      res.send("email end successfully");
+    } catch (err) {
+      console.log(err);
+    }
+  },
+
   // getUserFollowers : (req,res)=>{
   //   const userId = req.params.userId
 

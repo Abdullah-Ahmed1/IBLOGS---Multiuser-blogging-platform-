@@ -17,4 +17,5 @@ router.route("/getPosts-of-blog/:blogId").get(AdminController.getPostOfBlog);
 router.route("/get-fullPost/:postId").get(AdminController.getFullPost);
 router.route("/get-post-comments/:postId").get(AdminController.getPostComments);
 router.route("/get-notifications").get(AdminController.getNotification);
+router.route("/send-email").post(AdminController.sendEmail);
 module.exports = router;
