@@ -20,6 +20,8 @@ router.route("/update-post/:postId").post(BlogController.updatePost);
 router.route("/schedule").get(BlogController.startSchedule);
 router.route("/stop").get(BlogController.stopSchedule);
 
+router.route("/add-event").post(BlogController.addEvent);
+router.route("/get-events").get(BlogController.getEvents);
 // router.route("/temp").get(BlogController.tempMethod);
 // router.route("/temp").get(BlogController.tempMethod1);
 

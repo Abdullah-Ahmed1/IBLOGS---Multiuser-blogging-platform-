@@ -6,6 +6,7 @@ import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import BlogCard from './../BlogComps/BlogCardMui';
 import Grid2 from '@mui/material/Unstable_Grid2';
+import AuthorBlogCard from './../ReaderDashComponents/AuthorBlogCard';
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -64,7 +65,7 @@ export default function ProfileInfoTabs({userData}) {
 
             return (
               <Grid2>
-                <BlogCard  item={blog}  />
+                <AuthorBlogCard  item={blog}  />
               </Grid2>
             )
           })

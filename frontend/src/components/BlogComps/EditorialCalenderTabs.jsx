@@ -11,7 +11,7 @@ import { useEffect } from 'react';
 import axios from "axios"
 import { indexOf } from 'lodash';
 import EditorialCalender from '../../Pages/EditorialCalender';
-import Schedular from './../../Pages/Schedular';
+import Schedular from '../../Pages/Schedular';
 
 function TabPanel(props) {
     const { children, value, index, ...other } = props;

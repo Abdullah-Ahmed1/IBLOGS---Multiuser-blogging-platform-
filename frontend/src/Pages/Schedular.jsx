@@ -1,113 +1,184 @@
 import { Scheduler } from "@aldabil/react-scheduler";
-
+import {useState,useEffect} from "react";
+import  axios  from 'axios';
+import { parseISO,addDays, parse } from "date-fns";
+  
 const EVENTS = [
-    {
-      event_id: 1,
-      title: "Event 1",
-      start: new Date(new Date(new Date().setHours(9)).setMinutes(0)),
-      end: new Date(new Date(new Date().setHours(10)).setMinutes(0)),
-      disabled: true,
-      admin_id: [1, 2, 3, 4]
-    },
-    {
-      event_id: 2,
-      title: "Event 2",
-      start: new Date(new Date(new Date().setHours(10)).setMinutes(0)),
-      end: new Date(new Date(new Date().setHours(12)).setMinutes(0)),
-      admin_id: 2,
-      color: "#50b500"
-    },
-    {
-      event_id: 3,
-      title: "Event 3",
-      start: new Date(new Date(new Date().setHours(11)).setMinutes(0)),
-      end: new Date(new Date(new Date().setHours(12)).setMinutes(0)),
-      admin_id: 1,
-      editable: false,
-      deletable: false
-    },
-    {
-      event_id: 4,
-      title: "Event 4",
-      start: new Date(
-        new Date(new Date(new Date().setHours(9)).setMinutes(30)).setDate(
-          new Date().getDate() - 2
-        )
-      ),
-      end: new Date(
-        new Date(new Date(new Date().setHours(11)).setMinutes(0)).setDate(
-          new Date().getDate() - 2
-        )
-      ),
-      admin_id: 2,
-      color: "#900000"
-    },
-    {
-      event_id: 5,
-      title: "Event 5",
-      start: new Date(
-        new Date(new Date(new Date().setHours(10)).setMinutes(30)).setDate(
-          new Date().getDate() - 2
-        )
-      ),
-      end: new Date(
-        new Date(new Date(new Date().setHours(14)).setMinutes(0)).setDate(
-          new Date().getDate() - 2
-        )
-      ),
-      admin_id: 2,
-      editable: true
-    },
-    {
-      event_id: 6,
-      title: "Event 6",
-      start: new Date(
-        new Date(new Date(new Date().setHours(10)).setMinutes(30)).setDate(
-          new Date().getDate() - 4
-        )
-      ),
-      end: new Date(new Date(new Date().setHours(14)).setMinutes(0)),
-      admin_id: 2
-    }
+  {
+    event_id: "63834923d6d01b679116dcbb",
+    title: "Event 1234",
+    start: new Date(new Date(new Date().setHours(9)).setMinutes(0)),
+    end: new Date(new Date(new Date().setHours(10)).setMinutes(0)),
+    
+  },
+  {
+    event_id: 2,
+    title: "Event 2",
+    start: new Date(new Date(new Date().setHours(10)).setMinutes(0)),
+    end: new Date(new Date(new Date().setHours(12)).setMinutes(0)),
+    
+  },
+  {
+    event_id: 3,
+    title: "Event 3",
+    start: new Date('Mon Nov 28 2022 12:02:36 GMT+0500 (Pakistan Standard Time)'),
+    end: new Date('Mon Nov 28 2022 13:02:36 GMT+0500 (Pakistan Standard Time)'),
+  
+  },
+    
+   
   ];
   
 
 export default function Schedular() {
-  return (
-    <Scheduler
-      events={EVENTS}
-      view="week"
-      day={null}
-      month={null}
-      eventRenderer={(event) => {
-        if (+event.event_id % 2 === 0) {
-          return (
-            <div
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                justifyContent: "space-between",
-                height: "100%"
-              }}
-            >
-              <div
-                style={{ height: 20, background: "#ffffffb5", color: "black" }}
-              >
-                {event.start.toLocaleTimeString("en-US", {
-                  timeStyle: "short"
-                })}
-              </div>
-              <div>{event.title}</div>
-              <div
-                style={{ height: 20, background: "#ffffffb5", color: "black" }}
-              >
-                {event.end.toLocaleTimeString("en-UD", { timeStyle: "short" })}
-              </div>
-            </div>
-          );
+
+  const [events,setEvents] = useState([{
+    event_id: "63834923d6d01b679116dcbb",
+    title: "Event 1234",
+    start: new Date(new Date(new Date().setHours(9)).setMinutes(0)),
+    end: new Date(new Date(new Date().setHours(10)).setMinutes(0)),
+    
+  },
+  {
+    event_id: 2,
+    title: "Event 2",
+    start: new Date(new Date(new Date().setHours(10)).setMinutes(0)),
+    end: new Date(new Date(new Date().setHours(12)).setMinutes(0)),
+    
+  } ])
+
+  const handleRemote = async (viewEvent)=>{
+    console.log("eventssss",viewEvent)
+    let value = JSON.parse(localStorage.getItem('token'));
+    let token = value.token
+     const response = await axios.get("http://127.0.0.1:5000/BloggerDashboard/get-events",{
+      headers:{
+        "Content-Type":"application/json",
+        "Accept":"application/json",
+        "Authorization": token 
+      }
+    })
+
+    const res1 = response.data.map(item=>{
+      return(
+        {
+          event_id : item.event_id,
+          title: item.title,
+          start: new Date (item.start),
+          end: new Date(item.end)
         }
-        return null;
-      }}
-    />
+      )
+    }) 
+    setEvents([...events,...res1])
+console.log("/*/*/*/",events)
+
+    return new Promise((res,rej)=>{
+      res(events)
+   })
+  }
+    const handleConfirm =(event,action)=> {
+    return new Promise((resolve,reject)=>{
+       console.log("//-----//",typeof(event.start),"------",action)
+       if (action === "edit") {
+          console.log("edit clicked")
+      } else if (action === "create") {
+        const  data = {
+          title:event.title,
+          start: event.start,
+          end : event.end
+        }
+        let value = JSON.parse(localStorage.getItem('token'));
+        let token = value.token
+        axios.post("http://127.0.0.1:5000/BloggerDashboard/add-event",data,{
+          headers:{
+            "Content-Type":"application/json",
+            "Accept":"application/json",
+            "Authorization": token 
+          }
+        })
+        .then(res=>{
+          resolve({
+                ...event,
+                event_id: event.event_id || Math.random()
+              });
+        })
+      }
+      
+      
+    })
+
+    
+
+  }
+  useEffect(()=>{
+    let value = JSON.parse(localStorage.getItem('token'));
+    let token = value.token 
+    axios.get("http://127.0.0.1:5000/BloggerDashboard/get-events",{
+      headers:{
+        "Content-Type":"application/json",
+        "Accept":"application/json",
+        "Authorization": token 
+      }
+    }).then(response=>{
+      setEvents([...(response.data.map(item=>{
+        return({
+          event_id: item.event_id,
+          title:item.title,
+          start: new Date(item.start),
+          end: new Date(item.end)
+      })
+      }))])
+    })
+  },[])
+  return (
+    <>
+    {
+      events?(
+        <Scheduler
+         events={events}
+       // view="week"
+       // day={null}
+       // onConfirm={()=>console.log("-----")}
+        onConfirm = {handleConfirm}
+        // getRemoteEvents={handleRemote}
+       // month={null}
+       // eventRenderer={(event) => {
+       //   console.log("---><-----")
+       //   if (+event.event_id % 2 === 0) {
+       //     return (
+       //       <div
+       //         style={{
+       //           display: "flex",
+       //           flexDirection: "column",
+       //           justifyContent: "space-between",
+       //           height: "100%"
+       //         }}
+       //       >
+       //         <div
+       //           style={{ height: 20, background: "#ffffffb5", color: "black" }}
+       //         >
+       //           {event.start.toLocaleTimeString("en-US", {
+       //             timeStyle: "short"
+       //           })}
+       //         </div>
+       //         <div>{event.title}</div>
+       //         <div
+       //           style={{ height: 20, background: "#ffffffb5", color: "black" }}
+       //         >
+       //           {event.end.toLocaleTimeString("en-UD", { timeStyle: "short" })}
+       //         </div>
+       //       </div>
+       //     );
+       //   }
+       //   return null;
+       // }}
+     />
+      ):(
+        <div>Nothing to show</div>
+      )
+    }
+    </>
+   
+   
   );
 }

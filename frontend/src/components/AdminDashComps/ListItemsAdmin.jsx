@@ -46,7 +46,7 @@ const List_ItemsAdmin = ()=>{
         </Link>
         </Tooltip>
         <Tooltip title="Emailing" placement="right" arrow>
-        <Link to ='/admin/emails' >
+        <Link to ='/admin/email' >
         <ListItemButton>
           <ListItemIcon>
             <EmailIcon sx={{ color:"#379863",fontSize:"25px", marginBottom:"10px" }} />

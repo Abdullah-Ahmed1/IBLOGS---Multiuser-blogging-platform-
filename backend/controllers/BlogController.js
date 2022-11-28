@@ -4,11 +4,13 @@ var connection = require("../Connection/connection");
 const Blog = Mongoose.model("Blog");
 const Comment = Mongoose.model("Comment");
 const Post = Mongoose.model("Post");
+const Event = Mongoose.model("Event");
 const Notification = Mongoose.model("Notification");
 const Reply = Mongoose.model("Reply");
 const { User, validate } = require("../models/users.model");
 //const { Post, validate } = require("../models/post.model");
 const schedule = require("node-schedule");
+const date = require("date-fns");
 
 module.exports = {
   addBlog: async (req, res) => {
@@ -443,6 +445,58 @@ module.exports = {
 
   stopSchedule: (req, res) => {
     schedule.cancelJob("1123");
+  },
+
+  addEvent: (req, res) => {
+    console.log("reached addEvent----------");
+    const token = req.headers["authorization"];
+    try {
+      const decoded = jwt.verify(token, "1234567");
+      Event.create({ ...req.body, ownerId: decoded.id }).then((event) => {
+        res.send(event);
+      });
+    } catch (err) {
+      res.send(err);
+    }
+  },
+  getEvents: (req, res) => {
+    console.log("-------get events -------");
+    const token = req.headers["authorization"];
+    try {
+      const decoded = jwt.verify(token, "1234567");
+      const projection = {
+        _id: 0,
+        event_id: "$_id",
+        title: "$title",
+        start: date.parseISO("$start"),
+        end: date.parseISO("$end"),
+      };
+      Event.find({ ownerId: decoded.id }, projection).then((events) => {
+        console.log("--*--", date.addDays(date.parseISO(events[0].start), 1));
+        // var e = events.map((event) => {
+        //   event.start = date.parse(event.start);
+        //   event.end = date.parse(event.end);
+        // });
+        // console.log(e);
+        res.send(events);
+      });
+      // Event.aggregate([
+      //   { $match: { ownerId: decoded.id } },
+      //   {
+      //     $project: {
+      //       event_id: _id,
+      //       title: title,
+      //       start: start,
+      //       end: end,
+      //     },
+      //   },
+      // ]).then((events) => {
+      //   console.log(events);
+      //   res.send(events);
+      // });
+    } catch (err) {
+      res.send(err);
+    }
   },
 
   // --this is a method below to add any field to already added document

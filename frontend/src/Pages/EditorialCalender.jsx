@@ -549,7 +549,7 @@ const columns  = [
     {
       field: 'likes',
       headerName: 'Likes',
-      type: 'String',
+     
       width: 220,
       renderCell: (params)=>{
         return params.value.length
@@ -566,7 +566,7 @@ const columns  = [
     {
       field: 'Categories',
       headerName: 'Categories',
-      type: 'String',
+      // type: 'String',
       width: 220,
     },
   ]
