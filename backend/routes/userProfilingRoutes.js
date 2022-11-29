@@ -6,6 +6,9 @@ router.route("/hello").get(profilingController.main);
 
 router.route("/register").post(profilingController.insertUser);
 router.route("/login").post(profilingController.login);
+router
+  .route("/update-lastLogin-date")
+  .post(profilingController.addLastLoginDate);
 router.route("/me").get(profilingController.me);
 router.route("/forget").post(profilingController.forgetPassword);
 router.route("/findUser/:id").get(profilingController.findUser);

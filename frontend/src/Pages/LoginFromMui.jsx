@@ -64,10 +64,11 @@ export default function SignInSide() {
                 token:res.data.data
                 
             }));
-            if(!res.data.firstLogin){
-              navigate('/readerdashboard')
-            }else{
+            if(res.data.firstLogin){
               navigate('/welcome')
+             
+            }else{
+              navigate('/readerdashboard') 
               
             }
             

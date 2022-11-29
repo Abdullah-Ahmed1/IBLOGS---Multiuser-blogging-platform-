@@ -331,7 +331,7 @@ const blogFormSubmit =  ()=>{
         </Grid2>
         <Grid2>
         <Box sx={{ flexGrow: 1 }}>
-             <h2>Your blogs</h2>
+             <h2 stlye = {{color:"#05386b"}}>Your blogs</h2>
               <Grid container direction="row"  rowSpacing = {1} columnSpacing={5}     >
                  {
                   // !blogs ? ( <h5>You have not created any blog yet</h5>)

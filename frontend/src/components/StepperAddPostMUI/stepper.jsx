@@ -8,6 +8,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import Grid2 from '@mui/material/Unstable_Grid2';
 import Step from '@mui/material/Step';
 import PropTypes from 'prop-types';
+import LabelIcon from '@mui/icons-material/Label';
 import SendIcon from '@mui/icons-material/Send';
 import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
 //import { MobileDatePicker } from '@mui/x-date-pickers/MobileDatePicker';
@@ -49,9 +50,11 @@ import lottie from 'lottie-web'
 import { useRef, useEffect } from 'react';
 import { useState } from 'react';
 import ConfirmBox from './ConfirmBox';
+import TagSelect from './TagSelect';
+import Step2BackDrop from './Step2Backdrop';
 var h2p = require("html2plaintext");
 
-const steps = ['Post Details','Text Generation', 'Create post', 'Upload Options'];
+const steps = ['Post Details','Text Generation', 'Create post','Post Tags', 'Upload Options'];
 
   const QontoStepIconRoot = styled('div')(({ theme, ownerState }) => ({
     color: theme.palette.mode === 'dark' ? theme.palette.grey[700] : '#eaeaf0',
@@ -150,7 +153,8 @@ const steps = ['Post Details','Text Generation', 'Create post', 'Upload Options'
       1: <InfoIcon fontSize='small' />,
       2: <CreateIcon fontSize='small'/>,
       3: <CreateIcon fontSize='small'/>,
-      4: <PublishIcon fontSize='small'/>,
+      4:<LabelIcon fontSize='small' />,
+      5: <PublishIcon fontSize='small'/>,
     };
   
     return (
@@ -453,7 +457,7 @@ ColorlibStepIcon.propTypes = {
 
   ////////////////////////////////////////////////////////////////////////////////
   ///-----------------------------------------
-  const GetStepContent = ({activeStep,nextWord,handleSave,handleClickGenerate,generatedText,handlePostCardImage,handlePostTitle,handlePostDescription,handlePostKeywords,handlePostContent,postContent,handleAllowComments,allowComments,handlePublishStatus,handlePublishDate,publishDate,handleSchedule,handlePublish,openBox,handleOpenBox}) => {
+  const GetStepContent = ({activeStep,nextWord,tags,handleSave,handleClickGenerate,generatedText,handlePostCardImage,handlePostTitle,handlePostDescription,handlePostKeywords,handlePostContent,postContent,handleAllowComments,allowComments,handlePublishStatus,handlePublishDate,publishDate,handleSchedule,handlePublish,openBox,handleOpenBox}) => {
     console.log()
     switch (activeStep) {
       case 0:
@@ -471,7 +475,10 @@ ColorlibStepIcon.propTypes = {
           
       case 2:
         return <MyEditor  nextWord = {nextWord}  handlePostContent =  {handlePostContent} generatedText = {generatedText} postContent = {postContent}/>
-      case 3:
+      
+      case 3 : 
+        return <TagSelect tags = {tags}/>    
+      case 4:
         return (
             <UploadOptions  allowComments = {allowComments} 
             handleAllowComments ={handleAllowComments}  
@@ -853,6 +860,11 @@ const nextWord = (postContent) => {
   const container = useRef(null)
   const [activeStep, setActiveStep] = React.useState(0);
   const [skipped, setSkipped] = React.useState(new Set());
+  const [step2BackDropOpen, setStep2BackDropOpen] = useState(false)
+  const [tags,setTags] = useState([])
+  const step2BackDropHandleClose = () => {
+    setStep2BackDropOpen(false);
+  };
 
   const isStepOptional = (step) => {
     return step === 1;
@@ -866,8 +878,10 @@ const nextWord = (postContent) => {
   console.log("activeStep",activeStep)
     
   if(activeStep ==2){
+    setStep2BackDropOpen(true)
     const data = {value: "Web development is the work involved in developing a website for the Internet (World Wide Web) or an intranet (a private network).[1] Web development can range from developing a simple single static page of plain text to complex web applications, electronic businesses, and social network services. A more comprehensive list of tasks to which Web development commonly refers, may include Web engineering, Web design, Web content development, client liaison, client-side/server-side scripting, Web server and network security configuration, and e-commerce development.Among Web professionals, Web development usually refers to the main non-design aspects of building Web sites: writing markup and coding.[2] Web development may use content management systems (CMS) to make content changes easier and available with basic technical skills.For larger organizations and businesses, Web development teams can consist of hundreds of people (Web developers) and follow standard methods like Agile methodologies while developing Web sites. Smaller organizations may only require a single permanent or contracting developer, or secondary assignment to related job positions such as a graphic designer or information systems technician. Web development may be a collaborative effort between departments rather than the domain of a designated department. There are three kinds of Web developer specialization: front-end developer, back-end developer, and full-stack developer.[3] Front-end developers are responsible for behavior and visuals that run in the user browser, while back-end developers deal with the servers. Since the commercialization of the Web with Tim Berners-Lee[4] developing the World Wide Web at CERN, the industry has boomed and has become one of the most used technologies ever."}
     const temp = ` ${h2p(postContent)} ` 
+
     console.log("----------------------------------//",h2p(postContent)) 
      axios.post("http://127.0.0.1:3001/classify",
       {value: temp}
@@ -875,8 +889,10 @@ const nextWord = (postContent) => {
      )
      .then(res=>{
        console.log("classification",res.data)
-       
+       setTags(res.data)
+       setStep2BackDropOpen(false)
      })
+     .catch((err)=>{console.log(err)})
 
     }
 
@@ -927,6 +943,7 @@ const nextWord = (postContent) => {
 
   return (
     <Box sx={{ width: '100%' }}>
+      <Step2BackDrop   open = {step2BackDropOpen} handleClose={step2BackDropHandleClose} />
       <div  style={{display:"flex",flexDirection:"row",backgroundColor:"#379683"}}>
       <div style={{paddingTop:"25px"}}>
         <h3 style={{marginTop:"0px",paddingTop:"0px",marginLeft:"20px",color:"#05386b"}}><span><CreateIcon sx = {{paddingTop:"5px"}}/></span>Create Post</h3>
@@ -971,10 +988,17 @@ const nextWord = (postContent) => {
                
           <Box sx={{ display: 'flex', flexDirection: 'column', pt: 2 }}>
           <Paper elevation={3} sx = {{minHeight:"500px"}}  >
-            <div  style={{display: 'flex', flexDirection: 'row',justifyContent:"space-between" ,pt: 2}} >
-              <div  onClick = {handleWordClick}  style={{cursor:"pointer",padding:"10px 20px",border: "2px solid black",borderRadius:"5px"}}>
-                {tempWord}
-              </div>  
+            <div  style={activeStep!==2? {display:"flex",justifyContent:"flex-end"}: {display: 'flex', flexDirection: 'row',justifyContent:"space-between" ,pt: 2}} >
+              {
+                activeStep === 2?(
+                  <div  onClick = {handleWordClick}  style={{cursor:"pointer",padding:"10px 20px",border: "2px solid black",borderRadius:"5px"}}>
+                  {tempWord}
+                </div>  
+                ):(
+                  null
+                )
+              }
+             
             <div style={{display:'flex',flexDirection:'row'}}>         
             <Button
               color="inherit"
@@ -1017,6 +1041,7 @@ const nextWord = (postContent) => {
                  openBox={openBox}
                  nextWord={nextWord}
                  handleOpenBox = {handleOpenBox}
+                 tags ={tags}
                  
                  />
             </Paper>

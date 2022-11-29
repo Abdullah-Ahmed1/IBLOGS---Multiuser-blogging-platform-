@@ -1,6 +1,9 @@
 import Grid2 from '@mui/material/Unstable_Grid2';
 import Box from '@mui/material/Box';
 import { createStyles, makeStyles } from '@mui/styles';
+import { useState,useEffect } from 'react';
+import axios from "axios";
+
 const useStyles = makeStyles((theme)=>({
     root:{
      // height :'100vh',
@@ -15,6 +18,20 @@ const useStyles = makeStyles((theme)=>({
 const Welcome = ()=>{
     
       const classes = useStyles();
+
+
+    useEffect(()=>{
+        let value = JSON.parse(localStorage.getItem("token"));
+        let token = value.token;
+        axios.post(`http://127.0.0.1:5000/update-lastLogin-date`,{},{
+            headers: {
+                "Content-Type": "application/json",
+                Accept: "application/json",
+                Authorization: token,
+              },
+        })            
+    },[])
+
 return(
     <Box className={classes.root}>
     <Grid2 container direction={"column"} sx={{padding:"10px",minHeight:"90vh",background:"rgba(92, 219, 149,0.95)",}} >

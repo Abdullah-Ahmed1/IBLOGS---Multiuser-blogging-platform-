@@ -116,6 +116,24 @@ module.exports = {
     }
   },
 
+  addLastLoginDate: (req, res) => {
+    console.log("add-last-login-date  reached");
+    const token = req.headers["authorization"];
+    try {
+      const decoded = jwt.verify(token, "1234567");
+      User.findByIdAndUpdate(
+        { _id: decoded.id },
+        {
+          lastLogin: new Date(),
+        }
+      ).then((user) => {
+        res.send(user);
+      });
+    } catch (err) {
+      res.send(err);
+    }
+  },
+
   login: async (req, res) => {
     const user = await User.findOne({ email: req.body.email });
     console.log("---------------------", user);
