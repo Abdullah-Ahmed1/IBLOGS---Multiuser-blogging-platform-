@@ -16,6 +16,9 @@ var postSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  tags: {
+    type: [],
+  },
   postKeywords: {
     type: [],
     required: true,

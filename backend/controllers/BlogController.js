@@ -540,7 +540,7 @@ module.exports = {
   //     // const a = new Date();
   //     await Post.updateMany(
   //       {},
-  //       { $set: { dateCreated: "" } },
+  //       { $set: { tags: [] } },
   //       { upsert: false, multi: true }
   //     );
   //   } catch (err) {

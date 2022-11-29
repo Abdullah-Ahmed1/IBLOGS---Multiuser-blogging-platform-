@@ -3,6 +3,7 @@ import Box from '@mui/material/Box';
 import { createStyles, makeStyles } from '@mui/styles';
 import { useState,useEffect } from 'react';
 import axios from "axios";
+import WelcomeTagsArray from './../../components/ReaderDashComponents/WelcomeTagsArray';
 
 const useStyles = makeStyles((theme)=>({
     root:{
@@ -18,7 +19,7 @@ const useStyles = makeStyles((theme)=>({
 const Welcome = ()=>{
     
       const classes = useStyles();
-
+        const [tags,setTags] = useState([])
 
     useEffect(()=>{
         let value = JSON.parse(localStorage.getItem("token"));
@@ -30,6 +31,21 @@ const Welcome = ()=>{
                 Authorization: token,
               },
         })            
+    },[])
+
+    useEffect(()=>{
+        axios.get(`http://127.0.0.1:5000/get-tags`).
+        then(res=>{
+            setTags(res.data.map((item,index)=>{
+                return(
+                    {
+                        key:index,
+                        label: item 
+                    }
+                )
+            }))
+        })
+
     },[])
 
 return(
@@ -44,7 +60,7 @@ return(
             <h2>Which categories you are interested in?</h2>
             </Grid2>
             <Grid2 sx = {{backgroundColor:"white",padding:"15px",minHeight:"450px",borderRadius:"10px",boxShadow:"0 4px 8px 0 rgba(0,0,0, 0.9), 0 6px 20px 0 rgba(0,0,0, 0.9)"  }}>
-                sdjfnskdfjnsdkfjsdnksnfsdjfnsdkfsnskdnffdskfnsdkfnk
+                <WelcomeTagsArray tags={tags}/>
             </Grid2>
             
         </Grid2 >

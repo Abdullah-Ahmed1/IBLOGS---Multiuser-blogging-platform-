@@ -3,6 +3,7 @@ const jwt = require("jsonwebtoken");
 var connection = require("../Connection/connection");
 //const User = Mongoose.model("User");
 const { User, validate } = require("../models/users.model");
+const Post = Mongoose.model("Post");
 const Token = require("../models/token");
 const crypto = require("crypto");
 const sendEmail = require("../utils/sendEmail");
@@ -237,5 +238,25 @@ module.exports = {
     } catch (err) {
       return res.send({ err: err, message: "token may not be valid" });
     }
+  },
+
+  getTags: (req, res) => {
+    console.log("get tags reached");
+    Post.find({})
+      .select({
+        tags: 1,
+      })
+      .then(async (tags) => {
+        const temp = [];
+
+        await Promise.all(
+          tags.map((item) => {
+            temp.push(...item.tags);
+          })
+        );
+
+        console.log(temp);
+        res.send(temp);
+      });
   },
 };

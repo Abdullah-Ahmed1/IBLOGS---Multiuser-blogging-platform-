@@ -21,4 +21,6 @@ router
 router.route("/getProfile").get(profilingController.findProfile);
 router.route("/updateProfile").post(profilingController.updateProfile);
 
+router.route("/get-tags").get(profilingController.getTags);
+
 module.exports = router;
