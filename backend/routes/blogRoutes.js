@@ -22,6 +22,9 @@ router.route("/stop").get(BlogController.stopSchedule);
 
 router.route("/add-event").post(BlogController.addEvent);
 router.route("/get-events").get(BlogController.getEvents);
+router.route("/edit-event").post(BlogController.editEvent);
+router.route("/delete-event/:eventId").delete(BlogController.deleteEvent);
+
 // router.route("/temp").get(BlogController.tempMethod);
 // router.route("/temp").get(BlogController.tempMethod1);
 

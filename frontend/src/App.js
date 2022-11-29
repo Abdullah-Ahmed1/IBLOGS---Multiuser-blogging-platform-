@@ -40,7 +40,7 @@ const validateAdmin = () => {
 const validateUserToken = (token) =>
   new Promise((resolve, reject) => {
     axios
-      .post("http://127.0.0.1:5000/me", null, {
+      .get("http://127.0.0.1:5000/me", {
         headers: {
           "Content-Type": "application/json",
           Accept: "application/json",

@@ -468,11 +468,11 @@ module.exports = {
         _id: 0,
         event_id: "$_id",
         title: "$title",
-        start: date.parseISO("$start"),
-        end: date.parseISO("$end"),
+        start: "$start",
+        end: "$end",
       };
       Event.find({ ownerId: decoded.id }, projection).then((events) => {
-        console.log("--*--", date.addDays(date.parseISO(events[0].start), 1));
+        // console.log("--*--", date.addDays(date.parseISO(events[0].start), 1));
         // var e = events.map((event) => {
         //   event.start = date.parse(event.start);
         //   event.end = date.parse(event.end);
@@ -494,6 +494,39 @@ module.exports = {
       //   console.log(events);
       //   res.send(events);
       // });
+    } catch (err) {
+      res.send(err);
+    }
+  },
+  editEvent: (req, res) => {
+    console.log("edit events reached");
+    const token = req.headers["authorization"];
+    try {
+      const decoded = jwt.verify(token, "1234567");
+      Event.findByIdAndUpdate(
+        { _id: req.body.event_id },
+        {
+          title: req.body.title,
+          start: req.body.start,
+          end: req.body.end,
+        }
+      ).then((event) => {
+        res.send(event);
+      });
+    } catch (err) {
+      res.send(err);
+    }
+  },
+  deleteEvent: (req, res) => {
+    console.log("delete event reached");
+    const eventId = req.params.eventId;
+    console.log(eventId);
+    const token = req.headers["authorization"];
+    try {
+      const decoded = jwt.verify(token, "1234567");
+      Event.findByIdAndDelete({ _id: eventId }).then((event) => {
+        res.send(event);
+      });
     } catch (err) {
       res.send(err);
     }

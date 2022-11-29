@@ -32,20 +32,15 @@ const EVENTS = [
 
 export default function Schedular() {
 
-  const [events,setEvents] = useState([{
-    event_id: "63834923d6d01b679116dcbb",
-    title: "Event 1234",
-    start: new Date(new Date(new Date().setHours(9)).setMinutes(0)),
-    end: new Date(new Date(new Date().setHours(10)).setMinutes(0)),
+  const [events,setEvents] = useState([
+  // {
+  //   event_id: "er53k4jnf4k34",
+  //   title: "Event 2",
+  //   start: new Date(new Date(new Date().setHours(10)).setMinutes(0)),
+  //   end: new Date(new Date(new Date().setHours(12)).setMinutes(0)),
     
-  },
-  {
-    event_id: 2,
-    title: "Event 2",
-    start: new Date(new Date(new Date().setHours(10)).setMinutes(0)),
-    end: new Date(new Date(new Date().setHours(12)).setMinutes(0)),
-    
-  } ])
+  // }
+ ])
 
   const handleRemote = async (viewEvent)=>{
     console.log("eventssss",viewEvent)
@@ -78,9 +73,30 @@ console.log("/*/*/*/",events)
   }
     const handleConfirm =(event,action)=> {
     return new Promise((resolve,reject)=>{
-       console.log("//-----//",typeof(event.start),"------",action)
+       console.log("//-----//",event,"------",action)
        if (action === "edit") {
           console.log("edit clicked")
+          console.log("1122",event.event_id)
+          let value = JSON.parse(localStorage.getItem('token'));
+          let token = value.token 
+          const  data1 = {
+            event_id: event.event_id,
+            title:event.title,
+            start: event.start,
+            end : event.end
+          }
+          axios.post(`http://127.0.0.1:5000/BloggerDashboard/edit-event`,data1,{
+            headers:{
+              "Content-Type":"application/json",
+              "Accept":"application/json",
+              "Authorization": token 
+            }
+          }).then(res=>{
+            resolve({
+              ...event,
+              event_id: event.event_id || Math.random()
+            });
+          })
       } else if (action === "create") {
         const  data = {
           title:event.title,
@@ -110,6 +126,24 @@ console.log("/*/*/*/",events)
     
 
   }
+
+  const handleDelete = async(deletedId)=>{  return new Promise((resolve,reject)=>{
+    console.log("****/-",deletedId)
+    let value = JSON.parse(localStorage.getItem('token'));
+    let token = value.token
+    axios.delete(`http://127.0.0.1:5000/BloggerDashboard/delete-event/${deletedId}`,{
+      headers:{
+        "Content-Type":"application/json",
+        "Accept":"application/json",
+        "Authorization": token 
+      }
+    }).then(response=>{
+      resolve(deletedId);   
+    })
+
+   
+  })}
+  
   useEffect(()=>{
     let value = JSON.parse(localStorage.getItem('token'));
     let token = value.token 
@@ -120,7 +154,9 @@ console.log("/*/*/*/",events)
         "Authorization": token 
       }
     }).then(response=>{
-      setEvents([...(response.data.map(item=>{
+      console.log("-----***",response.data)
+      console.log("***////",EVENTS)
+      console.log("thissss",[...events,...(response.data.map((item,index)=>{
         return({
           event_id: item.event_id,
           title:item.title,
@@ -128,6 +164,15 @@ console.log("/*/*/*/",events)
           end: new Date(item.end)
       })
       }))])
+      setEvents([...events,...(response.data.map((item,index)=>{
+        return({
+          event_id: item.event_id,
+          title:item.title,
+          start: new Date(item.start),
+          end: new Date(item.end)
+      })
+      }))])
+
     })
   },[])
   return (
@@ -140,6 +185,7 @@ console.log("/*/*/*/",events)
        // day={null}
        // onConfirm={()=>console.log("-----")}
         onConfirm = {handleConfirm}
+        onDelete = {handleDelete}
         // getRemoteEvents={handleRemote}
        // month={null}
        // eventRenderer={(event) => {

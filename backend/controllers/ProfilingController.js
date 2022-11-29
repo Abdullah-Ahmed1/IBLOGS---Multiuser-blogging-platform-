@@ -150,7 +150,7 @@ module.exports = {
 
   me: (req, res) => {
     const token = req.headers["authorization"];
-    // console.log(token);
+    // console.log("---", token);
     try {
       const decoded = jwt.verify(token, "1234567");
       // console.log("--->>", decoded);
