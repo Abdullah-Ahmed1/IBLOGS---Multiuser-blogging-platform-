@@ -5,6 +5,7 @@ const Blog = Mongoose.model("Blog");
 const Post = Mongoose.model("Post");
 const Reply = Mongoose.model("Reply");
 const Report = Mongoose.model("Report");
+const History = Mongoose.model("History");
 const SavedList = Mongoose.model("SavedList");
 const User = Mongoose.model("User");
 const Notification = Mongoose.model("Notification");
@@ -818,6 +819,39 @@ module.exports = {
       });
     } catch (err) {
       console.log(err);
+    }
+  },
+  addToHistory: async (req, res) => {
+    console.log("add to history reached");
+    const token = req.headers["authorization"];
+    const postId = req.body.post;
+    try {
+      const decoded = jwt.verify(token, "1234567");
+      const ownerId = decoded.id;
+      const history = await History.findOne({ owner: decoded.id });
+      console.log("1111", history);
+      if (history) {
+        if (!history.posts.includes(postId)) {
+          History.updateOne(
+            { owner: decoded.id },
+            {
+              $push: { posts: postId },
+            }
+          ).then((history) => {
+            console.log(history);
+          });
+        }
+      } else {
+        console.log("reached----");
+        History.create({
+          owner: ownerId,
+          posts: [postId],
+        }).then((history) => {
+          console.log(history);
+        });
+      }
+    } catch (err) {
+      res.send(err);
     }
   },
 

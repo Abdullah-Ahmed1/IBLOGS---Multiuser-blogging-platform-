@@ -48,6 +48,20 @@ const ReaderFullPostView = ()=>{
 
     },[])   
 
+    useEffect(()=>{
+      let value = JSON.parse(localStorage.getItem("token"));
+      let token = value.token;
+      const data = {post : id}
+      axios.post(`http://127.0.0.1:5000/readerDashboard/add-to-history`,data,{
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+          Authorization: token,
+        },
+      })
+
+    },[])
+
     return(
         <>
             {/* <SimpleBackdrop open ={open} handleClose={handleClose}/> */}

@@ -48,6 +48,8 @@ router
   .get(ReaderDashController.getReaderNotifications);
 router.route("/get-blog-posts/:blogId").get(ReaderDashController.getBlogPosts);
 router.route("/report").post(ReaderDashController.addReport);
+
+router.route("/add-to-history").post(ReaderDashController.addToHistory);
 // router
 //   .route("/get-user-followers")
 //   .get(ReaderDashController.getFollowersOfUser);
