@@ -25,7 +25,7 @@ router.route("/get-events").get(BlogController.getEvents);
 router.route("/edit-event").post(BlogController.editEvent);
 router.route("/delete-event/:eventId").delete(BlogController.deleteEvent);
 
-//  router.route("/temp").get(BlogController.tempMethod);
+router.route("/temp").get(BlogController.tempMethod);
 // router.route("/temp").get(BlogController.tempMethod1);
 
 module.exports = router;

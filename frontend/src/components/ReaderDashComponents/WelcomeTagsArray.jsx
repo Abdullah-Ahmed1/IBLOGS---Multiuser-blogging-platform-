@@ -9,7 +9,7 @@ const ListItem = styled('li')(({ theme }) => ({
   margin: theme.spacing(0.5),
 }));
 
-export default function WelcomeTagsArray({tags}) {
+export default function WelcomeTagsArray({tags,handleChipClick,selected}) {
     console.log(tags)
   const [chipData, setChipData] = React.useState([
     { key: 0, label: 'Angular' },
@@ -45,7 +45,8 @@ export default function WelcomeTagsArray({tags}) {
         return (
           <ListItem key={data.key}>
             <Chip
-              
+              sx = {selected.includes(data)?{backgroundColor:"#05386b",color:"white",'&:hover:':{backgroundColor:"#05386b"}}:{backgroundColor:"none"}}
+              onClick={()=>handleChipClick(data)}
               label={data.label}
               
             />
