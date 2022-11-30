@@ -8,7 +8,7 @@ import Button from '@mui/material/Button';
 import WelcomeTagsArray from './../../components/ReaderDashComponents/WelcomeTagsArray';
 import SendIcon from '@mui/icons-material/Send';
 import TextField from '@mui/material/TextField';
-
+import { useNavigate } from 'react-router-dom';
 
 const useStyles = makeStyles((theme)=>({
     root:{
@@ -22,12 +22,16 @@ const useStyles = makeStyles((theme)=>({
     }
   }))
 const Welcome = ()=>{
+    const navigate = useNavigate()
     const container = useRef(null)
       const classes = useStyles();
         const [tags,setTags] = useState([])
         const [selected,setSelected] = useState([])    
-
-
+    //-------------------------------------------------------
+        const[profession,setProfession] = useState("")
+        const[organization,setOrganization] = useState("")
+        const[about,setAbout] = useState("")
+         
        const handleChipClick = (tag)=>{
         console.log("!!",tag)
         if(selected.includes(tag)){
@@ -39,6 +43,32 @@ const Welcome = ()=>{
         }
         
        }        
+
+       const handleNext = ()=>{
+
+        const data = {
+            profession:profession,
+            organization:organization,
+            about:about,
+            tags:selected.map(item=> {
+                return(
+                    item.label
+                )
+            })
+        }
+        let value = JSON.parse(localStorage.getItem("token"));
+        let token = value.token;
+            axios.post('http://127.0.0.1:5000/add-profile-info',{data},{
+                headers: {
+                    "Content-Type": "application/json",
+                    Accept: "application/json",
+                    Authorization: token,
+                  }, 
+            }).then(res=>{
+                navigate("/readerDashboard")
+            })
+       }
+
 
        useEffect(()=>{
     
@@ -88,13 +118,13 @@ return(
     <Grid2  container  justifyContent = {"center"}  direction = {"row"}  spacing = {3} sx = {{padding:"10px 20px"}}>
             <Grid2 container direction={"column"} columnSpacing={3}  lg={5} sx = {{backgroundColor:"white",padding:"25px",borderRadius:"10px",boxShadow:"0 4px 8px 0 rgba(0,0,0, 0.9), 0 6px 20px 0 rgba(0,0,0, 0.9)"  }}  >
                 <h3 style = {{color:"#05386b"}}>Tell us about yourself!</h3>
-                <TextField id="standard-basic" label="Organization" variant="standard" />
-                <TextField sx = {{marginTop:"15px"}} id="standard-basic" label="Profession" variant="standard" />
-                <TextField sx = {{marginTop:"15px"}} id="standard-basic" multiline rows = {4} label="About" variant="standard" />
-                <h3 style = {{color:" "}}>
+                <TextField  value={organization} onChange={(e)=> setOrganization(e.target.value)} id="standard-basic" label="Organization" variant="standard" />
+                <TextField value={profession} onChange={(e)=> setProfession(e.target.value)} sx = {{marginTop:"15px"}} id="standard-basic" label="Profession" variant="standard" />
+                <TextField value={about} onChange={(e)=> setAbout(e.target.value)} sx = {{marginTop:"15px"}} id="standard-basic" multiline rows = {4} label="About" variant="standard" />
+                <h3 style = {{color:"#05386b"}}>
                     Select tags you are interested in!   
                 </h3>
-                <div style={{maxHeight:"150px"}}>
+                <div style={{maxHeight:"150px",overflow:"auto"}}>
                     <WelcomeTagsArray tags={tags} handleChipClick={handleChipClick} selected={selected} />
                 </div>
             </Grid2>
@@ -108,7 +138,7 @@ return(
         
     </Grid2>
     <div style = {{padding:"0px 30px", display:"flex", justifyContent:"flex-end"}}>
-    <Button sx = {{backgroundColor:"#05386b"}} variant="contained" endIcon={<SendIcon />}>Next</Button>
+    <Button  onClick = {handleNext} sx = {{backgroundColor:"#05386b"}} variant="contained" endIcon={<SendIcon />}>Next</Button>
     </div>
     </Grid2>
     

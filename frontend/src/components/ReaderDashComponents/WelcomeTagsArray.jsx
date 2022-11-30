@@ -10,7 +10,7 @@ const ListItem = styled('li')(({ theme }) => ({
 }));
 
 export default function WelcomeTagsArray({tags,handleChipClick,selected}) {
-    console.log(tags)
+      
   const [chipData, setChipData] = React.useState([
     { key: 0, label: 'Angular' },
     { key: 1, label: 'jQuery' },

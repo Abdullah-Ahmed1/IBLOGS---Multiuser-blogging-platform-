@@ -259,4 +259,39 @@ module.exports = {
         res.send(temp);
       });
   },
+  addProfileInfo: (req, res) => {
+    console.log("add info profile  reached ");
+    console.log(req.body);
+    const profession = req.body.data.profession;
+    const organization = req.body.organization;
+    const about = req.body.about;
+    const tags = req.body.tags;
+    const token = req.headers["authorization"];
+    console.log("$$", profession);
+    try {
+      const decoded = jwt.verify(token, "1234567");
+      console.log(decoded.id);
+      User.updateOne(
+        { _id: decoded.id },
+        {
+          $set: {
+            profession: req.body.data.profession,
+            organization: req.body.data.organization,
+            about: req.body.data.about,
+            tagsInterestedIn: req.body.data.tags,
+          },
+        }
+        // { upsert: false, multi: true }
+      )
+
+        .then((user) => {
+          res.send("user info updated");
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    } catch (err) {
+      res.send(err);
+    }
+  },
 };
