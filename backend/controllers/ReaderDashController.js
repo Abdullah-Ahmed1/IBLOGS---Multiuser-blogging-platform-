@@ -93,7 +93,9 @@ module.exports = {
           // console.log(data);
           res.send(
             response.filter(
-              (item) => item.parentBlog.owner._id.toString() !== decoded.id
+              (item) =>
+                item.parentBlog.owner._id.toString() !== decoded.id &&
+                item.publishStatus === "published"
             )
           );
         })
@@ -146,7 +148,9 @@ module.exports = {
           // console.log(data);
           res.send(
             response.filter(
-              (item) => item.parentBlog.owner._id.toString() !== decoded.id
+              (item) =>
+                item.parentBlog.owner._id.toString() !== decoded.id &&
+                item.publishStatus === "published"
             )
           );
         })
