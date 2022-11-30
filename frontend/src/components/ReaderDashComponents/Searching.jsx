@@ -160,7 +160,7 @@ export default function MenuListComposition() {
                             posts.length>0 ? (
                                 posts.map(item=>{
                                     return(
-                                        <MenuItem key={item._id}>
+                                        <MenuItem key={item._id} onClick={()=>navigate(`/ReaderDashboard/full-post/${item._id}`)}>
                                             <div style={{margin:0,padding:0,display:"flex",flexDirection:"row",justifyContent:"center",alignItems:"center"}}>
                                                 <Avatar sx={{ width:24,height:24    ,bgcolor: green[500],marginRight:"10px" }}>
                                                     <AssignmentIcon sx = {{fontSize:"18px"}} />
