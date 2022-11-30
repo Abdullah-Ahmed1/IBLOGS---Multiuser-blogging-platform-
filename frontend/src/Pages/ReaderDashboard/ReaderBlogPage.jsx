@@ -30,7 +30,7 @@ const ReaderBlogPage = ()=>{
         },
       }).then(res => {
         console.log(res)
-        axios.get('http://127.0.0.1:5000/readerDashboard',{
+        axios.get(`http://127.0.0.1:5000/readerDashboard/getPost-of-blog/${blogId}`,{
           headers: {
             "Content-Type": "application/json",
             Accept: "application/json",
@@ -70,7 +70,7 @@ const ReaderBlogPage = ()=>{
     useEffect(()=>{
       let value = JSON.parse(localStorage.getItem("token"));
       let token = value.token;
-      axios.get('http://127.0.0.1:5000/readerDashboard',{
+      axios.get(`http://127.0.0.1:5000/readerDashboard/getPost-of-blog/${blogId}`,{
         headers: {
           "Content-Type": "application/json",
           Accept: "application/json",

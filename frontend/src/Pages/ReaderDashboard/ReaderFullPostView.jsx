@@ -17,8 +17,9 @@ import Divider from '@mui/material/Divider';
  import Avatar from '@mui/material/Avatar';
  import RecommendedChips from './../../components/PostComponentsMui/RecommendChips';
  import { useEffect,useState } from 'react';
- //import TrendPostCard from './../../components/PostComponentsMui/TrendPostCard';
+ import TrendPostCard from './../../components/PostComponentsMui/TrendPostCard';
  import PostCommentDrawer from "../../components/ReaderDashComponents/PostCommentsDrawer"
+import PostFromSameBlogCard from './../../components/PostComponentsMui/PostFromSameBlogCard';
 
    function Progress() {
     return (
@@ -32,7 +33,8 @@ const ReaderFullPostView = ()=>{
     let { id } = useParams();
     console.log("idddd",id)
     const [post,setPost] = useState(null);
-    
+    const [postsFromSameBlog,setPostsFromSameBlog] =useState(null)
+    const [postsFromSameBlogOwner,SetPostsFromSameBlogOwner] = useState({})
   React.useEffect(()=>{
     reactGA.pageview(window.location.pathname)
   },[])
@@ -42,8 +44,27 @@ const ReaderFullPostView = ()=>{
        
         axios.get(`http://127.0.0.1:5000/readerDashboard/full-post/${id}`)
         .then(res => {
-            console.log("fullpost response" ,res.data.data[0])
+            console.log("fullpost response" ,res.data.data[0].parentBlog._id)
          setPost(res.data.data[0])
+          //----------------------------------------------------------------------
+          let value = JSON.parse(localStorage.getItem("token"));
+           let token = value.token;
+            axios.get(`http://127.0.0.1:5000/readerDashboard/get-blog-posts/${res.data.data[0].parentBlog._id} `,{
+              headers: {
+                "Content-Type": "application/json",
+                Accept: "application/json",
+                Authorization: token,
+              },
+            }).then(res=>{
+              console.log("post from same blog: ",res.data)
+              SetPostsFromSameBlogOwner(res.data.owner)
+              setPostsFromSameBlog(res.data.posts.filter(item=>{
+                return(
+                  item._id !== id
+                )
+              }))
+            })
+
         }).catch(err=>console.log (err))
 
     },[])   
@@ -113,6 +134,20 @@ const ReaderFullPostView = ()=>{
        <RecommendedChips/>
        <div>
        <h4 style={{color:"#379683"}}>Posts From Same Blog</h4>
+         {
+          postsFromSameBlog?(
+            postsFromSameBlog.length> 0 ?(
+              postsFromSameBlog.map(post=>{
+                return <PostFromSameBlogCard key={post._id} item = {post} owner = {postsFromSameBlogOwner} />
+              })
+            ):(
+              <h3>No other posts </h3>
+            ) 
+          ):(
+            <h3>Loading</h3>
+          )
+         }     
+
          {/* <TrendPostCard/>
          <TrendPostCard/>
          <TrendPostCard/>

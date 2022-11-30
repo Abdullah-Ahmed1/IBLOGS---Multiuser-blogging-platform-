@@ -102,6 +102,59 @@ module.exports = {
       res.send(err);
     }
   },
+  getAllDataOfBlog: (req, res) => {
+    const token = req.headers["authorization"];
+    const blogId = req.params.blogId;
+    try {
+      const decoded = jwt.verify(token, "1234567");
+      Post.find({ parentBlog: blogId })
+        .populate({
+          path: "parentBlog",
+          select: { title: 1 },
+          populate: {
+            path: "owner",
+            select: {
+              firstname: 1,
+              lastname: 1,
+              profileImage: 1,
+              email: 1,
+              ReadingList: 1,
+            },
+          },
+        })
+        .select({
+          title: 1,
+          postTitle: 1,
+          postDescription: 1,
+          postKeywords: 1,
+          likes: 1,
+          publishDate: 1,
+          publishStatus: 1,
+          allowComments: 1,
+          postCardImage: 1,
+        })
+        .exec()
+        .then((response) => {
+          // console.log(
+          //   response.filter(
+          //     (item) => item.parentBlog.owner._id.toString() !== decoded.id
+          //   )
+          // );
+          const data = response.filter((item) => {
+            item.parentBlog.owner._id.toString() === decoded.id;
+          });
+          // console.log(data);
+          res.send(
+            response.filter(
+              (item) => item.parentBlog.owner._id.toString() !== decoded.id
+            )
+          );
+        })
+        .catch((err) => console.log(err));
+    } catch (err) {
+      res.send(err);
+    }
+  },
 
   getAllData2: (req, res) => {
     // console.log("reached");
@@ -630,6 +683,14 @@ module.exports = {
       const decoded = jwt.verify(token, "1234567");
       Blog.findById(blogId)
         .populate("posts")
+        .populate({
+          path: "owner",
+          select: {
+            firstname: 1,
+            lastname: 1,
+            profileImage: 1,
+          },
+        })
         .exec()
         .then((data) => {
           res.json(data);

@@ -3,6 +3,10 @@ const router = express.Router();
 const ReaderDashController = require("../controllers/ReaderDashController");
 
 router.route("/").get(ReaderDashController.getAllData);
+router
+  .route("/getPost-of-blog/:blogId")
+  .get(ReaderDashController.getAllDataOfBlog);
+
 router.route("/full-post/:id").get(ReaderDashController.getFullPost);
 router.route("/add-comment/:postId").post(ReaderDashController.addComment);
 router
