@@ -95,13 +95,13 @@ export default function PostCommentDrawer() {
     >
         <Grid2 container  direction="column" sx = {{p:2}}>
             <Grid2>
-                <h3 style={{color:"#05386b"}} >Add Comment:</h3>         
+                <h3 style={{color:"#5cdb95"}} >Add Comment:</h3>         
             </Grid2>
             <Grid2>
                 <AddCommentCard  refreshComments = {refreshComments}/>         
             </Grid2>
             <Grid2>
-                <h3 style={{color:"#05386b"}} >Comments:</h3>  
+                <h3 style={{color:"#5cdb95"}} >Comments:</h3>  
             </Grid2>
             <Grid2 >
                 {
@@ -129,12 +129,12 @@ export default function PostCommentDrawer() {
     <div>
       {[ 'right'].map((anchor) => (
         <React.Fragment key={anchor}>
-          <Button onClick={toggleDrawer(anchor, true)}><InsertCommentIcon  sx = {{marginLeft:"10px" ,  fontSize: "40px",color:"#379863"}}/></Button>
+          <Button onClick={toggleDrawer(anchor, true)}><InsertCommentIcon  sx = {{marginLeft:"10px" ,  fontSize: "40px",color:"#5cdb95"}}/></Button>
           <Drawer
           variant='temporary'
           sx = {{
             "& .MuiDrawer-paper":{
-              backgroundColor:"#379683",
+              backgroundColor:"#05386b",
               width: {xs : "100%", sm: "100",md: 425,lg: 425 }
               // width: 425,
             }

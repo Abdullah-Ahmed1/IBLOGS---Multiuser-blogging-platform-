@@ -24,7 +24,7 @@ var _  =require('lodash')
 const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
   });
-   function FullScreenDialog({handleClose,handleClickOpen,dialogOpen ,blogId  }) {
+   function FullScreenDialog({handleClose,handleClickOpen,dialogOpen ,refreshPosts,blogId  }) {
   
     return (
       <div>
@@ -37,7 +37,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
         >
           <div style={{ display:"flex",justifyContent:"center"}}>
           <div style={{width:"100%"}} >
-            <AddPostStepper  handleClose={handleClose}/>
+            <AddPostStepper  handleClose={handleClose}  refreshPosts ={refreshPosts} />
             </div>
             
           </div>
@@ -90,6 +90,16 @@ const BlogPost= ({refreshBlogs})=>{
         refreshBlogs()
       })
     }
+  }
+
+  const refreshPosts = ()=>{
+    axios.get(`http://127.0.0.1:5000/bloggerDashboard/get-all-posts/${blogId}`)
+        .then(res=>{
+          console.log("posts--------------------",res.data);
+          setData(res.data)
+          setData1(res.data)
+          setPosts(res.data.posts)        
+        })
   }
 
 //-------------------------------------------------
@@ -147,7 +157,7 @@ const BlogPost= ({refreshBlogs})=>{
     
     return(
         <div  style= {{ width:"100%"}}>  
-            <FullScreenDialog  dialogOpen = {open} blogId = {blogId}  handleClickOpen = {handleClickOpen}  handleClose = {handleClose}  />
+            <FullScreenDialog  dialogOpen = {open} blogId = {blogId}  refreshPosts = {refreshPosts} handleClickOpen = {handleClickOpen}  handleClose = {handleClose}  />
             <Grid container sx = {{width:"100%",padding:"0px 20px"  }} justifyContent="space-between">
             <Grid item container   sx = {{height:"410px",margin:0,fontSize: "25px",borderRadius:"10px", fontWeight:"bold" ,backgroundImage:`url('${data.image}')`,backgroundRepeat:"no-repeat",backgroundPosition:"center",backgroundSize:"cover",position: "relative"}}  >
               

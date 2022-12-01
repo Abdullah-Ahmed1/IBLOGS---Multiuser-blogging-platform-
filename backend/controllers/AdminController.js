@@ -205,9 +205,13 @@ module.exports = {
     const token = req.headers["authorization"];
     try {
       const decoded = jwt.verify(token, "1122334455");
+      const post = await Post.findOne({ _id: postId });
       await SavedList.updateOne({}, { $pull: { savedPosts: postId } });
       await User.updateOne({}, { $pull: { ReadingList: postId } });
-
+      await Blog.updateOne(
+        { _id: post.parentBlog },
+        { $pull: { posts: postId } }
+      );
       Post.findOne({ _id: postId }).then(async (post) => {
         if (post) {
           comments.push(...post.comments);

@@ -756,6 +756,20 @@ module.exports = {
   RemoveCustomList: (req, res) => {
     const listId = req.params.listId;
     console.log("listId", listId);
+    const token = req.headers["authorization"];
+    try {
+      const decoded = jwt.verify(token, "1234567");
+      User.updateOneOne(
+        { _id: decoded.id },
+        {
+          $pull: { your_lists: listId },
+        }
+      ).then((user) => {
+        SavedList.deleteOne({ _id: listId }).then((list) => {
+          res.send("list deleted successfully");
+        });
+      });
+    } catch (err) {}
   },
   addToCustomList: (req, res) => {
     const token = req.headers["authorization"];
