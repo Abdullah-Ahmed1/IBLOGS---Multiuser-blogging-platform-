@@ -14,11 +14,52 @@ import { Typography } from '@mui/material';
 import LockIcon from '@mui/icons-material/Lock';
 import RecommendedChips from '../../components/PostComponentsMui/RecommendChips';
 //import { Grid } from '@mui/material/Grid';
+import AddNewListDialog from './../../components/ReaderDashComponents/AddSavedListDialog';
 
 const SavedList = ()=>{
   const container = useRef(null)
   const [lists,setLists] =useState(null);
   const navigate = useNavigate();
+
+  const [addListDialogOpen, setAddListDialogOpen] = useState(false);
+
+  const addListHandleClose = () => {
+    setAddListDialogOpen(false);
+  };
+
+  const handleAdd  =(listName)=>{
+    console.log("reached",listName)
+    const data = {
+      listName:listName
+    }
+    let value = JSON.parse(localStorage.getItem("token"));
+    let token = value.token;
+    axios.post(`http://127.0.0.1:5000/readerDashboard/create-custom-list`,data,{
+      headers: {
+        "Content-Type": "application/json", 
+        Accept: "application/json",
+        Authorization: token,
+    },
+    }).then(res=>{
+      axios.get('http://127.0.0.1:5000/readerDashboard/get-customLists',{
+        headers: {
+          "Content-Type": "application/json", 
+          Accept: "application/json",
+          Authorization: token,
+      },
+      })
+      .then(res=>{
+        // console.log("---/---/",res.data)
+        setLists(res.data)
+       
+        setAddListDialogOpen(false);
+
+      })  
+      
+    })    
+
+
+  }
 
   useEffect(()=>{
     lottie.loadAnimation({
@@ -82,6 +123,7 @@ const SavedList = ()=>{
 
     return(
         <>
+        <AddNewListDialog  open={addListDialogOpen} handleAdd = {handleAdd}  handleClose = {addListHandleClose}/>
         <CssBaseline />
         {/* <div style={{marginTop:"5px",display:"flex",width:"73%",flexDirection:"row" ,background:"rgba(237, 245, 225,0)",alignItems:"center",justifyContent:"space-between"}}>
           <h2 style = {{color:"#5cdb95"}}>IBlogs</h2>
@@ -96,7 +138,7 @@ const SavedList = ()=>{
               <h2 style={{margin: 0 ,padding:0}} >Your Lists</h2>
             </Grid2>
             <Grid2>
-              <Button sx = {{backgroundColor:"#05386b"}} variant='contained'> New List </Button>
+              <Button  onClick = {()=> setAddListDialogOpen(true)}  sx = {{backgroundColor:"#05386b"}} variant='contained'> New List </Button>
             </Grid2>
           </Grid2>
 

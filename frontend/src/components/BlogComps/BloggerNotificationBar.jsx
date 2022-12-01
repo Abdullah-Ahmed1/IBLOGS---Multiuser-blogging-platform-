@@ -1,7 +1,7 @@
 import Grid2 from '@mui/material/Unstable_Grid2';
 import Avatar from '@mui/material/Avatar';
 import {Link} from "react-router-dom";
-const BloggerNotificationBar = ({notification,handleNotificationClick})=>{
+const   BloggerNotificationBar = ({notification,handleNotificationClick})=>{
     console.log("-*-*-",notification)
     return(
         <Grid2  onClick = {()=>handleNotificationClick(notification._id)}  container flexDirection={"row"} alignItems={"center"} justifyContent={"space-between"} sx = {{cursor: "pointer",marginBottom:"10px",width:"95%",backgroundColor:"white",   borderLeft:`${notification.seen ? "none": "5px solid #379863"}`  ,borderRight:`${notification.seen ? "none": "5px solid #379863"}` ,boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)'}}  >

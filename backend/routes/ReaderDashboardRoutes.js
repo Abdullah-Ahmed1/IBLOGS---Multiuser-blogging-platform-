@@ -24,7 +24,7 @@ router.route("/get-reading-list").get(ReaderDashController.getReadingList);
 router
   .route("/remove-from-readingList/:postId")
   .delete(ReaderDashController.removeFromReadingList);
-
+router.route("/getUserData1/:userId").get(ReaderDashController.getUserData1); //needed for follow button in author profile for comparison
 router.route("/getUserData/:userId").get(ReaderDashController.getUserData);
 router.route("/add-follower/:userId").post(ReaderDashController.addFollower);
 router

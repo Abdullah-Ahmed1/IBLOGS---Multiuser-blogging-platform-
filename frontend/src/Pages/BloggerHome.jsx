@@ -327,7 +327,7 @@ const blogFormSubmit =  ()=>{
       </div>
       <Grid2 container direction ={"column"} sx= {{margin:0,padding:0,width:"100%"}} >
         <Grid2>
-           <BasicBreadcrumbs />  
+           {/* <BasicBreadcrumbs />   */}
         </Grid2>
         <Grid2>
         <Box sx={{ flexGrow: 1 }}>

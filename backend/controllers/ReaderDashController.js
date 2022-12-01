@@ -418,6 +418,20 @@ module.exports = {
     console.log(req.params.postId);
   },
 
+  getUserData1: (req, res) => {
+    //needed for comparing followers for follow button
+    const token = req.headers["authorization"];
+    const userId = req.params.userId;
+    console.log("+++++++++++", userId);
+    try {
+      const decoded = jwt.verify(token, "1234567");
+      User.findOne({ _id: userId }).then((user) => {
+        res.send(user);
+      });
+    } catch (err) {
+      res.send(err);
+    }
+  },
   getUserData: (req, res) => {
     const token = req.headers["authorization"];
     const userId = req.params.userId;

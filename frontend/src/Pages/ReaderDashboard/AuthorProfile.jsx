@@ -11,11 +11,12 @@ import CircularProgress from '@mui/material/CircularProgress';
  import ProfileInfoTabs from '../../components/ProfileComps/ProfileInfoTabs';
 import { UserContext } from "./ReaderDashboard";
 
-const AuthorProfile = ({profileData})=>{
+const AuthorProfile = ()=>{
     const value = useContext(UserContext);
-    console.log("profilevalue--",profileData)
+    const [profileData,setProfileData] = useState(null)
     const [userData,setUserData] =useState(null);
     const [followed,setFollowed,] =useState(false)
+    
     let { userId } = useParams();
     //console.log("userId",userId)
 
@@ -39,7 +40,7 @@ const AuthorProfile = ({profileData})=>{
                 console.log(res)
                 let value = JSON.parse(localStorage.getItem("token"));
                 let token = value.token;
-                axios.get(`http://127.0.0.1:5000/readerDashboard/getUserData/${userId}`,{
+                axios.get(`http://127.0.0.1:5000/readerDashboard/getUserData1/${userId}`,{
                     headers: {
                         "Content-Type": "application/json",
                         Accept: "application/json",
@@ -47,7 +48,7 @@ const AuthorProfile = ({profileData})=>{
                       },
                 }).then(res=>{
                     console.log("*************************///",res.data[0])
-                    setUserData(res.data[0])
+                    // setUserData(res.data[0])
                     profileData && res.data[0].followers.includes(profileData._id)? setFollowed(true): setFollowed(false)
                     // isFollowed(res.data[0])
                     
@@ -66,7 +67,7 @@ const AuthorProfile = ({profileData})=>{
                 console.log(res)
                 let value = JSON.parse(localStorage.getItem("token"));
                 let token = value.token;
-                axios.get(`http://127.0.0.1:5000/readerDashboard/getUserData/${userId}`,{
+                axios.get(`http://127.0.0.1:5000/readerDashboard/getUserData1/${userId}`,{
                     headers: {
                         "Content-Type": "application/json",
                         Accept: "application/json",
@@ -74,7 +75,8 @@ const AuthorProfile = ({profileData})=>{
                       },
                 }).then(res=>{
                    // console.log("*************************",res.data)
-                    setUserData(res.data);
+                    // setUserData(res.data);
+                    console.log( "-*-*-*-",profileData && res.data.followers.includes(profileData._id))
                     profileData && res.data.followers.includes(profileData._id)? setFollowed(true): setFollowed(false)
                    
                     
@@ -117,22 +119,41 @@ const AuthorProfile = ({profileData})=>{
    
   // console.log( "a is  :",isFollowed())
     
+//    useEffect(()=>{
+//     let value = JSON.parse(localStorage.getItem("token"));
+//         let token = value.token;
+//     axios.get(`http://127.0.0.1:5000/readerDashboard/get-user-followers`,{
+//         headers: {
+//             "Content-Type": "application/json",
+//             Accept: "application/json",
+//             Authorization: token,
+//           }, 
+//     }).then(res=>{
+//         console.log(res.data)
+//     })    
+//    },[])
+
+
    useEffect(()=>{
     let value = JSON.parse(localStorage.getItem("token"));
-        let token = value.token;
-    axios.get(`http://127.0.0.1:5000/readerDashboard/get-user-followers`,{
-        headers: {
+    let token = value.token;
+    axios.get(
+        "http://127.0.0.1:5000/getProfile",
+        {
+          headers: {
             "Content-Type": "application/json",
             Accept: "application/json",
             Authorization: token,
-          }, 
-    }).then(res=>{
-        console.log(res.data)
-    })    
+          },
+        }
+      )
+      .then((res) => {
+        console.log("Got Profile", res);
+        setProfileData(res.data)
+       
+      })
+      .catch((err) => console.log("errr", err));
    },[])
-
-
-
     useEffect(()=>{
       console.log("caledd")
         //    console.log("1121212121212112212122121",value)
@@ -146,25 +167,76 @@ const AuthorProfile = ({profileData})=>{
               },
         }).then(res=>{
             console.log("111111",res.data)
-            if(typeof(res.data)=="object"){
-                profileData && res.data.followers.includes(profileData._id)? setFollowed(true): setFollowed(false)
-                // console.log("********************//--//*****",res.data[0].followers.includes())
-                setUserData(res.data)
-                console.log("111111",res)
-                console.log("123324242423",profileData.followers)
 
-            }else{
-                setUserData(" ")
-            }
-           
+
+        if(typeof(res.data)=="object"){
+           setUserData(res.data)
             
-            // isFollowed(res.data[0]);
-        })
+        }else{
+            console.log("data is not object")
+            setUserData(" ")
+        }
+                
+                    
+                    // isFollowed(res.data[0]);
+    })
 //---------------------------------------------------------------------
 
 
 
-    },[profileData])
+    },[])
+
+
+    useEffect(()=>{
+        let value = JSON.parse(localStorage.getItem("token"));
+        let token = value.token;
+        axios.get(`http://127.0.0.1:5000/readerDashboard/getUserData1/${userId}`,{
+            headers: {
+                "Content-Type": "application/json",
+                Accept: "application/json",
+                Authorization: token,
+              },
+        }).then(res=>{
+            
+
+            axios.get(
+                "http://127.0.0.1:5000/getProfile",
+                {
+                  headers: {
+                    "Content-Type": "application/json",
+                    Accept: "application/json",
+                    Authorization: token,
+                  },
+                }
+              )
+              .then((profile) => {
+                console.log("Got Profile", profile.data);
+                setProfileData(profile.data)
+
+                if(typeof(res.data)=="object"){
+                    console.log("data is object",res.data.followers)
+                    // console.log( "!-*-*-*-", res.data.followers.includes(profileData._id))
+                    if(profile.data){
+                        console.log("1111111122212121",profile.data._id,res.data.followers)
+                        
+                    }
+                    console.log("//--//+",res.data.followers.includes(profile.data._id))
+                    res.data.followers.includes(profile.data._id)? setFollowed(true): setFollowed(false)
+                    // console.log("********************//--//*****",res.data[0].followers.includes())
+                    // setUserData(res.data)
+                    console.log("111111",res)
+                    // console.log("123324242423",profileData.followers)
+        
+                }else{
+                    console.log("data is not object")
+                    // setUserData(" ")
+                }
+
+
+               
+              })
+        })
+    },[])
 
 
     return(
