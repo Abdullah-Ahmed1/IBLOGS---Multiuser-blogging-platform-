@@ -82,7 +82,7 @@ const ReadingListPostCard = ({item,handleRemovePostClick})=>{
         {/* <BookmarkAddIcon  sx=  {{cursor:"pointer",color:"#05386b",margin:"0px 15px ",display: `${added ? "none":"inline"}`}} onClick ={handleSaveIconClick}  /> */}
         {/* <CreateListMenu  postId = {item._id} />  */}
         <Tooltip title="Remove from reading list">
-          <BookmarkRemoveIcon sx=  {{cursor:"pointer",color:"#379683 ",margin:"0px 15px ",display: `${!added ? "none":"inline"}`}} onClick = {()=> setReadingListPostRemoveDialogOpen(true)}    />
+          <BookmarkRemoveIcon sx=  {{cursor:"pointer",color:"#379683 ",margin:"0px 15px ",display: `${!added ? "none":"inline"}`}} onClick = {()=> handleRemovePostClick(item._id)}    />
         </Tooltip>    
          </Grid>
       </Grid>
@@ -105,8 +105,29 @@ const CustomListView = ()=>{
   const [list,setList] = useState(null)
     console.log("LostUD",listId) 
 
-  const handleRemovePostClick = ()=>{
-    console.log("reaxhed")
+  const handleRemovePostClick = (id)=>{
+    console.log("reaxhed",id)
+    const data = {
+      listId:listId,
+      postId:id
+    }
+    let value = JSON.parse(localStorage.getItem("token"));
+    let token = value.token;
+    axios.post(`http://127.0.0.1:5000/readerDashboard/remove-from-customList`,data,{
+      headers: {
+        "Content-Type": "application/json", 
+        Accept: "application/json",
+        Authorization: token,
+    },
+    })
+    .then(res=>{
+      axios.get(`http://127.0.0.1:5000/readerDashboard/get-customList-post/${listId}`)
+      .then(res=>{
+        console.log("**--**",res.data)
+        setList(res.data)
+      })
+    })
+
   }
 
     useEffect(()=>{

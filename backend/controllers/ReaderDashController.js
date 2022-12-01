@@ -759,17 +759,19 @@ module.exports = {
     const token = req.headers["authorization"];
     try {
       const decoded = jwt.verify(token, "1234567");
-      User.updateOneOne(
+      User.updateOne(
         { _id: decoded.id },
         {
           $pull: { your_lists: listId },
         }
       ).then((user) => {
-        SavedList.deleteOne({ _id: listId }).then((list) => {
+        SavedList.findByIdAndDelete({ _id: listId }).then((list) => {
           res.send("list deleted successfully");
         });
       });
-    } catch (err) {}
+    } catch (err) {
+      res.send(err);
+    }
   },
   addToCustomList: (req, res) => {
     const token = req.headers["authorization"];
@@ -784,6 +786,7 @@ module.exports = {
     }
   },
   removeFromCustomList: (req, res) => {
+    console.log("remove from custom list reached");
     const data = req.body;
     // console.log(data);
     const token = req.headers["authorization"];

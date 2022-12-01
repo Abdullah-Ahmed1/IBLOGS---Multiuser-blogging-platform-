@@ -109,7 +109,7 @@ const SavedList = ()=>{
               <Grid2 sx = {{paddingLeft:"10px",paddingTop:"10px"}}>
               <h3 style={{padding:"0px",margin:"0px"}}  >Reading List {<LockIcon sx = {{fontSize:"20px",margin:"0px 10px"}} />}</h3>
               <h4>Posts: 5</h4>
-              <Button onClick={()=>{ navigate("/readerdashboard/saved-lists/reading-list");}}  sx = {{color:"#05386b",borderColor:"#05386b"}}  variant="outlined">View list</Button>
+              <Button onClick={()=>{ navigate("/readerdashboard/saved-lists/reading-list");}}  sx = {{backgroundColor:"#05386b",borderColor:"#05386b"}}  variant="contained">View list</Button>
               </Grid2>
             
             </Grid2>
@@ -133,8 +133,8 @@ const SavedList = ()=>{
                       <h3 style={{padding:"0px",margin:"0px"}}  >{list.listName}</h3>
                       <h4>Posts: 5</h4>
                       <Grid2 container  alignItems={"center"}>
-                      <Button onClick={()=>{ navigate(`/readerdashboard/saved-lists/custom-list/${list._id}`);}}  sx = {{color:"#05386b",borderColor:"#05386b"}}  variant="outlined">View list</Button>
-                      <DeleteIcon sx={{fontSize: "30px" ,cursor:"pointer"}} onClick={()=>handleDeleteList(list._id)}/>
+                      <Button onClick={()=>{ navigate(`/readerdashboard/saved-lists/custom-list/${list._id}`);}}  sx = {{backgroundColor:"#05386b",borderColor:"#05386b"}}  variant="contained">View list</Button>
+                      <DeleteIcon sx={{fontSize: "30px" ,cursor:"pointer",color:"#05386b"}} onClick={()=>handleDeleteList(list._id)}/>
                       </Grid2>
                       </Grid2>
                     
