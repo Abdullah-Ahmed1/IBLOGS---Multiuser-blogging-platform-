@@ -398,7 +398,24 @@ module.exports = {
     const token = req.headers["authorization"];
     try {
       const decoded = jwt.verify(token, "1234567");
-      Notification.find({ "info.ownerId": decoded.id }).then((data) => {
+      Notification.find({
+        $or: [
+          {
+            $and: [
+              { "info.ownerId": decoded.id },
+              { notificationType: "follow" },
+            ],
+          },
+          {
+            $and: [
+              { "info.ownerId": decoded.id },
+              { notificationType: "warning" },
+            ],
+          },
+        ],
+        // "info.ownerId": decoded.id,
+        // notificationType: "follow",
+      }).then((data) => {
         res.send(data);
       });
     } catch (err) {

@@ -9,6 +9,79 @@ const Notifications =()=>{
   const container = useRef(null)
   
 const [notifications,setNotifications]  =useState(null)
+  const handleWarn = (id)=>{
+    let value = JSON.parse(localStorage.getItem("adminToken"));
+    let token = value.adminToken;
+    axios.post(`http://127.0.0.1:5000/admin/add-warn-notification/${id}`,{data:null},{
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+        Authorization: token,
+      },
+    }).then(res=>{
+      setSeen(id)
+    })
+
+    
+  }
+  const handleDiscard = (id)=>{
+  
+    setSeen(id)
+  }
+const setSeen = (id)=>{
+  console.log("*-*-*1111111")
+  let value = JSON.parse(localStorage.getItem("adminToken"));
+  let token = value.adminToken;
+  axios.get(`http://127.0.0.1:5000/admin/set-notification-seen/${id}`,{
+    headers: {
+      "Content-Type": "application/json",
+      Accept: "application/json",
+      Authorization: token,
+    },
+  })
+  .then(res=>{
+    axios.get(`http://127.0.0.1:5000/admin/get-notifications`,{
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+        Authorization: token,
+      },
+    })
+    .then(res=>{
+      console.log(res)
+      setNotifications(res.data)
+    })
+
+  })
+}
+
+const handleDeleteNotification = (id)=>{
+  console.log("seen",id)
+  let value = JSON.parse(localStorage.getItem("adminToken"));
+  let token = value.adminToken;
+  axios.delete(`http://127.0.0.1:5000/admin/delete-notification/${id}`,{
+    headers: {
+      "Content-Type": "application/json",
+      Accept: "application/json",
+      Authorization: token,
+    },
+  }).then(res=>{
+    axios.get(`http://127.0.0.1:5000/admin/get-notifications`,{
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+        Authorization: token,
+      },
+    })
+    .then(res=>{
+      console.log(res)
+      setNotifications(res.data)
+    })
+  })
+
+}
+
+
 useEffect(()=>{
     
   lottie.loadAnimation({
@@ -61,7 +134,7 @@ useEffect(()=>{
             notifications.length> 0? (
               
               notifications.map(notification=>{
-                return <AdminNotificationBar key={notification._id} notification = {notification} />
+                return <AdminNotificationBar key={notification._id} handleDeleteNotification={handleDeleteNotification} notification = {notification} handleDiscard={handleDiscard} handleWarn={handleWarn} />
               })
               
             ):(

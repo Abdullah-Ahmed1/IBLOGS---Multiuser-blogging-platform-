@@ -353,6 +353,79 @@ module.exports = {
       res.send(err);
     }
   },
+
+  setNotificationSeen: (req, res) => {
+    console.log("notification set seen reached");
+    const notificationId = req.params.id;
+    const token = req.headers["authorization"];
+
+    try {
+      const decoded = jwt.verify(token, "1122334455");
+
+      Notification.updateOne(
+        { _id: notificationId },
+        {
+          seen: true,
+        }
+      ).then((not) => {
+        res.send(not);
+      });
+    } catch (err) {
+      res.send(err);
+    }
+  },
+
+  deleteNotification: (req, res) => {
+    console.log("delete notification reached");
+    const token = req.headers["authorization"];
+    console.log(token);
+    const notificationId = req.params.id;
+    try {
+      const decoded = jwt.verify(token, "1122334455");
+      Notification.deleteOne({ _id: notificationId }).then((notifi) => {
+        res.send(notifi);
+      });
+    } catch (err) {
+      res.send(err);
+    }
+  },
+
+  addWarningNotification: (req, res) => {
+    console.log("reached", req.params.id);
+    const notificationId = req.params.id;
+    const token = req.headers["authorization"];
+    try {
+      const decoded = jwt.verify(token, "1122334455");
+      Notification.findById({ _id: notificationId }).then((notification) => {
+        // console.log(notification);
+        const data = {
+          notificationText: "",
+          info: {
+            ownerId: notification.info.ownerId,
+            postId: notification.info.postId,
+            postTitle: notification.info.postTitle,
+            reason: notification.info.reason,
+          },
+          notificationType: "warning",
+          seen: "false",
+          notificationDate: new Date(),
+        };
+        // console.log(data);
+
+        Notification.create(data)
+          .then((item) => {
+            console.log("-*-*-*-*-*-", item);
+            res.send("User is warned");
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      });
+    } catch (err) {
+      res.send(err);
+    }
+  },
+
   getPostOfBlog: (req, res) => {
     const blogId = req.params.blogId;
     const token = req.headers["authorization"];
