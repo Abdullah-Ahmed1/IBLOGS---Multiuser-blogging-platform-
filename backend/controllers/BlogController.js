@@ -500,11 +500,12 @@ module.exports = {
   },
   editEvent: (req, res) => {
     console.log("edit events reached");
+    const eventId = req.body.event_id;
     const token = req.headers["authorization"];
     try {
       const decoded = jwt.verify(token, "1234567");
       Event.findByIdAndUpdate(
-        { _id: req.body.event_id },
+        { _id: eventId },
         {
           title: req.body.title,
           start: req.body.start,

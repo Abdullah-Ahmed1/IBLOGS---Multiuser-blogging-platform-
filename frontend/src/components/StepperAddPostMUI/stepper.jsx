@@ -457,7 +457,7 @@ ColorlibStepIcon.propTypes = {
 
   ////////////////////////////////////////////////////////////////////////////////
   ///-----------------------------------------
-  const GetStepContent = ({activeStep,nextWord,tags,handleSave,handleClickGenerate,generatedText,handlePostCardImage,handlePostTitle,handlePostDescription,handlePostKeywords,handlePostContent,postContent,handleAllowComments,allowComments,handlePublishStatus,handlePublishDate,publishDate,handleSchedule,handlePublish,openBox,handleOpenBox}) => {
+  const GetStepContent = ({activeStep,nextWord,tags,selectedTag,handleSelectTag,handleSave,handleClickGenerate,generatedText,handlePostCardImage,handlePostTitle,handlePostDescription,handlePostKeywords,handlePostContent,postContent,handleAllowComments,allowComments,handlePublishStatus,handlePublishDate,publishDate,handleSchedule,handlePublish,openBox,handleOpenBox}) => {
     console.log()
     switch (activeStep) {
       case 0:
@@ -477,7 +477,7 @@ ColorlibStepIcon.propTypes = {
         return <MyEditor  nextWord = {nextWord}  handlePostContent =  {handlePostContent} generatedText = {generatedText} postContent = {postContent}/>
       
       case 3 : 
-        return <TagSelect tags = {tags}/>    
+        return <TagSelect tags = {tags}  selectedTag = {selectedTag} handleSelectTag = {handleSelectTag}/>    
       case 4:
         return (
             <UploadOptions  allowComments = {allowComments} 
@@ -511,6 +511,17 @@ export default function AddPostStepper({handleClose,refreshPosts}) {
     const [publishStatus,setPublishStatus] = useState("");
     const [publishDate,setPublishDate] = useState(dayjs(new Date()));
     const [tempWord,setTempWord] = useState("");
+
+    const[selectedTag,setSelectedTag] = useState([])
+
+    const handleSelectTag = (event)=>{
+      console.log("event",event.target.value)
+      const {
+        target: { value },} = event;
+      setSelectedTag(
+        event.target.value
+      );
+    }
     //-----------------------------------------------------------------------------
     const [activeStep, setActiveStep] = React.useState(0);
     //----------------confirmation box open-----------------------------------
@@ -585,7 +596,8 @@ const nextWord = (postContent) => {
         postCardImage: postCardImage ? postCardImage : ""  ,
         publishStatus : "published",
         publishDate: new Date(),
-        dateCreated: new Date()
+        dateCreated: new Date(),
+        tags: selectedTag
       
       }
       if(postCardImage){
@@ -610,7 +622,8 @@ const nextWord = (postContent) => {
       postCardImage: res.data.secure_url ,
       publishStatus : "published",
       publishDate: new Date(),
-      dateCreated: new Date()
+      dateCreated: new Date(),
+      tags: selectedTag
     
     }
     console.log("url: ",res.data.secure_url)
@@ -642,7 +655,8 @@ const nextWord = (postContent) => {
         postCardImage: ""  ,
         publishStatus : "published",
         publishDate: new Date(),
-        dateCreated: new Date()
+        dateCreated: new Date(),
+        tags: selectedTag
       }
       
       let value = JSON.parse(localStorage.getItem("token"));
@@ -682,7 +696,8 @@ const nextWord = (postContent) => {
         allowComments,
         publishStatus : "scheduled",
         publishDate: dayjs(publishDate).format(),
-        dateCreated: new Date()
+        dateCreated: new Date(),
+        tags: selectedTag
       
       }
       if(postCardImage){
@@ -706,7 +721,8 @@ const nextWord = (postContent) => {
         allowComments,
         publishStatus : "scheduled",
         publishDate: dayjs(publishDate).format(),
-        dateCreated: new Date()
+        dateCreated: new Date(),
+        tags: selectedTag
       
       }
       
@@ -737,7 +753,8 @@ const nextWord = (postContent) => {
           allowComments,
           publishStatus : "scheduled",
           publishDate: dayjs(publishDate).format(),
-          dateCreated: new Date()
+          dateCreated: new Date(),
+          tags: selectedTag
         
         }
         
@@ -788,7 +805,8 @@ const nextWord = (postContent) => {
         postCardImage: postCardImage ? postCardImage : ""  ,
         publishStatus : "Draft",
         publishDate: new Date(),
-        dateCreated: new Date()
+        dateCreated: new Date(),
+        tags: selectedTag
       
       }
       if(postCardImage){
@@ -813,7 +831,8 @@ const nextWord = (postContent) => {
       postCardImage: res.data.secure_url ,
       publishStatus : "Draft",
       publishDate: new Date(),
-      dateCreated: new Date()
+      dateCreated: new Date(),
+      tags: selectedTag
     
     }
     console.log("url: ",res.data.secure_url)
@@ -843,7 +862,8 @@ const nextWord = (postContent) => {
         postCardImage: ""  ,
         publishStatus : "Draft",
         publishDate: new Date(),
-        dateCreated: new Date()
+        dateCreated: new Date(),
+        tags: selectedTag
       }
       
       let value = JSON.parse(localStorage.getItem("token"));
@@ -899,7 +919,10 @@ const nextWord = (postContent) => {
        setTags(res.data)
        setStep2BackDropOpen(false)
      })
-     .catch((err)=>{console.log(err)})
+     .catch((err)=>{
+      console.log(err)
+      setStep2BackDropOpen(false)
+    })
 
     }
 
@@ -1050,6 +1073,8 @@ const nextWord = (postContent) => {
                  openBox={openBox}
                  nextWord={nextWord}
                  handleOpenBox = {handleOpenBox}
+                 handleSelectTag = {handleSelectTag}
+                 selectedTag = {selectedTag}
                  tags ={tags}
                  
                  />

@@ -9,6 +9,8 @@ import Button from '@mui/material/Button';
 import dayjs from 'dayjs';
 import JoditEditor from "jodit-react";
 import Typography from "@mui/material/Typography";
+import { styled } from '@mui/material/styles';
+import Chip from '@mui/material/Chip';
 //import Dialog from '@mui/material/Dialog';
 //import DialogContent from '@mui/material/DialogContent';
 import parse from 'html-react-parser';
@@ -16,7 +18,7 @@ import Box from "@mui/material/Box";
 import Alert from '@mui/material/Alert';
 import PropTypes from "prop-types";
 import Paper from "@mui/material/Paper";
-
+import List from '@mui/material/List';
 import Popper from "@mui/material/Popper";
 import { useEffect,useState,useRef } from 'react';
 import axios from "axios";
@@ -479,6 +481,7 @@ export default function AskConfirmationBeforeSave({blogId}) {
         posts? (
           posts.length>0? (
             <DataGrid
+            checkboxSelection
             rows={posts}
             columns={columns}
             getRowId={(row)=> row._id}
@@ -517,6 +520,7 @@ const columns  = [
     {
       field: 'postDescription',
       headerName: 'Post Description',
+      color:"green",
       width: 280,
       renderCell: renderCellExpand,
       editable: true,
@@ -550,7 +554,7 @@ const columns  = [
       field: 'likes',
       headerName: 'Likes',
      
-      width: 220,
+      width: 120,
       renderCell: (params)=>{
         return params.value.length
       }
@@ -564,10 +568,46 @@ const columns  = [
       editable :true
     },
     {
-      field: 'Categories',
-      headerName: 'Categories',
+      field: 'tags',
+      headerName: 'Tags',
       // type: 'String',
-      width: 220,
+      width: 320,
+      renderCell :(params)=>{
+        console.log("params",params)
+        const ListItem = styled('li')(({ theme }) => ({
+          margin: theme.spacing(0.5),
+        }));
+        return(
+          <>
+          {
+            params.value.map((data,index)=>{
+              return(
+                <List>
+                <ListItem key={index}>
+                     <Chip
+                      sx = {{backgroundColor:"#05386b",color:"white"}}
+                      label={data}
+                      // onDelete={data.label === 'React' ? undefined : handleDelete(data)}
+                    />
+                  </ListItem  >
+                  </List> 
+              )
+            })
+            // params.value.map((data,index)=>{
+            //   return(
+            //     <ListItem key={index}>
+            //     <Chip
+                 
+            //       label={data.label}
+            //       // onDelete={data.label === 'React' ? undefined : handleDelete(data)}
+            //     />
+            //   </ListItem>
+            //   )
+            // })
+          }
+          </>
+        )
+      } 
     },
   ]
   // const rows1 = [

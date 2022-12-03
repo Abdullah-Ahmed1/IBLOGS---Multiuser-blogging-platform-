@@ -19,18 +19,18 @@ const MenuProps = {
   },
 };
 
-// const names = [
-//   'Oliver Hansen',
-//   'Van Henry',
-//   'April Tucker',
-//   'Ralph Hubbard',
-//   'Omar Alexander',
-//   'Carlos Abbott',
-//   'Miriam Wagner',
-//   'Bradley Wilkerson',
-//   'Virginia Andrews',
-//   'Kelly Snyder',
-// ];
+const names = [
+  'Oliver Hansen',
+  'Van Henry',
+  'April Tucker',
+  'Ralph Hubbard',
+  'Omar Alexander',
+  'Carlos Abbott',
+  'Miriam Wagner',
+  'Bradley Wilkerson',
+  'Virginia Andrews',
+  'Kelly Snyder',
+];
 
 function getStyles(name, personName, theme) {
   return {
@@ -41,19 +41,10 @@ function getStyles(name, personName, theme) {
   };
 }
 
-export default function TagSelect({tags}) {
+export default function TagSelect({tags,selectedTag,handleSelectTag}) {
   const theme = useTheme();
-  const [personName, setPersonName] = React.useState([]);
-
-  const handleChange = (event) => {
-    const {
-      target: { value },
-    } = event;
-    setPersonName(
-      // On autofill we get a stringified value.
-      typeof value === 'string' ? value.split(',') : value,
-    );
-  };
+ 
+ 
 
   return (
     <div style={{display:"flex",flexDirection:"column",justifyContent:"center",alignItems:"center"}}>
@@ -64,8 +55,8 @@ export default function TagSelect({tags}) {
           labelId="demo-multiple-chip-label"
           id="demo-multiple-chip"
           multiple
-          value={personName}
-          onChange={handleChange}
+          value={selectedTag}
+          onChange={handleSelectTag}
           input={<OutlinedInput id="select-multiple-chip" label="Chip" />}
           renderValue={(selected) => (
             <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
@@ -76,11 +67,14 @@ export default function TagSelect({tags}) {
           )}
           MenuProps={MenuProps}
         >
-          {tags.map((name) => (
+          {
+          // tags
+          names
+          .map((name) => (
             <MenuItem
               key={name}
               value={name}
-              style={getStyles(name, personName, theme)}
+              style={getStyles(name, selectedTag, theme)}
             >
               {name}
             </MenuItem>

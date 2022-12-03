@@ -72,7 +72,7 @@ export default function TabsWrappedLabel({blogs,handleChange,value,handleChangeI
     <Box sx={{backgroundColor:"white", width: '100%' }}>
         <AppBar position="static">
       <Tabs
-      sx = {{backgroundColor:"white"}}
+      sx = {{backgroundColor:"white",color:'#05386b'}}
         value={value}
         onChange={handleChange}
         variant = "fullWidth" 

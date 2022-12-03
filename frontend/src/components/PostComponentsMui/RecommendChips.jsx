@@ -18,7 +18,9 @@ export default function RecommendedChips() {
     { key: 4, label: 'Vue.js' },
   ]);
 
- 
+ const handleChipClick = ()=>{
+  console.log("reached")
+ }
 
   return (
     <Box
@@ -43,6 +45,7 @@ export default function RecommendedChips() {
           <ListItem key={data.key}>
             <Chip
               //icon={icon}
+              onClick = {handleChipClick}
               sx = {{backgroundColor:"#5cdb95",color:"#05386b",fontWeight:"bold"}}
               label={data.label}
              
