@@ -1,5 +1,6 @@
 import axios from "axios";
 import {useState,useEffect,useContext} from "react";
+import { Link,useLocation,useNavigate } from "react-router-dom";
 import Grid2 from '@mui/material/Unstable_Grid2';
 import Box from '@mui/material/Box';    
 import Button from '@mui/material/Button';
@@ -12,6 +13,8 @@ import CircularProgress from '@mui/material/CircularProgress';
 import { UserContext } from "./ReaderDashboard";
 
 const AuthorProfile = ()=>{
+    const location = useLocation()
+    const navigate = useNavigate()
     const value = useContext(UserContext);
     const [profileData,setProfileData] = useState(null)
     const [userData,setUserData] =useState(null);
@@ -153,7 +156,7 @@ const AuthorProfile = ()=>{
        
       })
       .catch((err) => console.log("errr", err));
-   },[])
+   },[location])
     useEffect(()=>{
       console.log("caledd")
         //    console.log("1121212121212112212122121",value)
@@ -184,7 +187,7 @@ const AuthorProfile = ()=>{
 
 
 
-    },[])
+    },[location])
 
 
     useEffect(()=>{
@@ -236,7 +239,7 @@ const AuthorProfile = ()=>{
                
               })
         })
-    },[])
+    },[Location])
 
 
     return(
@@ -292,7 +295,9 @@ const AuthorProfile = ()=>{
                             {
                                 userData.followers.map(follower=>{
                                     return(
-                                        <Grid2 container sx = {{cursor:"pointer"}} direction={"row"} alignItems={"center"} columnSpacing={2} >
+                                        
+                                        <Grid2  onClick = {()=>navigate(`/ReaderDashboard/author-profile/${follower._id}`)}  container sx = {{cursor:"pointer"}} direction={"row"} alignItems={"center"} columnSpacing={2} >
+
                                             <Grid2>
                                                 <Avatar sx= {{ width: 24, height: 24}} alt={follower.firstname} src={follower.profileImage} />
                                             </Grid2>
@@ -308,7 +313,7 @@ const AuthorProfile = ()=>{
                              {
                                 userData.following.map(following=>{
                                     return(
-                                        <Grid2 container sx = {{cursor:"pointer"}} direction={"row"} alignItems={"center"} columnSpacing={2} >
+                                        <Grid2 onClick = {()=>navigate(`/ReaderDashboard/author-profile/${following._id}`)} container sx = {{cursor:"pointer"}} direction={"row"} alignItems={"center"} columnSpacing={2} >
                                             <Grid2>
                                                 <Avatar sx= {{ width: 24, height: 24}} alt={following.firstname} src={following.profileImage} />
                                             </Grid2>

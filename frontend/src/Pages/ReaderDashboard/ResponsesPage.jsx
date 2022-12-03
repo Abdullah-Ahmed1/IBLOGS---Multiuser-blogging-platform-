@@ -45,7 +45,7 @@ const ResponsesPage = ()=>{
     return(
         <>
         <CssBaseline />
-        <div style={{marginTop:"10px",display:"flex",width:"73%",flexDirection:"row" ,background:"rgba(237, 245, 225,0)",alignItems:"center",justifyContent:"space-between"}}>
+        <div style={{marginLeft :"20px", marginTop:"10px",display:"flex",width:"73%",flexDirection:"row" ,background:"rgba(237, 245, 225,0)",alignItems:"center",justifyContent:"space-between"}}>
           <h2 style = {{color:"#379863"}}>IBlogs</h2>
          
         </div>

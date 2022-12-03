@@ -36,10 +36,10 @@ export default function BlogShareDialog({shareDialogOpen,handleShareDialogClose}
   
 
   return (
-    <Dialog onClose={handleShareDialogClose} open={shareDialogOpen}>
+    <Dialog sx = {{width:"100%"}} onClose={handleShareDialogClose} open={shareDialogOpen}>
       <DialogTitle>Select to Share</DialogTitle>
       <DialogContent>
-        <Grid2   container direction="row" columnSpacing={2}>
+        <Grid2   container direction="row" spacing={3}>
             <Grid2>
                 <WhatsappShareButton
                     url={'https://Iblogs.com'}

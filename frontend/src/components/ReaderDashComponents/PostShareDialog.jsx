@@ -32,10 +32,10 @@ export default function PostShareDialog({shareDialogOpen,handleShareDialogClose}
 //   const [selectedValue, setSelectedValue] = React.useState(emails[1]);
 
   return (
-    <Dialog onClose={handleShareDialogClose} open={shareDialogOpen}  >
+    <Dialog  sx  = {{width:"100%"}} onClose={handleShareDialogClose} open={shareDialogOpen}  >
       <DialogTitle>Select to Share</DialogTitle>
       <DialogContent>
-        <Grid2   container direction="row" columnSpacing={3} justifyContent="space-between" >
+        <Grid2   container direction="row" spacing={4} justifyContent="space-between" >
             <Grid2>
                 <WhatsappShareButton
                     url={'https://Iblogs.com'}

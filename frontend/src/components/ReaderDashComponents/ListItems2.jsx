@@ -45,7 +45,7 @@ const List_Items = ()=>{
         <Divider/>
 
         <Tooltip title="Switch to Bloggerdashboard" placement="right" arrow>
-         <Link to ='/bloggerdashboard' >
+         <Link to ='/Bloggerdashboard' >
         <ListItemButton>
           <ListItemIcon>
             <DriveFileRenameOutlineIcon sx={{ color:"#5cdb95",fontSize:"25px", marginBottom:"10px" }} />

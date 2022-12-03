@@ -45,7 +45,7 @@ const BloggerNotification = ()=>{
     },[])  
     return(
         <Grid2 sx = {{width:"100%"}} >
-            <Grid2 container direction = {"row"} justifyContent="space-between" alignItems={"center"}>
+            <Grid2 container direction = {"row"}  justifyContent="space-between" alignItems={"center"}>
                 <Grid2>
                 <h2 style={{color:"#379683"}}>Notifications</h2>
                 </Grid2>
@@ -54,7 +54,7 @@ const BloggerNotification = ()=>{
            
                 </Grid2>
             </Grid2>
-            
+            <Grid2>
             {
                 notifications ? (
                     notifications.length > 0 ? (
@@ -73,6 +73,7 @@ const BloggerNotification = ()=>{
             <BloggerNotificationBar/>
             <BloggerNotificationBar/>
             <BloggerNotificationBar/> */}
+            </Grid2>
         </Grid2>
         
     )

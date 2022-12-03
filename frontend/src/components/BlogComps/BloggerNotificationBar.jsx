@@ -4,10 +4,12 @@ import {Link} from "react-router-dom";
 const   BloggerNotificationBar = ({notification,handleNotificationClick})=>{
     console.log("-*-*-",notification)
     return(
-        <Grid2  onClick = {()=>handleNotificationClick(notification._id)}  container flexDirection={"row"} alignItems={"center"} justifyContent={"space-between"} sx = {{cursor: "pointer",marginBottom:"10px",width:"95%",backgroundColor:"white",   borderLeft:`${notification.seen ? "none": "5px solid #379863"}`  ,borderRight:`${notification.seen ? "none": "5px solid #379863"}` ,boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)'}}  >
-        
+        // <Grid2  onClick = {()=>handleNotificationClick(notification._id)}  container flexDirection={"row"} alignItems={"center"} justifyContent={"space-between"} sx = {{cursor: "pointer",marginBottom:"10px",width:"95%",backgroundColor:"white",   borderLeft:`${notification.seen ? "none": "5px solid #379863"}`  ,borderRight:`${notification.seen ? "none": "5px solid #379863"}` ,boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)'}}  >
+        <>
             {
-                notification.notificationType =="follow" && (
+                notification.notificationType =="follow"? (
+                    <Grid2  onClick = {()=>handleNotificationClick(notification._id)}  container flexDirection={"row"} alignItems={"center"} justifyContent={"space-between"} sx = {{cursor: "pointer",marginBottom:"10px",width:"95%",backgroundColor:"white",   borderLeft:`${notification.seen ? "none": "5px solid #379863"}`  ,borderRight:`${notification.seen ? "none": "5px solid #379863"}` ,boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)'}}  >
+        
                     <>
                 <Link to={`/readerDashboard/author-profile/${notification.info.followerId}`}>
                     <Grid2 container direction={"row"} alignItem={"center"}  lg = {10} sx = {{paddingRight:"40px"}}>
@@ -20,18 +22,19 @@ const   BloggerNotificationBar = ({notification,handleNotificationClick})=>{
                         
                     </Grid2>
                  </Link>
-                 <Grid2 lg = {2} container flexDirection={"row"}  justifyContent={"flex-end"}  >
+                 <Grid2 sx = {{marginRight:"10px"}} lg = {2} container flexDirection={"row"}  justifyContent={"flex-end"}  >
                     <h5>{new Date(notification.notificationDate).toLocaleString()}</h5>
                  </Grid2>
+                 
                  </>
-                )  
-             }
-        
-        <Grid2 >
+                 </Grid2>
+                )  :(
+                    null
+                )
             
-            {/* <h4   style = {{paddingLeft :"10px"}}>{ notification ? notification.notificationText : "Abdullah Ahmed Commented on 'Intro To react js'"}</h4> */}
-        </Grid2>
-    </Grid2>
+            }
+
+</>
     )
 }
 export default BloggerNotificationBar;
