@@ -59,7 +59,7 @@ const MyEditor = ({
             }
           };
           // console.log(h2p(newContent));
-
+          console.log(h2p(newContent).split(". "));
           // a = newContent;
         }}
       />
