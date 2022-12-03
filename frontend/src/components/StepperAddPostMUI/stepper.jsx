@@ -938,7 +938,7 @@ const nextWord = (postContent) => {
           setStep2BackDropOpen(false)
         })
 
-
+      }
 
     
 
