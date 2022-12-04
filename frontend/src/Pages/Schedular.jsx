@@ -92,9 +92,38 @@ console.log("/*/*/*/",events)
               "Authorization": token 
             }
           }).then(res=>{
+            //-----------------------------------------
+            axios.get("http://127.0.0.1:5000/BloggerDashboard/get-events",{
+              headers:{
+                "Content-Type":"application/json",
+                "Accept":"application/json",
+                "Authorization": token 
+              }
+            }).then(response=>{
+              console.log("-----***",response.data)
+              console.log("***////",EVENTS)
+              console.log("thissss",[...events,...(response.data.map((item,index)=>{
+                return({
+                  event_id: item.event_id,
+                  title:item.title,
+                  start: new Date(item.start),
+                  end: new Date(item.end)
+              })
+              }))])
+              setEvents([...events,...(response.data.map((item,index)=>{
+                return({
+                  event_id: item.event_id,
+                  title:item.title,
+                  start: new Date(item.start),
+                  end: new Date(item.end)
+              })
+              }))])
+        
+            })
+            //-----------------------------------------
             resolve({
               ...event,
-              event_id: event.event_id || Math.random()
+              event_id: event.event_id 
             });
           })
       } else if (action === "create") {
@@ -113,9 +142,38 @@ console.log("/*/*/*/",events)
           }
         })
         .then(res=>{
+          //------------------------
+          axios.get("http://127.0.0.1:5000/BloggerDashboard/get-events",{
+      headers:{
+        "Content-Type":"application/json",
+        "Accept":"application/json",
+        "Authorization": token 
+      }
+    }).then(response=>{
+      console.log("-----***",response.data)
+      console.log("***////",EVENTS)
+      console.log("thissss",[...events,...(response.data.map((item,index)=>{
+        return({
+          event_id: item.event_id,
+          title:item.title,
+          start: new Date(item.start),
+          end: new Date(item.end)
+      })
+      }))])
+      setEvents([...events,...(response.data.map((item,index)=>{
+        return({
+          event_id: item.event_id,
+          title:item.title,
+          start: new Date(item.start),
+          end: new Date(item.end)
+      })
+      }))])
+
+    })
+          //-----------------------
           resolve({
                 ...event,
-                event_id: event.event_id || Math.random()
+                event_id: event.event_id 
               });
         })
       }

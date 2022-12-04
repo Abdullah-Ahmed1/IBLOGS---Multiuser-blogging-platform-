@@ -437,6 +437,8 @@ ColorlibStepIcon.propTypes = {
       </Button>
       <LocalizationProvider dateAdapter={AdapterDayjs}>
         <DateTimePicker
+        disablePast
+        
             sx = {{display: `${schedule ? "none" : "flex"}` }}
           //  label="Date&Time picker"
             value={publishDate}
