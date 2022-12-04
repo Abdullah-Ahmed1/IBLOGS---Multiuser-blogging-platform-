@@ -63,7 +63,9 @@ const BlogPost= ({refreshBlogs})=>{
   //const [title, setTitle] = useState(null)
   const [description,setDescription] = useState(null)
 
-
+  //---------------------------------------
+    const [commentsNumber,setCommentsNumber] = useState(0)
+  //---------------------------------------
   const handleChangeItem = (item)=>{
    const a = (/^\w+(?:\s+\w+){0,249}$/).test(item.description)
    console.log("--!",a)
@@ -98,7 +100,8 @@ const BlogPost= ({refreshBlogs})=>{
           console.log("posts--------------------",res.data);
           setData(res.data)
           setData1(res.data)
-          setPosts(res.data.posts)        
+          setPosts(res.data.posts)    
+          commentsCounter(res.data.posts)    
         })
   }
 
@@ -128,10 +131,20 @@ const BlogPost= ({refreshBlogs})=>{
         .then(res=>{
           console.log("posts--------------------",res.data);
           setData(res.data)
-          setPosts(res.data.posts)        
+          setPosts(res.data.posts)      
+          commentsCounter(res.data.posts)  
         })
       })
     }
+
+    const commentsCounter =(posts)=>{
+      var count = 0
+      Promise.all( posts.map(post=>{
+         count = count + post.comments.length
+       }))
+       setCommentsNumber(count) 
+    }
+
     useEffect(()=>{ 
       lottie.loadAnimation({
         container : container.current,
@@ -148,6 +161,8 @@ const BlogPost= ({refreshBlogs})=>{
         axios.get(`http://127.0.0.1:5000/bloggerDashboard/get-all-posts/${blogId}`)
         .then(res=>{
           console.log("posts--------------------",res.data);
+          
+          commentsCounter(res.data.posts)
           setData(res.data)
           setData1(res.data)
           setPosts(res.data.posts)        
@@ -223,9 +238,12 @@ const BlogPost= ({refreshBlogs})=>{
                 }
                  
 
-                 
+                  <Grid2 container columnSpacing={2} justifyContent={'space-evenly'}>
+                                  
                   <h5 style={{color:"white"}}><span><ArticleIcon  sx = {{marginTop:"5px"}} /></span>Total posts : {posts.length}</h5>
-
+                  <h5 style={{color:"white"}}><span><ArticleIcon  sx = {{marginTop:"5px"}} /></span>Total Comments :{ commentsNumber} </h5>
+                  </Grid2> 
+                 
                   </div>   
                   {/* </div> */}
                 

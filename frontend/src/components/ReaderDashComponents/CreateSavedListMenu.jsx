@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {useState,useEffect} from "react";
 import axios from "axios";
-
+import TextField from '@mui/material/TextField';
 import ClickAwayListener from '@mui/material/ClickAwayListener';
 import Grow from '@mui/material/Grow';
 import Paper from '@mui/material/Paper';
@@ -17,7 +17,9 @@ import Input from '@mui/material/Input';
 import Grid2 from '@mui/material/Unstable_Grid2';
 import CheckboxesGroup from './GroupedCheckBox';
 import SavedListComponent from './SavedListComponent ';
+
 import { SignalCellularNullSharp } from '@material-ui/icons';
+import CustomListDuplicateSnack from './CustomListDuplicateSnack';
 
 
 
@@ -26,37 +28,64 @@ export default function MenuListComposition({postId,item,customList,handleCustom
   const [listTitle,setListTitle] = useState("");
   const [lists,setLists] = useState(null)
   const [customChecked,setCustomChecked] =useState(true) 
-  
+  const [nameError,setNameError] = useState(false)
+  const [nameErrorText,setNameErrorText] = useState("")
   console.log("saved??????????????????????????????????",true)
-
+//--------------------------------------------------------------------------
+  const [customListDuplicateSnackOpen,setCustomListDuplicateSnackOpen] = useState(false)
+  const customListDuplicateSnackHandleClose = ()=>{
+    setCustomListDuplicateSnackOpen(false)
+  }
+//------------------------------------------------------------------     
+    
+  
   const handleDone = ()=>{
     // console.log(postId)
-
-    let value = JSON.parse(localStorage.getItem("token"));
-    let token = value.token;
-    axios.post(`http://127.0.0.1:5000/readerDashboard/create-custom-list`,{
-          listName: listTitle
-    },{
-      headers: {
-                "Content-Type": "application/json", 
-                Accept: "application/json",
-                Authorization: token,
-            },
-    }).then(res=>{
-      console.log(res)
-      axios.get('http://127.0.0.1:5000/readerDashboard/get-customLists',{
-        headers: {
-          "Content-Type": "application/json", 
-          Accept: "application/json",
-          Authorization: token,
-      },
+    if(listTitle===""){
+      setNameError(true)
+      setNameErrorText("this field is required")
+    }else{
+      setNameError(false)
+      setNameErrorText("")
+      
+      const same =  lists.map(list=>{
+        return list.listName === listTitle 
       })
-      .then(res=>{
-        console.log("---/---",res.data)
-        setLists(res.data.your_lists)
-      })  
+      // console.log("sameeeesssss",same.includes(true))
+      //-------------------------------------------------------------------
+      if(!same.includes(true) ){
+        let value = JSON.parse(localStorage.getItem("token"));
+      let token = value.token;
+      axios.post(`http://127.0.0.1:5000/readerDashboard/create-custom-list`,{
+            listName: listTitle
+      },{
+        headers: {
+                  "Content-Type": "application/json", 
+                  Accept: "application/json",
+                  Authorization: token,
+              },
+      }).then(res=>{
+        console.log(res)
+        axios.get('http://127.0.0.1:5000/readerDashboard/get-customLists',{
+          headers: {
+            "Content-Type": "application/json", 
+            Accept: "application/json",
+            Authorization: token,
+        },
+        })
+        .then(res=>{
+          console.log("---/---",res.data)
+          setListTitle("")
+          setLists(res.data.your_lists)
+        })  
+      
+      })
+      }else{
+        setCustomListDuplicateSnackOpen(true)
+      }
+      
+    }
     
-    })
   }
  
   const refreshLists = ()=>{
@@ -102,6 +131,8 @@ export default function MenuListComposition({postId,item,customList,handleCustom
   }, [open]);
 
   return (
+    <>
+    <CustomListDuplicateSnack open={customListDuplicateSnackOpen}  handleClose={customListDuplicateSnackHandleClose}/>
     <Stack direction="row" spacing={2}>
      
       <div>
@@ -181,7 +212,7 @@ export default function MenuListComposition({postId,item,customList,handleCustom
                     
                     <Grid2     container spacing={0}>
                         <Grid2>
-                            <Input onChange={(e)=>setListTitle(e.target.value)}  placeholder='Enter list title' />
+                            <TextField id="standard-basic"  variant="standard" error={nameError} helperText = {nameError? nameErrorText:""} onChange={(e)=>setListTitle(e.target.value)}   placeholder='Enter list title' />
                         </Grid2>
                         <Grid2 justifyContent={"center"} alignItems="center" >
                             <DoneIcon  onClick = {handleDone} />
@@ -201,5 +232,6 @@ export default function MenuListComposition({postId,item,customList,handleCustom
         </Popper>
       </div>
     </Stack>
+    </>
   );
 }
