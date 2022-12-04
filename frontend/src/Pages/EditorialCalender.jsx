@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { DataGrid,useGridApiContext } from '@mui/x-data-grid';
+import { DataGrid,useGridApiContext ,GridToolbar } from '@mui/x-data-grid';
 import Snackbar from '@mui/material/Snackbar';
 import Dialog from '@mui/material/Dialog';
 import DialogTitle from '@mui/material/DialogTitle';
@@ -483,6 +483,7 @@ export default function AskConfirmationBeforeSave({blogId}) {
             <DataGrid
             checkboxSelection
             rows={posts}
+            components={{ Toolbar: GridToolbar }}
             columns={columns}
             getRowId={(row)=> row._id}
             processRowUpdate={processRowUpdate}

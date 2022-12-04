@@ -82,6 +82,16 @@ const ReaderHome = ()=>{
 
 
     }
+//--------------------not interested handle--------------------------------
+    const handleNotInterested = (id)=>{
+
+      setPosts(posts.filter(item=>{
+        return item._id != id
+      }))
+
+      console.log("!!!qqq",id)
+    }
+//----------------------------------------------    
     useEffect(()=>{
       let value = JSON.parse(localStorage.getItem("token"));
       let token = value.token;
@@ -126,7 +136,7 @@ const ReaderHome = ()=>{
           posts.map(item =>{
            
             return (
-              <ReaderPostCard   key = {item._id} item ={item}  handleLikeClick={handleLikeClick} />
+              <ReaderPostCard   key = {item._id} item ={item}  handleLikeClick={handleLikeClick} handleNotInterested={handleNotInterested} />
         
             )
           })

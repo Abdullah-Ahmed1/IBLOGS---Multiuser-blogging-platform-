@@ -12,7 +12,7 @@ import ReportDialog from './ReportDialog';
 import axios from "axios";
 import ReportSnack from './ReportSnack';
 
-export default function PostCardMenu({ownerId,postId}) {
+export default function PostCardMenu({ownerId,postId,handleNotInterested}) {
   const [open, setOpen] = React.useState(false);
   const [reportSnackOpen, setReportSnackOpen] = React.useState(false);
   const [openReportDialog, setOpenReportDialog] = React.useState(false);
@@ -151,6 +151,7 @@ export default function PostCardMenu({ownerId,postId}) {
                     onKeyDown={handleListKeyDown}
                   >
                     <MenuItem onClick={handleClose1}>Report this post</MenuItem>
+                    <MenuItem onClick={()=>handleNotInterested(postId)}>Not Interested</MenuItem>
                     {/* <MenuItem onClick={handleClose}>My account</MenuItem>
                     <MenuItem onClick={handleClose}>Logout</MenuItem> */}
                   </MenuList>

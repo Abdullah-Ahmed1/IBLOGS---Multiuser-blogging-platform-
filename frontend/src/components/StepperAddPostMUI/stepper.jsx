@@ -52,6 +52,7 @@ import { useState } from 'react';
 import ConfirmBox from './ConfirmBox';
 import TagSelect from './TagSelect';
 import Step2BackDrop from './Step2Backdrop';
+import LengthMsgSnack from './LengthMsgSnack';
 var h2p = require("html2plaintext");
 
 const steps = ['Post Details','Text Generation', 'Create post','Post Tags', 'Upload Options'];
@@ -887,7 +888,13 @@ const nextWord = (postContent) => {
       //---------------------------------------------
 
   const container = useRef(null)
-  
+  //----------------------------------------
+  const [lengthMsgSnack,setLengthMsgSnack] = useState(false)
+
+    const lengthMsgSnackHandleClose =()=>{
+      setLengthMsgSnack(false)
+    }
+  //----------------------------------------
   const [skipped, setSkipped] = React.useState(new Set());
   const [step2BackDropOpen, setStep2BackDropOpen] = useState(false)
   const [tags,setTags] = useState([])
@@ -940,6 +947,8 @@ const nextWord = (postContent) => {
           setStep2BackDropOpen(false)
         })
 
+      }else{
+        setLengthMsgSnack(true)
       }
 
     
@@ -995,6 +1004,7 @@ const nextWord = (postContent) => {
 
   return (
     <Box sx={{ width: '100%' }}>
+      <LengthMsgSnack open = {lengthMsgSnack} handleClose = {lengthMsgSnackHandleClose} />
       <Step2BackDrop   open = {step2BackDropOpen} handleClose={step2BackDropHandleClose} />
       <div  style={{display:"flex",flexDirection:"row",backgroundColor:"#379683"}}>
       <div style={{paddingTop:"25px"}}>

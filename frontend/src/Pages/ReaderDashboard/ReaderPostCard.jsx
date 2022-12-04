@@ -19,7 +19,7 @@ import CreateListMenu from './../../components/ReaderDashComponents/CreateSavedL
 import PostShareDialog from './../../components/ReaderDashComponents/PostShareDialog';
 import { useEffect } from 'react';
 import PostCardMenu from './../../components/PostComponentsMui/PostCardMenu';
-const ReaderPostCard = ({item,handleLikeClick})=>{
+const ReaderPostCard = ({item,handleLikeClick,handleNotInterested})=>{
     const [shareDialogOpen,setShareDialogOpen] = useState(false)
     const [liked,setLiked] = useState(false)
     //const [saved,setSaved] = useState(false)
@@ -96,6 +96,9 @@ const ReaderPostCard = ({item,handleLikeClick})=>{
       }
       setOpen(false);
     };
+
+
+    
 //-----------------------------------------------------------------    
       console.log("item is :  " ,item)
     const handleShareDialogClose = ()=>{
@@ -157,7 +160,7 @@ const ReaderPostCard = ({item,handleLikeClick})=>{
                   <Grid item lg ={2} sm={1} xs = {1}>
                       {/* icons here */}
                       {/* <MoreVertIcon  sx ={{color:"#05386b"}}  /> */}
-                      <PostCardMenu ownerId = {item.parentBlog.owner._id} postId={item._id} />
+                      <PostCardMenu ownerId = {item.parentBlog.owner._id} postId={item._id}  handleNotInterested = {handleNotInterested}/>
                   </Grid>
                   
               </Grid>
