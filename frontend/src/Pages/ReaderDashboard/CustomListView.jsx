@@ -15,6 +15,8 @@ import ListIcon from '@mui/icons-material/List';
 import Grid from "@mui/material/Grid";
 import { Link } from 'react-router-dom';
 import axios from "axios";
+import TrendPostCard from './../../components/PostComponentsMui/TrendPostCard';
+
 import {useParams} from "react-router-dom";
 import { useEffect,useState } from 'react';
 
@@ -103,6 +105,7 @@ const ReadingListPostCard = ({item,handleRemovePostClick})=>{
 const CustomListView = ()=>{
   const {listId} = useParams();
   const [list,setList] = useState(null)
+  const [trendingPosts,setTrendingPosts] = useState(null)
     console.log("LostUD",listId) 
 
   const handleRemovePostClick = (id)=>{
@@ -138,6 +141,33 @@ const CustomListView = ()=>{
       })
     },[])
 
+
+    useEffect(()=>{
+      let value = JSON.parse(localStorage.getItem("token"));
+      let token = value.token;
+      axios.get('http://127.0.0.1:5000/readerDashboard',{
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+          Authorization: token,
+        },
+      })
+      .then(res =>{
+        console.log("res--------",res.data    ) 
+  
+        res.data.sort((a,b)=>{
+          if(a.likes.length> b.likes.length) return 1;
+          if(a.likes.length< b.likes.length) return -1;
+          return 0 ;
+        })
+        
+  
+        setTrendingPosts(res.data)
+        
+       
+      }).catch(err=> console.log(err))
+    
+    },[])
 
     return(
         <>
@@ -175,44 +205,30 @@ const CustomListView = ()=>{
             <Grid2 className="sideScroll" xs={12} md={5} lg={3.3 }   sx = {{ position:"fixed",bottom:"0px",right:"0px",height:"100vh",overflow:"auto", background:"#05386b",marginRight:"0px",paddingLeft:"20px"} }     >
            
             {/* <Divider /> */}
-            <h4 style={{color:"#379683"}} > Recommended Topics</h4>
+            <h4 style={{color:"#5cdb95"}} > Recommended Topics</h4>
             <RecommendedChips/>
             <div>
-            <h4 style={{color:"#379683"}}>Trending Posts</h4>
-              {/* <TrendPostCard/>
-              <TrendPostCard/>
-              <TrendPostCard/>
-              <TrendPostCard/>
-              <TrendPostCard/> */}
+            <h4 style={{color:"#5cdb95"}}>Trending Posts</h4>
+            {
+            trendingPosts !== null? (
+              trendingPosts.length > 0?(
+                trendingPosts.map(item=>{
+                  return (
+                    <TrendPostCard  key={item._id}  item = {item}/>
+                  )
+                })
+              ):(
+                <h4>No trending right now</h4>
+              )
+            ):(
+              <CircularProgress/>
+            )
+          }
+
               </div>
-            <Typography paragraph>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-              tempor incididunt ut labore et dolore magna aliqua. Rhoncus dolor purus non
-              enim praesent elementum facilisis leo vel. Risus at ultrices mi tempus
-              imperdiet. Semper risus in hendrerit gravida rutrum quisque non tellus.
-              Convallis convallis tellus id interdum velit laoreet id donec ultrices.
-              Odio morbi quis commodo odio aenean sed adipiscing. Amet nisl suscipit
-              adipiscing bibendum est ultricies integer quis. Cursus euismod quis viverra
-              nibh cras. Metus vulputate eu scelerisque felis imperdiet proin fermentum
-              leo. Mauris commodo quis imperdiet massa tincidunt. Cras tincidunt lobortis
-              feugiat vivamus at augue. At augue eget arcu dictum varius duis at
-              consectetur lorem. Velit sed ullamcorper morbi tincidunt. Lorem donec massa
-              sapien faucibus et molestie ac.
-            </Typography>
-            {/* <Typography paragraph>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-              tempor incididunt ut labore et dolore magna aliqua. Rhoncus dolor purus non
-              enim praesent elementum facilisis leo vel. Risus at ultrices mi tempus
-              imperdiet. Semper risus in hendrerit gravida rutrum quisque non tellus.
-              Convallis convallis tellus id interdum velit laoreet id donec ultrices.
-              Odio morbi quis commodo odio aenean sed adipiscing. Amet nisl suscipit
-              adipiscing bibendum est ultricies integer quis. Cursus euismod quis viverra
-              nibh cras. Metus vulputate eu scelerisque felis imperdiet proin fermentum
-              leo. Mauris commodo quis imperdiet massa tincidunt. Cras tincidunt lobortis
-              feugiat vivamus at augue. At augue eget arcu dictum varius duis at
-              consectetur lorem. Velit sed ullamcorper morbi tincidunt. Lorem donec massa
-              sapien faucibus et molestie ac.
-            </Typography> */}
+           
+            
+            
             {/* <div  style={{backgroundColor:"green",maxWidth:"100px",overflowY: "auto"}} onScroll={onScroll}
             ref={listInnerRef} >Hello</div>
     

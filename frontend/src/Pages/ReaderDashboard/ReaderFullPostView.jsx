@@ -20,6 +20,7 @@ import Divider from '@mui/material/Divider';
  import TrendPostCard from './../../components/PostComponentsMui/TrendPostCard';
  import PostCommentDrawer from "../../components/ReaderDashComponents/PostCommentsDrawer"
 import PostFromSameBlogCard from './../../components/PostComponentsMui/PostFromSameBlogCard';
+import { useLocation } from 'react-router-dom';
 
    function Progress() {
     return (
@@ -29,7 +30,7 @@ import PostFromSameBlogCard from './../../components/PostComponentsMui/PostFromS
     );
   }      
 const ReaderFullPostView = ()=>{
-      
+  let location = useLocation();
     let { id } = useParams();
     console.log("idddd",id)
     const [post,setPost] = useState(null);
@@ -67,7 +68,7 @@ const ReaderFullPostView = ()=>{
 
         }).catch(err=>console.log (err))
 
-    },[])   
+    },[location])   
 
     useEffect(()=>{
       let value = JSON.parse(localStorage.getItem("token"));

@@ -66,11 +66,7 @@ const ResponsesPage = ()=>{
         if(a.likes.length< b.likes.length) return -1;
         return 0 ;
       })
-      
-
       setTrendingPosts(res.data)
-      
-     
     }).catch(err=> console.log(err))
   
   },[])

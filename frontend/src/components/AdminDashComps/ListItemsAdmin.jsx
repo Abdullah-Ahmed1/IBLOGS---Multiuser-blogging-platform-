@@ -9,11 +9,18 @@ import BarChartIcon from '@mui/icons-material/BarChart';
 //import ThumbUpAltIcon from '@mui/icons-material/ThumbUpAlt';
 import {Link} from 'react-router-dom' 
 import Divider from '@mui/material/Divider';
+import LogoutIcon from '@mui/icons-material/Logout';
 import Tooltip from '@mui/material/Tooltip';
 import EmailIcon from '@mui/icons-material/Email';
 import DriveFileRenameOutlineIcon from '@mui/icons-material/DriveFileRenameOutline';
-
+import { useNavigate } from "react-router-dom";
 const List_ItemsAdmin = ()=>{
+    let navigate = useNavigate();
+    const handleLogOut = ()=>{
+      localStorage.removeItem("adminToken");
+      navigate("/admin");
+    }
+
     return(
         <>
         <Tooltip title="Home" placement="right" arrow>
@@ -63,6 +70,15 @@ const List_ItemsAdmin = ()=>{
           </ListItemIcon> 
         </ListItemButton>
         </Link>
+        </Tooltip>
+        <Tooltip title="logout" placement="right" arrow>
+         
+        <ListItemButton onClick = {handleLogOut} >
+          <ListItemIcon>
+            <LogoutIcon sx={{ color:"#5cdb95",fontSize:"25px", marginBottom:"10px" }} />
+          </ListItemIcon> 
+        </ListItemButton>
+        
         </Tooltip>
         
         </>
