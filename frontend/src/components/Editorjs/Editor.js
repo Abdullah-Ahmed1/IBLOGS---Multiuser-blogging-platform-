@@ -51,6 +51,7 @@ const MyEditor = ({
         tabIndex={1} // tabIndex of textarea
         onBlur={(newContent) => handlePostContent(newContent)} // preferred to use only this option to update the content for performance reasons
         onChange={(newContent) => {
+          // console.log("66788", newContent);
           // console.log(newContent.replace("/<[^>]+>/g", ""));
           window.onkeydown = (event) => {
             if (event.keyCode == 32) {
@@ -59,7 +60,7 @@ const MyEditor = ({
             }
           };
           // console.log(h2p(newContent));
-          console.log(h2p(newContent).split(". "));
+
           // a = newContent;
         }}
       />

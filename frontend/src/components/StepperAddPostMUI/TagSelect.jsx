@@ -68,8 +68,8 @@ export default function TagSelect({tags,selectedTag,handleSelectTag}) {
           MenuProps={MenuProps}
         >
           {
-          // tags
-          names
+          tags
+          // names
           .map((name) => (
             <MenuItem
               key={name}

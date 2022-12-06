@@ -117,7 +117,7 @@ const ReaderHome = ()=>{
           {/* <h2 style = {{color:"#379863"}}>IBlogs</h2> */}
           <img style={{width:"180px",marginRight:"50px"}} src={'/logo2.png'} alt="iblogs" />
           {/* <SearchBar/> */}
-          <Searching/>
+          <Searching borderColor={"black"} width = {'495px'} height = {'550px'}/>
         </div>
         {/* <Divider variant="middle"/> */}
       <Grid2 container spacing={0} justifyContent= "space-between"   >

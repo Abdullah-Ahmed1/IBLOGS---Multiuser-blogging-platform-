@@ -11,6 +11,8 @@ import RecommendedChips from './../../components/PostComponentsMui/RecommendChip
 import NotificationBar from './../../components/ReaderDashComponents/NotificationBar';
 import { useEffect,useState,useRef } from 'react';
 import axios from 'axios';
+import Searching from '../../components/ReaderDashComponents/Searching';
+
 
 const ResponsesPage = ()=>{
   const container = useRef(null)
@@ -88,10 +90,10 @@ const ResponsesPage = ()=>{
         <Grid2 className="sideScroll" xs={12} md={5} lg={3.3 }   sx = {{ position:"fixed",bottom:"0px",right:"0px",height:"100vh",overflow:"auto", background:"#05386b",marginRight:"0px",paddingLeft:"20px"} }     >
        
         {/* <Divider /> */}
-        <h4 style={{color:"#379683"}} > Recommended Topics</h4>
-        <RecommendedChips/>
+        <h4 style={{color:"#5cdb95"}} > Search</h4>
+        <Searching borderColor={'#5cdb95'}  width={'355px'} height={'500px'} />
         <div>
-        <h4 style={{color:"#379683"}}>Trending Posts</h4>
+        <h4 style={{color:"#5cdb95"}}>Trending Posts</h4>
          
           </div>
         <Typography paragraph>

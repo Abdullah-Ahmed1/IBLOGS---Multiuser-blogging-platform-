@@ -27,5 +27,9 @@ router
 router
   .route("/add-warn-notification/:id")
   .post(AdminController.addWarningNotification);
+
+router.route("/add-auto-email").post(AdminController.addAutoEmail);
+router.route("/get-auto-emails").get(AdminController.getAutoEmails);
+router.route("/delete-auto-email/:id").delete(AdminController.deleteAutoEmail);
 router.route("/send-email").post(AdminController.sendEmail);
 module.exports = router;

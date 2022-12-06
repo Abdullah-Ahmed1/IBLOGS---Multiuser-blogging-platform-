@@ -53,6 +53,9 @@ import ConfirmBox from './ConfirmBox';
 import TagSelect from './TagSelect';
 import Step2BackDrop from './Step2Backdrop';
 import LengthMsgSnack from './LengthMsgSnack';
+import ContentRepititionSnack from './ContentRepitionSnack';
+import LinksNumberSnack from './LinksNumberSnack';
+import MalLinkSnack from './MalLinkSnack';
 var h2p = require("html2plaintext");
 
 const steps = ['Post Details','Text Generation', 'Create post','Post Tags', 'Upload Options'];
@@ -555,7 +558,7 @@ const nextWord = (postContent) => {
   
     // console.log("key pressed");
     axios
-      .post("http://localhost:3001/next_word", { value: h2p(postContent) })
+      .post(`${process.env.REACT_APP_HOSTING}/next_word`, { value: h2p(postContent) })
       .then((res) => {
         console.log("predicted word", res);
         // setPostContent(res.data)
@@ -575,7 +578,7 @@ const nextWord = (postContent) => {
       const bodyFormData ={
         title : keyword
       }
-      axios.post("http://localhost:3001/generate",bodyFormData)
+      axios.post(`${process.env.REACT_APP_HOSTING}/generate`,bodyFormData)
       .then(res=>{
         console.log("generated text",res.data)
         setGeneratedText(res.data)
@@ -890,7 +893,19 @@ const nextWord = (postContent) => {
   const container = useRef(null)
   //----------------------------------------
   const [lengthMsgSnack,setLengthMsgSnack] = useState(false)
-
+  const [repititionSnack,setRepititionSnack] = useState(false)
+  const [linksNumberSnack,setLinksNumberSnack] = useState(false)
+  const [malLinkSnack,setMalLinkSnack] = useState(false)
+  
+  const malLinkSnackHandleClose =()=>{
+    setMalLinkSnack(false)
+  }
+  const linksNumberSnackHandleClose =()=>{
+    setLinksNumberSnack(false)
+  }
+  const repititionSnackHandleClose =()=>{
+    setRepititionSnack(false)
+  }
     const lengthMsgSnackHandleClose =()=>{
       setLengthMsgSnack(false)
     }
@@ -905,48 +920,117 @@ const nextWord = (postContent) => {
   const isStepOptional = (step) => {
     return step === 1;
   };
+//-------------------------------------------
 
+  const repititionDetection = ()=>{
+    let str = "I am not gonna live forever, but I wanna live while I am alive",
+    split = (h2p(postContent)).split("."),
+    obj = {};
+
+  for (let i = 0; i < split.length; i++) {
+    if (obj[split[i]] === undefined) {
+      obj[split[i]] = 1;
+    } else {
+      obj[split[i]]++;
+    }
+  }
+
+  console.log("answer",(Object.values(obj)).includes(3))
+    return (Object.values(obj)).includes(3)
+  }
+
+  const getLinks = ()=>{
+    const text = postContent;
+    let parser = new DOMParser();
+    const doc = parser.parseFromString(text, 'text/html');
+    // console.log(doc);
+    const links = doc.getElementsByTagName('a');
+    // console.log(links);
+    const a = [];
+
+    Promise.all([...links].forEach((link) => {
+      // console.log("444444",link.getAttribute('href'));
+      a.push(link.getAttribute('href'))
+    }));
+
+    const b = a.map((item)=>{
+     return( item.slice(8,item.length))
+    }) 
+    console.log("links array",b)
+    return b
+  }
+
+  const checkMaliciousLinks = ()=>{
+
+    axios.post(`${process.env.HOSTING}/SpamDetection`,{value:getLinks()})
+    .then(res=>{
+     return  res ==="spam"?  true: false
+    }).catch((err)=>{
+      return false
+    })
+
+
+  }
+///-----------------------------------------
   const isStepSkipped = (step) => {
     return skipped.has(step);
   };
 
-  const handleNext = () => {
+  const handleNext = async() => {
+    
     console.log("activeStep",activeStep)
     
     if(activeStep ==2)  {
+      getLinks()
       if((h2p(postContent).split(".")).length >= 10){
-        console.log("reacheeeee")
-        setStep2BackDropOpen(true)
-
-        let newSkipped = skipped;
-        if (isStepSkipped(activeStep)) {
-          newSkipped = new Set(newSkipped.values());
-          newSkipped.delete(activeStep);
-        }
-    
-        setActiveStep((prevActiveStep) => prevActiveStep + 1);
-        setSkipped(newSkipped);
-        const data = {value: "Web development is the work involved in developing a website for the Internet (World Wide Web) or an intranet (a private network).[1] Web development can range from developing a simple single static page of plain text to complex web applications, electronic businesses, and social network services. A more comprehensive list of tasks to which Web development commonly refers, may include Web engineering, Web design, Web content development, client liaison, client-side/server-side scripting, Web server and network security configuration, and e-commerce development.Among Web professionals, Web development usually refers to the main non-design aspects of building Web sites: writing markup and coding.[2] Web development may use content management systems (CMS) to make content changes easier and available with basic technical skills.For larger organizations and businesses, Web development teams can consist of hundreds of people (Web developers) and follow standard methods like Agile methodologies while developing Web sites. Smaller organizations may only require a single permanent or contracting developer, or secondary assignment to related job positions such as a graphic designer or information systems technician. Web development may be a collaborative effort between departments rather than the domain of a designated department. There are three kinds of Web developer specialization: front-end developer, back-end developer, and full-stack developer.[3] Front-end developers are responsible for behavior and visuals that run in the user browser, while back-end developers deal with the servers. Since the commercialization of the Web with Tim Berners-Lee[4] developing the World Wide Web at CERN, the industry has boomed and has become one of the most used technologies ever."}
-        const temp = ` ${h2p(postContent)} ` 
-  
-        console.log("----------------------------------//",h2p(postContent)) 
-        axios.post("http://127.0.0.1:3001/classify",
-          {value: temp}
-          // data
-        )
-        .then(res=>{
-          console.log("classification",res.data)
-          setTags(res.data)
-          setStep2BackDropOpen(false)
-  
+        if(!repititionDetection()){
+          if(getLinks().length < 10 ){
+          if(!(await checkMaliciousLinks())){
+            console.log("reacheeeee")
+            setStep2BackDropOpen(true)
+            //---------------------------
+            
+            //---------------------------
+            let newSkipped = skipped;
+            if (isStepSkipped(activeStep)) {
+              newSkipped = new Set(newSkipped.values());
+              newSkipped.delete(activeStep);
+            }
         
-  
-        })
-        .catch((err)=>{
-          console.log(err)
-          setStep2BackDropOpen(false)
-        })
+            setActiveStep((prevActiveStep) => prevActiveStep + 1);
+            setSkipped(newSkipped);
+            const data = {value: "Web development is the work involved in developing a website for the Internet (World Wide Web) or an intranet (a private network).[1] Web development can range from developing a simple single static page of plain text to complex web applications, electronic businesses, and social network services. A more comprehensive list of tasks to which Web development commonly refers, may include Web engineering, Web design, Web content development, client liaison, client-side/server-side scripting, Web server and network security configuration, and e-commerce development.Among Web professionals, Web development usually refers to the main non-design aspects of building Web sites: writing markup and coding.[2] Web development may use content management systems (CMS) to make content changes easier and available with basic technical skills.For larger organizations and businesses, Web development teams can consist of hundreds of people (Web developers) and follow standard methods like Agile methodologies while developing Web sites. Smaller organizations may only require a single permanent or contracting developer, or secondary assignment to related job positions such as a graphic designer or information systems technician. Web development may be a collaborative effort between departments rather than the domain of a designated department. There are three kinds of Web developer specialization: front-end developer, back-end developer, and full-stack developer.[3] Front-end developers are responsible for behavior and visuals that run in the user browser, while back-end developers deal with the servers. Since the commercialization of the Web with Tim Berners-Lee[4] developing the World Wide Web at CERN, the industry has boomed and has become one of the most used technologies ever."}
+            const temp = ` ${h2p(postContent)} ` 
+      
+            // console.log("----------------------------------//",h2p(postContent)) 
+            axios.post(`${process.env.REACT_APP_HOSTING}/classify`,
+              {value: temp}
+              // data
+            )
+            .then(res=>{
+              console.log("classification",res.data)
+              setTags(res.data)
+              setStep2BackDropOpen(false)
+            })
+            .catch((err)=>{
+              console.log(err)
+              setStep2BackDropOpen(false)
+            })
+    
+          }else{
+            setMalLinkSnack(true)
+            //-------------------------------here
+          }  
+       
+          }else{
 
+            setLinksNumberSnack(true)
+          }
+          
+        }else{
+          setRepititionSnack(true)
+        }  
+        
       }else{
         setLengthMsgSnack(true)
       }
@@ -1004,7 +1088,10 @@ const nextWord = (postContent) => {
 
   return (
     <Box sx={{ width: '100%' }}>
+      <MalLinkSnack open = {malLinkSnack} handleClose={malLinkSnackHandleClose}/>
+      <LinksNumberSnack  open = {linksNumberSnack} handleClose ={linksNumberSnackHandleClose} /> 
       <LengthMsgSnack open = {lengthMsgSnack} handleClose = {lengthMsgSnackHandleClose} />
+      <ContentRepititionSnack   open = {repititionSnack}  handleClose={repititionSnackHandleClose}/>
       <Step2BackDrop   open = {step2BackDropOpen} handleClose={step2BackDropHandleClose} />
       <div  style={{display:"flex",flexDirection:"row",backgroundColor:"#379683"}}>
       <div style={{paddingTop:"25px"}}>

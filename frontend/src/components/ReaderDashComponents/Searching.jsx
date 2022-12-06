@@ -16,7 +16,7 @@ import MenuItem from '@mui/material/MenuItem';
 import MenuList from '@mui/material/MenuList';
 import Stack from '@mui/material/Stack';
 
-export default function MenuListComposition() {
+export default function MenuListComposition({borderColor,width,height}) {
   const navigate = useNavigate()
   const [open, setOpen] = React.useState(false);
   const anchorRef = React.useRef(null);
@@ -88,17 +88,22 @@ export default function MenuListComposition() {
   return (
     // <Stack direction="row" spacing={2}>
      
-      <div style={{width:"70%"}}>
+      <div style={{width:"90%"}}>
         
                      <TextField 
                       ref={anchorRef}
+                      fullWidth
+                      InputLabelProps = {{
+                        sx:{ color:"green"}
+                      }}
+                      sx = {{'MuiInputLabel':"green",'& .MuiOutlinedInput-root':{'& fieldset':{  borderColor: borderColor}}}}
                       aria-controls={open ? 'composition-menu' : undefined}
           aria-expanded={open ? 'true' : undefined}
           aria-haspopup="true"
           onChange={(e)=> optimizedFn(e.target.value)}
         
           onFocus={handleToggle}
-                     id="outlined-basic" size='small' fullWidth placeholder='search' variant="outlined" />
+                     id="outlined-basic" size='small'  placeholder='search' variant="outlined" />
 
         <Popper
           open={open}
@@ -116,7 +121,7 @@ export default function MenuListComposition() {
                   placement === 'bottom-start' ? 'left top' : 'left bottom',
               }}
             >
-              <Paper sx = {{width:"495px",maxHeight:"550",overflow:"auto"}}>
+              <Paper sx = {{width:width,maxHeight:height,overflow:"auto"}}>
                 
                 <ClickAwayListener onClickAway={handleClose}>
                   <MenuList

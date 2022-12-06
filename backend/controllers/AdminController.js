@@ -5,6 +5,7 @@ const sendEmail = require("../utils/sendEmail");
 const Blog = Mongoose.model("Blog");
 const Post = Mongoose.model("Post");
 const Admin = Mongoose.model("Admin");
+const Email = Mongoose.model("Email");
 const Notification = Mongoose.model("Notification");
 const Reply = Mongoose.model("Reply");
 const SavedList = Mongoose.model("SavedList");
@@ -455,6 +456,45 @@ module.exports = {
       res.send("email end successfully");
     } catch (err) {
       console.log(err);
+    }
+  },
+
+  addAutoEmail: (req, res) => {
+    console.log("add auto email reached");
+    const token = req.headers["authorization"];
+    try {
+      const decoded = jwt.verify(token, "1122334455");
+      Email.create(req.body).then((email) => {
+        res.send("email added");
+      });
+    } catch (err) {
+      res.send(err);
+    }
+  },
+  getAutoEmails: (req, res) => {
+    const token = req.headers["authorization"];
+
+    try {
+      const decoded = jwt.verify(token, "1122334455");
+      Email.find({}).then((emails) => {
+        res.send(emails);
+      });
+    } catch (err) {
+      res.send(err);
+    }
+  },
+  deleteAutoEmail: (req, res) => {
+    console.log("delete auto email reached");
+    const token = req.headers["authorization"];
+    const emailId = req.params.id;
+    console.log(req.params.id);
+    try {
+      const decoded = jwt.verify(token, "1122334455");
+      Email.findOneAndDelete({ _id: emailId }).then((email) => {
+        res.send("deleted successfully");
+      });
+    } catch (err) {
+      res.send(err);
     }
   },
 
