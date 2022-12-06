@@ -12,11 +12,14 @@ import NotificationBar from './../../components/ReaderDashComponents/Notificatio
 import { useEffect,useState,useRef } from 'react';
 import axios from 'axios';
 import Searching from '../../components/ReaderDashComponents/Searching';
+import TrendPostCard from './../../components/PostComponentsMui/TrendPostCard';
+import { CircularProgress } from '@mui/material';
 
 
 const ResponsesPage = ()=>{
   const container = useRef(null)
     const [test,setTest] = useState(null)
+    const [trendingPosts,setTrendingPosts] = useState(null)
   const [notifications,setNotifications]  =useState(null)
   useEffect(()=>{
       
@@ -43,6 +46,33 @@ const ResponsesPage = ()=>{
      // console.log(res.data)
       setNotifications(res.data)
     })
+  },[])
+
+  useEffect(()=>{
+    let value = JSON.parse(localStorage.getItem("token"));
+    let token = value.token;
+    axios.get('http://127.0.0.1:5000/readerDashboard',{
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+        Authorization: token,
+      },
+    })
+    .then(res =>{
+      console.log("res--------",res.data    ) 
+
+      res.data.sort((a,b)=>{
+        if(a.likes.length> b.likes.length) return 1;
+        if(a.likes.length< b.likes.length) return -1;
+        return 0 ;
+      })
+      
+
+      setTrendingPosts(res.data)
+      
+     
+    }).catch(err=> console.log(err))
+  
   },[])
     return(
         <>
@@ -94,22 +124,23 @@ const ResponsesPage = ()=>{
         <Searching borderColor={'#5cdb95'}  width={'355px'} height={'500px'} />
         <div>
         <h4 style={{color:"#5cdb95"}}>Trending Posts</h4>
-         
+        {
+            trendingPosts !== null? (
+              trendingPosts.length > 0?(
+                trendingPosts.map(item=>{
+                  return (
+                    <TrendPostCard  key={item._id}  item = {item}/>
+                  )
+                })
+              ):(
+                <h4>No trending right now</h4>
+              )
+            ):(
+              <CircularProgress/>
+            )
+          }
           </div>
-        <Typography paragraph>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-          tempor incididunt ut labore et dolore magna aliqua. Rhoncus dolor purus non
-          enim praesent elementum facilisis leo vel. Risus at ultrices mi tempus
-          imperdiet. Semper risus in hendrerit gravida rutrum quisque non tellus.
-          Convallis convallis tellus id interdum velit laoreet id donec ultrices.
-          Odio morbi quis commodo odio aenean sed adipiscing. Amet nisl suscipit
-          adipiscing bibendum est ultricies integer quis. Cursus euismod quis viverra
-          nibh cras. Metus vulputate eu scelerisque felis imperdiet proin fermentum
-          leo. Mauris commodo quis imperdiet massa tincidunt. Cras tincidunt lobortis
-          feugiat vivamus at augue. At augue eget arcu dictum varius duis at
-          consectetur lorem. Velit sed ullamcorper morbi tincidunt. Lorem donec massa
-          sapien faucibus et molestie ac.
-        </Typography>
+        
         {/* */} 
 
         </Grid2>

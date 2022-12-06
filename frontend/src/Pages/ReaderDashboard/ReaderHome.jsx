@@ -6,7 +6,7 @@ import "../../components/PostComponentsMui/TrendPostCard.css"
 //import Grid from "@mui/material/Grid";
 import Grid2 from '@mui/material/Unstable_Grid2';
 //import List from '@mui/material/List';
-import { CircularProgress, Typography } from '@mui/material';
+import { CircularProgress} from '@mui/material';
 //import { Link } from 'react-router-dom';
 // import Button from '@mui/material/Button';
 // import { styled } from '@mui/material/styles';

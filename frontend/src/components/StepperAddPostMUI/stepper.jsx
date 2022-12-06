@@ -576,7 +576,7 @@ const nextWord = (postContent) => {
       // bodyFormData.append('title', keyword);
       setStep2BackDropOpen(true)
       const bodyFormData ={
-        title : keyword
+        value : keyword
       }
       axios.post(`${process.env.REACT_APP_HOSTING}/generate`,bodyFormData)
       .then(res=>{
@@ -585,6 +585,9 @@ const nextWord = (postContent) => {
         setPostContent(res.data)
         setStep2BackDropOpen(false)
         setActiveStep((activeStep) => activeStep + 1);
+      })
+      .catch(err=>{
+        setStep2BackDropOpen(false)
       })
     }
 

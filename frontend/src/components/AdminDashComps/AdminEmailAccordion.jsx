@@ -123,7 +123,7 @@ export default function EmailAccordion() {
          handleEmailDateChange = {handleEmailDateChange}
          />
     <div>
-        <h2>Write Custom Email</h2>
+        <h2 style={{color:"#05386b"}}>Write Custom Email</h2>
       <Accordion>
         <AccordionSummary
           expandIcon={<ExpandMoreIcon />}
@@ -142,7 +142,7 @@ export default function EmailAccordion() {
       </Accordion>
     </div>
           <div style={{display:"flex",flexDirection:"row",alignItems:"center",justifyContent:"space-between"}}>
-          <h2>Annually Automated Emails Content</h2>
+          <h2 style={{color:"#05386b"}}>Annually Automated Emails Content</h2>
           <AddCircleIcon sx = {{cursor:"pointer"}}  onClick={()=>setAddAccordionDialogOpenOpen(true)}  />
           </div>
          
@@ -153,8 +153,9 @@ export default function EmailAccordion() {
           accordion.length>0 ? (
             accordion.map((item)=>{
               return(
-                  <Accordion key={item._id} >
+                  <Accordion key={item._id}  >
                   <AccordionSummary
+                  sx = {{backgroundColor:"green"}}
                     expandIcon={<ExpandMoreIcon />}
                     aria-controls="panel1a-content"
                     id="panel1a-header"
@@ -163,7 +164,7 @@ export default function EmailAccordion() {
                     <Typography>{item.title}</Typography>
                     <DeleteIcon  sx = {{marginLeft:"20px"}} onClick={()=>handleDelete(item._id)}  />
                   </AccordionSummary>
-                  <AccordionDetails>
+                  <AccordionDetails   >
                       <h4>Date : {item.emailDate}</h4>
                       <h4>Subject :{item.subject}</h4>
                       <h4>Content:</h4>

@@ -49,7 +49,7 @@ const ReaderHome = ()=>{
        {/* <Posts  posts = {posts}/> */}
        <Grid2 container  spacing= {3} sx = {{p:3}} >
         <Grid2 xs={12} md={6} lg={6}>
-        <Paper sx = {{height:"70px"}}>
+        <Paper sx = {{height:"70px",backgroundColor:"#05386b",color:"white"}}>
           <Grid2 container>
             <Grid2  container  sx={{margin:"auto"}} flexDirection="row" alignItems = "center" justifyContent={"space-around"}   >
               <Grid2>
@@ -69,7 +69,7 @@ const ReaderHome = ()=>{
         </Paper>
         </Grid2>
         <Grid2 xs={12} md={6} lg={6}>
-        <Paper sx = {{height:"70px"}}>
+        <Paper sx = {{height:"70px",backgroundColor:"#05386b",color:"white"}}>
           <Grid2 container>
             <Grid2  container  sx={{margin:"auto"}} flexDirection="row" alignItems = "center" justifyContent={"space-around"}   >
               <Grid2>
@@ -89,7 +89,7 @@ const ReaderHome = ()=>{
         </Paper>
         </Grid2>
         <Grid2 xs={12} md={6} lg={6}>
-        <Paper sx = {{height:"70px"}}>
+        <Paper sx = {{height:"70px",backgroundColor:"#05386b",color:"white"}}>
           <Grid2 container>
             <Grid2  container  sx={{margin:"auto"}} flexDirection="row" alignItems = "center" justifyContent={"space-around"}   >
               <Grid2>
@@ -109,7 +109,7 @@ const ReaderHome = ()=>{
         </Paper>
         </Grid2>
         <Grid2 xs={12} md={6} lg={6}>
-        <Paper sx = {{height:"70px"}}>
+        <Paper sx = {{height:"70px",backgroundColor:"#05386b",color:"white"}}>
           <Grid2 container>
             <Grid2  container  sx={{margin:"auto"}} flexDirection="row" alignItems = "center" justifyContent={"space-around"}   >
               <Grid2>

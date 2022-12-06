@@ -11,6 +11,7 @@ const Reply = Mongoose.model("Reply");
 const SavedList = Mongoose.model("SavedList");
 const User = Mongoose.model("User");
 const Comment = Mongoose.model("Comment");
+const schedule = require("node-schedule");
 
 module.exports = {
   // addAdmin: (req, res) => {
@@ -466,6 +467,22 @@ module.exports = {
       const decoded = jwt.verify(token, "1122334455");
       Email.create(req.body).then((email) => {
         res.send("email added");
+
+        //---------------------------------
+        // schedule.scheduleJob(email._id, email.emailDate, async () => {
+        //   const emailList = [
+        //     "abdullah.ahmed10001@gmail.com",
+        //     "alikumail54@gmail.com",
+        //   ];
+        //   try {
+        //     sendEmail(emailList, email.subject, email.content);
+
+        //     //-----------------------------------------------------------------------------------
+        //   } catch (err) {
+        //     console.log(err);
+        //   }
+        // });
+        //----------------------------------
       });
     } catch (err) {
       res.send(err);
@@ -492,6 +509,7 @@ module.exports = {
       const decoded = jwt.verify(token, "1122334455");
       Email.findOneAndDelete({ _id: emailId }).then((email) => {
         res.send("deleted successfully");
+        // schedule.cancelJob(email._id)
       });
     } catch (err) {
       res.send(err);

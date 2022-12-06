@@ -20,7 +20,7 @@ const List_ItemsAdmin = ()=>{
           <Link to="/admin/home">
          <ListItemButton>
           <ListItemIcon>
-            <HomeIcon sx={{ color: "#379863",fontSize:"25px", marginBottom:"10px" }} />
+            <HomeIcon sx={{ color: "#5cdb95",fontSize:"25px", marginBottom:"10px" }} />
           </ListItemIcon>
         </ListItemButton>
         </Link>
@@ -30,7 +30,7 @@ const List_ItemsAdmin = ()=>{
         <Link to="/admin/users">   
           <ListItemButton>
             <ListItemIcon>
-              <PeopleAltIcon sx={{ color: "#379863",fontSize:"25px" , marginBottom:"10px"}} />
+              <PeopleAltIcon sx={{ color: "#5cdb95",fontSize:"25px" , marginBottom:"10px"}} />
             </ListItemIcon> 
           </ListItemButton>
         </Link>    
@@ -40,7 +40,7 @@ const List_ItemsAdmin = ()=>{
         <Link to ='/admin/notifications' >
         <ListItemButton>
           <ListItemIcon>
-            <NotificationsActiveIcon sx={{ color:"#379863",fontSize:"25px", marginBottom:"10px" }} />
+            <NotificationsActiveIcon sx={{ color:"#5cdb95",fontSize:"25px", marginBottom:"10px" }} />
           </ListItemIcon> 
         </ListItemButton>
         </Link>
@@ -49,7 +49,7 @@ const List_ItemsAdmin = ()=>{
         <Link to ='/admin/email' >
         <ListItemButton>
           <ListItemIcon>
-            <EmailIcon sx={{ color:"#379863",fontSize:"25px", marginBottom:"10px" }} />
+            <EmailIcon sx={{ color:"#5cdb95",fontSize:"25px", marginBottom:"10px" }} />
           </ListItemIcon> 
         </ListItemButton>
         </Link>
@@ -59,7 +59,7 @@ const List_ItemsAdmin = ()=>{
          <Link to ='/admin/weeklyReports' >
         <ListItemButton>
           <ListItemIcon>
-            <BarChartIcon sx={{ color:"#379863",fontSize:"25px", marginBottom:"10px" }} />
+            <BarChartIcon sx={{ color:"#5cdb95",fontSize:"25px", marginBottom:"10px" }} />
           </ListItemIcon> 
         </ListItemButton>
         </Link>

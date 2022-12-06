@@ -20,7 +20,7 @@ const UsersProfilePage = ({userData,handleUserDelete})=>{
       <Grid2 container spacing={0} justifyContent= "space-between"   >
         <Grid2  lg ={11} spacing={0} sx = {{minHeight:"90vh",marginTop:"50px",marginLeft:"30px"}}  >  
        {/* ----------------------------------------------------------------------------------- */}
-       <h2 style = {{color:"#379863"}}  >All Users</h2>
+       <h2 style = {{color:"#5cdb95"}}  >All Users</h2>
        
        <Grid2 container direction="row" spacing={2} sx = {{margin:"0px",padding:"0px"}} >
        {

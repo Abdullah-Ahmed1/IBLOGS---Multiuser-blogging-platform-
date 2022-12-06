@@ -44,7 +44,7 @@ export default function AdminDashboard() {
     <Box sx={{ display: 'flex' }} 
     className={classes.root}
     >
-        <AppBar position="fixed" sx={{backgroundColor:"#379863",color:"#05386b", height:"60px",zIndex: (theme) => theme.zIndex.drawer + 1 }}>
+        <AppBar position="fixed" sx={{backgroundColor:"#5cdb95",color:"#05386b", height:"60px",zIndex: (theme) => theme.zIndex.drawer + 1 }}>
         <Toolbar>
             <div style = {{display:"flex", flexDirection:"row"}}>
             <h3 style={{fontFamily:"Roboto,Helvetica,Arial,sans-serif",paddingTop:"5px",marginTop:"5px",marginRight:"50px"}}>IBlogs</h3>

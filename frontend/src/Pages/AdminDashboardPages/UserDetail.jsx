@@ -62,7 +62,7 @@ useEffect(()=>{
                         <h3 style={{margin:0,padding:0}}>{user.email}</h3>
                         <h4 style={{margin:0,padding:0}}>{user.profession} @ {user.organization}</h4>
                         <p style={{maxHeight:"100px" ,overflow:"auto"}} >{user.about ==="" || !user.about ? "No about Info Provided" : user.about }</p>
-                        <Button   onClick={()=> navigate(`/admin/users/blogs/${userId}`)}  fullWidth variant="contained"  sx = {{backgroundColor:"#379863",color:"white",'&:hover':{backgroundColor:"#05386b"}}}>View Blogs</Button>
+                        <Button   onClick={()=> navigate(`/admin/users/blogs/${userId}`)}  fullWidth variant="contained"  sx = {{backgroundColor:"#5cdb95",color:"white",'&:hover':{backgroundColor:"#05386b"}}}>View Blogs</Button>
                         <Grid2 container direction={"row"} justifyContent={"space-between"} sx = {{margin:"20px 60px"}} >
                             <Grid2 >
                                 <h4>Total Blogs</h4>

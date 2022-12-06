@@ -93,16 +93,16 @@ export default function MenuListComposition({borderColor,width,height}) {
                      <TextField 
                       ref={anchorRef}
                       fullWidth
-                      InputLabelProps = {{
-                        sx:{ color:"green"}
-                      }}
-                      sx = {{'MuiInputLabel':"green",'& .MuiOutlinedInput-root':{'& fieldset':{  borderColor: borderColor}}}}
+                      // InputLabelProps = {{
+                      //   sx:{ color:"green"}
+                      // }}
+                      sx = {{'MuiInputLabel':{color:"green"},input:{color:"#5cdb95"},':hover':{'& .MuiOutlinedInput-root':{'& fieldset':{  borderColor: borderColor}}},textDecorationColor:"green",'& .MuiOutlinedInput-root':{'& fieldset':{  borderColor: borderColor}}}}
                       aria-controls={open ? 'composition-menu' : undefined}
-          aria-expanded={open ? 'true' : undefined}
-          aria-haspopup="true"
-          onChange={(e)=> optimizedFn(e.target.value)}
+                      aria-expanded={open ? 'true' : undefined}
+                      aria-haspopup="true"
+                      onChange={(e)=> optimizedFn(e.target.value)}
         
-          onFocus={handleToggle}
+                     onFocus={handleToggle}
                      id="outlined-basic" size='small'  placeholder='search' variant="outlined" />
 
         <Popper
