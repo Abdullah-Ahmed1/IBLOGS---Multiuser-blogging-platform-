@@ -58,6 +58,11 @@ router.route("/add-to-history").post(ReaderDashController.addToHistory);
 //   .route("/get-user-followers")
 //   .get(ReaderDashController.getFollowersOfUser);
 router.route("/search/:data").get(ReaderDashController.search);
+
+router.route("/add-view").post(ReaderDashController.addView);
+
+router.route("/filter-with-tags/:tag").get(ReaderDashController.filterWithTags);
+
 //router.route("/all").get(ReaderDashController.getAllData1);
 //router.route("/all2").get(ReaderDashController.getAllData2);
 

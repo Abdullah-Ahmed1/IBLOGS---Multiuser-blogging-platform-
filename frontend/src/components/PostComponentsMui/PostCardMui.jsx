@@ -67,9 +67,9 @@ export default function PostCardMui({item,handlePostDelete}) {
       </Typography>
      
        <div  >
-       <Button   sx = {{color:"#05386b"}}  size="small"><ThumbUpAltIcon/>5</Button>
+       <Button   sx = {{color:"#05386b"}}  size="small"><ThumbUpAltIcon/>{item.likes.length}</Button>
         <Button  onClick = {()=>setShareDialogOpen(true )}   sx = {{color:"#05386b"}} size="small"><ShareIcon/></Button>
-        <Button  sx = {{color:"#05386b"}} size="small"><EditIcon/></Button>
+        {/* <Button  sx = {{color:"#05386b"}} size="small"><EditIcon/></Button> */}
         <Button  onClick={()=>setPostDeleteDialogOpen(true)}  sx = {{color:"#05386b"}} size="small"><DeleteIcon /></Button>
         <Button onClick={()=>setFullPostDialogOpen(true)}  sx = {{color:"#05386b"}} size="small"><VisibilityIcon/></Button>
         <Chip  sx = {{backgroundColor:"#379683",color:"white"}}  label={item.publishStatus} />

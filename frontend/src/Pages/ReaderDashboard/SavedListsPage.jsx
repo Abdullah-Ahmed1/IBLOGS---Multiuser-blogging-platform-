@@ -15,13 +15,18 @@ import LockIcon from '@mui/icons-material/Lock';
 import RecommendedChips from '../../components/PostComponentsMui/RecommendChips';
 //import { Grid } from '@mui/material/Grid';
 import AddNewListDialog from './../../components/ReaderDashComponents/AddSavedListDialog';
+import TrendPostCard from './../../components/PostComponentsMui/TrendPostCard';
+import { CircularProgress } from '@mui/material';
+
 
 const SavedList = ()=>{
   const container = useRef(null)
   const [lists,setLists] =useState(null);
   const navigate = useNavigate();
+  const [trendingPosts,setTrendingPosts] = useState(null)
 
   const [addListDialogOpen, setAddListDialogOpen] = useState(false);
+  
 
   const addListHandleClose = () => {
     setAddListDialogOpen(false);
@@ -121,6 +126,29 @@ const SavedList = ()=>{
     
   },[])
 
+  useEffect(()=>{
+    let value = JSON.parse(localStorage.getItem("token"));
+    let token = value.token;
+    axios.get('http://127.0.0.1:5000/readerDashboard',{
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+        Authorization: token,
+      },
+    })
+    .then(res =>{
+      console.log("res--------",res.data    ) 
+
+      res.data.sort((a,b)=>{
+        if(a.likes.length> b.likes.length) return 1;
+        if(a.likes.length< b.likes.length) return -1;
+        return 0 ;
+      })
+      setTrendingPosts(res.data)
+    }).catch(err=> console.log(err))
+  
+  },[])
+
     return(
         <>
         <AddNewListDialog  open={addListDialogOpen} handleAdd = {handleAdd}  handleClose = {addListHandleClose}/>
@@ -212,6 +240,23 @@ const SavedList = ()=>{
         <RecommendedChips/>
         <div>
         <h4 style={{color:"#5cdb95"}}>Recommended Posts</h4>
+
+        {
+            trendingPosts !== null? (
+              trendingPosts.length > 0?(
+                trendingPosts.map(item=>{
+                  return (
+                    <TrendPostCard  key={item._id}  item = {item}/>
+                  )
+                })
+              ):(
+                <h4>No trending right now</h4>
+              )
+            ):(
+              <CircularProgress/>
+            )
+          }
+
           {/* <TrendPostCard/>
           <TrendPostCard/>
           <TrendPostCard/>

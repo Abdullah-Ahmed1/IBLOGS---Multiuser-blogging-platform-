@@ -606,7 +606,8 @@ const nextWord = (postContent) => {
         publishStatus : "published",
         publishDate: new Date(),
         dateCreated: new Date(),
-        tags: selectedTag
+        tags: selectedTag,
+        contentImagesCount: getImageCount()
       
       }
       if(postCardImage){
@@ -632,8 +633,8 @@ const nextWord = (postContent) => {
       publishStatus : "published",
       publishDate: new Date(),
       dateCreated: new Date(),
-      tags: selectedTag
-    
+      tags: selectedTag,
+      contentImagesCount: getImageCount()
     }
     console.log("url: ",res.data.secure_url)
     
@@ -665,7 +666,8 @@ const nextWord = (postContent) => {
         publishStatus : "published",
         publishDate: new Date(),
         dateCreated: new Date(),
-        tags: selectedTag
+        tags: selectedTag,
+        contentImagesCount: getImageCount()
       }
       
       let value = JSON.parse(localStorage.getItem("token"));
@@ -706,7 +708,8 @@ const nextWord = (postContent) => {
         publishStatus : "scheduled",
         publishDate: dayjs(publishDate).format(),
         dateCreated: new Date(),
-        tags: selectedTag
+        tags: selectedTag,
+        contentImagesCount: getImageCount()
       
       }
       if(postCardImage){
@@ -731,7 +734,8 @@ const nextWord = (postContent) => {
         publishStatus : "scheduled",
         publishDate: dayjs(publishDate).format(),
         dateCreated: new Date(),
-        tags: selectedTag
+        tags: selectedTag,
+        contentImagesCount: getImageCount()
       
       }
       
@@ -763,7 +767,8 @@ const nextWord = (postContent) => {
           publishStatus : "scheduled",
           publishDate: dayjs(publishDate).format(),
           dateCreated: new Date(),
-          tags: selectedTag
+          tags: selectedTag,
+          contentImagesCount: getImageCount()
         
         }
         
@@ -815,7 +820,8 @@ const nextWord = (postContent) => {
         publishStatus : "Draft",
         publishDate: new Date(),
         dateCreated: new Date(),
-        tags: selectedTag
+        tags: selectedTag,
+        contentImagesCount: getImageCount()
       
       }
       if(postCardImage){
@@ -841,7 +847,8 @@ const nextWord = (postContent) => {
       publishStatus : "Draft",
       publishDate: new Date(),
       dateCreated: new Date(),
-      tags: selectedTag
+      tags: selectedTag,
+      contentImagesCount: getImageCount()
     
     }
     console.log("url: ",res.data.secure_url)
@@ -872,7 +879,8 @@ const nextWord = (postContent) => {
         publishStatus : "Draft",
         publishDate: new Date(),
         dateCreated: new Date(),
-        tags: selectedTag
+        tags: selectedTag,
+        contentImagesCount: getImageCount()
       }
       
       let value = JSON.parse(localStorage.getItem("token"));
@@ -942,6 +950,7 @@ const nextWord = (postContent) => {
     return (Object.values(obj)).includes(3)
   }
 
+//------------------------------------------------  
   const getLinks = ()=>{
     const text = postContent;
     let parser = new DOMParser();
@@ -963,6 +972,17 @@ const nextWord = (postContent) => {
     return b
   }
 
+  const getImageCount = ()=>{
+    const text = postContent;
+    let parser = new DOMParser();
+    const doc = parser.parseFromString(text, 'text/html');
+    // console.log(doc);
+    const imgs = doc.getElementsByTagName('img');
+    console.log("no of images are",imgs.length);
+    return imgs.length
+
+  }
+//---------------------------------------------
   const checkMaliciousLinks = ()=>{
 
     axios.post(`${process.env.HOSTING}/SpamDetection`,{value:getLinks()})
@@ -984,10 +1004,11 @@ const nextWord = (postContent) => {
     console.log("activeStep",activeStep)
     
     if(activeStep ==2)  {
+      getImageCount()
       getLinks()
       if((h2p(postContent).split(".")).length >= 10){
         if(!repititionDetection()){
-          if(getLinks().length < 10 ){
+          if(getLinks().length < 150 ){
           if(!(await checkMaliciousLinks())){
             console.log("reacheeeee")
             setStep2BackDropOpen(true)

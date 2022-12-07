@@ -116,6 +116,7 @@ export default function TabsWrappedLabel({blogs,handleChange,value,handleChangeI
         </SwipeableViews>
     </Box>
   <div style={{backgroundColor:"white",padding:"20px",width:"100%"}}>
+    <h2>Task Creator</h2>
     <Schedular/>
   </div>
   </>

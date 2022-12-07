@@ -66,6 +66,28 @@ module.exports = {
       console.log(res);
     });
   },
+
+  enhancementRecommendations: () => {
+    // schedule.scheduleJob("*/2 * * * * *", () => {
+
+    // });
+    WeeklyAnalysis.find({}).then((res) => {
+      console.log("weekly analysis", res);
+      const good = [];
+      const bad = [];
+      Promise.all(
+        res[0].postAnalysis.map((item) => {
+          if (item.commentsSemantics == "positive" && item.likes > 10) {
+            good.push(item);
+          } else {
+            bad.push(item);
+          }
+        })
+      );
+      console.log(good, bad);
+    });
+  },
+
   testAnalysis: () => {
     var a = 1;
     // schedule.scheduleJob("*/2 * * * * *", () => {

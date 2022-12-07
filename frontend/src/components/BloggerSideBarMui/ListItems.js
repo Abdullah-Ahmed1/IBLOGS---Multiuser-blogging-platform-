@@ -33,7 +33,7 @@ export const MainListItems = (props) => {
       >
         <ListItemButton>
           <ListItemIcon>
-            <DashboardIcon sx={{ color: "#379683" }} />
+            <DashboardIcon sx={{ color: "#5cdb95" }} />
           </ListItemIcon>
           <ListItemText />
         </ListItemButton>
@@ -41,7 +41,7 @@ export const MainListItems = (props) => {
       {location.pathname == "/Bloggerdashboard" ? (
         <ListItemButton onClick={props.handleClick}>
           <ListItemIcon>
-            <AddCircleIcon sx={{ color: "#379683" }} />
+            <AddCircleIcon sx={{ color: "#5cdb95" }} />
           </ListItemIcon>
           <ListItemText />
         </ListItemButton>
@@ -52,24 +52,24 @@ export const MainListItems = (props) => {
       >
         <ListItemButton>
           <ListItemIcon>
-            <NotificationsActiveIcon sx={{ color: "#379683" }} />
+            <NotificationsActiveIcon sx={{ color: "#5cdb95" }} />
           </ListItemIcon>
           <ListItemText />
         </ListItemButton>
       </Link>
-      <ListItemButton>
+      {/* <ListItemButton>
         <ListItemIcon>
           <BarChartIcon sx={{ color: "#379683" }} />
         </ListItemIcon>
         <ListItemText />
-      </ListItemButton>
+      </ListItemButton> */}
       <Link
         style={{ color: "white", textDecoration: "none" }}
         to="/Bloggerdashboard/calender"
       >
         <ListItemButton>
           <ListItemIcon>
-            <CalendarMonthIcon sx={{ color: "#379683" }} />
+            <CalendarMonthIcon sx={{ color: "#5cdb95" }} />
           </ListItemIcon>
           <ListItemText />
         </ListItemButton>

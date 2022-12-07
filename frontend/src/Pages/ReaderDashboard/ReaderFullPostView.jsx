@@ -83,6 +83,19 @@ const ReaderFullPostView = ()=>{
       })
 
     },[])
+    useEffect(()=>{
+      let value = JSON.parse(localStorage.getItem("token"));
+      let token = value.token;
+      const data = {post : id}
+      axios.post(`http://127.0.0.1:5000/readerDashboard/add-view`,data,{
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+          Authorization: token,
+        },
+      })
+
+    },[])
 
     return(
         <>
@@ -122,7 +135,7 @@ const ReaderFullPostView = ()=>{
                 < PostCommentDrawer/>
                 </Tooltip>
                 <Tooltip title="Like">
-                <ThumbUpIcon sx = {{ marginLeft:"20px",fontSize: "40px",color:"#379863"}} />
+                <ThumbUpIcon sx = {{ marginLeft:"20px",fontSize: "40px",color:"##5cdb95"}} />
                 </Tooltip>
             </div>  
             </Grid2>
@@ -131,10 +144,10 @@ const ReaderFullPostView = ()=>{
              <Grid2 className="sideScroll" xs={12} md={5} lg={3.3 }   sx = {{ position:"fixed",bottom:"0px",right:"0px",height:"100vh",overflow:"auto", background:"#05386b",marginRight:"0px",paddingLeft:"20px"} }     >
        
        {/* <Divider /> */}
-       <h4 style={{color:"#379683"}} > Recommended Topics</h4>
+       <h4 style={{color:"#5cdb95"}} > Recommended Topics</h4>
        <RecommendedChips/>
        <div>
-       <h4 style={{color:"#379683"}}>Posts From Same Blog</h4>
+       <h4 style={{color:"#5cdb95 "}}>Posts From Same Blog</h4>
          {
           postsFromSameBlog?(
             postsFromSameBlog.length> 0 ?(

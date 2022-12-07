@@ -71,5 +71,11 @@ var postSchema = new mongoose.Schema({
   Categories: {
     type: [String],
   },
+  views: {
+    type: Number,
+  },
+  contentImagesCount: {
+    type: String,
+  },
 });
 mongoose.model("Post", postSchema);

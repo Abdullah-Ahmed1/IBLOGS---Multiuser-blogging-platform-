@@ -21,6 +21,7 @@ const Analysis = require("./utils/Analysis");
 // Analysis.googleAPI();
 //Analysis.commentAnalysis();
 // Analysis.testAnalysis();
+// Analysis.enhancementRecommendations();
 //----------------------------------------------------
 
 const profilingRoutes = require("./routes/userProfilingRoutes");

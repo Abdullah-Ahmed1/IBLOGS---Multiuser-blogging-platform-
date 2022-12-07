@@ -38,8 +38,8 @@ const YourProfile =()=>{
         <CssBaseline/>
          <Grid2 container spacing={0} justifyContent= "space-between"   >
          <Grid2 xs={12} md={5} lg={7.5} spacing={0} sx = {{minHeight:"100vh",marginLeft:"30px"}}  >
-         <Grid2   sx = {{fontFamily: '"Source Sans Pro",Arial,sans-serif',borderRadius:"5   0px",width:"100%",marginTop:"50px",boxShadow:"0 4px 8px 0 rgba(92,219,149, 0.2), 0 6px 20px 0 rgba(92,219,149, 0.19)"}}>
-                    <Grid2 container direction="column" sx = {{backgroundColor:"white"}}  >
+         <Grid2   sx = {{fontFamily: '"Source Sans Pro",Arial,sans-serif',minHeight:"600px",borderRadius:"5   0px",width:"100%",marginTop:"50px",boxShadow:"0 4px 8px 0 rgba(92,219,149, 0.2), 0 6px 20px 0 rgba(92,219,149, 0.19)"}}>
+                    <Grid2 container direction="column" sx = {{backgroundColor:"white",minHeight:"600px"}}  >
                     <Grid2  sx = {{paddingLeft:"20px",paddingTop:"30px"}}    >
                             <div>
                                 <div  style = {{cursor:"pointer"}} >
@@ -143,17 +143,17 @@ const YourProfile =()=>{
                                             <TextField id="filled-basic" sx = {{width:"80%"}} multiline size="small" label="About" rows={5}  variant="filled" />
                                            
                                         ):(
-                                            <p> Lorem ipsum dolor sit amet consectetur adipisicing elit. Odio voluptatum nobis aliquid sapiente corporis temporibus molestiae obcaecati, dolor aut, amet, quod consequatur? Ratione animi vero rem eum quasi ad consequatur. 
+                                            <p>{value.profileData.about? value.profileData.about: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Odio voluptatum nobis aliquid sapiente corporis temporibus molestiae obcaecati, dolor aut, amet, quod consequatur? Ratione animi vero rem eum quasi ad consequatur.'}  
                                             </p>
                                         )
                                     }
                                 </Grid2>
                                 <Grid2 container direction="row" columnSpacing={10}>
                                     <Grid2>
-                                        Total Blogs
+                                        Total Blogs  3
                                     </Grid2>
                                     <Grid2>
-                                        Total Posts
+                                        Total Posts  4
                                     </Grid2>
                                 </Grid2>     
                                

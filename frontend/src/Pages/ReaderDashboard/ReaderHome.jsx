@@ -43,12 +43,27 @@ const ReaderHome = ()=>{
   const large = useMediaQuery(theme.breakpoints.down('lg'));
   const medium = useMediaQuery(theme.breakpoints.down('md'));
   const small = useMediaQuery(theme.breakpoints.down('sm'));
-
+  const [trendingPosts,setTrendingPosts] = useState(null)
   const [posts,setPosts] = useState(null)
     const [added,setAdded] = useState(false) 
     const handleSaveIconClick =()=>{
       setAdded(true)
     } 
+
+    const handleChipClick = (label)=>{
+      console.log("66666",label)
+      let value = JSON.parse(localStorage.getItem("token"));
+      let token = value.token;
+      axios.get(`http://127.0.0.1:5000/readerDashboard/filter-with-tags/${label}`,{
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+          Authorization: token,
+        },
+      }).then(res=>{
+        setPosts(res.data)
+      })
+     }
 
     const handleLikeClick = (postId)=>{
       let value = JSON.parse(localStorage.getItem("token"));
@@ -105,6 +120,32 @@ const ReaderHome = ()=>{
       .then(res =>{
         console.log("res--------",res.data    ) 
         setPosts(res.data)
+
+        
+       
+      }).catch(err=> console.log(err))
+    },[])
+
+    useEffect(()=>{
+      let value = JSON.parse(localStorage.getItem("token"));
+      let token = value.token;
+      axios.get('http://127.0.0.1:5000/readerDashboard',{
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+          Authorization: token,
+        },
+      })
+      .then(res =>{
+        console.log("res--------",res.data    ) 
+        
+
+        res.data.sort((a,b)=>{
+          if(a.likes.length> b.likes.length) return 1;
+          if(a.likes.length< b.likes.length) return -1;
+          return 0 ;
+        })
+        setTrendingPosts(res.data)
         
        
       }).catch(err=> console.log(err))
@@ -163,13 +204,13 @@ const ReaderHome = ()=>{
        
         {/* <Divider /> */}
         <h4 style={{color:"#5cdb95"}} > Recommended Topics</h4>
-        <RecommendedChips/>
+        <RecommendedChips  handleChipClick ={handleChipClick} />
         <div>
         <h4 style={{color:"#5cdb95"}}>Trending Posts</h4>
           {
-            posts !== null? (
-              posts.length > 0?(
-                posts.map(item=>{
+            trendingPosts !== null? (
+              trendingPosts.length > 0?(
+                trendingPosts.map(item=>{
                   return (
                     <TrendPostCard  key={item._id}  item = {item}/>
                   )

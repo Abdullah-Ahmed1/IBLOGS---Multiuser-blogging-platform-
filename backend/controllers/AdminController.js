@@ -516,6 +516,16 @@ module.exports = {
     }
   },
 
+  getHomeData: async (req, res) => {
+    const users = await User.find({});
+    const blogs = await Blog.find({});
+    const posts = await Post.find({});
+    const comments = await Comment.find({});
+
+    const data1 = [users.length, blogs.length, posts.length, comments.length];
+    res.send(data1);
+  },
+
   // getUserFollowers : (req,res)=>{
   //   const userId = req.params.userId
 

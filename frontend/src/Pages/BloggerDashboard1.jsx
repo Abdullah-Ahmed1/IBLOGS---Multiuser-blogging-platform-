@@ -212,7 +212,7 @@ function DashboardContent() {
     <Box sx={{ display: "flex" }}   className={classes.root} >
       
       <AppBar 
-        sx = {{ backgroundColor:"#379683" ,zIndex: (theme) => theme.zIndex.drawer + 1 }}
+        sx = {{ backgroundColor:"#5cdb95" ,zIndex: (theme) => theme.zIndex.drawer + 1 }}
         position="fixed"
       >
         <Toolbar

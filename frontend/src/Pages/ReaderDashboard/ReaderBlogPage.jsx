@@ -77,6 +77,7 @@ const ReaderBlogPage = ()=>{
           Authorization: token,
         },
       }).then(res=>{
+        console.log("---------/-/-/------------",res.data)
         setPosts(res.data)
       })
     },[])
@@ -141,6 +142,7 @@ const ReaderBlogPage = ()=>{
               {
                 posts?(
                   posts.map(post=>{
+                    console.log("oist",post)
                     return(
                       
                       <ReaderPostCard key={post._id} item={post} handleLikeClick={handleLikeClick}  />

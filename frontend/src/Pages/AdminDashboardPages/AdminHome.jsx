@@ -25,6 +25,7 @@ import PostLineChart from './../../components/AdminDashComps/PostLineChart';
 
 const ReaderHome = ()=>{
 
+    const [allData,setAllData]  = useState([])
     useEffect(()=>{
 
       axios.get("http://127.0.0.1:5000/admin/getAllUsers")
@@ -32,6 +33,16 @@ const ReaderHome = ()=>{
         console.log("!!££££££",res.data)
       })
     })
+
+    useEffect(()=>{
+      axios.get("http://127.0.0.1:5000/admin/get-admin-home-data")
+      .then(res=>{
+
+        console.log("!!££££££",res.data)
+
+        setAllData(res.data)
+      })
+    },[])
 
    
 
@@ -60,7 +71,7 @@ const ReaderHome = ()=>{
             
               </Grid2>
               <Grid2>
-            <h2 style={{margin:"0px",padding:"0px"}}>5</h2>
+            <h2 style={{margin:"0px",padding:"0px"}}>{allData[0]}</h2>
             </Grid2>    
             </Grid2>
             
@@ -80,7 +91,7 @@ const ReaderHome = ()=>{
             
               </Grid2>
               <Grid2>
-            <h2 style={{margin:"0px",padding:"0px"}}>10</h2>
+            <h2 style={{margin:"0px",padding:"0px"}}>{allData[1]}</h2>
             </Grid2>    
             </Grid2>
             
@@ -100,7 +111,7 @@ const ReaderHome = ()=>{
             
               </Grid2>
               <Grid2>
-            <h2 style={{margin:"0px",padding:"0px"}}>10</h2>
+            <h2 style={{margin:"0px",padding:"0px"}}>{allData[2]}</h2>
             </Grid2>    
             </Grid2>
             
@@ -120,7 +131,7 @@ const ReaderHome = ()=>{
             
               </Grid2>
               <Grid2>
-            <h2 style={{margin:"0px",padding:"0px"}}>20</h2>
+            <h2 style={{margin:"0px",padding:"0px"}}>{allData[3]}</h2>
             </Grid2>    
             </Grid2>
             

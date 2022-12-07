@@ -202,7 +202,6 @@ module.exports = {
     console.log("postId", postId);
     console.log(req.body.comment);
     const token = req.headers["authorization"];
-
     try {
       const decoded = jwt.verify(token, "1234567");
       // console.log(decoded);
@@ -951,6 +950,80 @@ module.exports = {
     }
   },
 
+  getRecommendedPosts: (req, res) => {
+    console.log("get recommended posts reached");
+  },
+  filterWithTags: (req, res) => {
+    console.log("tags filter reached");
+    const tag = req.params.tag;
+    console.log("the tag is", tag);
+    const token = req.headers["authorization"];
+
+    try {
+      const decoded = jwt.verify(token, "1234567");
+      Post.find()
+        .populate({
+          path: "parentBlog",
+          select: { title: 1 },
+          populate: {
+            path: "owner",
+            select: {
+              firstname: 1,
+              lastname: 1,
+              profileImage: 1,
+              email: 1,
+              ReadingList: 1,
+            },
+          },
+        })
+        .select({
+          title: 1,
+          postTitle: 1,
+          postDescription: 1,
+          postKeywords: 1,
+          likes: 1,
+          publishDate: 1,
+          publishStatus: 1,
+          allowComments: 1,
+          postCardImage: 1,
+          tags: 1,
+        })
+        .exec()
+        .then((response) => {
+          // console.log(
+          //   response.filter(
+          //     (item) => item.parentBlog.owner._id.toString() !== decoded.id
+          //   )
+          // );
+          const data = response.filter((item) => {
+            item.parentBlog.owner._id.toString() === decoded.id;
+          });
+          // console.log(data);
+          res.send(
+            response.filter(
+              (item) =>
+                item.parentBlog.owner._id.toString() !== decoded.id &&
+                item.publishStatus === "published" &&
+                item.tags.includes(tag)
+            )
+          );
+        })
+        .catch((err) => console.log(err));
+    } catch (err) {
+      res.send(err);
+    }
+  },
+
+  addView: (req, res) => {
+    const postId = req.body.post;
+    console.log("33333", postId);
+    // Post.UpdateOne(
+    //   { _id: postId },
+    //   {
+    //     $inc: { views: 1 },
+    //   }
+    // );
+  },
   // getFollowersOfUser: (req, res) => {
   //   console.log("reached get followers of user");
   //   const token = req.headers["authorization"];
