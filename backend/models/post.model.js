@@ -77,5 +77,8 @@ var postSchema = new mongoose.Schema({
   contentImagesCount: {
     type: String,
   },
+  summary: {
+    type: String,
+  },
 });
 mongoose.model("Post", postSchema);

@@ -27,6 +27,7 @@ module.exports = {
       })
       .select({
         likes: 1,
+        contentImagesCount: 1,
       });
 
     console.log("!!!!", posts);
@@ -52,6 +53,7 @@ module.exports = {
           postImpressions: null,
           postLikes: post.likes.length,
           commentsSemantics: res1.data,
+          ContentImages: post.contentImagesCount,
         };
         analysisArr.push(data);
         console.log("---/-", analysisArr);
@@ -85,6 +87,27 @@ module.exports = {
         })
       );
       console.log(good, bad);
+
+      bad.map((item) => {
+        Post.findOne({ _id: item.postId })
+          .populate({
+            path: "parentBlog",
+            select: {
+              title: 1,
+            },
+            populate: {
+              path: "owner",
+              select: {
+                email: 1,
+                firstname: 1,
+                lastname: 1,
+              },
+            },
+          })
+          .then((data) => {
+            console.log("//", data.parentBlog.owner.email, item);
+          });
+      });
     });
   },
 

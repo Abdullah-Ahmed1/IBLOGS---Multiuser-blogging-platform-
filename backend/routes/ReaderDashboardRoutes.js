@@ -60,8 +60,10 @@ router.route("/add-to-history").post(ReaderDashController.addToHistory);
 router.route("/search/:data").get(ReaderDashController.search);
 
 router.route("/add-view").post(ReaderDashController.addView);
+router.route("/get-recommended").post(ReaderDashController.getRecommendedPosts);
 
 router.route("/filter-with-tags/:tag").get(ReaderDashController.filterWithTags);
+router.route("/scrap/:title").get(ReaderDashController.scrapSearch);
 
 //router.route("/all").get(ReaderDashController.getAllData1);
 //router.route("/all2").get(ReaderDashController.getAllData2);

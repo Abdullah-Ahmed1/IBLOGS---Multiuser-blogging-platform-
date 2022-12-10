@@ -1,0 +1,186 @@
+Long short-term memory (LSTM)[1] is an artificial neural network used in the fields of artificial intelligence and deep learning. Unlike standard feedforward neural networks, LSTM has feedback connections. Such a recurrent neural network (RNN) can process not only single data points (such as images), but also entire sequences of data (such as speech or video). For example, LSTM is applicable to tasks such as unsegmented, connected handwriting recognition,[2] speech recognition,[3][4] machine translation,[5][6] robot control,[7][8] video games,[9][10] and healthcare.[11]
+The name of LSTM refers to the analogy that a standard RNN has both "long-term memory" and "short-term memory". The connection weights and biases in the network change once per episode of training, analogous to how physiological changes in synaptic strengths store long-term memories; the activation patterns in the network change once per time-step, analogous to how the moment-to-moment change in electric firing patterns in the brain store short-term memories.[12] The LSTM architecture aims to provide a short-term memory for RNN that can last thousands of timesteps, thus "long short-term memory".[1]
+A common LSTM unit is composed of a cell, an input gate, an output gate[13] and a forget gate.[14] The cell remembers values over arbitrary time intervals and the three gates regulate the flow of information into and out of the cell.
+LSTM networks are well-suited to classifying, processing and making predictions based on time series data, since there can be lags of unknown duration between important events in a time series. LSTMs were developed to deal with the vanishing gradient problem[15] that can be encountered when training traditional RNNs. Relative insensitivity to gap length is an advantage of LSTM over RNNs, hidden Markov models and other sequence learning methods in numerous applications.[citation needed]
+In theory, classic (or "vanilla") RNNs can keep track of arbitrary long-term dependencies in the input sequences. The problem with vanilla RNNs is computational (or practical) in nature: when training a vanilla RNN using back-propagation, the long-term gradients which are back-propagated can "vanish" (that is, they can tend to zero) or "explode" (that is, they can tend to infinity),[15] because of the computations involved in the process, which use finite-precision numbers. RNNs using LSTM units partially solve the vanishing gradient problem, because LSTM units allow gradients to also flow unchanged. However, LSTM networks can still suffer from the exploding gradient problem.[16]
+In the equations below, the lowercase variables represent vectors. Matrices 
+𝑊
+𝑞
+ and 
+𝑈
+𝑞
+ contain, respectively, the weights of the input and recurrent connections, where the subscript 
+𝑞
+ can either be the input gate 
+𝑖
+, output gate 
+𝑜
+, the forget gate 
+𝑓
+ or the memory cell 
+𝑐
+, depending on the activation being calculated. In this section, we are thus using a "vector notation". So, for example, 
+𝑐
+𝑡
+∈
+𝑅
+ℎ
+ is not just one unit of one LSTM cell, but contains 
+ℎ
+ LSTM cell's units.
+The compact forms of the equations for the forward pass of an LSTM cell with a forget gate are:[1][14]
+where the initial values are 
+𝑐
+0
+=
+0
+ and 
+ℎ
+0
+=
+0
+ and the operator 
+⊙
+ denotes the Hadamard product (element-wise product). The subscript 
+𝑡
+ indexes the time step.
+where the superscripts 
+𝑑
+ and 
+ℎ
+ refer to the number of input features and number of hidden units, respectively.
+The figure on the right is a graphical representation of an LSTM unit with peephole connections (i.e. a peephole LSTM).[17][18] Peephole connections allow the gates to access the constant error carousel (CEC), whose activation is the cell state.[17] 
+ℎ
+𝑡
+−
+1
+ is not used, 
+𝑐
+𝑡
+−
+1
+ is used instead in most places.
+Each of the gates can be thought as a "standard" neuron in a feed-forward (or multi-layer) neural network: that is, they compute an activation (using an activation function) of a weighted sum. 
+𝑖
+𝑡
+,
+𝑜
+𝑡
+ and 
+𝑓
+𝑡
+ represent the activations of respectively the input, output and forget gates, at time step 
+𝑡
+.
+The 3 exit arrows from the memory cell 
+𝑐
+ to the 3 gates 
+𝑖
+,
+𝑜
+ and 
+𝑓
+ represent the peephole connections. These peephole connections actually denote the contributions of the activation of the memory cell 
+𝑐
+ at time step 
+𝑡
+−
+1
+, i.e. the contribution of 
+𝑐
+𝑡
+−
+1
+ (and not 
+𝑐
+𝑡
+, as the picture may suggest). In other words, the gates 
+𝑖
+,
+𝑜
+ and 
+𝑓
+ calculate their activations at time step 
+𝑡
+ (i.e., respectively, 
+𝑖
+𝑡
+,
+𝑜
+𝑡
+ and 
+𝑓
+𝑡
+) also considering the activation of the memory cell 
+𝑐
+ at time step 
+𝑡
+−
+1
+, i.e. 
+𝑐
+𝑡
+−
+1
+.
+The single left-to-right arrow exiting the memory cell is not a peephole connection and denotes 
+𝑐
+𝑡
+.
+The little circles containing a 
+×
+ symbol represent an element-wise multiplication between its inputs. The big circles containing an S-like curve represent the application of a differentiable function (like the sigmoid function) to a weighted sum.
+Peephole convolutional LSTM.[19] The 
+∗
+ denotes the convolution operator.
+An RNN using LSTM units can be trained in a supervised fashion on a set of training sequences, using an optimization algorithm like gradient descent combined with backpropagation through time to compute the gradients needed during the optimization process, in order to change each weight of the LSTM network in proportion to the derivative of the error (at the output layer of the LSTM network) with respect to corresponding weight.
+A problem with using gradient descent for standard RNNs is that error gradients vanish exponentially quickly with the size of the time lag between important events. This is due to 
+lim
+𝑛
+→
+∞
+𝑊
+𝑛
+=
+0
+ if the spectral radius of 
+𝑊
+ is smaller than 1.[15][20]
+However, with LSTM units, when error values are back-propagated from the output layer, the error remains in the LSTM unit's cell. This "error carousel" continuously feeds error back to each of the LSTM unit's gates, until they learn to cut off the value.
+Many applications use stacks of LSTM RNNs[21] and train them by connectionist temporal classification (CTC)[22] to find an RNN weight matrix that maximizes the probability of the label sequences in a training set, given the corresponding input sequences. CTC achieves both alignment and recognition.
+Sometimes, it can be advantageous to train (parts of) an LSTM by neuroevolution[23] or by policy gradient methods, especially when there is no "teacher" (that is, training labels).
+There have been several successful stories of training, in a non-supervised fashion, RNNs with LSTM units.
+In 2018, Bill Gates called it a "huge milestone in advancing artificial intelligence" when bots developed by OpenAI were able to beat humans in the game of Dota 2.[9] OpenAI Five consists of five independent but coordinated neural networks. Each network is trained by a policy gradient method without supervising teacher and contains a single-layer, 1024-unit Long-Short-Term-Memory that sees the current game state and emits actions through several possible action heads.[9]
+In 2018, OpenAI also trained a similar LSTM by policy gradients to control a human-like robot hand that manipulates physical objects with unprecedented dexterity.[8]
+In 2019, DeepMind's program AlphaStar used a deep LSTM core to excel at the complex video game Starcraft II.[10] This was viewed as significant progress towards Artificial General Intelligence.[10]
+Applications of LSTM include:
+1991: Sepp Hochreiter analyzed the vanishing gradient problem and developed principles of the method in his German diploma thesis[15] advised by Jürgen Schmidhuber.
+1995: "Long Short-Term Memory (LSTM)" is published in a technical report by Sepp Hochreiter and Jürgen Schmidhuber.[46]
+1996: LSTM is published at NIPS'1996, a peer-reviewed conference.[13]
+1997: The main LSTM paper is published in the journal Neural Computation.[1] By introducing Constant Error Carousel (CEC) units, LSTM deals with the vanishing gradient problem. The initial version of LSTM block included cells, input and output gates.[47]
+1999: Felix Gers and his advisor Jürgen Schmidhuber and Fred Cummins introduced the forget gate (also called "keep gate") into the LSTM architecture,[48] enabling the LSTM to reset its own state.[47]
+2000: Gers & Schmidhuber & Cummins added peephole connections (connections from the cell to the gates) into the architecture.[14] Additionally, the output activation function was omitted.[47]
+2001: Gers and Schmidhuber trained LSTM to learn languages unlearnable by traditional models such as Hidden Markov Models.[17][49]
+Hochreiter et al. used LSTM for meta-learning (i.e. learning a learning algorithm).[50]
+2004: First successful application of LSTM to speech by Schmidhuber's student Alex Graves et al.[51][49]
+2005: First publication (Graves and Schmidhuber) of LSTM with full backpropagation through time and of bi-directional LSTM.[24][49]
+2005: Daan Wierstra, Faustino Gomez, and Schmidhuber trained LSTM by neuroevolution without a teacher.[23]
+2006: Graves, Fernandez, Gomez, and Schmidhuber introduce a new error function for LSTM: Connectionist Temporal Classification (CTC) for simultaneous alignment and recognition of sequences.[22] CTC-trained LSTM led to breakthroughs in speech recognition.[25][52][53][54]
+Mayer et al. trained LSTM to control robots.[7]
+2007: Wierstra, Foerster, Peters, and Schmidhuber trained LSTM by policy gradients for reinforcement learning without a teacher.[55]
+Hochreiter, Heuesel, and Obermayr applied LSTM to protein homology detection the field of biology.[34]
+2009: An LSTM trained by CTC won the ICDAR connected handwriting recognition competition. Three such models were submitted by a team led by Alex Graves.[2] One was the most accurate model in the competition and another was the fastest.[56] This was the first time an RNN won international competitions.[49]
+2009: Justin Bayer et al. introduced neural architecture search for LSTM.[57][49]
+2013: Alex Graves, Abdel-rahman Mohamed, and Geoffrey Hinton used LSTM networks as a major component of a network that achieved a record 17.7% phoneme error rate on the classic TIMIT natural speech dataset.[26]
+2014: Kyunghyun Cho et al. put forward a simplified variant of the forget gate LSTM[48] called Gated recurrent unit (GRU).[58]
+2015: Google started using an LSTM trained by CTC for speech recognition on Google Voice.[52][53] According to the official blog post, the new model cut transcription errors by 49%.[59]
+2015: Rupesh Kumar Srivastava, Klaus Greff, and Schmidhuber used LSTM principles[48] to create the Highway network, a feedforward neural network with hundreds of layers, much deeper than previous networks.[60][61][62] 7 months later, Kaiming He, Xiangyu Zhang; Shaoqing Ren, and Jian Sun won the ImageNet 2015 competition with an open-gated or gateless Highway network variant called Residual neural network.[63] This has become the most cited neural network of the 21st century.[62]
+2016: Google started using an LSTM to suggest messages in the Allo conversation app.[64] In the same year, Google released the Google Neural Machine Translation system for Google Translate which used LSTMs to reduce translation errors by 60%.[5][65][66]
+Apple announced in its Worldwide Developers Conference that it would start using the LSTM for quicktype[67][68][69] in the iPhone and for Siri.[70][71]
+Amazon released Polly, which generates the voices behind Alexa, using a bidirectional LSTM for the text-to-speech technology.[72]
+2017: Facebook performed some 4.5 billion automatic translations every day using long short-term memory networks.[6]
+Researchers from Michigan State University, IBM Research, and Cornell University published a study in the Knowledge Discovery and Data Mining (KDD) conference.[73][74][75] Their Time-Aware LSTM (T-LSTM) performs better on certain data sets than standard LSTM.
+Microsoft reported reaching 94.9% recognition accuracy on the Switchboard corpus, incorporating a vocabulary of 165,000 words. The approach used "dialog session-based long-short-term memory".[54]
+2018: OpenAI used LSTM trained by policy gradients to beat humans in the complex video game of Dota 2,[9] and to control a human-like robot hand that manipulates physical objects with unprecedented dexterity.[8][49]
+2019: DeepMind used LSTM trained by policy gradients to excel at the complex video game of Starcraft II.[10][49]
+2021: According to Google Scholar, in 2021, LSTM was cited over 16,000 times within a single year. This reflects applications of LSTM in many different fields including healthcare.[11]

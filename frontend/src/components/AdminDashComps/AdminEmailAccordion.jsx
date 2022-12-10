@@ -42,6 +42,7 @@ export default function EmailAccordion() {
         const data ={
             title: emailTitle,
             content:emailContent,
+            subject:emailSubject,
             emailDate: dayjs(emailDate).format()
         }
         axios.post(`http://127.0.0.1:5000/admin/add-auto-email`,data,{
@@ -127,6 +128,7 @@ export default function EmailAccordion() {
       <Accordion>
         <AccordionSummary
           expandIcon={<ExpandMoreIcon />}
+          sx = {{backgroundColor:"#5cdb95"}}
           aria-controls="panel1a-content"
           id="panel1a-header"
         >
@@ -143,7 +145,7 @@ export default function EmailAccordion() {
     </div>
           <div style={{display:"flex",flexDirection:"row",alignItems:"center",justifyContent:"space-between"}}>
           <h2 style={{color:"#05386b"}}>Annually Automated Emails Content</h2>
-          <AddCircleIcon sx = {{cursor:"pointer"}}  onClick={()=>setAddAccordionDialogOpenOpen(true)}  />
+          <AddCircleIcon sx = {{cursor:"pointer",color:"#05386b"}}  onClick={()=>setAddAccordionDialogOpenOpen(true)}  />
           </div>
          
 
@@ -155,7 +157,7 @@ export default function EmailAccordion() {
               return(
                   <Accordion key={item._id}  >
                   <AccordionSummary
-                  sx = {{backgroundColor:"green"}}
+                  sx = {{backgroundColor:"#5cdb95"}}
                     expandIcon={<ExpandMoreIcon />}
                     aria-controls="panel1a-content"
                     id="panel1a-header"
@@ -168,7 +170,7 @@ export default function EmailAccordion() {
                       <h4>Date : {item.emailDate}</h4>
                       <h4>Subject :{item.subject}</h4>
                       <h4>Content:</h4>
-                      <p>{item.details}</p>
+                      <p>{item.content}</p>
                       
                     {/* <Typography>
                       Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse

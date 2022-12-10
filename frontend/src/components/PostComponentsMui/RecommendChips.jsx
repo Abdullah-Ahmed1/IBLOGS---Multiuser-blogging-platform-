@@ -48,7 +48,7 @@ export default function RecommendedChips({handleChipClick}) {
         justifyContent: 'center',
         backgroundColor:"none",
         flexWrap: 'wrap',
-        height:"150px",
+        height:"160px",
         overflow:"auto",
         background:"rgba(255, 255, 255,0)",
         listStyle: 'none',

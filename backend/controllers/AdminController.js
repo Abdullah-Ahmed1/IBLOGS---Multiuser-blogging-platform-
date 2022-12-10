@@ -467,21 +467,25 @@ module.exports = {
       const decoded = jwt.verify(token, "1122334455");
       Email.create(req.body).then((email) => {
         res.send("email added");
-
+        console.log("33", email._id);
         //---------------------------------
-        // schedule.scheduleJob(email._id, email.emailDate, async () => {
-        //   const emailList = [
-        //     "abdullah.ahmed10001@gmail.com",
-        //     "alikumail54@gmail.com",
-        //   ];
-        //   try {
-        //     sendEmail(emailList, email.subject, email.content);
-
-        //     //-----------------------------------------------------------------------------------
-        //   } catch (err) {
-        //     console.log(err);
-        //   }
-        // });
+        schedule.scheduleJob(
+          email._id.toHexString(),
+          "*/2 * * * * *",
+          async () => {
+            // const emailList = [
+            //   "abdullah.ahmed10001@gmail.com",
+            //   "alikumail54@gmail.com",
+            // ];
+            try {
+              // sendEmail(emailList, email.subject, email.content);
+              console.log("hello");
+              //-----------------------------------------------------------------------------------
+            } catch (err) {
+              console.log(err);
+            }
+          }
+        );
         //----------------------------------
       });
     } catch (err) {
@@ -509,7 +513,7 @@ module.exports = {
       const decoded = jwt.verify(token, "1122334455");
       Email.findOneAndDelete({ _id: emailId }).then((email) => {
         res.send("deleted successfully");
-        // schedule.cancelJob(email._id)
+        schedule.cancelJob(email._id.toHexString());
       });
     } catch (err) {
       res.send(err);

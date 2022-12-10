@@ -21,6 +21,7 @@ import Divider from '@mui/material/Divider';
  import PostCommentDrawer from "../../components/ReaderDashComponents/PostCommentsDrawer"
 import PostFromSameBlogCard from './../../components/PostComponentsMui/PostFromSameBlogCard';
 import { useLocation } from 'react-router-dom';
+// import TrendPostCard from './../../components/PostComponentsMui/TrendPostCard';
 
    function Progress() {
     return (
@@ -36,6 +37,8 @@ const ReaderFullPostView = ()=>{
     const [post,setPost] = useState(null);
     const [postsFromSameBlog,setPostsFromSameBlog] =useState(null)
     const [postsFromSameBlogOwner,SetPostsFromSameBlogOwner] = useState({})
+    const [recommended,setRecommended] = useState(null)
+    const [trendingPosts,setTrendingPosts] = useState(null)
   React.useEffect(()=>{
     reactGA.pageview(window.location.pathname)
   },[])
@@ -96,6 +99,54 @@ const ReaderFullPostView = ()=>{
       })
 
     },[])
+
+    useEffect(()=>{
+
+      axios.post(`${process.env.REACT_APP_HOSTING}/recommend`,{value:id})
+      .then(res=>{
+        console.log("rererer",res.data)
+        let value = JSON.parse(localStorage.getItem("token"));
+        let token = value.token;
+        axios.post('http://127.0.0.1:5000/readerDashboard/get-recommended',{postIds:res.data},{
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+            Authorization: token,
+          },
+        })
+        .then(res=>{
+          setRecommended(res.data)
+          console.log("------",res)
+        })
+        
+      })
+    },[])
+    useEffect(()=>{
+      let value = JSON.parse(localStorage.getItem("token"));
+      let token = value.token;
+      axios.get('http://127.0.0.1:5000/readerDashboard',{
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+          Authorization: token,
+        },
+      })
+      .then(res =>{
+        console.log("res--------",res.data    ) 
+        
+
+        res.data.sort((a,b)=>{
+          if(a.likes.length> b.likes.length) return 1;
+          if(a.likes.length< b.likes.length) return -1;
+          return 0 ;
+        })
+        setTrendingPosts(res.data)
+        
+       
+      }).catch(err=> console.log(err))
+    },[])
+
+
 
     return(
         <>
@@ -161,6 +212,30 @@ const ReaderFullPostView = ()=>{
             <h3>Loading</h3>
           )
          }     
+
+         {/* <TrendPostCard/>
+         <TrendPostCard/>
+         <TrendPostCard/>
+         <TrendPostCard/>
+         <TrendPostCard/> */}
+         </div>
+         <div>
+       <h4 style={{color:"#5cdb95 "}}>Recommended Posts</h4>
+       {
+            recommended !== null? (
+              recommended.length > 0?(
+                recommended.map(item=>{
+                  return (
+                    <TrendPostCard  key={item._id}  item = {item}/>
+                  )
+                })
+              ):(
+                <h3>No trending right now</h3>
+              )
+            ):(
+              <h3>loading</h3>
+            )
+          }  
 
          {/* <TrendPostCard/>
          <TrendPostCard/>

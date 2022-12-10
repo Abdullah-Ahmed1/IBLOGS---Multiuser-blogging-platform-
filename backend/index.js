@@ -18,6 +18,9 @@ require("./Connection/connection");
 
 //--------------------------------------------------
 const Analysis = require("./utils/Analysis");
+const scrap = require("./utils/scrap");
+// scrap.start();
+// scrap.getOrganicData();
 // Analysis.googleAPI();
 //Analysis.commentAnalysis();
 // Analysis.testAnalysis();

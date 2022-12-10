@@ -112,13 +112,8 @@ export default function ReaderDashboard() {
         .catch((err) => console.log("errr", err));
     
     }
-
-   
-    
-    
-    
+      
   }
-
 
   const ProfileFetch = ()=>{
     console.log("uuuuuuuuuuuuuu")

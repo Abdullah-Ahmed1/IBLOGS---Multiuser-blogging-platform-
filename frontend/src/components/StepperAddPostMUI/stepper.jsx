@@ -517,6 +517,7 @@ export default function AddPostStepper({handleClose,refreshPosts}) {
     const [publishStatus,setPublishStatus] = useState("");
     const [publishDate,setPublishDate] = useState(dayjs(new Date()));
     const [tempWord,setTempWord] = useState("");
+    const [summary,setSummary] = useState("");
 
     const[selectedTag,setSelectedTag] = useState([])
 
@@ -547,6 +548,8 @@ export default function AddPostStepper({handleClose,refreshPosts}) {
     const handleAllowComments = allowComments => setAllowComments(allowComments)
     const handlePublishStatus = publishStatus => setPublishStatus(publishStatus)
     const handlePublishDate = publishDate => setPublishDate(publishDate) 
+    
+
 
      // console.log("post title : ",postTitle)
       //console.log("post description : ",postDescription)
@@ -607,7 +610,8 @@ const nextWord = (postContent) => {
         publishDate: new Date(),
         dateCreated: new Date(),
         tags: selectedTag,
-        contentImagesCount: getImageCount()
+        contentImagesCount: getImageCount(),
+        summary:summary
       
       }
       if(postCardImage){
@@ -634,7 +638,8 @@ const nextWord = (postContent) => {
       publishDate: new Date(),
       dateCreated: new Date(),
       tags: selectedTag,
-      contentImagesCount: getImageCount()
+      contentImagesCount: getImageCount(),
+      summary:summary
     }
     console.log("url: ",res.data.secure_url)
     
@@ -667,7 +672,8 @@ const nextWord = (postContent) => {
         publishDate: new Date(),
         dateCreated: new Date(),
         tags: selectedTag,
-        contentImagesCount: getImageCount()
+        contentImagesCount: getImageCount(),
+        summary:summary
       }
       
       let value = JSON.parse(localStorage.getItem("token"));
@@ -709,7 +715,8 @@ const nextWord = (postContent) => {
         publishDate: dayjs(publishDate).format(),
         dateCreated: new Date(),
         tags: selectedTag,
-        contentImagesCount: getImageCount()
+        contentImagesCount: getImageCount(),
+        summary:summary
       
       }
       if(postCardImage){
@@ -735,7 +742,8 @@ const nextWord = (postContent) => {
         publishDate: dayjs(publishDate).format(),
         dateCreated: new Date(),
         tags: selectedTag,
-        contentImagesCount: getImageCount()
+        contentImagesCount: getImageCount(),
+        summary:summary
       
       }
       
@@ -768,7 +776,8 @@ const nextWord = (postContent) => {
           publishDate: dayjs(publishDate).format(),
           dateCreated: new Date(),
           tags: selectedTag,
-          contentImagesCount: getImageCount()
+          contentImagesCount: getImageCount(),
+          summary:summary
         
         }
         
@@ -821,7 +830,8 @@ const nextWord = (postContent) => {
         publishDate: new Date(),
         dateCreated: new Date(),
         tags: selectedTag,
-        contentImagesCount: getImageCount()
+        contentImagesCount: getImageCount(),
+        summary:summary
       
       }
       if(postCardImage){
@@ -848,7 +858,8 @@ const nextWord = (postContent) => {
       publishDate: new Date(),
       dateCreated: new Date(),
       tags: selectedTag,
-      contentImagesCount: getImageCount()
+      contentImagesCount: getImageCount(),
+      summary:summary
     
     }
     console.log("url: ",res.data.secure_url)
@@ -880,7 +891,8 @@ const nextWord = (postContent) => {
         publishDate: new Date(),
         dateCreated: new Date(),
         tags: selectedTag,
-        contentImagesCount: getImageCount()
+        contentImagesCount: getImageCount(),
+        summary:summary
       }
       
       let value = JSON.parse(localStorage.getItem("token"));
@@ -983,14 +995,20 @@ const nextWord = (postContent) => {
 
   }
 //---------------------------------------------
-  const checkMaliciousLinks = ()=>{
+  const checkMaliciousLinks = async()=>{
 
-    axios.post(`${process.env.HOSTING}/SpamDetection`,{value:getLinks()})
-    .then(res=>{
-     return  res ==="spam"?  true: false
-    }).catch((err)=>{
+     const a = await  axios.post(`${process.env.REACT_APP_HOSTING}/SpamDetection`,{value:getLinks()})
+     console.log("******",a)
+     if(a.data =="Spam"){
+        return true
+     }else{
       return false
-    })
+     }
+    // .then(res=>{
+    //  return  res ==="spam"?  true: false
+    // }).catch((err)=>{
+    //   return false
+    // })
 
 
   }
@@ -1008,8 +1026,8 @@ const nextWord = (postContent) => {
       getLinks()
       if((h2p(postContent).split(".")).length >= 10){
         if(!repititionDetection()){
-          if(getLinks().length < 150 ){
-          if(!(await checkMaliciousLinks())){
+          if(getLinks().length < 300 ){
+          if((await checkMaliciousLinks() === false)){
             console.log("reacheeeee")
             setStep2BackDropOpen(true)
             //---------------------------
@@ -1035,6 +1053,13 @@ const nextWord = (postContent) => {
               console.log("classification",res.data)
               setTags(res.data)
               setStep2BackDropOpen(false)
+              axios.post(`${process.env.REACT_APP_HOSTING}/summarizer`,
+              {value: h2p(postContent)}
+              // data
+            ).then(res=>{
+                setSummary(res.data)
+            })
+        
             })
             .catch((err)=>{
               console.log(err)
