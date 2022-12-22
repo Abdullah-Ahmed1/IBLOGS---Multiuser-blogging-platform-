@@ -120,7 +120,7 @@ const ReaderFullPostView = ()=>{
         })
         
       })
-    },[])
+    },[location])
     useEffect(()=>{
       let value = JSON.parse(localStorage.getItem("token"));
       let token = value.token;
@@ -233,7 +233,7 @@ const ReaderFullPostView = ()=>{
                 <h3>No trending right now</h3>
               )
             ):(
-              <h3>loading</h3>
+              <CircularProgress/>
             )
           }  
 

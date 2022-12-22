@@ -375,8 +375,11 @@ export default function AskConfirmationBeforeSave({blogId}) {
               // if(progress1){
               //   setPromiseArguments({ resolve, reject, newRow, oldRow,mutation });    
               // }
-            }else{
-              
+            }else if(newRow.publishStatus ==="published"){
+              setPromiseArguments({ resolve, reject, newRow, oldRow,mutation });    
+            }else if(newRow.publishStatus ==="Draft"){
+              console.log("drafted")
+              setPromiseArguments({ resolve, reject, newRow, oldRow,mutation });  
             }
           }else{
             setPromiseArguments({ resolve, reject, newRow, oldRow,mutation });  

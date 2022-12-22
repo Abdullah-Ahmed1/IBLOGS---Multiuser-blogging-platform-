@@ -463,7 +463,7 @@ ColorlibStepIcon.propTypes = {
 
   ////////////////////////////////////////////////////////////////////////////////
   ///-----------------------------------------
-  const GetStepContent = ({activeStep,nextWord,tags,selectedTag,handleSelectTag,handleSave,handleClickGenerate,generatedText,handlePostCardImage,handlePostTitle,handlePostDescription,handlePostKeywords,handlePostContent,postContent,handleAllowComments,allowComments,handlePublishStatus,handlePublishDate,publishDate,handleSchedule,handlePublish,openBox,handleOpenBox}) => {
+  const GetStepContent = ({handleSetScrap,scrap,right,left,activeStep,nextWord,tags,selectedTag,handleSelectTag,handleSave,handleClickGenerate,generatedText,handlePostCardImage,handlePostTitle,handlePostDescription,handlePostKeywords,handlePostContent,postContent,handleAllowComments,allowComments,handlePublishStatus,handlePublishDate,publishDate,handleSchedule,handlePublish,openBox,handleOpenBox}) => {
     console.log()
     switch (activeStep) {
       case 0:
@@ -480,7 +480,7 @@ ColorlibStepIcon.propTypes = {
           )
           
       case 2:
-        return <MyEditor  nextWord = {nextWord}  handlePostContent =  {handlePostContent} generatedText = {generatedText} postContent = {postContent}/>
+        return <MyEditor   handleSetScrap = {handleSetScrap} scrap={scrap} left = {left} right = {right} nextWord = {nextWord}  handlePostContent =  {handlePostContent} generatedText = {generatedText} postContent = {postContent}/>
       
       case 3 : 
         return <TagSelect tags = {tags}  selectedTag = {selectedTag} handleSelectTag = {handleSelectTag}/>    
@@ -919,7 +919,25 @@ const nextWord = (postContent) => {
   const [repititionSnack,setRepititionSnack] = useState(false)
   const [linksNumberSnack,setLinksNumberSnack] = useState(false)
   const [malLinkSnack,setMalLinkSnack] = useState(false)
-  
+
+  //------------------------------------------------
+  const [left,setLeft]  = useState(12)
+  const [right,setRight]  = useState(0)
+  const [scrap,setScrap] = useState(false)
+  const handleSetScrap = ()=>{
+    setScrap(true)
+  }
+  const handleScrap = ()=>{
+    console.log("erer")
+    if(left ===12){
+      setLeft(7)
+      setRight(5)
+    }else{
+      setLeft(12)
+      setRight(0)
+    }
+  }
+  //----------------------------------------------
   const malLinkSnackHandleClose =()=>{
     setMalLinkSnack(false)
   }
@@ -947,7 +965,7 @@ const nextWord = (postContent) => {
 
   const repititionDetection = ()=>{
     let str = "I am not gonna live forever, but I wanna live while I am alive",
-    split = (h2p(postContent)).split("."),
+    split = (h2p(postContent)).split(". "),
     obj = {};
 
   for (let i = 0; i < split.length; i++) {
@@ -957,7 +975,7 @@ const nextWord = (postContent) => {
       obj[split[i]]++;
     }
   }
-
+  console.log("rep",obj)
   console.log("answer",(Object.values(obj)).includes(3))
     return (Object.values(obj)).includes(3)
   }
@@ -996,14 +1014,20 @@ const nextWord = (postContent) => {
   }
 //---------------------------------------------
   const checkMaliciousLinks = async()=>{
-
-     const a = await  axios.post(`${process.env.REACT_APP_HOSTING}/SpamDetection`,{value:getLinks()})
+      console.log("links are:::::",getLinks())
+    if(getLinks().length>0){
+      console.log("******reacheddddd")
+      const a = await  axios.post(`${process.env.REACT_APP_HOSTING}/SpamDetection`,{value:getLinks()})
      console.log("******",a)
      if(a.data =="Spam"){
         return true
      }else{
       return false
      }
+    }else{
+      return false
+    }
+     
     // .then(res=>{
     //  return  res ==="spam"?  true: false
     // }).catch((err)=>{
@@ -1025,7 +1049,9 @@ const nextWord = (postContent) => {
       getImageCount()
       getLinks()
       if((h2p(postContent).split(".")).length >= 10){
+        console.log("----rep---",repititionDetection())
         if(!repititionDetection()){
+          console.log("aaasaaaaaaaa")
           if(getLinks().length < 300 ){
           if((await checkMaliciousLinks() === false)){
             console.log("reacheeeee")
@@ -1199,7 +1225,10 @@ const nextWord = (postContent) => {
                 )
               }
              
-            <div style={{display:'flex',flexDirection:'row'}}>         
+            <div style={{display:'flex',flexDirection:'row'}}>    
+            <Button variant='contained' onClick = {handleScrap} style = {activeStep===2? {visibility:"visible",marginRight:"10px"}:{visibility:"hidden"}} >
+             {left===7? "Close" :"Get Data"}
+            </Button>     
             <Button
               color="inherit"
             
@@ -1244,7 +1273,10 @@ const nextWord = (postContent) => {
                  handleSelectTag = {handleSelectTag}
                  selectedTag = {selectedTag}
                  tags ={tags}
-                 
+                 left = {left}
+                 right = {right}
+                 handleSetScrap = {handleSetScrap}
+                 scrap = {scrap}
                  />
             </Paper>
           </Box>

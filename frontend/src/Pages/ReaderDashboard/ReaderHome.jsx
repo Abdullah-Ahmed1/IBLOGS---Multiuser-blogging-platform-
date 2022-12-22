@@ -1,44 +1,27 @@
 import * as React from 'react';
-import { useState,useEffect } from 'react';
+import { useState,useEffect,useRef } from 'react';
 import axios from "axios";
 import "../../components/PostComponentsMui/TrendPostCard.css"
-//import Box from '@mui/material/Box';
-//import Grid from "@mui/material/Grid";
 import Grid2 from '@mui/material/Unstable_Grid2';
-//import List from '@mui/material/List';
 import { CircularProgress} from '@mui/material';
-//import { Link } from 'react-router-dom';
-// import Button from '@mui/material/Button';
-// import { styled } from '@mui/material/styles';
-// import Paper from '@mui/material/Paper';
+import lottie from 'lottie-web';
 import Divider from '@mui/material/Divider';
-//import { createStyles, makeStyles } from '@mui/styles';
 import CssBaseline from '@mui/material/CssBaseline';
-//import List_Items from '../../components/ReaderDashComponents/ListItems2';
 import SearchBar from "../../components/ReaderDashComponents/Searchbar"
 import { useTheme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
-//------------
-//import ThumbUpIcon from '@mui/icons-material/ThumbUp';
-//import ShareIcon from '@mui/icons-material/Share';
-//import BookmarkAddIcon from '@mui/icons-material/BookmarkAdd';
-//import BookmarkAddedIcon from '@mui/icons-material/BookmarkAdded';
 import "./../../components/PostComponentsMui/PostCardScroll.css";
-//import Avatar from '@mui/material/Avatar';
-//import Grid from "@mui/material/Grid";
-//import Box from "@mui/material/Box";
-//import MoreVertIcon from '@mui/icons-material/MoreVert';
 import RecommendedChips from './../../components/PostComponentsMui/RecommendChips';
 import TrendPostCard from './../../components/PostComponentsMui/TrendPostCard';
-//import AccountMenu from './../../components/Avatar/AccountAvatar';
-//import CreateListMenu from './../../components/ReaderDashComponents/CreateSavedListMenu';
 import ReaderPostCard from './ReaderPostCard';
 import PostCardMobile from './../../components/PostComponentsMui/PostCardMobile';
 import Searching from '../../components/ReaderDashComponents/Searching';
+import Aos from 'aos';
 
 
 
 const ReaderHome = ()=>{
+  const container = useRef(null)
   const theme = useTheme();
   const large = useMediaQuery(theme.breakpoints.down('lg'));
   const medium = useMediaQuery(theme.breakpoints.down('md'));
@@ -151,6 +134,23 @@ const ReaderHome = ()=>{
       }).catch(err=> console.log(err))
     },[])
 
+    useEffect(()=>{
+    
+      lottie.loadAnimation({
+        container : container.current,
+        renderer: 'svg',
+        loop:true,
+        autoplay:true,
+        animationData:require('../../lottie/search_empty.json')
+    
+      })
+      
+    },[])
+    
+    useEffect(() => {
+      Aos.init({duration :1000});
+
+  }, [])
     return(
         <>
         <CssBaseline />
@@ -177,12 +177,15 @@ const ReaderHome = ()=>{
           posts.map(item =>{
            
             return (
-              <ReaderPostCard   key = {item._id} item ={item}  handleLikeClick={handleLikeClick} handleNotInterested={handleNotInterested} />
-        
+              <div data-aos="fade-up">
+                <ReaderPostCard   key = {item._id} item ={item}  handleLikeClick={handleLikeClick} handleNotInterested={handleNotInterested} />
+              </div>
             )
           })
         ):(
-          <h2>No data to show </h2>
+          <div style = {{margin:"auto"}}>
+            <div className='container' ref={container} style={{width:"350px"}}  ></div>
+          </div>
         )
       ):(
         <CircularProgress/>

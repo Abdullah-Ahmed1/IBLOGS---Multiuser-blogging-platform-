@@ -16,6 +16,7 @@ const view_id = "276275451";
 require("dotenv").config();
 module.exports = {
   commentAnalysis: async () => {
+    console.log("reached");
     let analysisArr = [];
     console.log("reached-----------------------------------------------");
     const posts = await Post.find({})
@@ -30,8 +31,8 @@ module.exports = {
         contentImagesCount: 1,
       });
 
-    console.log("!!!!", posts);
-    // console.log(post[0].comments[0]);
+    console.log("!!!!", posts.length);
+    // console.log(posts[0].comments[0]);
 
     await Promise.all(
       posts.map(async (post) => {
@@ -44,26 +45,33 @@ module.exports = {
 
           // console.log("--------------------", data);
         });
-        const res1 = await axios.post("http://127.0.0.1:3001/semantic", {
-          array: arr,
-        });
-        const data = {
-          analysisDate: new Date().toISOString(),
-          postId: post._id,
-          postImpressions: null,
-          postLikes: post.likes.length,
-          commentsSemantics: res1.data,
-          ContentImages: post.contentImagesCount,
-        };
-        analysisArr.push(data);
-        console.log("---/-", analysisArr);
+        console.log("////----", arr);
+        try {
+          const res1 = await axios.post("http://127.0.0.1:3001/semantic", {
+            array: arr,
+          });
+          console.log("****", res1.data);
+          const data = {
+            analysisDate: new Date().toISOString(),
+            postId: post._id,
+            postImpressions: null,
+            postLikes: post.likes.length,
+            commentsSemantics: res1.data,
+            ContentImages: post.contentImagesCount,
+          };
+          analysisArr.push(data);
+        } catch (err) {
+          console.log(err);
+        }
+
+        // console.log("---/-", analysisArr);
         // console.log(arr);
       })
     );
 
-    // axios.post("/http://127.0.0.1:3001/semantic")
-    // .then(res)
-    console.log("!!!!!!!!!3333333333333333");
+    // // axios.post("/http://127.0.0.1:3001/semantic")
+    // // .then(res)
+    // console.log("!!!!!!!!!3333333333333333");
     WeeklyAnalysis.create({ postAnalysis: analysisArr }).then((res) => {
       console.log(res);
     });

@@ -106,6 +106,7 @@ module.exports = {
         console.log("it has to be published");
         Post.create({ ...req.body, parentBlog: blogId })
           .then((post) => {
+            console.log("4444", post);
             Blog.updateOne(
               { _id: blog._id },
               { $push: { posts: post._id } },

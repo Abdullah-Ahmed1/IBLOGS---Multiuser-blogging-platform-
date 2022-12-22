@@ -2,6 +2,7 @@ const puppeteer = require("puppeteer");
 const h2p = require("html2plaintext");
 const fs = require("fs/promises");
 const unirest = require("unirest");
+const sendEmail = require("../utils/sendEmail");
 const cheerio = require("cheerio");
 
 module.exports = {
@@ -25,6 +26,17 @@ module.exports = {
     // );
     await fs.writeFile("scrap.txt", data.join("\r\n"));
     console.log(data);
+  },
+  testSend: async () => {
+    const text = `<h1>Hello this is a test</h1> 
+                  <a href = "http://localhost:3000/ReaderDashboard/full-post/632c7a1f55d458e83aaf173f ">this,link</a>
+    `;
+    await sendEmail(
+      "abdullah.ahmed10001@gmail.com",
+      "testing",
+      "this is a testetester",
+      text
+    );
   },
 
   getOrganicData: async () => {

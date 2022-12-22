@@ -4,6 +4,7 @@ import Grid2 from '@mui/material/Unstable_Grid2';
 import CssBaseline from '@mui/material/CssBaseline';
 import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
 import Paper from '@mui/material/Paper';
+import Button from '@mui/material/Button';
 import CircularProgress from '@mui/material/CircularProgress';
 import WeeklyReportsItems from './../../components/AdminDashComps/WeeklyReportItems';
 
@@ -29,7 +30,16 @@ const WeeklyReports = ()=>{
         <Grid2 lg ={11} spacing={0} sx = {{minHeight:"90vh",marginTop:"50px",marginLeft:"30px"}}  >  
        {/* ----------------------------------------------------------------------------------- */}
         <div style={{marginTop:"70px"}}>
-        <h2 style={{color:"#05386b"}}>Weekly Report</h2>
+        <Grid2 container direction={"row"} alignItems={"center"} justifyContent={"space-between"}>
+            <Grid2>
+                <h2 style={{color:"#05386b"}}>Weekly Report</h2>
+            </Grid2>
+            <Grid2 >
+            <Button sx = {{marginRight:"10px"}} variant="contained">Run Report</Button>
+            <Button variant="contained">Email Recommendation</Button>
+            </Grid2>
+        </Grid2>   
+        
         <Paper sx = {{padding:"15px"}}>
         <h3>Analysis Date : {reports ? reports[0].postAnalysis[0].analysisDate.slice(0,10): ""}</h3>
         {

@@ -39,6 +39,19 @@ export default function BloggerFullPostViewDialog({item,open,handleClose}) {
               <img  src={item.postCardImage} />
               {item.postCardImage}
             </div>
+            {
+              item.summary? (
+                <div>
+                  <h2 sx = {{backgroundColor:"#05386b"}}>Summary</h2>
+                  
+                  {item.summary}
+                </div>
+              ):(
+                null
+              )
+               
+            }
+           
             <div>
             <h2 sx = {{backgroundColor:"#05386b"}}>Post Description</h2>
               {item.postDescription}

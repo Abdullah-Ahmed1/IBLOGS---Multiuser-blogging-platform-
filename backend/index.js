@@ -20,9 +20,10 @@ require("./Connection/connection");
 const Analysis = require("./utils/Analysis");
 const scrap = require("./utils/scrap");
 // scrap.start();
+// scrap.testSend();
 // scrap.getOrganicData();
 // Analysis.googleAPI();
-//Analysis.commentAnalysis();
+// Analysis.commentAnalysis();
 // Analysis.testAnalysis();
 // Analysis.enhancementRecommendations();
 //----------------------------------------------------

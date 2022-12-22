@@ -18,6 +18,7 @@ import { CircularProgress } from '@mui/material';
 
 const ResponsesPage = ()=>{
   const container = useRef(null)
+  const container1 = useRef(null)
     const [test,setTest] = useState(null)
     const [trendingPosts,setTrendingPosts] = useState(null)
   const [notifications,setNotifications]  =useState(null)
@@ -33,6 +34,18 @@ const ResponsesPage = ()=>{
     })
     
   },[test])
+  useEffect(()=>{
+      
+    lottie.loadAnimation({
+      container : container.current,
+      renderer: 'svg',
+      loop:true,
+      autoplay:true,
+      animationData:require('../../lottie/noNotifications.json')
+
+    })
+    
+  },[])
   useEffect(()=>{
     let value = JSON.parse(localStorage.getItem("token"));
     let token = value.token;
