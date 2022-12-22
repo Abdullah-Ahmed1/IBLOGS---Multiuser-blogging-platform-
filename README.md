@@ -1,2 +1,2 @@
-# FYP
-this is my FYP
+# Multiuser Blogging platform
+
