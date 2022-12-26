@@ -550,7 +550,10 @@ module.exports = {
       res.send(err);
     }
   },
-
+  //------------------------------ method to change draft to publish
+  draft_to_publish: (req, res) => {
+    console.log("reached draft to publish");
+  },
   // --this is a method below to add any field to already added document
 
   tempMethod: async (req, res) => {
