@@ -163,7 +163,7 @@ const SavedList = ()=>{
        {/* ----------------------------------------------------------------------------------- */}
           <Grid2 container justifyContent={"space-between"}>
             <Grid2>
-              <h2 style={{margin: 0 ,padding:0}} >Your Lists</h2>
+              <h2 style={{margin: 0 ,padding:0,color:"#05386b"}} >Your Lists</h2>
             </Grid2>
             <Grid2>
               <Button  onClick = {()=> setAddListDialogOpen(true)}  sx = {{backgroundColor:"#05386b"}} variant='contained'> New List </Button>

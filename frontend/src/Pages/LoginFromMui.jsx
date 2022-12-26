@@ -142,8 +142,9 @@ export default function SignInSide() {
             <Avatar sx={{ m: 1, bgcolor: '#5cdb95' }}>
               <LockOutlinedIcon />
             </Avatar>
+            <img style={{width:"200px",marginLeft:"25px",marginRight:"50px",marginBottom:"20px"}} src={'/logo2.png'} alt="iblogs" />
             <Typography component="h1" variant="h5" sx = {{color:"#05386b"}} >
-              Sign in
+              {/* Sign in */}
             </Typography>
             <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 1 }}>
               <TextField

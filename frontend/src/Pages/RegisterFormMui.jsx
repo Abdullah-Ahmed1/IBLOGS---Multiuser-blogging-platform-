@@ -260,9 +260,11 @@ const [validated,setValidated] = useState(false);
           <Avatar sx={{ m: 1, bgcolor: '#5cdb95' }}>
             <LockOutlinedIcon  />
           </Avatar>
-          <Typography component="h1" variant="h5">
+          <img style={{width:"200px",marginLeft:"25px",marginRight:"45px",marginBottom:"20px"}} src={'/logo2.png'} alt="iblogs" />
+           
+          {/* <Typography component="h1" variant="h5">
             Sign up
-          </Typography>
+          </Typography> */}
           <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
             <Grid container spacing={2}>
               <Grid item xs={12} sm={6}>
