@@ -19,6 +19,7 @@ import { set } from 'lodash';
 import PostShareDialog from './../ReaderDashComponents/PostShareDialog';
 import { useState } from 'react';
 import BloggerFullPostViewDialog from './BloggerFullPostViewDialog';
+import PostStatusMenu from './PostStatusMenu';
 
 const bull = (
   <Box
@@ -45,6 +46,11 @@ export default function PostCardMui({item,handlePostDelete}) {
     setPostDeleteDialogOpen(false)
   }
 
+//--------------------publish Status Control Functions------------------------------------------------
+
+
+
+
  // console.log("items",item)
   return (
     <>
@@ -66,13 +72,14 @@ export default function PostCardMui({item,handlePostDelete}) {
         {item.postDescription}
       </Typography>
      
-       <div  >
+       <div style={{display:"flex",flexDirection:"row"}} >
        <Button   sx = {{color:"#05386b"}}  size="small"><ThumbUpAltIcon/>{item.likes.length}</Button>
         <Button  onClick = {()=>setShareDialogOpen(true )}   sx = {{color:"#05386b"}} size="small"><ShareIcon/></Button>
         {/* <Button  sx = {{color:"#05386b"}} size="small"><EditIcon/></Button> */}
         <Button  onClick={()=>setPostDeleteDialogOpen(true)}  sx = {{color:"#05386b"}} size="small"><DeleteIcon /></Button>
         <Button onClick={()=>setFullPostDialogOpen(true)}  sx = {{color:"#05386b"}} size="small"><VisibilityIcon/></Button>
-        <Chip  sx = {{backgroundColor:"#379683",color:"white"}}  label={item.publishStatus} />
+        {/* <Chip  sx = {{backgroundColor:"#379683",color:"white"}}  label={item.publishStatus} /> */}
+        <PostStatusMenu label = {item.publishStatus} />
     </div>
     </CardContent>
       
