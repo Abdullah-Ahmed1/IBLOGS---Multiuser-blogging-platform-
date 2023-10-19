@@ -1,20 +1,19 @@
 import React from "react";
-import { useEffect, useState } from "react";
-import parse from "html-react-parser";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
-import { useQuill } from "react-quilljs";
-import fetch from "isomorphic-unfetch";
-
 import "quill/dist/quill.snow.css"; // Add css for snow theme
+import parse from "html-react-parser";
+import fetch from "isomorphic-unfetch";
+import { useQuill } from "react-quilljs";
+import { useEffect, useState } from "react";
+import "react-toastify/dist/ReactToastify.css";
+import { useNavigate } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
 // or import 'quill/dist/quill.bubble.css'; // Add css for bubble theme
 
 const Editor = ({}) => {
   const { quill, quillRef } = useQuill();
-  const [content, setContent] = useState("");
   const [title, setTitle] = useState("");
+  const [content, setContent] = useState("");
 
   const navigate = useNavigate();
   const insertToEditor = (url) => {

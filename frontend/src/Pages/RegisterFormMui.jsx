@@ -11,7 +11,7 @@ import Checkbox from '@mui/material/Checkbox';
 import TypeWriterEffect from 'react-typewriter-effect';
 import { Link } from "react-router-dom";
 import Paper from '@mui/material/Paper';
-  import Box from '@mui/material/Box';
+import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';

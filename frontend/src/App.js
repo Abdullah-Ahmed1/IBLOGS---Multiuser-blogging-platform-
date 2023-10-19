@@ -64,11 +64,9 @@ const checkUserSession = () => {
         return true;
       })
       .catch(() => {
-        console.log("----------");
         return false;
       });
   } else {
-    console.log("===========");
     return false;
   }
 };

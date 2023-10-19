@@ -94,7 +94,8 @@ module.exports = {
           //   )
           // );
           const data = response.filter((item) => {
-            item.parentBlog.owner._id.toString() === decoded.id;
+            console.log("--------->>>>>>>", item)
+            item.parentBlog?.owner?._id.toString() === decoded.id;
           });
           // console.log(data);
           res.send(
